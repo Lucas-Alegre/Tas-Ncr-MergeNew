@@ -1,0 +1,25 @@
+﻿{
+    "type": "General",
+
+	"run": function() {
+		window.setTimeout(function(){
+			States.handleEvent("timeout");
+        }, 5000);
+	},
+
+	"screens": {
+	    "default": {
+			"messagecenter": {
+				"text": "¡Gracias!",
+				"imagen": "/images/naranja/carita.png"
+			}
+		}
+	},
+
+	"events" : {
+        "timeout": function() {
+            var path = window.location.protocol + "//" + window.location.host + "?name=n/status_inservice";
+            window.location = path;
+        }, 
+	}
+}

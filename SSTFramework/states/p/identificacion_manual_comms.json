@@ -1,0 +1,75 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WSCCL",
+        "nombre": "identificacion",
+        "audit": function(res) {
+            return SSUtil.getObjValue(res, "SCO_IDENT") + "\n" + SSUtil.getObjValue(res, "SNO_CLIEN");
+        },
+
+        "storename": "comms.WSCCL",
+        "responseHandler": function(response) {
+            console.log("Aca muestra el response despues de identificar");
+            console.log(JSON.stringify(response));
+
+            SSUtil.setLocal("identified", true);        
+            States.storeNamedValue("customer", response.SCO_IDENT);
+            console.log("customer");
+            console.log(JSON.stringify(response.SCO_IDENT));
+            if(response.hasOwnProperty("SNO_CLIEN")) {
+                States.storeNamedValue("customer_name", response.SNO_CLIEN);
+                States.storeNamedValue("origen_name", response.SNO_CLIEN); 
+                console.log("customer_name");
+            console.log(JSON.stringify(response.SNO_CLIEN));
+
+            }
+			if(response.hasOwnProperty("SCOTIPDOC")) {
+                States.storeNamedValue("origen_id_type", response.SCOTIPDOC);
+                console.log("origen_id_type");
+                console.log(JSON.stringify(response.SCOTIPDOC));
+			}
+			if(response.hasOwnProperty("SNU_DOCUM")) {      
+				States.storeNamedValue("origen_id", response.SNU_DOCUM);
+                Vars.set("identificacion_depositante", response.SNU_DOCUM);
+                console.log("origen_id");
+                console.log(JSON.stringify(response.SNU_DOCUM));
+			}
+			if(response.hasOwnProperty("SCO_IDENT")) {
+				if (response.SCO_IDENT > 0) {             
+                    States.storeNamedValue("origen_id", response.SCO_IDENT);  
+                    console.log("origen_id");
+                console.log(JSON.stringify(response.SCO_IDENT));           
+				} 
+            }
+            
+            // consulta de ultima ves que ingreso a la tas
+
+                //http://172.21.200.179:8280/services/DatosTas
+
+                var url = "http://[IPESB]:8280/services/DatosTas";
+                url = url.replace("[IPESB]", SSUtil.getLocal("IPESB"));
+
+                console.log("url final: " + url);
+
+                var origen_id = States.getStoredValue("origen_id");
+
+                console.log("origen_id: " + origen_id);
+
+				$.get(url, {id: origen_id}, function(respuesta){
+				    console.log(respuesta);
+
+	           		SSUtil.setLocal("mensajeApi", respuesta);
+				     
+                }, "json")
+
+                
+            return response;            
+        }
+    },
+
+    "events": {
+        "comms_ok": "p/identificacion_pin",
+    }
+
+}

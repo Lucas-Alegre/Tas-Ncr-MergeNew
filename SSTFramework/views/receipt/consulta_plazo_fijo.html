@@ -1,0 +1,28 @@
+﻿<!--
+    Requires:
+        moneda:
+        cuenta: account number, formatted for display
+        neto: account balance, formatted for display
+        capital:
+        interes:
+        fecha:
+-->
+
+
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+
+<hr />
+<h1>Consulta de Plazo Fijo</h1>
+<hr />
+<table>
+    <tr><td>Moneda: </td><td align="right"> <%- receipt.moneda %></td> </tr>
+    <tr><td>Nro. Certificado: </td><td align="right"> <%- receipt.cuenta %></td> </tr>
+    <tr><td>Neto a cobrar: </td><td align="right"> <%- receipt.neto %></td> </tr>
+    <tr><td>Capital: </td><td align="right"> <%- receipt.capital %></td> </tr>
+    <tr><td>Interés: </td><td align="right"> <%- receipt.interes %></td> </tr>
+    <tr><td>Fecha venc.: </td><td align="right"> <%- receipt.fecha %></td> </tr>   
+</table>
+
+<% include chunk/footer.html %>

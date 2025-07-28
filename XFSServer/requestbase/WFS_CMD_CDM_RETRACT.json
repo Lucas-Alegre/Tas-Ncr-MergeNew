@@ -1,0 +1,8 @@
+﻿{
+    "command": "WFS_CMD_CDM_RETRACT",
+    "input" : {
+        "usIndex": 1,
+        "usRetractArea": "WFS_CDM_RA_RETRACT",
+        "fwOutputPosition": "WFS_CDM_POSNULL"
+    }
+}

@@ -1,0 +1,61 @@
+﻿{
+    
+    "base" : include(p/bases/ingreso_monto.json),
+
+        "run": function() {
+            var val = States.getStoredValue("valor_sumador", 0);
+            States.setProperty("start_value", val);
+            States.storeNamedValue("valor_sumador", 0);
+        },
+
+    "properties": {
+        "storename": "monto",
+        
+        "decimales": "2",
+
+    },
+
+    "screens": {
+                        
+        "default" : {            
+                
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Por favor, ingrese el monto total de<br>los cheques a depositar",
+                },
+
+            include(p/chunk/nav_all_calculadora.json),
+    
+        }
+    },
+
+    "events": {
+
+        "calculadora": {
+            "call": "p/bases/sumador",	
+            "events": {
+                "back" : "p/deposito_monto_cheques",
+                "cancel": "p/deposito_monto_cheques",        
+                "continue": "p/deposito_monto_cheques",
+            }
+        },
+   
+		"accept": function() {
+			if (States.getStoredValue("data.menu_principal").value =="entrega_documentacion"){
+				States.handleEvent("continue_entrega_documentacion");
+			} else {
+				States.handleEvent("continue");
+			}
+    	},
+		
+		"continue": "p/deposito_comms_cheques_simulacion",
+
+		"continue_entrega_documentacion": "p/deposito_confirma",
+
+        "back": "p/deposito_cantidad_cheques",
+
+        "cancel": "p/close_salir",
+    },
+
+}   

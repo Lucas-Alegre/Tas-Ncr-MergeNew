@@ -1,0 +1,65 @@
+<!--
+    Data:
+        video.src: Link to the video. 
+-->
+
+<video id="video" 
+    <%if(video.fullscreen) {%>
+        class="bgvideo"
+    <%} else {%>
+        class="floatvideo"
+    <%}%>
+    type="video/ogg" loop autoplay muted>
+    <source src="<%- video.src %>" />
+</video>
+
+<style>
+    <%if(video.fullscreen=="true") {%> 
+    body {
+        background-color: black;
+        background-image: none;
+    }
+    <%}%>
+
+     video {
+        position: absolute;
+    }
+
+</style>
+
+<script>
+    $(function () {
+
+        var component_data = <%- JSON.stringify(video) %>;
+
+        var rvideo = $("#video"); 
+
+        if(component_data.fullscreen) {
+
+            rvideo.css("box-shadow", "0px 0px 0px #000");
+            rvideo.css("border-radius", "0px 0px");
+
+        } else {
+
+            if(component_data.hasOwnProperty("class")) {
+                rvideo.addClass(component_data.class);
+            }
+
+            if(component_data.top) {
+                rvideo.css("top", component_data.top);
+            }
+            if(component_data.left) {
+                rvideo.css("left", component_data.left);
+            }
+            if(component_data.right) {
+                rvideo.css("right", component_data.right);
+            }
+            if(component_data.bottom) {
+                rvideo.css("bottom", component_data.bottom);
+            }
+        }       
+        rvideo.click(function() {
+            States.handleEvent("video");
+        });
+    });
+</script>

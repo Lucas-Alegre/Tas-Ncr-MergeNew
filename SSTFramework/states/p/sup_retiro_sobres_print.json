@@ -1,0 +1,52 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "sup_retiro_sobres",
+
+			"update": function() { 
+			    var hora = new Date(States.getStoredValue("sup.hora"));
+			    var total = States.getStoredValue("sup.total");
+			    var sobres = States.getStoredValue("sup.status").lpBuffer.wNumOfDeposits;
+
+			    var sobre= "";
+			        sobre += "Ultima apertura:" + "\r\n";
+			        sobre += "Cantidad sobres: " + sobres + "\r\n";
+			        sobre += "Hora: " + hora + "\r\n";
+			        sobre += "Aperturas anteriores:" + "\r\n";
+			        sobre += "Total sobres: " + total + "\r\n";
+			        xfsAudit("Retiro de sobres",sobre); 
+
+			    var receipt = { 
+			        "sobres": sobres,
+			        "total_sobres": total,
+			        "hora": UserFuns.getDateString(hora) + " " + UserFuns.getTimeString(hora),
+			    };
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "print_ok": function() {
+			States.handleEvent("auditar");
+		},
+	    "hardware_error_ptr": function() {
+			States.handleEvent("auditar");
+		},
+		"auditar": function() {
+			var datos = {};
+			datos.operacion = "CopyClosed";
+			var dev = new XFSDevice("server");		
+			dev.extension("Auditoria", datos);
+			return "p/sup_menu_select";
+		}
+	}
+
+}

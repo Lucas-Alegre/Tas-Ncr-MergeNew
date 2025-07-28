@@ -1,0 +1,38 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "storename": "moneda_deposito",        
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {			
+                "text" : "Seleccione la moneda de depósito"
+            },
+
+	        "update": function(screen) {				
+	            var opciones = include(p/config/moneda.json);
+	            var orden = ["select0", "select1", "select2", "select3", "select4", "select5", "select6"];
+	            UserFuns.selectFromList(screen, opciones, orden);
+	        },
+			
+			"select": {							    
+			},
+
+            
+            include(p/chunk/nav_cancelar_anterior.json),
+	    }
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "select": "p/deposito_tipo",
+        "back": "p/deposito_cuenta_propia",
+	}
+}

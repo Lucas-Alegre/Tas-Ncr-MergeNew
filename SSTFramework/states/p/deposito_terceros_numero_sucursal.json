@@ -1,0 +1,25 @@
+﻿{
+    "base": include(p/bases/ingreso_sucursal.json),
+
+    
+	"screens": {
+
+	    "default" : {
+
+	        include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {			
+                "text" : "Ingrese el número de sucursal de la cuenta"
+	        },
+
+            include(p/chunk/nav_all.json),
+	    }
+	},
+
+	"events" : {
+	    "accept": "p/deposito_terceros_numero",
+        "back": "p/deposito_terceros_tipo",
+        "cancel": "p/close_salir",
+
+	}
+}

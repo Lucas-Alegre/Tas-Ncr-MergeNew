@@ -1,0 +1,76 @@
+﻿{
+    "type": "General",
+
+    "screens": {
+
+        "default": {
+
+            "include" : "1",
+            "include" : "2",
+            "include" : "3",
+
+            "title": {			
+                "text" : "Menú Supervisor V {0}"
+            },
+
+            "subtitle": {
+                "text" : "Ingrese la clave de supervisor y toque continuar"
+            },
+
+            "numkeyboard": {},
+        
+            "inputarea": {},
+        
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+
+                "nav1": {
+                    "text": "Anterior",
+                    "event": "back"
+                },
+
+                "nav2": {
+                    "text": "Borrar",
+                    "event": "clear"
+                },
+
+                "nav3": {
+                    "text": "Continuar",
+                    "event": "enter"
+                },
+                
+            }
+        }
+    },
+     
+    "properties": {
+        "storename": "customer_id",
+
+        "datachanged": function(args) {			
+            return args.slice(-12);
+        },
+
+		"datapresented": function(args) { 
+		    return SSUtil.formatNumber(parseInt(args, 10), 0);
+		},
+    },
+
+	"events" : {
+	    "cancel": "return",
+
+	    "back": "p/identificacion_manual",
+        
+		"enter": function() { 
+		    States.fireCustomEvent("input.enter", null);
+		},
+
+        "clear": function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+
+		"accept": "p/identificacion_pin",
+		}
+}

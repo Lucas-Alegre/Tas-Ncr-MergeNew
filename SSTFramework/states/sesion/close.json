@@ -1,0 +1,19 @@
+﻿{ 
+	"type": "Close",
+	
+	"screens": { 	
+	    "idc_card_eject": { 
+	        "floating_message": {
+	            "top": "20%",
+		        "text" : "Por favor retire su tarjeta<br><img src='/images/InsertCard.png'></img>"
+	        }, 
+	    },
+	},
+
+
+	"events": {
+	    "card_taken": "main",
+		"complete": "main",
+	}
+
+}

@@ -1,0 +1,58 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WSTTC",
+        "storename": "comms.WSTTC",
+
+        "repeat_trx": false,
+        "simulacion":  true,
+        
+        "requestHandler": function(obj) {
+
+            if(States.getStoredValue("medio_pago_tarjeta")=="debito") {
+                obj.cuenta_detalle = UserFuns.getProduct("cuenta_debito");
+            }
+
+            if(States.getStoredValue("tarjeta_pago")!="resumen") {
+                //obj.tarjeta = UserFuns.getProduct("tarjeta_pago").ALF01DE22;
+                obj.tarjeta = UserFuns.getProduct("tarjeta_pago").WCUNUMCUE;
+            }
+
+            if(States.getStoredValue("medio_pago_tarjeta")=="cheque") { 
+                obj.simulacion = false;
+            }
+        
+            obj.repeat_trx = States.getProperty("repeat_trx");            
+            obj.simulacion = States.getProperty("simulacion");      
+
+        },
+        
+    },
+
+    "events": {
+
+        "comms_ok": function() {
+           
+            if(States.getStoredValue("medio_pago_tarjeta")=="debito") {
+                States.handleEvent("debito");
+            } else {
+                if(States.getStoredValue("medio_pago_tarjeta")=="efectivo") {
+                    States.handleEvent("efectivo");
+                } else {
+                    States.handleEvent("cheque");
+                }
+            }
+            return false;
+        },
+
+        "debito": "p/pago_ttcc_print",
+
+        "cheque": "p/pago_ttcc_print_sobre",
+
+        "efectivo": "p/pago_ttcc_print_sobre",
+        
+        "resumen": "p/pago_ttcc_print_sobre",
+    }
+
+}

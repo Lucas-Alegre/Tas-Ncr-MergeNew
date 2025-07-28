@@ -1,0 +1,24 @@
+{
+    "type": "General",
+
+    "run": function(statedata) {
+	
+		return UserFuns.getConfig()
+		.then(function(res) {
+			States.handleEvent("continue");
+		})
+		.catch(function(ex) {
+			console.log("Excepción: " + JSON.stringify(ex));
+			States.handleEvent("error");
+		});
+    },
+
+	"screens": {
+	    "default" : {},
+	    },
+    
+    "events": {
+        "continue": "p/sup_configura_ingreso",
+        "error": "p/sup_configura_ingreso",
+    }
+}

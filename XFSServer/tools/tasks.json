@@ -1,0 +1,361 @@
+[
+    {
+        "id": 29,
+        "description": "Empty",
+        "type": "application_update",
+        "status": 2,
+        "start_date": "2017-11-23T22:50:25Z",
+        "creator": {
+            "first_name": "",
+            "last_name": "",
+            "last_login": "2017-11-23T22:54:02.695470Z",
+            "username": "admin",
+            "id": 1,
+            "is_active": true
+        },
+        "elements": [
+            {
+                "id": 12
+            }
+        ],
+        "terminal": {
+            "name": "",
+            "type": "",
+            "location": "",
+            "gl_account": null,
+            "id": 1764,
+            "branch": 1,
+            "ipTerminal": "110.33.0.164",
+            "username": "110.33.0.164",
+            "is_active": true,
+            "code": "04652",
+            "description": "TAS con módulo de depósito inteligente"
+        }
+    },
+    {
+        "id": 28,
+        "description": "Empty",
+        "type": "application_update",
+        "status": 2,
+        "start_date": "2017-11-23T22:42:18Z",
+        "creator": {
+            "first_name": "",
+            "last_name": "",
+            "last_login": "2017-11-23T22:54:02.695470Z",
+            "username": "admin",
+            "id": 1,
+            "is_active": true
+        },
+        "elements": [
+            {
+                "id": 11
+            }
+        ],
+        "terminal": {
+            "name": "",
+            "type": "",
+            "location": "",
+            "gl_account": null,
+            "id": 1764,
+            "branch": 1,
+            "ipTerminal": "110.33.0.164",
+            "username": "110.33.0.164",
+            "is_active": true,
+            "code": "04652",
+            "description": "TAS con módulo de depósito inteligente"
+        }
+    },
+    {
+        "id": 27,
+        "description": "Empty",
+        "type": "application_update",
+        "status": 2,
+        "start_date": "2017-11-23T22:42:08Z",
+        "creator": {
+            "first_name": "",
+            "last_name": "",
+            "last_login": "2017-11-23T22:54:02.695470Z",
+            "username": "admin",
+            "id": 1,
+            "is_active": true
+        },
+        "elements": [
+            {
+                "id": 10
+            }
+        ],
+        "terminal": {
+            "name": "",
+            "type": "",
+            "location": "",
+            "gl_account": null,
+            "id": 1764,
+            "branch": 1,
+            "ipTerminal": "110.33.0.164",
+            "username": "110.33.0.164",
+            "is_active": true,
+            "code": "04652",
+            "description": "TAS con módulo de depósito inteligente"
+        }
+    },
+    {
+        "id": 26,
+        "description": "Empty",
+        "type": "application_update",
+        "status": 2,
+        "start_date": "2017-11-23T21:38:26Z",
+        "creator": {
+            "first_name": "",
+            "last_name": "",
+            "last_login": "2017-11-23T22:54:02.695470Z",
+            "username": "admin",
+            "id": 1,
+            "is_active": true
+        },
+        "elements": [
+            {
+                "id": 9
+            }
+        ],
+        "terminal": {
+            "name": "",
+            "type": "",
+            "location": "",
+            "gl_account": null,
+            "id": 1764,
+            "branch": 1,
+            "ipTerminal": "110.33.0.164",
+            "username": "110.33.0.164",
+            "is_active": true,
+            "code": "04652",
+            "description": "TAS con módulo de depósito inteligente"
+        }
+    },
+    {
+        "id": 24,
+        "description": "Empty",
+        "type": "application_update",
+        "status": 2,
+        "start_date": "2017-11-23T21:27:11Z",
+        "creator": {
+            "first_name": "",
+            "last_name": "",
+            "last_login": "2017-11-23T22:54:02.695470Z",
+            "username": "admin",
+            "id": 1,
+            "is_active": true
+        },
+        "elements": [
+            {
+                "id": 7
+            }
+        ],
+        "terminal": {
+            "name": "",
+            "type": "",
+            "location": "",
+            "gl_account": null,
+            "id": 1764,
+            "branch": 1,
+            "ipTerminal": "110.33.0.164",
+            "username": "110.33.0.164",
+            "is_active": true,
+            "code": "04652",
+            "description": "TAS con módulo de depósito inteligente"
+        }
+    },
+    {
+        "id": 23,
+        "description": "Empty",
+        "type": "application_update",
+        "status": 2,
+        "start_date": "2017-11-23T21:11:40Z",
+        "creator": {
+            "first_name": "",
+            "last_name": "",
+            "last_login": "2017-11-23T22:54:02.695470Z",
+            "username": "admin",
+            "id": 1,
+            "is_active": true
+        },
+        "elements": [
+            {
+                "id": 6
+            }
+        ],
+        "terminal": {
+            "name": "",
+            "type": "",
+            "location": "",
+            "gl_account": null,
+            "id": 1764,
+            "branch": 1,
+            "ipTerminal": "110.33.0.164",
+            "username": "110.33.0.164",
+            "is_active": true,
+            "code": "04652",
+            "description": "TAS con módulo de depósito inteligente"
+        }
+    },
+    {
+        "id": 21,
+        "description": "Empty",
+        "type": "application_update",
+        "status": 2,
+        "start_date": "2017-11-23T20:45:43Z",
+        "creator": {
+            "first_name": "",
+            "last_name": "",
+            "last_login": "2017-11-23T22:54:02.695470Z",
+            "username": "admin",
+            "id": 1,
+            "is_active": true
+        },
+        "elements": [
+            {
+                "id": 4
+            }
+        ],
+        "terminal": {
+            "name": "",
+            "type": "",
+            "location": "",
+            "gl_account": null,
+            "id": 1764,
+            "branch": 1,
+            "ipTerminal": "110.33.0.164",
+            "username": "110.33.0.164",
+            "is_active": true,
+            "code": "04652",
+            "description": "TAS con módulo de depósito inteligente"
+        }
+    },
+    {
+        "id": 25,
+        "description": "Empty",
+        "type": "application_update",
+        "status": 5,
+        "start_date": "2017-11-23T19:30:08Z",
+        "creator": {
+            "first_name": "",
+            "last_name": "",
+            "last_login": "2017-11-23T22:54:02.695470Z",
+            "username": "admin",
+            "id": 1,
+            "is_active": true
+        },
+        "elements": [
+            {
+                "id": 8
+            }
+        ],
+        "terminal": {
+            "name": "",
+            "type": "",
+            "location": "",
+            "gl_account": null,
+            "id": 1764,
+            "branch": 1,
+            "ipTerminal": "110.33.0.164",
+            "username": "110.33.0.164",
+            "is_active": true,
+            "code": "04652",
+            "description": "TAS con módulo de depósito inteligente"
+        }
+    },
+    {
+        "id": 20,
+        "description": "Empty",
+        "type": "application_update",
+        "status": 1,
+        "start_date": "2017-11-23T19:20:36Z",
+        "creator": {
+            "first_name": "",
+            "last_name": "",
+            "last_login": "2017-11-23T22:54:02.695470Z",
+            "username": "admin",
+            "id": 1,
+            "is_active": true
+        },
+        "elements": [
+            {
+                "id": 3
+            }
+        ],
+        "terminal": {
+            "name": "",
+            "type": "",
+            "location": "",
+            "gl_account": null,
+            "id": 1764,
+            "branch": 1,
+            "ipTerminal": "110.33.0.164",
+            "username": "110.33.0.164",
+            "is_active": true,
+            "code": "04652",
+            "description": "TAS con módulo de depósito inteligente"
+        }
+    },
+    {
+        "id": 22,
+        "description": "Empty",
+        "type": "application_update",
+        "status": 5,
+        "start_date": "2017-11-23T16:52:17Z",
+        "creator": {
+            "first_name": "",
+            "last_name": "",
+            "last_login": "2017-11-23T22:54:02.695470Z",
+            "username": "admin",
+            "id": 1,
+            "is_active": true
+        },
+        "elements": [
+            {
+                "id": 5
+            }
+        ],
+        "terminal": {
+            "name": "",
+            "type": "",
+            "location": "",
+            "gl_account": null,
+            "id": 1764,
+            "branch": 1,
+            "ipTerminal": "110.33.0.164",
+            "username": "110.33.0.164",
+            "is_active": true,
+            "code": "04652",
+            "description": "TAS con módulo de depósito inteligente"
+        }
+    },
+    {
+        "id": 18,
+        "description": "Empty",
+        "type": "application_update",
+        "status": 4,
+        "start_date": "2017-11-22T20:15:00Z",
+        "creator": {
+            "first_name": "",
+            "last_name": "",
+            "last_login": "2017-11-23T22:54:02.695470Z",
+            "username": "admin",
+            "id": 1,
+            "is_active": true
+        },
+        "elements": [],
+        "terminal": {
+            "name": "",
+            "type": "",
+            "location": "",
+            "gl_account": null,
+            "id": 1764,
+            "branch": 1,
+            "ipTerminal": "110.33.0.164",
+            "username": "110.33.0.164",
+            "is_active": true,
+            "code": "04652",
+            "description": "TAS con módulo de depósito inteligente"
+        }
+    }
+]

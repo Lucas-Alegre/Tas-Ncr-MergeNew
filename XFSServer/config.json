@@ -1,0 +1,1566 @@
+{
+    "configs": {
+        "wsdlPrefix": "https://wmbdesa.sis.ad.bia.itau/"
+    },
+    "trxs": {
+        "Campana.ListarOfertas": {
+            "type": "ws",
+            "wsdl": "integracion/campana?wsdl",
+            "function" : "ListarOfertas"
+        },
+        "Campana.RegistrarFinSesion": {
+            "type": "ws",
+            "wsdl": "integracion/campana?wsdl",
+            "function" : "RegistrarFinSesion"
+        },
+        "Campana.RegistrarInicioSesion": {
+            "type": "ws",
+            "wsdl": "integracion/campana?wsdl",
+            "function" : "RegistrarInicioSesion"
+        },
+        "Campana.RegistrarResultadoOferta": {
+            "type": "ws",
+            "wsdl": "integracion/campana?wsdl",
+            "function" : "RegistrarResultadoOferta"
+        },
+        "Cliente.ListarRaices": {
+            "type": "ws",
+            "wsdl": "integracion/cliente?wsdl",
+            "function" : "ListarRaices"
+        },
+        "PosicionConsolidada.Listar": {
+            "type": "ws",
+            "wsdl": "integracion/posicionconsolidada?wsdl",
+            "function" : "Listar"
+        },
+        "SeguridadTAS.BlanquearClave": {
+            "type": "ws",
+            "wsdl": "integracion/seguridadtas?wsdl",
+            "function" : "BlanquearClave"
+        },
+        "SeguridadTAS.ConsultarEstadoCliente": {
+            "type": "ws",
+            "wsdl": "integracion/seguridadtas?wsdl",
+            "function" : "ConsultarEstadoCliente"
+        },
+        "Mock.SeguridadTAS.ConsultarEstadoCliente": {
+            "type": "ws",
+            "wsdl": "http://192.168.1.100:8088/mockSeguridadTASSOAP?WSDL",
+            "function" : "ConsultarEstadoCliente",
+            "inputObfuscate": [
+                "body.ConsultarEstadoCliente.documento.numeroDocumento"
+            ],
+            "outputObfuscate": [
+                "body.ConsultarEstadoClienteResponse.numeroCliente"
+            ]
+        },
+        "SeguridadTAS.ConsultarEstadoRaiz": {
+            "type": "ws",
+            "wsdl": "integracion/seguridadtas?wsdl",
+            "function" : "ConsultarEstadoRaiz"
+        },
+        "SeguridadTAS.ConsultarLlaveDinamica": {
+            "type": "ws",
+            "wsdl": "integracion/seguridadtas?wsdl",
+            "function" : "ConsultarLlaveDinamica"
+        },
+        "SeguridadTAS.RegistrarActividadSesion": {
+            "type": "ws",
+            "wsdl": "integracion/seguridadtas?wsdl",
+            "function" : "RegistrarActividadSesion"
+        },
+        "SeguridadTAS.RegistrarClave": {
+            "type": "ws",
+            "wsdl": "integracion/seguridadtas?wsdl",
+            "function" : "RegistrarClave"
+        },
+        "SeguridadTAS.RegistrarCambioClave": {
+            "type": "ws",
+            "wsdl": "integracion/seguridadtas?wsdl",
+            "function" : "RegistrarCambioClave"
+        },
+        "SeguridadTAS.RegistrarFinSesion": {
+            "type": "ws",
+            "wsdl": "integracion/seguridadtas?wsdl",
+            "function" : "RegistrarFinSesion"
+        },
+        "SeguridadTAS.RegistrarInicioSesion": {
+            "type": "ws",
+            "wsdl": "integracion/seguridadtas?wsdl",
+            "function" : "RegistrarInicioSesion"
+        },
+        "SeguridadTAS.ValidarAdhesion": {
+            "type": "ws",
+            "wsdl": "integracion/seguridadtas?wsdl",
+            "function" : "ValidarAdhesion"
+        },
+        "Chequera.ConsultarSolicitudPendiente": {
+            "type": "ws",
+            "wsdl": "integracion/chequera?wsdl",
+            "function" : "ConsultarSolicitudPendiente"
+        },
+        "Chequera.HabilitarPendientes": {
+            "type": "ws",
+            "wsdl": "integracion/chequera?wsdl",
+            "function" : "HabilitarPendientes"
+        },
+        "Chequera.RegistrarSolicitud": {
+            "type": "ws",
+            "wsdl": "integracion/chequera?wsdl",
+            "function" : "RegistrarSolicitud"
+        },
+        "Cobro.ConsultarClienteAsociado": {
+            "type": "ws",
+            "wsdl": "integracion/cobro?wsdl",
+            "function" : "ConsultarClienteAsociado"
+        },
+        "Cobro.Listar": {
+            "type": "ws",
+            "wsdl": "integracion/cobro?wsdl",
+            "function" : "Listar"
+        },
+        "Convenio.ListarPorFiltro": {
+            "type": "ws",
+            "wsdl": "integracion/convenio?wsdl",
+            "function" : "ListarPorFiltro"
+        },
+        "Pago.Conformar": {
+            "type": "ws",
+            "wsdl": "integracion/pago?wsdl",
+            "function" : "Conformar"
+        },
+        "Pago.ListarDocumentos": {
+            "type": "ws",
+            "wsdl": "integracion/pago?wsdl",
+            "function" : "ListarDocumentos"
+        },
+        "Moneda.CalcularConversion": {
+            "type": "ws",
+            "wsdl": "integracion/moneda?wsdl",
+            "function" : "CalcularConversion"
+        },
+        "Moneda.ListarCotizaciones": {
+            "type": "ws",
+            "wsdl": "integracion/moneda?wsdl",
+            "function" : "ListarCotizaciones"
+        },
+        "Transferencia.RegistrarACuentaInterna": {
+            "type": "ws",
+            "wsdl": "integracion/transferencia?wsdl",
+            "function" : "RegistrarACuentaInterna"
+        },
+        "Cuenta.ListarPorDocumento": {
+            "type": "ws",
+            "wsdl": "integracion/cuenta?wsdl",
+            "function" : "ListarPorDocumento"
+        },
+        "Movimiento.ListarUltimosMovimientos": {
+            "type": "ws",
+            "wsdl": "integracion/movimiento?wsdl",
+            "function" : "ListarUltimosMovimientos"
+        },
+        "Movimiento.ListarMasMovimientos": {
+            "type": "ws",
+            "wsdl": "integracion/movimiento?wsdl",
+            "function" : "ListarMasMovimientos"
+        },
+        "Cuenta.ConsultarSaldoAl31": {
+            "type": "ws",
+            "wsdl": "integracion/cuenta?wsdl",
+            "function" : "ConsultarSaldoAl31"
+        },
+        "Cuenta.ConsultarCBUPorCuenta": {
+            "type": "ws",
+            "wsdl": "integracion/cuenta?wsdl",
+            "function" : "ConsultarCBUPorCuenta"
+        },
+        "Pago.ListarPorCodigoBarra": {
+            "type": "ws",
+            "wsdl": "integracion/pago?wsdl",
+            "function" : "ListarPorCodigoBarra"
+        },
+        "Pago.ListarServiciosDisponibles": {
+            "type": "ws",
+            "wsdl": "integracion/pago?wsdl",
+            "function" : "ListarServiciosDisponibles"
+        },
+        "Pago.RegistrarPagoPorCodigoBarra": {
+            "type": "ws",
+            "wsdl": "integracion/pago?wsdl",
+            "function" : "RegistrarPagoPorCodigoBarra",
+            "reqType": "ns16:RegistrarPagoPorCodigoBarrRequest"
+        },
+        "PlazoFijo.ListarPorDocumento": {
+            "type": "ws",
+            "wsdl": "integracion/plazofijo?wsdl",
+            "function" : "ListarPorDocumento"
+        },
+        "PlazoFijo.ListarProductos": {
+            "type": "ws",
+            "wsdl": "integracion/plazofijo?wsdl",
+            "function" : "ListarProductos"
+        },
+        "PlazoFijo.Registrar": {
+            "type": "ws",
+            "wsdl": "integracion/plazofijo?wsdl",
+            "function" : "Registrar"
+        },
+        "Tarjeta.ListarCuentasAsociadas": {
+            "type": "ws",
+            "wsdl": "integracion/tarjeta?wsdl",
+            "function" : "ListarCuentasAsociadas"
+        },
+        "Tarjeta.ListarDetalles": {
+            "type": "ws",
+            "wsdl": "integracion/tarjeta?wsdl",
+            "function" : "ListarDetalles"
+        },
+        "Tarjeta.ListarPorRaiz": {
+            "type": "ws",
+            "wsdl": "integracion/tarjeta?wsdl",
+            "function" : "ListarPorRaiz"
+        },
+        "Tarjeta.RegistrarPago": {
+            "type": "ws",
+            "wsdl": "integracion/tarjeta?wsdl",
+            "function" : "RegistrarPago"
+        },
+        "323": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_type1"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "324": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_type1"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "325": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_325"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "328": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_328"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "613": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_613"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "620": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_type2"
+                },
+                {
+                    "attName": "fechaNegocio",
+                    "length": 8,
+                    "padChar": "0"
+                },
+                {
+                    "filler": "@"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "629": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_629"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "632": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_632"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "681": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_type2"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "682": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_type2"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "730": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_730"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "902": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_902"
+                }
+            ],
+            "responseParams": [
+            ]
+        },
+        "906": {
+            "type": "grip",
+            "ip": "localhost",
+            "port": 2345,
+            "firstTimeout": 60,
+            "format": [
+                {
+                    "format": "header"
+                },
+                {
+                    "format": "body_906"
+                }
+            ],
+            "responseParams": [
+            ]
+        }
+    },
+    "gripFormats" : {
+        "header": [
+            {
+                "filler": "A"
+            },
+            {
+                "attName": "NSU4",
+                "length": 4,
+                "padChar": "0"
+            },
+            {
+                "attName": "branch",
+                "length": 4,
+                "padChar": "0"
+            },
+            {
+                "filler": "000"
+            },
+            {
+                "attName": "trx",
+                "length": 3,
+                "padChar": "0"
+            },
+            {
+                "attName": "terminal",
+                "length": 5,
+                "padChar": "0"
+            },
+            {
+                "attName": "format",
+                "length": 2,
+                "padChar": "0"
+            },
+            {
+                "filler": "0000"
+            },
+            {
+                "attName": "control",
+                "length": 1,
+                "padChar": "A"
+            },
+            {
+                "attName": "lastTrxPerformed",
+                "length": 1,
+                "padChar": "E"
+            },
+            {
+                "filler": "06"
+            },
+            {
+                "attName": "NSU6",
+                "length": 6,
+                "padChar": "0"
+            }
+        ],
+        "body_type1": [
+            {
+                "filler": "001|PFIXA"
+            },
+            {
+                "filler": "$004|"
+            },
+            {
+                "attName": "id",
+                "length": 19,
+                "padChar": "0"
+            },
+            {
+                "filler": "$235|"
+            },
+            {
+                "attName": "cuit",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$058|"
+            },
+            {
+                "attName": "producto",
+                "length": 3,
+                "padChar": "0"
+            },
+            {
+                "filler": "$027|"
+            },
+            {
+                "attName": "convenio",
+                "length": 6,
+                "padChar": "0"
+            },
+            {
+                "filler": "$061|"
+            },
+            {
+                "attName": "descripcionConvenio"
+            },
+            {
+                "filler": "$080|"
+            },
+            {
+                "attName": "descripcionConvenio"
+            },
+            {
+                "filler": "$005|00"
+            },
+            {
+                "attName": "tipoMoneda",
+                "length": 1,
+                "padChar": "1"
+            },
+            {
+                "filler": "$007|"
+            },
+            {
+                "attName": "publicaDeuda",
+                "length": 1,
+                "padChar": "N"
+            },
+            {
+                "filler": "$160|"
+            },
+            {
+                "attName": "tipoCtaCre",
+                "length": 1,
+                "padChar": "0"
+            },
+            {
+                "filler": "$159|"
+            },
+            {
+                "attName": "nroCtaCre",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$193|"
+            },
+            {
+                "attName": "idCliente"
+            },
+            {
+                "filler": "$185|"
+            },
+            {
+                "attName": "tipoDoc",
+                "length": 2,
+                "padChar": "0"
+            },
+            {
+                "filler": "$063|"
+            },
+            {
+                "attName": "nroDoc",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$119| "
+            },
+            {
+                "filler": "$120|"
+            },
+            {
+                "length": 11
+            },
+            {
+                "filler": "$062|"
+            },
+            {
+                "length": 18,
+                "padChar": "0"
+            },
+            {
+                "filler": "$065|"
+            },
+            {
+                "length": 16,
+                "padChar": "0"
+            },
+            {
+                "filler": "$060|"
+            },
+            {
+                "length": 8,
+                "padChar": "0"
+            },
+            {
+                "filler": "$066|"
+            },
+            {
+                "attName": "importe",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$026|"
+            },
+            {
+                "attName": "nroCtaCre",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$012|"
+            },
+            {
+                "attName": "nroFacturas",
+                "length": 2,
+                "padChar": "0"
+            },
+            {
+                "filler": "$146|"
+            },
+            {
+                "attName": "tipoDeposito",
+                "length": 3,
+                "padChar": "0"
+            },
+            {
+                "attName": "cuenta",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "length": 18
+            },
+            {
+                "attName": "importe",
+                "length": 12,
+                "padChar": "0"
+            },
+            {
+                "attName": "fechaNegocio",
+                "length": 8,
+                "padChar": "0"
+            },
+            {
+                "filler": "$205|"
+            },
+            {
+                "attName": "importeEfectivo",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$206|"
+            },
+            {
+                "attName": "importeChequeAlDia",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$207|"
+            },
+            {
+                "attName": "importeChequePostDatados",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$208|"
+            },
+            {
+                "attName": "importeDebito",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$@"
+            }
+        ],
+        "body_type2": [
+            {
+                "filler": "0"
+            },
+            {
+                "attName": "tipoMoneda",
+                "length": 1,
+                "padChar": "1"
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "attName": "tipoDeCuentaDestino",
+                "length": 1,
+                "padChar": "1"
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "attName": "nroDeCuentaDestino",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "attName": "importe",
+                "length": 12,
+                "padChar": "0"
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "length": 16,
+                "padChar": "0"
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "length": 3,
+                "padChar": "0"
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "length": 1,
+                "padChar": "0"
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "length": 6,
+                "padChar": "0"
+            },
+            {
+                "filler": "@"
+            }
+        ],
+        "body_325": [
+            {
+                "filler": "001|PFIXA"
+            },
+            {
+                "filler": "$004|"
+            },
+            {
+                "attName": "id",
+                "length": 19,
+                "padChar": "0"
+            },
+            {
+                "filler": "$235|"
+            },
+            {
+                "attName": "cuit",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$058|"
+            },
+            {
+                "attName": "producto",
+                "length": 3,
+                "padChar": "0"
+            },
+            {
+                "filler": "$027|"
+            },
+            {
+                "attName": "convenio",
+                "length": 6,
+                "padChar": "0"
+            },
+            {
+                "filler": "$061|"
+            },
+            {
+                "attName": "descripcionConvenio"
+            },
+            {
+                "filler": "$080|"
+            },
+            {
+                "attName": "descripcionConvenio"
+            },
+            {
+                "filler": "$005|00"
+            },
+            {
+                "attName": "tipoMoneda",
+                "length": 1,
+                "padChar": "1"
+            },
+            {
+                "filler": "$007|"
+            },
+            {
+                "attName": "publicaDeuda",
+                "length": 1,
+                "padChar": "N"
+            },
+            {
+                "filler": "$160|"
+            },
+            {
+                "attName": "tipoCtaCre",
+                "length": 1,
+                "padChar": "0"
+            },
+            {
+                "filler": "$159|"
+            },
+            {
+                "attName": "nroCtaCre",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$193|"
+            },
+            {
+                "attName": "idCliente"
+            },
+            {
+                "filler": "$185|"
+            },
+            {
+                "attName": "tipoDoc",
+                "length": 2,
+                "padChar": "0"
+            },
+            {
+                "filler": "$063|"
+            },
+            {
+                "attName": "nroDoc",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$119| "
+            },
+            {
+                "filler": "$120|"
+            },
+            {
+                "attName": "cuenta",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$062|"
+            },
+            {
+                "attName": "nroTarjeta",
+                "length": 18,
+                "padChar": "0"
+            },
+            {
+                "filler": "$065|"
+            },
+            {
+                "length": 16
+            },
+            {
+                "filler": "$060|"
+            },
+            {
+                "length": 8,
+                "padChar": "0"
+            },
+            {
+                "filler": "$066|"
+            },
+            {
+                "attName": "importe",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$026|"
+            },
+            {
+                "attName": "nroCtaCre",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$012|"
+            },
+            {
+                "attName": "nroFacturas",
+                "length": 2,
+                "padChar": "0"
+            },
+            {
+                "filler": "$146|"
+            },
+            {
+                "attName": "tipoDeposito",
+                "length": 3,
+                "padChar": "0"
+            },
+            {
+                "attName": "cuenta",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "length": 18
+            },
+            {
+                "attName": "importe",
+                "length": 12,
+                "padChar": "0"
+            },
+            {
+                "attName": "fechaNegocio",
+                "length": 8,
+                "padChar": "0"
+            },
+            {
+                "filler": "$205|"
+            },
+            {
+                "attName": "importeEfectivo",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$206|"
+            },
+            {
+                "attName": "importeChequeAlDia",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$207|"
+            },
+            {
+                "attName": "importeChequePostDatados",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$208|"
+            },
+            {
+                "attName": "importeDebito",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$@"
+            }
+        ],
+        "body_328": [
+            {
+                "filler": "001|PFIXA"
+            },
+            {
+                "filler": "$004|"
+            },
+            {
+                "attName": "id",
+                "length": 19,
+                "padChar": "0"
+            },
+            {
+                "filler": "$235|"
+            },
+            {
+                "attName": "cuit",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$058|"
+            },
+            {
+                "attName": "producto",
+                "length": 3,
+                "padChar": "0"
+            },
+            {
+                "filler": "$027|"
+            },
+            {
+                "attName": "convenio",
+                "length": 6,
+                "padChar": "0"
+            },
+            {
+                "filler": "$061|"
+            },
+            {
+                "attName": "descripcionConvenio"
+            },
+            {
+                "filler": "$080|"
+            },
+            {
+                "attName": "descripcionConvenio"
+            },
+            {
+                "filler": "$005|00"
+            },
+            {
+                "attName": "tipoMoneda",
+                "length": 1,
+                "padChar": "1"
+            },
+            {
+                "filler": "$007|"
+            },
+            {
+                "attName": "publicaDeuda",
+                "length": 1,
+                "padChar": "N"
+            },
+            {
+                "filler": "$160|1"
+            },
+            {
+                "filler": "$159|"
+            },
+            {
+                "attName": "nroCtaCre",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$193|"
+            },
+            {
+                "attName": "idCliente"
+            },
+            {
+                "filler": "$185|"
+            },
+            {
+                "attName": "tipoDoc",
+                "length": 2,
+                "padChar": "0"
+            },
+            {
+                "filler": "$063|"
+            },
+            {
+                "attName": "nroDoc",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$119| "
+            },
+            {
+                "filler": "$120|"
+            },
+            {
+                "length": 11
+            },
+            {
+                "filler": "$062|"
+            },
+            {
+                "length": 18,
+                "padChar": "0"
+            },
+            {
+                "filler": "$065|"
+            },
+            {
+                "length": 16,
+                "padChar": "0"
+            },
+            {
+                "filler": "$060|"
+            },
+            {
+                "length": 8,
+                "padChar": "0"
+            },
+            {
+                "filler": "$066|"
+            },
+            {
+                "attName": "importe",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$026|"
+            },
+            {
+                "attName": "nroCtaCre",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$012|"
+            },
+            {
+                "attName": "nroFacturas",
+                "length": 2,
+                "padChar": "0"
+            },
+            {
+                "filler": "$146|1"
+            },
+            {
+                "length": 29
+            },
+            {
+                "attName": "importeEfectivo",
+                "length": 12,
+                "padChar": "0"
+            },
+            {
+                "length": 8
+            },
+            {
+                "filler": "$205|"
+            },
+            {
+                "attName": "importeEfectivo",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$206|"
+            },
+            {
+                "attName": "importeChequeAlDia",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$207|"
+            },
+            {
+                "attName": "importeChequePostDatados",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$208|"
+            },
+            {
+                "attName": "importeDebito",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$@"
+            }
+        ],
+        "body_613": [
+            {
+                "filler": "001|PFIXA"
+            },
+            {
+                "filler": "$005|00"
+            },
+            {
+                "attName": "tipoMoneda",
+                "length": 1,
+                "padChar": "1"
+            },
+            {
+                "filler": "$026|"
+            },
+            {
+                "attName": "cuenta",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$066|"
+            },
+            {
+                "attName": "importe",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$117|"
+            },
+            {
+                "attName": "nroTarjCred",
+                "length": 18,
+                "padChar": "0"
+            },
+            {
+                "filler": "$130|"
+            },
+            {
+                "attName": "stopDebit",
+                "length": 3
+            },
+            {
+                "filler": " Deb. Automatico $@"
+            }
+        ],
+        "body_629": [
+            {
+                "filler": "001|PFIXA"
+            },
+            {
+                "filler": "$018|"
+            },
+            {
+                "attName": "tipoDeCuentaOrigen",
+                "length": 1,
+                "padChar": "0"
+            },
+            {
+                "filler": "$062|"
+            },
+            {
+                "attName": "nroTarjeta",
+                "length": 18,
+                "padChar": "0"
+            },
+            {
+                "filler": "$065|"
+            },
+            {
+                "length": 16
+            },
+            {
+                "filler": "$026|"
+            },
+            {
+                "attName": "nroDeCuentaOrigen",
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$005|00"
+            },
+            {
+                "attName": "tipoMoneda",
+                "length": 1,
+                "padChar": "1"
+            },
+            {
+                "filler": "$066|"
+            },
+            {
+                "attName": "importe",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$103|"
+            },
+            {
+                "attName": "codigoEmpresa"
+            },
+            {
+                "filler": "$009|"
+            },
+            {
+                "attName": "CodigoDeBarras"
+            },
+            {
+                "filler": "$019|"
+            },
+            {
+                "attName": "fechaVencimiento",
+                "length": 8,
+                "padChar": "0"
+            },
+            {
+                "filler": "$067|"
+            },
+            {
+                "filler": "$222|"
+            },
+            {
+                "attName": "cuit"
+            },
+            {
+                "filler": "$024|01"
+            },
+            {
+                "filler": "$130|"
+            },
+            {
+                "attName": "referencia"
+            },
+            {
+                "filler": "$061|"
+            },
+            {
+                "attName": "nombreEmpresa"
+            },
+            {
+                "filler": "$@"
+            }
+        ],
+        "body_632": [
+            {
+                "filler": "001|PFIXA"
+            },
+            {
+                "filler": "$018|"
+            },
+            {
+                "length": 1,
+                "padChar": "0"
+            },
+            {
+                "filler": "$062|"
+            },
+            {
+                "length": 18,
+                "padChar": "0"
+            },
+            {
+                "filler": "$065|"
+            },
+            {
+                "length": 16
+            },
+            {
+                "filler": "$026|"
+            },
+            {
+                "length": 11,
+                "padChar": "0"
+            },
+            {
+                "filler": "$005|00"
+            },
+            {
+                "attName": "tipoMoneda",
+                "length": 1,
+                "padChar": "1"
+            },
+            {
+                "filler": "$066|"
+            },
+            {
+                "attName": "importe",
+                "length": 17,
+                "padChar": "0"
+            },
+            {
+                "filler": "$103|0000"
+            },
+            {
+                "filler": "$117|"
+            },
+            {
+                "attName": "nroTarjCred",
+                "length": 18,
+                "padLeft": false,
+                "padChar": " "
+            },
+            {
+                "filler": "$130|"
+            },
+            {
+                "attName": "stopDebit",
+                "length": 3
+            },
+            {
+                "filler": " Deb. Automatico "
+            },
+            {
+                "filler": "$067|$222|$019|"
+            },
+            {
+                "attName": "fechaNegocio",
+                "length": 8,
+                "padChar": "0"
+            },
+            {
+                "filler": "$@"
+            }
+        ],
+        "body_730": [
+            {
+                "attName": "nroTarjetaDebito",
+                "length": 18,
+                "padChar": "0"
+            },
+            {
+                "filler": "@2@"
+            },
+            {
+                "length": 5
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "length": 2
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "length": 76
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "length": 2
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "length": 37
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "length": 2
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "length": 104
+            },
+            {
+                "filler": "@"
+            }
+        ],
+        "body_902": [
+            {
+                "attName": "confirma",
+                "length": 1,
+                "padChar": "N"
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "attName": "codError",
+                "length": 3,
+                "padChar": "0"
+            },
+            {
+                "filler": "@"
+            }
+        ],
+        "body_906": [
+            {
+                "filler": "6"
+            },
+            {
+                "attName": "terminal",
+                "length": 4,
+                "padChar": "0"
+            },
+            {
+                "filler": "@1"
+            },
+            {
+                "attName": "terminal",
+                "length": 4,
+                "padChar": "0"
+            },
+            {
+                "filler": "@2"
+            },
+            {
+                "attName": "terminal",
+                "length": 4,
+                "padChar": "0"
+            },
+            {
+                "filler": "@3"
+            },
+            {
+                "attName": "terminal",
+                "length": 4,
+                "padChar": "0"
+            },
+            {
+                "filler": "@4"
+            },
+            {
+                "attName": "terminal",
+                "length": 4,
+                "padChar": "0"
+            },
+            {
+                "filler": "@"
+            },
+            {
+                "filler": "002025"
+            },
+            {
+                "filler": "20090102"
+            },
+            {
+                "length": 56,
+                "padChar": "0"
+            },
+            {
+                "filler": "@"
+            }
+        ]
+    }
+}

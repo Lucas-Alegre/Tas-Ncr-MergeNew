@@ -1,0 +1,30 @@
+﻿{
+    "base" : include(p/bases/ingreso_pin.json),
+
+	"screens": {
+
+	
+		"default" : {
+			
+		    include(p/chunk/title_transaccion.json),
+    
+            
+            "subtitle": { 
+                "text": "Por favor, repita nuevamente el nuevo PIN" 
+            },
+
+		}
+	},
+
+	"properties" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "storename": "pinblocknew2",
+	},
+
+
+	"events" : {
+        "pin_entered": "p/cambio_pin_verifica",
+        "cancel": "p/close_salir",
+    }
+}

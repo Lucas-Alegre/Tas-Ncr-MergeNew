@@ -1,0 +1,54 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "consulta_movimientos",
+
+			"update": function() { 
+			    var cuenta = UserFuns.getProduct("cuenta");
+			    var receipt = { 
+			        "tipo_cuenta": UserFuns.formatProductName(cuenta),
+			        "sucursal": cuenta.ACU_OFICI,
+			        "cuenta": UserFuns.formatProductValue(cuenta, 1),
+			        "saldo": UserFuns.formatMonto(cuenta.CSA_DISPO),
+			        "saldo_real": UserFuns.formatMonto(cuenta.CSAEFEHOY),
+			        "saldo_conformar": UserFuns.formatMonto(cuenta.CSA_CONFO),
+              "saldo_48hs": UserFuns.formatMonto(cuenta.CSAFLOH2),
+              "leyenda_ticket": SSUtil.getLocal("config_params").leyenda_ticket,
+			        "movimientos": []
+                };
+
+			    var res = States.getStoredValue("comms.WSCEC");
+			    var c = 0;
+			    for(c=0; c<res.LineItems.length && c<20; c++) {
+			        var mov = res.LineItems[c];
+			        if(SSUtil.isDef(mov.TFE_TRAN1) && parseInt(mov.TFE_TRAN1, 10)>0) {
+			            receipt.movimientos.push({
+			                "fecha": UserFuns.formatFecha(mov.TFE_TRAN1),
+			                "descripcion": mov.DNOTRAABR,
+                    "monto": UserFuns.formatMonto(mov.TVA_MOVI2),
+                    "tipoDoc": mov.ACOTIPDOC,
+                    "numeroDoc": mov.ANUDOCDEP,
+                    "nombre": mov.ANODEPOSI,
+			            });
+			        }
+			    }
+			    States.storeNamedValue("comms.movimientos", receipt.movimientos.length);
+			    UserFuns.addPrinterHeader(receipt);
+        return receipt;			 		
+         
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "print_ok": "p/consulta_movimientos",
+	    "hardware_error_ptr": "p/close_printer_error"
+	}
+
+}

@@ -1,0 +1,7 @@
+﻿{
+    "command": "WFS_CMD_IPM_RESET",
+    "input" : {
+        "wMediaControl": "WFS_IPM_RESETRETRACTTOBIN",
+        "usBinNumber": 2,
+    }
+}

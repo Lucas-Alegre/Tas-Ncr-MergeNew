@@ -1,0 +1,40 @@
+﻿{
+    "type": "General",
+
+    "run": function() {
+		States.storeNamedValue("cCurrencyID", "ARS");
+		States.storeNamedValue("CimBanknoteTypes", null);
+        States.storeNamedValue("CimNoteTypes", null);
+		SSFramework.changeStyle("supervisor");
+        SSUtil.setApplicationState("sup", "oos");
+        supervisorSwitch(function(res) {
+            if((res.state=="supervisor" || res.state=="supervisor_gop") && res.tpa=="oos") {
+                States.handleEvent(res.state);
+            } 
+        })
+
+    },
+
+	"screens": {
+
+        
+	    "default" : {
+            
+	        "title": {
+	            "text": "Equipo en servicio"
+	        },
+            
+            "message": {
+                "text": "Ponga el switch en modo supervisor para acceder a la aplicación de supervisor"
+            },
+		}
+
+	},
+
+	"events" : {
+	  
+	    "supervisor": "n/sup_changestyle",
+
+        "supervisor_gop": "n/sup_changestyle",
+	}
+}

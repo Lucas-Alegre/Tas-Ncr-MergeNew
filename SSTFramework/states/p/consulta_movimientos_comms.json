@@ -1,0 +1,24 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WSCEC",
+        "storename": "comms.WSCEC",
+        "nombre": "consulta movimientos",
+ 
+         "requestHandler": function(obj) {
+             obj.cuenta_detalle = UserFuns.getProduct("cuenta");
+         },
+     
+
+        "responseHandler": function(response) {
+            States.storeNamedValue("data.movimientos", [].concat(response.LineItems));
+            return response;            
+        }
+    },
+    
+    "events": {
+        "comms_ok": "p/consulta_movimientos_print",
+    }
+
+}

@@ -1,0 +1,40 @@
+﻿{
+    "type": "Dispense",
+
+    "properties": {
+        "test_mix": true,
+    },
+
+    "screens": {
+
+
+        "wait": {
+            include(p/chunk/screen_wait.json),
+        },
+
+
+        "default": {
+
+            include(p/chunk/title_transaccion.json),
+
+
+            "subtitle": {
+                "text": "Retire su dinero"
+            },
+
+
+            "video": {
+                "class": "video_extraccion",
+                "src": "<%= SSUtil.readCSS('video_extraccion') %>"
+            },
+
+        }
+    },
+
+	"events" : {
+	    "valid_mix": "p/extraccion_confirma",
+	    "hardware_error_cdm": "p/close_dispenser_error",
+        "invalid_mix": "p/extraccion_invalid_mix",
+    }
+
+}

@@ -1,0 +1,50 @@
+﻿{
+    "type": "Custom",
+
+    "run": function(statedata) {
+        
+        var idc = new XFSDevice("idc");
+        var _this = this;
+
+        idc.available()
+
+        .then(function (val) {
+            if (val.available == false)
+                handleEvent("no_idc");            
+            return;
+        })
+
+        .then(function () {
+            return idc.getInfo("WFS_INF_IDC_CAPABILITIES");
+        })
+
+        .then(function (caps) {
+            if (SSUtil.getObj("lpBuffer.fwType", caps) == 1) {
+                if (res.lpBuffer.fwMedia == 1) {
+                    States.handleEvent("motorized_with_media");   
+                } else {
+                    States.handleEvent("motorized");   
+                }
+            } else {
+                if (res.lpBuffer.fwMedia == 1) {
+                    States.handleEvent("dip_with_media");
+                } else {
+                    States.handleEvent("dip");
+ 
+                }
+            }
+
+        }) .catch(function(ex) {
+            handleEvent("no_idc");
+        });
+    },
+
+    "events": {
+        "no_idc": "",
+        "motorized": "",
+        "dip": "",
+        "motorized_with_media": "",
+        "dip_with_media": "",
+    }
+
+}

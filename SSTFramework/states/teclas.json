@@ -1,0 +1,52 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+		"default" : {
+			"title": {
+				"text" : "Todos los fdk prendidos"
+			},
+
+			"select": {
+			    "select0" : {
+					"text": "Opción 0",
+					"event": "opcion" 
+				},
+				"select1" : {
+					"text": "Opción 1",
+					"event": "opcion" 
+				},
+				"select2" : {
+					"text": "Opción 2",
+					"event": "opcion" 
+				},
+				"select4" : {
+					"text": "Opción 4",
+					"event": "opcion" 
+				},
+				"select5" : {
+					"text": "Opción 5",
+					"event": "opcion" 
+				},
+				"select6" : {
+					"text": "Opción 6",
+					"event": "opcion" 
+				},
+				"select7" : {
+					"text": "Opción 7",
+					"event": "opcion" 
+				},
+
+				"select3" : {
+					"text": "Atrás",
+					"event": "atras" 
+				},
+			}
+		}
+	},
+
+	"events" : {
+		"atras": "main",
+		"opcion": function(val) { alert("se apretó la tecla: " + val.attr("id")); }
+	}
+}

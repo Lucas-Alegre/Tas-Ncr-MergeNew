@@ -1,0 +1,46 @@
+﻿{
+    "type": "General",
+
+    "properties": {       
+        "storename": "marca_tarjeta",
+         "nav": function(evt) {
+             if(evt.event && evt.event.text) {
+                 return evt.event.text;
+             }
+             return null;             
+         }
+    },
+
+	"screens": {
+
+	    "default" : {
+			            
+	        include(p/chunk/title_transaccion.json),
+
+            "subtitle": {			
+                "text" : "Seleccione la marca de la tarjeta"
+            },
+
+	        "update": function(screen) {				
+	            var opciones = include(p/config/tarjetas.json);
+	            var orden = ["select0", "select4", "select1", "select5", "select2", "select6", "select3"];
+	            UserFuns.selectFromList(screen, opciones, orden);
+	        },
+			
+			"select": {							    
+			},
+
+            include(p/chunk/nav_cancelar_anterior.json),
+
+	    }
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "select": "p/pago_ttcc_resumen_numero_cuenta",
+        "back": "p/pago_ttcc_resumen_tipo_ingreso",
+        "cancel": "p/close_salir",
+	    
+	}
+}

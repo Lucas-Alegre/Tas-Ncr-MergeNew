@@ -1,0 +1,20 @@
+﻿<!--
+    Requires:
+        detalle: Recibo entregado por el server  
+-->
+
+
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+<hr />
+<h1>Adhesión Pago de Tarjeta</h1>
+<hr />
+
+
+<p style="margin: 10% 10% auto; text-align: justify">
+    En mi carácter de titular de la Tarjeta de Crédito <%= receipt.marca %> cuenta número <%= receipt.numero %>, autorizo expresamente al <%= receipt.banco %> a debitar de mi cuenta <%= receipt.cuenta %> de mi titularidad, el pago <%= receipt.pago %> que resulte del Resumen de Cuenta de mi Tarjeta de Crédito que se encontrare adeudado, con más los insumos, cargos e intereses que con posterioridad se devenguen.
+</p>
+
+<% include chunk/footer.html %>
+

@@ -1,0 +1,103 @@
+ssfw = {
+
+    "properties" : {
+
+        "callbacks" : function(evt) {
+            if(evt.event){
+                console.log("module event: " + evt.event);
+            }  
+        },
+
+        "init" : function() {
+            return new Promise(function(resolve,reject) {
+                var working_instance = States.getProperty("working_instance", undefined);
+                if (working_instance != undefined)
+                    return resolve(working_instance);
+                try{
+                    var module = new XFSDevice(States.getProperty("module"));
+                    module.setCallback(States.getProperty("callbacks")); //REVISAR
+                    States.setProperty("working_instance", module);
+                    return resolve(module);
+                }catch(e){                
+                    States.handleEvent("module_init_error");
+                    return reject(e);
+                }
+            });
+        },
+
+        "summary" : function() {
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(module){
+                    //return module.extension(States.getProperty("controller"), {"method": "summary"}) //ASÍ ESTABA
+                    module.extension(States.getProperty("controller"), {"method": "summary"}) //ASÍ PIENSO QUE DEBE IR - HR
+                    .then(function(data){
+                        return resolve(data);
+                    })      
+                    .caught(function(ex) {
+                        return reject(ex);
+                    });
+                })
+                .caught(function(e){
+                    return reject(e);   
+                });            
+            });
+        },
+
+        "reset" : function() {
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(module){
+                    module.extension(States.getProperty("controller"), {"method": "reset" })    
+                    .then(function(res) {
+                        if(res.hResult!=0) {
+                            States.handleEvent("module_reset_error");
+                            return reject(res);
+                        }
+                        States.handleEvent("module_reset_ok");
+                        return resolve(res);
+                    })
+                    .caught(function(ex) {
+                        States.handleEvent("module_reset_error");                 
+                        return reject(ex);  
+                    });   
+                })
+                .caught(function(e) {
+                    States.handleEvent("module_reset_error");
+                    return reject(e);   
+                });          
+            });
+        },
+
+        "cancel" : function() {
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(module){
+                    module.extension(States.getProperty("controller"), {"method": "cancel" })    
+                    .then(function(res) {
+                        if(res.hResult!=0){
+                            States.handleEvent("module_cancel_error");  
+                            return reject(res);
+                        }
+                        States.handleEvent("module_cancel_ok");
+                        return resolve(res);
+                    })
+                    .caught(function(ex) {                  
+                        return reject(ex);
+                    });            
+                })
+                .caught(function(e){
+                    return reject(e);   
+                });  
+           });
+        },
+    },
+
+    "events" : {
+        "module_init_error" : "",
+        "module_cancel_ok": "",
+        "module_cancel_error": "",
+        "module_reset_ok" : "",
+        "module_reset_error" : "",
+    }
+}   

@@ -1,0 +1,46 @@
+﻿{ 
+
+    "type": "Custom",
+     
+    "run": function(state) {
+        var dev = new XFSDevice("ptr");
+        return dev.available()
+        .then(function(res) {
+            if(res.available==false){
+                States.handleEvent("hardware_error_ptr");
+			}
+            dev = new XFSDevice("pin");
+            return dev.getInfo("WFS_INF_PIN_STATUS");
+        })
+        .then(function(res) {
+            if (res.lpBuffer.fwDevice != 0 || (res.lpBuffer.fwEncStat != 0 && res.lpBuffer.fwEncStat != 5)){
+                States.handleEvent("hardware_error_pin");
+            }
+            //dev = new XFSDevice("dep");
+            //return dev.available();
+        //})
+        //.then(function(res) {
+            //if(res.available==false){
+            //    States.handleEvent("hardware_error_dep");
+			//}
+            //dev = new XFSDevice("cdm");
+            //return dev.available();
+        //})
+        //.then(function(res) {
+            //if(res.available==false){
+            //    States.handleEvent("hardware_error_cdm");
+			//}
+            dev = new XFSDevice("cim");
+            return dev.available();
+        })
+        .then(function(res) {
+            if(res.available==false){
+                States.handleEvent("hardware_error_cim");
+			} 
+			States.handleEvent("check_complete");
+        })
+        .catch(function(ex) {
+            States.handleEvent("check_complete");
+        });
+    },
+}

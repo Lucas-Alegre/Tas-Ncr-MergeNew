@@ -1,0 +1,35 @@
+﻿{
+    "type": "General",
+
+    "run": function(state){
+      xfsAudit("Error" , "Se ha producido un problema inesperado en la ejecucion de esta transaccion. Para mayor informacion, por favor dirijase a la sucursal.");
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+	        "title": {
+	            "text": "Error"
+	        },
+
+            "message": { 
+                "text": "Se ha producido un problema inesperado en la ejecución de esta transacción.<br>Para mayor información, por favor diríjase a la sucursal.",
+            },
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+            },
+
+		}
+	},
+
+	"events" : {
+		"timeout": "p/close_salir",
+
+	    "cancel": "p/close_salir"
+	}
+}

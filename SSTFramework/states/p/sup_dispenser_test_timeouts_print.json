@@ -1,0 +1,64 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "sup_dispenser",
+
+			"update": function() { 
+			    var detalle = "";
+			    var trx = SSUtil.getLocal("trx.timeout", null);
+			    var pos = SSUtil.getLocal("trx.timeout.pos", 0);       
+			    
+			    if(trx!=null && trx.trx.length>0) {
+			        for(var c=pos; c<trx.trx.length && c<pos+10; c++) {
+			            var line = trx.trx[c].replace(/\n/g, '<br>');
+			            detalle += "<p>"+line+"</p>";
+			        }
+			        var len = trx.trx.length;
+			        if(len>10) {
+			            detalle += "<p>"+(Math.floor(pos/10)+1) + "/" + (Math.floor(len/10)+1) +"</p>";
+			        }
+                }
+
+			    
+			    var receipt = {
+			        "detalle": detalle,
+			        "operacion": "Extracciones inconsistentes"
+			    };
+
+
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "print_ok": function() {
+	        var trx = SSUtil.getLocal("trx.timeout", null);
+	        var pos = SSUtil.getLocal("trx.timeout.pos", 0);       
+	       
+	        if(trx!=null && trx.trx.length>0) {
+	            pos += 10;
+	            SSUtil.setLocal("trx.timeout.pos", pos);        
+	            if(pos< trx.trx.length) {
+	                return "p/sup_dispenser_test_timeouts_print";	  
+	            } else {
+	                trx = { "trx": [] };
+	                SSUtil.setLocal("trx.timeout.pos", 0);        
+	                SSUtil.setLocal("trx.timeout", trx);
+	                setRegistry("trx.timeout", JSON.stringify(trx));
+                
+	            }
+	        }
+	        return "p/sup_menu_cash";
+	    },
+	    "hardware_error_ptr": "p/close_printer_error"
+	}
+
+}

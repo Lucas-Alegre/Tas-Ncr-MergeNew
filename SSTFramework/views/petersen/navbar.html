@@ -1,0 +1,102 @@
+<!--
+    Presents a 5 button navigation panel.
+
+    Data:
+        nav[0-7].text: text to display in the button
+
+    FireEvents:
+        Defined in data.
+
+    ListenEvents:
+        -
+-->
+
+
+<table class="navbar">
+    <tr><td class="navitem navitemtop">col1</td></tr>
+    <tr><td class="navitem">col2</td></tr>
+    <tr><td class="navitem">col3</td></tr>
+    <tr><td class="navitem">col4</td></tr>
+    <tr><td class="navitem">col5</td></tr>
+    <tr><td class="navitem">col6</td></tr>
+</table>
+
+
+<script>
+
+    $(function () {
+        
+            ////////////////////////
+            //tween inicial
+            var obj = $(".navbar");
+            obj.tween(TweenHelpers.tweenOpacity(obj, false, 0, false));
+
+            var navbar = States.getStoredValue("data.navbar", null); 
+            if (navbar == null) {
+                navbar = [];
+            }
+
+            States.registerCustomEvent("clear_navbar", function (evt) {
+                navbar = [];
+                States.storeNamedValue("data.navbar", navbar);
+            });
+
+            States.registerCustomEvent("state_exit", function (evt) {
+                var nav = States.getProperty("nav");
+                if (nav != null) {
+                    var position = States.getProperty("storename", null);
+                    if (position != null) {
+                        var value = States.getStoredValue(position);
+                        if (value != null) {
+                            var res = nav(evt);
+                            if (res != null) {
+                                var obj = {
+                                    "position": position,
+                                    "value": res
+                                }
+                                navbar.push(obj);
+                                States.storeNamedValue("data.navbar", navbar);
+                            }
+                        }
+                    }
+                }
+            });
+
+            var nav = States.getProperty("nav", null);
+            if (nav != null) {
+                var position = States.getProperty("storename");
+                if (position != null) {
+                    for (var c = 0; c < navbar.length; c++) {
+                        if (navbar[c].position == position) {
+                            navbar = navbar.slice(0, c);
+                            States.storeNamedValue("data.navbar", navbar);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            //paint
+            for (var c = 0; c < 6; c++) {
+                var str = "";
+                if (c < navbar.length) {
+                    str = navbar[c].value;
+                }
+
+                $(".navbar td").eq(c).removeClass("navitemunique");
+                $(".navbar td").eq(c).removeClass("navitembottom");
+                if (str != "")
+                {
+                    $(".navbar td").eq(c).html(str);
+                } else {
+                    $(".navbar td").eq(c).hide();
+                }
+                if (c == 0 & navbar.length == 1)
+                    $(".navbar td").eq(c).addClass("navitemunique");
+                if (c == navbar.length - 1 && c != 0)
+                    $(".navbar td").eq(c).addClass("navitembottom");
+            }
+
+    });
+
+</script>

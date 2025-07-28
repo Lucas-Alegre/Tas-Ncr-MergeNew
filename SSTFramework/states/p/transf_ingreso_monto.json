@@ -1,0 +1,44 @@
+﻿{
+    
+    "base" : include(p/bases/ingreso_monto.json),
+
+    "properties": {
+
+        "decimales": "2",
+
+        "storename": "monto",
+
+        "datapresented": function(args) { 
+            var decimales = parseInt(States.getProperty("decimales"));
+            return "$ " + SSUtil.formatNumber(parseFloat(args)/100, 2);
+        },
+
+    },
+
+    "screens": {
+                        
+        "default" : {            
+                
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Por favor, ingrese el monto a transferir",
+                },
+
+            include(p/chunk/nav_all.json),
+    
+        }
+    },
+
+    "events": {
+        include(p/chunk/event_timeout.json),
+
+        "accept": "p/transf_comms_simulacion",
+
+        "back": "p/transf_cuenta_destino_tipo",
+
+        "cancel": "p/close_salir",
+
+    },
+
+}   

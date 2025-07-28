@@ -1,0 +1,10 @@
+﻿{
+  "command": "WFS_CMD_TTU_WRITE",
+  "input": {
+    "fwMode": "WFS_TTU_POSABSOLUTE", 
+    "wPosX": 0, 
+    "wPosY": 0, 
+    "fwTextAttr": 0, 
+    "lpsUNICODEText": 0
+  }
+}

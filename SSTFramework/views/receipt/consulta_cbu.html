@@ -1,0 +1,35 @@
+﻿<!--
+    Requires:
+        tipo_cuenta:
+        sucursal:
+        cuenta: account number, formatted for display   
+        cbu:
+        nombre1:     
+        nombre2:     
+        nombre3:     
+-->
+
+
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+<hr />
+<h1>Consulta de CBU</h1>
+<hr />
+
+<% include chunk/account_detail.html %>
+<table>
+    <tr><td>CBU:</td><td align="right"> <%- receipt.cbu %></td> </tr>
+    
+    <% if(receipt.nombre1!="") { %>
+    <tr><td>Titular:</td><td align="right"> <%- receipt.nombre1 %></td> </tr>
+    <%}%>
+    <% if(receipt.nombre2!="") { %>
+    <tr><td>Titular:</td><td align="right"> <%- receipt.nombre2 %></td> </tr>
+    <%}%>
+    <% if(receipt.nombre3!="") { %>
+    <tr><td>Titular:</td><td align="right"> <%- receipt.nombre3 %></td> </tr>
+    <%}%>
+</table>
+
+<% include chunk/footer.html %>

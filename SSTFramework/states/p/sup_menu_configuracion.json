@@ -1,0 +1,42 @@
+﻿{
+    "type": "General",
+
+	"screens": {
+
+	    "default" : {
+
+			"title": {				
+				"text" : "Configuración"
+			},
+
+            "subtitle": {
+                "text": "Seleccione la operación que desea realizar"
+            },
+            
+			"select": {
+
+			    "select0" : {
+					"text": "Número de equipo",
+					"event": "numero", 
+				},
+
+                "select1": {
+                    "text": "IP del servidor",
+                    "event": "ip",
+                },
+			},
+
+            include(p/chunk/nav_cancelar.json),
+
+		}
+	},
+
+    "events": {
+        "timeout": "p/sup_changestyle",
+        "cancel": "p/sup_menu_select",
+        "ip": "p/sup_numero_ip",
+        "numero": "p/sup_numero_terminal",
+        "back": "p/sup_menu_select",
+    }
+
+}

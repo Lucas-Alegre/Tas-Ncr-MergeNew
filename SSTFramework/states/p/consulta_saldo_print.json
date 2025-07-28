@@ -1,0 +1,43 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "consulta_saldos",
+
+			"update": function() { 
+			    var cuenta = UserFuns.getProduct("cuenta");
+			    var receipt = { 
+			        "tipo_cuenta": UserFuns.formatProductName(cuenta),
+			        "sucursal": cuenta.ACU_OFICI,
+			        "cuenta": UserFuns.formatProductValue(cuenta, 1),
+			        "saldo": UserFuns.formatMonto(cuenta.CSA_DISPO),
+			        "saldo_real": UserFuns.formatMonto(cuenta.CSAEFEHOY),
+			        "saldo_conformar": UserFuns.formatMonto(cuenta.CSA_CONFO),
+			        "saldo_48hs": UserFuns.formatMonto(cuenta.CSAFLOH2),
+			        //"saldo_72hs": UserFuns.formatMonto(cuenta.CSAFLOH2),
+			        //"saldo_96hs": UserFuns.formatMonto(cuenta.CSAFLOH2),
+			        //"saldo_otro": UserFuns.formatMonto(cuenta.CSAFLOH2),
+			        "dep_cheques_a_conf": UserFuns.formatMonto(cuenta.CSAFLOH1),
+			        "dep_a_conf": UserFuns.formatMonto(cuenta.CSAFLOE1),
+			        //"intereses": UserFuns.formatMonto(cuenta.CSAFLOH2),
+			        //"limite_credito": UserFuns.formatMonto(cuenta.CSAFLOH2),
+			        //"debitos_pendientes": UserFuns.formatMonto(cuenta.CSAFLOH2),
+			    };
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "cancel": "p/close_salir",
+        "print_ok": "p/close_salir",
+	    "hardware_error_ptr": "p/close_printer_error"
+    }
+
+}

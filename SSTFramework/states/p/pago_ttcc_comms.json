@@ -1,0 +1,67 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WSTTC",
+        "storename": "comms.WSTTC",
+
+        "repeat_trx": true,
+        "simulacion":  false,
+
+        "nombre": "PAGO DE TARJETA",
+                
+        "requestHandler": function(obj) {
+
+            if(States.getStoredValue("medio_pago_tarjeta")=="debito") {
+                obj.cuenta_detalle = UserFuns.getProduct("cuenta_debito");
+            }
+
+            if(States.getStoredValue("tarjeta_pago")!="resumen") {
+                //obj.tarjeta = UserFuns.getProduct("tarjeta_pago").ALF01DE22;
+                obj.tarjeta = UserFuns.getProduct("tarjeta_pago").WCUNUMCUE;
+
+            }
+            obj.repeat_trx = States.getProperty("repeat_trx");            
+            obj.simulacion = States.getProperty("simulacion");      
+
+        },
+        
+    },
+
+    "events": {
+        "comms_ok": function() {
+            if(States.getStoredValue("medio_pago_tarjeta")=="debito") {
+                return "p/pago_ttcc_print";
+            }
+
+            if (States.getStoredValue("medio_pago_tarjeta")=="cheque") {
+                if (Vars.get("ipm_available")) {
+                    return "p/cheque/generar_imagen_tiff";
+                } else {
+                    return "p/pago_ttcc_print";
+                }
+            }
+
+            if(States.getStoredValue("medio_pago_tarjeta")=="efectivo") {
+                if (Vars.get("cim_available")) {
+                    return "cim/depositar_billetes";
+                } else {
+                    return "p/pago_ttcc_print";
+                }
+            }
+        },
+        "comms_error": function() {
+            if(States.getStoredValue("medio_pago_tarjeta")!="debito") {
+                return "p/pago_ttcc_print";
+            }
+            return "p/close_hardware_error";
+        },
+        "comms_general_error": function() {
+            if(States.getStoredValue("medio_pago_tarjeta")!="debito") {
+                return "p/pago_ttcc_print";
+            }
+            return "p/close_comms_error";
+        },
+    }
+
+}

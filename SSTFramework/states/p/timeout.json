@@ -1,0 +1,45 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+    },
+
+	"screens": {
+
+	    "default" : {
+			            
+	        "title": {			
+	            "text" : "Tiempo de espera superado"
+	        },
+
+            "subtitle": {			
+                "text" : "Necesita más tiempo?"
+            },
+
+	        "nav": {
+	            "nav0": {
+	                "text": "No",
+                    "event": "no",
+                    },
+
+                "nav3": {
+                    "text": "Si",
+                    "event": "si",
+                }
+	        }
+
+		}
+	},
+
+	"events" : {
+	    "no": "p/close_salir",
+        "timeout": "p/close_salir",
+        "si": function() {
+            States.runState(
+                States.getStoredValue("temp.timeout_state"),
+                States.getStoredValue("temp.params")
+            );
+            return false;
+        },
+	}
+}

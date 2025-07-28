@@ -1,0 +1,37 @@
+﻿{
+    
+    "base" : include(p/bases/selecciona_cuenta.json),
+
+    "properties": {
+        "storename": "cuenta_destino",
+        "conceptos": [1, 2],
+        "monedas": [80],
+    },
+
+    "screens": {
+
+                
+        "default" : {            
+    
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Por favor, seleccione la cuenta destino",
+            },
+        }
+    },
+
+    "events": {
+        include(p/chunk/event_timeout.json),
+                
+        "sin_opciones": "p/close_sin_opciones",
+
+        "select": "p/transf_ingreso_monto",
+
+        "back": "p/transf_cuenta_destino_tipo",
+
+        "cancel": "p/close_salir",
+
+    },
+
+}   

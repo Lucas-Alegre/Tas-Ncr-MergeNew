@@ -1,0 +1,11 @@
+﻿{
+    "base": include(p/identificacion_manual_comms_cuentas.json),
+    
+    "events": {
+        "comms_general_error": "p/extraccion_print", 
+        "comms_error": "p/extraccion_print", 
+        "comms_ok": "p/extraccion_print", 
+        "invalid_pin": "p/extraccion_print",
+    }
+
+}

@@ -1,0 +1,56 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "storename": "periodo",
+        
+        "nav": function() {
+            return States.getStoredValue(States.getProperty("storename", "periodo"));                        
+        },
+    },
+
+	"screens": {
+
+	    "default" : {
+            
+	        "update": function(screen) {				
+	            var periodos = [];	
+	            
+	            for(var c=1; c<7; c++) {
+	                var date = new Date();
+	                date.setMonth(date.getMonth()-c);
+	                var str = ("00"+(date.getMonth()+1)).slice(-2) + "/" + date.getFullYear();
+	                periodos.push({
+	                    text: str,
+	                    value: str,
+	                });	                
+	            }
+
+	            var orden = ["select0", "select4", "select1", "select5", "select2", "select6", "select3"];
+	            UserFuns.selectFromList(screen, periodos, orden);
+	        },
+
+            "select": {},
+		
+            include(p/chunk/title_transaccion.json),
+            
+            "subtitle": {
+                "text": "Seleccione el período de la consulta",
+            },
+
+            include(p/chunk/nav_cancelar_anterior.json),
+
+		}
+	},
+    
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+        "cancel": "p/close_salir",
+        
+        "back": "p/consultas",
+
+        "select": "p/consulta_haberes",
+                
+	}
+}

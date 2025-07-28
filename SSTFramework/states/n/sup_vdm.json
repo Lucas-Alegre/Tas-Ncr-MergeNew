@@ -1,0 +1,36 @@
+﻿{
+    "type": "General",
+
+    "run": function(statedata) {
+        var vdm = new XFSDevice("vdm");
+        vdm.extension("StartVDM");
+    },
+
+    "properties": {
+        
+    },
+
+	"screens": {
+
+	    "default" : {
+
+			"title": {				
+				"text" : "VDM"
+			},
+
+            "message": {
+                "text": "Se está ingresando al VDM.<br>Toque CANCELAR para volver al menú principal de supervisor"
+            },
+            
+            "nav": {
+				include(n/chunk/nav_btn_cancelar.json),
+			}
+
+		}
+	},
+    
+    "events": {
+        "timeout": "n/sup_changestyle",
+        "cancel": "n/sup_menu_dep",
+    }
+}

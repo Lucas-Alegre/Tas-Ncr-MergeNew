@@ -1,0 +1,6 @@
+﻿{
+  "command": "WFS_CMD_IDC_EJECT_CARD",
+  "input": {
+    "wEjectPosition": 1
+  }
+}

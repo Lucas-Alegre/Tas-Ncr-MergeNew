@@ -1,0 +1,27 @@
+﻿[
+	{
+		text: "Caja de ahorros $", 
+		value: {
+		    "concepto": 2,
+		    "moneda": 80
+		}
+	}, {
+	    text: "Cuenta corriente $",
+	    value: {
+	        "concepto": 1,
+	        "moneda": 80
+	    }
+	}, {
+        text: "Caja de ahorros U$S",
+        value: {
+            "concepto": 2,
+            "moneda": 2
+        }
+	}, {
+        text: "Cuenta corriente U$S",
+        value: {
+            "concepto": 1,
+            "moneda": 2
+        }
+	}
+]

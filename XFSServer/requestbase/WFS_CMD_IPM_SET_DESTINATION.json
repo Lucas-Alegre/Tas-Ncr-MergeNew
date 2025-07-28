@@ -1,0 +1,7 @@
+﻿{
+    "command": "WFS_CMD_IPM_SET_DESTINATION",
+    "input" : {
+        "usMediaID": 0,
+        "usBinNumber": 0,
+    }
+}

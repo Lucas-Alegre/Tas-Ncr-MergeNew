@@ -1,0 +1,156 @@
+﻿
+html {
+    overflow: hidden;
+}
+
+@font-face { 
+    font-family: 'DIN 30640 Std'; 
+    src: url(/style/DIN.ttf) format("truetype"); 
+} 
+
+* { 
+    font-family: 'DIN 30640 Std'; 
+}
+
+body, #ScreenPanel {
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+html, body { 
+    margin: 0; 
+    padding: 0; 
+}
+
+
+.bgvideo {
+    position: fixed; right: 0; bottom: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 100;
+}
+
+.floatvideo {
+    /*box-shadow: -4px 4px 4px #000;*/
+    box-shadow: 0px 0px 0px 20px rgba(59,59,60,1);
+    border-radius: 20px 20px;
+    border: 1px solid white;
+    width: 320px; height: 240px; z-index: 0;
+ }
+
+.video_deposita_sobre {
+    content: "/video/sobre_in.ogv";
+    bottom: 24%;
+    right: 20%;
+}
+
+.video_deposita_efectivo {
+    content: "/video/cash_in.webm";
+    bottom: 24%;
+    right: 20%;
+}
+
+.video_retira_efectivo {
+    content: "/video/cash_out.webm";
+    bottom: 24%;
+    right: 20%;
+}
+
+.video_deposita_cheques {
+    content: "/video/cheque_in.webm";
+    bottom: 24%;
+    right: 20%;
+}
+
+.video_retira_cheques {
+    content: "/video/cheque_out.webm";
+    bottom: 24%;
+    right: 20%;
+}
+
+.video_entrega_sobre {
+    content: "/video/sobre_out.ogv";
+    bottom: 24%;
+    right: 20%;
+}
+
+.video_ingreso_pin {
+    content: "/video/pinpad.ogv";
+    bottom: 10%;
+    right: 10%;
+}
+
+.video_impresora {
+    content: "/video/impresora.ogv";
+    bottom: 25%;
+    right: 25%;
+}
+
+.video_extraccion {
+    content: "/video/extraccion.ogv";
+    bottom: 25%;
+    right: 25%;
+}
+
+.video_ingreso_tarjeta_motorizada {
+    content: "/video/tarjeta_mot.ogv";
+    right: 10%;
+    bottom: 10%;
+}
+
+.video_ingreso_tarjeta_dip {
+    content: "/video/tarjeta_dip.ogv";
+    right: 10%;
+    bottom: 10%;
+}
+
+.full {
+    width: 100%;
+    height: 100%;
+}
+
+div, td {
+    font-size: 28px;
+    text-align: center;
+    /* text-shadow: 1px 1px 0px #fff; */
+}
+
+.spinner {
+  width: 103px;
+  height: 103px;
+  background-image: url(/images/new_spinner.png);
+  margin: 25px auto;
+  -webkit-animation: rotateplane 1.2s infinite linear;
+  animation: rotateplane 1.2s infinite linear;
+}
+
+@-webkit-keyframes rotateplane {
+  0% { -webkit-transform: rotate(0deg) }
+  100% { -webkit-transform: rotate(360deg) }
+}
+
+#ScreenPanel, #MainPanel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+/* Elementos Petersen */
+.navbtn {
+    display: none;
+}
+
+.subtitle {
+    display: none;
+}
+
+.navbar {
+    display: none;
+}
+
+.version {
+    width: 27%;
+    height: 10%;
+}

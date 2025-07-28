@@ -1,0 +1,39 @@
+﻿{
+    "type": "General",
+
+    "run": function() {
+
+        SSUtil.setApplicationState("tpa", "oos");
+
+        supervisorSwitch(function(res) {
+            if((res.state=="normal" || res.state=="normal_gop") && res.sup=="oos") {
+                States.handleEvent(res.state);
+            } 
+        })
+
+    },
+
+	"screens": {
+
+        
+	    "default" : {
+            
+	        "title": {
+	            "text": "Equipo fuera de servicio"
+	        },
+            
+            "message": {
+                "text": "Por favor utilice otra máquina"
+            },
+		}
+
+	},
+
+	"events" : {
+	    "inservice": "p/status_inservice",
+
+        "normal": "p/status_startofday",
+
+        "normal_gop": "p/status_startofday",
+	}
+}

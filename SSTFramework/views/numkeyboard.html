@@ -1,0 +1,46 @@
+<!--
+    Data:
+        numkeyboard.top: vertical position of message
+
+    FireEvents:
+        -
+
+    FireGuiEvents:
+        -
+
+    ListenEvents:
+        -
+
+-->
+
+    <div class="numeric_keyboard">
+        <table class="numeric_keyboard_table">
+            <tr><td class="numkey"><div>1</div></td><td class="numkey"><div>2</div></td><td class="numkey"><div>3</div></td></tr>
+            <tr><td class="numkey"><div>4</div></td><td class="numkey"><div>5</div></td><td class="numkey"><div>6</div></td></tr>
+            <tr><td class="numkey"><div>7</div></td><td class="numkey"><div>8</div></td><td class="numkey"><div>9</div></td></tr>
+            <tr><td></td><td class="numkey"><div>0</div></td><td></td></tr>
+        </table>
+    </div>
+    
+<script>
+    $(function () {
+
+        var component_data = <%- JSON.stringify(numkeyboard) %>;
+        
+        $.each($(".numkey"), function(index, key) {
+            var elkey = $(key);
+            elkey.data("value", elkey.text());
+            elkey.click(elkey.data("value"), function(event) {
+                SSFramework.initTimeout();
+                SSFramework.playAudio("boton.wav");
+                States.fireCustomEvent("input.key", event.data);
+            })
+        });
+
+
+        var numkeyboard = $(".numeric_keyboard");
+        if(numkeyboard)
+            numkeyboard.tween(TweenHelpers.tweenSide(numkeyboard, "top", false, -500, 0));
+        
+    });
+</script>

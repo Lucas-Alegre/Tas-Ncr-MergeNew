@@ -1,0 +1,42 @@
+<!--
+    Data:
+        message.text: text to display
+        message.top: vertical position of message
+
+    FireEvents:
+        -
+
+    ListenEvents:
+        -
+-->
+
+<div class="message_panel">
+    <div class="message" id="message">
+        <%- message.text %>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        var component_data = <%- JSON.stringify(message) %>;
+
+        var obj = $("#message");
+        if(component_data.top) {
+            obj.css("top", component_data.top);
+        }
+
+        $.each(component_data, function(key, value) {
+            obj.data(key, value);
+        });
+
+        ////////////////////////
+        ///centrado vertical
+        SSFramework.centerInDiv("#message");
+
+        ////////////////////////
+        //tween inicial
+        var obj = $("#message");
+        obj.tween(TweenHelpers.tweenOpacity(obj, false, 0, false));
+    });
+</script>

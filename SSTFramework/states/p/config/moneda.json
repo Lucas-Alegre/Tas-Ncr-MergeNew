@@ -1,0 +1,9 @@
+﻿[
+	{
+		text: "Pesos", 
+        value: 80
+	}, {
+		text: "Dólares", 
+        value: 2
+	}
+]

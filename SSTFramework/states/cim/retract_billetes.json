@@ -1,0 +1,19 @@
+ssfw = {
+
+    "base" : include(cim/base_cim.json),
+
+	"type" : function() {
+        States.getProperty("retract")()
+        .then(
+            function(ok){},
+            function(error){} 
+        )
+        .caugth(function(e){});
+	},
+
+	"events" : {
+        "cim_retract_ok" : "cim/salida_timeout",
+        "cim_retract_error" : "cim/salida_error"
+	}
+}
+

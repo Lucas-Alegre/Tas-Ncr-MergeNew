@@ -1,0 +1,93 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+
+        "accept_zero": "0",
+
+        "storename": "dato_ingresado",
+
+        "decimales": "2",
+
+        "nav": function() {
+            var valor = States.getStoredValue(States.getProperty("storename", "dato_ingresado"));
+            return "$ " + UserFuns.formatFloatMonto(valor);
+        },
+
+        "datachanged": function(args) {			
+            return args.slice(0, 12);
+        },
+
+		"datapresented": function(args) { 
+		    var div = 1;
+		    
+		    var decimales = parseInt(States.getProperty("decimales"));
+		    for(var c=0; c<decimales; c++)
+		        div *= 10;
+		    return "$ " + SSUtil.formatNumber((parseFloat(args)/div).toFixed(decimales), decimales);
+		},
+
+        "dataccept": function(args) {
+            
+            if(parseInt(States.getProperty("accept_zero"))!=0) {
+                if(args.length<1)
+                    args = "0";
+            }
+
+            if(args.length<1)
+                return false;
+
+            
+            var store = States.getProperty("storename");
+            var data = States.getStoredValue(store);
+            var decimales = parseInt(States.getProperty("decimales"));
+            var div = 1;
+
+            for(var c=0; c<decimales; c++)
+                div *= 10;
+
+            
+            var val = (parseFloat(data)/div);
+            if(parseInt(States.getProperty("accept_zero"))==0) {
+                if(val<=0)
+                    return false;
+            }
+
+            var res = val.toFixed(decimales);		    
+            States.storeNamedValue(store, res.toString());
+            return true;
+        },
+
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+            "inputarea": {},
+
+			"numkeyboard": {},
+
+	    }
+	},
+
+	"events" : {
+	    
+	    include(p/chunk/event_timeout.json),
+
+
+		"enter": function() { 
+		    States.fireCustomEvent("input.enter", null);
+		},
+
+       
+        "clear": function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+
+		"reject" : function() {
+		    States.refreshState();
+		},
+
+	}
+}

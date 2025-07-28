@@ -1,0 +1,27 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "mensajes",
+
+			"update": function() { 
+			    var cuenta = UserFuns.getProduct("cuenta");
+			    var receipt = { 		
+			    };
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "print_ok": "p/close_salir",
+	    "hardware_error_ptr": "p/close_printer_error"
+    }
+
+}

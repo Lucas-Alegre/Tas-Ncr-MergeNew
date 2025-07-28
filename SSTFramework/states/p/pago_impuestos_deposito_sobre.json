@@ -1,0 +1,29 @@
+﻿
+{
+    "base": include(p/bases/buzon_deposita_sobre.json),
+
+    "properties": {
+        "printLine": function() {
+            var date = new Date();
+            var datestr = UserFuns.getDateString(date) + " " + UserFuns.getTimeString(date)
+            var line = SSUtil.getLocal("TerminalName", "") + " " + datestr;   
+            try { 
+                line += " " + States.getSequencialNumber("config.numtrx", false);
+                line += " Pago Impuesto";
+                line += " " + States.getStoredValue("medio_pago");
+                line += " " + States.getStoredValue("customer", "0");
+                line += " " + " $" + States.getStoredValue("monto");
+            } catch(ex) {}
+            return line;
+        }
+
+    },
+
+    "events": {
+        "deposit_ok": "p/pago_impuestos_comms",
+        "deposit_error": "p/close_hardware_error",
+        "hardware_error_dep": "p/close_hardware_error", 
+        "cancel": "p/close_salir",
+    }
+
+}

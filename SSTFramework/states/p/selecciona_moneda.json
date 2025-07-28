@@ -1,0 +1,99 @@
+﻿{
+    "type": "General",
+	
+	"run": function(state) {
+		var nombre = States.getStoredValue("customer_name");
+		States.setProperty("nombre_cliente", nombre);
+		
+		var conceptos = States.getProperty("conceptos");
+		var flags = States.getProperty("flags");
+		
+		var cuentas = UserFuns.getFilteredProducts(conceptos, flags, [80]);
+		var tienePesos = false;
+		for(var c=0; c<cuentas.length; c++) {
+			if (cuentas[c] != null) {
+				tienePesos = true;
+				break;
+			}
+		}
+		cuentas = UserFuns.getFilteredProducts(conceptos, flags, [2]);
+		var tieneDolares = false;
+		for(var c=0; c<cuentas.length; c++) {
+			if (cuentas[c] != null) {
+				tieneDolares = true;
+				break;
+			}
+		}
+		
+		if (tienePesos && tieneDolares) {
+			States.storeNamedValue("varias_monedas", true);
+		} else {
+			States.storeNamedValue("varias_monedas", false);
+			if (tienePesos)
+				States.storeNamedValue("moneda", 80);
+			else
+				States.storeNamedValue("moneda", 2);
+			States.handleEvent("select");
+		}
+	},
+
+    "properties": {
+        "storename": "moneda",
+
+        "conceptos": [1, 2],
+        "flags": ["TSEDEBITO" ]
+    },
+
+	"screens": {
+
+	    "default" : {
+	
+			"update": function(screen) {
+				UserFuns.deleteUnenabledSelects(screen.select);
+				
+				if (UserFuns.executeUniqueSelect(screen.select))
+					States.storeNamedValue("varias_monedas", false);
+				
+				UserFuns.reorganizeSelects(screen.select, [1,5]);
+			},
+            
+	        "select": {
+
+			    "select1" : {
+					"text": "Pesos",
+					"event": "select",
+                    "value": 80,
+					"funciones": {
+						"tarjeta": ["ExTPe"]
+					}
+				},
+
+
+				"select5" : {
+				    "text": "Dólares",
+					"event": "select", 
+					"value": 2,
+					"funciones": {
+						"tarjeta": ["ExTDo"]
+					}
+                }
+			},
+		
+            include(p/chunk/title_transaccion.json),
+
+      
+            "subtitle": {
+                "text": "Bienvenido <%= nombre_cliente %><br>Por favor, seleccione la moneda",
+            },
+
+            include(p/chunk/nav_cancelar.json)
+		}
+	},
+    
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "select" : "p/extraccion",
+        "cancel": "p/close_salir"
+	}
+}

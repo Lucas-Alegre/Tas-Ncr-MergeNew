@@ -1,0 +1,24 @@
+﻿<!--
+    Data:
+        title.text: text to display
+
+    FireEvents:
+        -
+
+    ListenEvents:
+        -
+-->
+
+<div class="title" id="title">
+    <%- title.text %>
+</div>
+
+<script>
+    $(function () {
+
+        SSFramework.centerInDiv("#title");
+
+        var tit = $(".title");
+        tit.tween(TweenHelpers.tweenSide(tit, "top", false, 200, 0));
+    });
+</script>

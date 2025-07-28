@@ -1,0 +1,33 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "consulta_plazo_fijo",
+
+			"update": function() { 
+			    var cuenta = UserFuns.getProduct("cuenta");
+			    var receipt = { 
+			        "moneda": UserFuns.findCText(cuenta.ACO_MONED),
+			        "cuenta": UserFuns.formatProductValue(cuenta),
+			        "neto": UserFuns.formatMonto(cuenta.CSAEFEHOY),
+			        "capital": UserFuns.formatMonto(cuenta.CSA_DISPO),
+			        "interes": UserFuns.formatMonto(cuenta.CSA_CONFO),
+			        "fecha": UserFuns.formatFecha(cuenta.FFE_VENCI),
+			    };
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 	 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "print_ok": "p/close_salir",
+	    "hardware_error_ptr": "p/close_printer_error"
+    }
+
+}

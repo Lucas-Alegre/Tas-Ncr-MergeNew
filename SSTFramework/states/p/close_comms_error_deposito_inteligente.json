@@ -1,0 +1,42 @@
+﻿{
+    "type": "General",
+
+    "screens": {
+
+        "default" : {
+
+            "update": function(screen) {
+                var errs = include(p/config/errores.json);
+                var errcode = States.getStoredValue("comms.error");
+                var errdesc = screen.message.text;
+                if(errcode) { 
+                    if(errs[errcode]) {
+                        errdesc = errs[errcode];
+                    }
+                    errdesc = errcode.toUpperCase() + ": " + errdesc;
+                }
+            screen.message.text = errdesc;
+            xfsAudit("Error: " +  errdesc ,"");            
+            },
+            
+            include(p/chunk/title_transaccion.json),
+
+            "message": { 
+                "text": "Lo sentimos, pero por problemas técnicos<br>No es posible operar en este momento<br>Contacte a un asistente",
+            },
+
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+            },
+
+        }
+    },
+
+    "events" : {
+        "cancel": "p/close_salir"
+    }
+}

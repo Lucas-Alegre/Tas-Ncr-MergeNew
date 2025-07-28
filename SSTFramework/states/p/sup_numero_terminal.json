@@ -1,0 +1,56 @@
+﻿{
+    
+    "base" : include(p/bases/ingreso_teclado.json),
+
+    "properties": {
+
+        "accept_zero": "0",
+
+        "largo": 6,
+
+        "largo_minimo": 6,
+
+        "storename": "numero_terminal",
+
+        "datapresented": function(args) { 
+            return args;
+        },
+
+
+    },
+
+    "screens": {
+                        
+        "default" : {            
+                
+        
+            "title": {
+                "text": "Ingreso Número de Terminal",
+                },
+
+            "subtitle": {
+                "text": "Ingrese los 6 dígitos del número de terminal y toque CONTINUAR<br>([0/1]Tipo de equipo [3] sucursal [2] número de equipo)",
+                },
+
+            include(p/chunk/nav_all.json),
+    
+        }
+    },
+
+    "events": {
+        include(p/chunk/event_timeout.json),
+
+        "accept": function() { 
+            var val = States.getProperty("value");   
+            SSUtil.setLocal("TerminalName", val);
+            setRegistry("TerminalName", val);
+            return "p/sup_carga_config";
+        },
+
+        "back": "p/sup_menu_configuracion",
+
+        "cancel": "p/sup_menu_configuracion",
+
+        },
+
+}   

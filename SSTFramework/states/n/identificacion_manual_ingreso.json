@@ -1,0 +1,38 @@
+﻿{
+    "base" : include(n/bases/ingreso_documento.json),
+
+	"run": function() {
+
+		//States.storeNamedValue("data.navbar", [{"position":"inicio", "value":"hola"}, {"position":"segundo", "value":"que tal"}]);
+		
+	},
+
+    "properties": {
+        "storename": "customer_id",
+		//"nav": function(evt) {
+		//	return States.getStoredValue("customer_id");
+		//}
+    },
+
+	"screens": {
+	    "default": {
+            "subtitle": {			
+                "text": "Ingresá tu número de documento y tocá Continuar"
+            },
+			"nav": {
+				include(n/chunk/nav_btn_cancelar.json),
+				include(n/chunk/nav_btn_borrar.json),
+				include(n/chunk/nav_btn_continuar.json),
+			}
+		}
+	},
+
+	"events" : {
+	    "timeout": "n/timeout",
+		"accept": "n/CimCashInStart",
+		"cancel": "n/close_salir",
+        "reject": function() {
+            States.refreshState();
+        },
+	}
+}

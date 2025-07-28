@@ -1,0 +1,41 @@
+﻿{
+    
+    "base" : include(p/bases/ingreso_teclado.json),
+
+    "properties": {
+
+        "accept_zero": "0",
+
+        "largo": 10,
+
+        "storename": "cuenta_tarjeta",
+
+        },
+
+    "screens": {
+                        
+        "default" : {            
+                
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Ingrese el número de cuenta de la tarjeta",
+                },
+
+            include(p/chunk/nav_all.json),
+    
+            }
+    },
+
+    "events": {
+        include(p/chunk/event_timeout.json),
+
+        "accept": "p/pago_ttcc_monto",
+
+        "back": "p/pago_ttcc_resumen_tipo_tarjeta",
+
+        "cancel": "p/close_salir",
+
+        },
+
+}   

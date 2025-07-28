@@ -1,0 +1,12 @@
+﻿{{>ttu_header}}
+{{padl data.connection 32}}
+Dispenser totals
+Last update: {{data.clear_time}}
+
+{{padr "Type" 17}}{{padl "Init" 6}}{{padl "Curr" 5}}{{padl "Rjct" 4}}
+{{#each data.cashunits}}
+{{padl position 2}}{{padl separator 1}}{{padr cUnitID 6}}{{padl cCurrencyID 4}}{{padr ulValues 4}}{{padl ulInitialCount 6}}{{padl ulCount 5}}{{padl ulRejectCount 4}}
+{{/each}}
+
+To update press 4
+Press 0 to exit

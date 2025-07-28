@@ -1,0 +1,42 @@
+﻿{
+
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+
+        "trx": "notifica_mensajes",
+        "storename": "comms.notifica_mensajes",   
+        
+        "requestHandler": function(msg) {
+            var mensajes = States.getStoredValue("comms.obtener_mensaje");
+            var list = "";
+            if(mensajes.length>0) {
+                for(var c=0; c<mensajes.length-1; c++) {
+                    list += mensajes[c].id + ",";
+                }
+                list += mensajes[mensajes.length-1].id;
+            }
+            msg.mensajes = list;
+        },
+
+        "generalResponseHandler": function(msg) {
+            return msg;
+        }
+
+    },
+
+    "events": {
+        "comms_ok": function() {
+            States.handleEvent("identificacion_ok");   
+        },
+
+        "comms_error": function() {
+            States.handleEvent("identificacion_ok");   
+        },
+
+        "comms_general_error": function() {
+            States.handleEvent("identificacion_ok");   
+        },
+    }
+
+}

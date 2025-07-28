@@ -1,0 +1,13 @@
+﻿{
+    "base": include(p/transf_comms.json),
+        
+    "properties": {
+        "repeat_trx": false,
+        "simulacion":  true,
+    },
+
+    "events": {
+        "comms_ok": "p/transf_confirma",
+    }
+
+}

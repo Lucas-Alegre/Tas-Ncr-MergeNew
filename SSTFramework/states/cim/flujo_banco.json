@@ -1,0 +1,19 @@
+ssfw = {
+	
+	"type" : "General",
+
+    "run" : function() {
+        States.handleEvent("continue");
+    },
+
+    "screens" : {
+
+        "default" : {
+   
+        }
+    },
+
+    "events" : {
+        "continue" : "cim/depositar_billetes"
+    }
+}

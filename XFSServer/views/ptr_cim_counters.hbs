@@ -1,0 +1,17 @@
+﻿{{>header}}
+<div class="td100 tcenter">Cash deposit totals</div>
+<body><pre>
+{{padr "Type" 5}}{{padl "Notes" 7}}{{padl "Count" 10}}{{padl "Amount" 14}}
+{{#each data.cashunits}}
+{{padr cUnitID 5}}{{padl cCurrencyName 7}}{{padl ulCount 10}}{{padl total.summary 14}}
+{{/each}}
+Notes
+{{#each data.total.currency}}
+Currency: {{cCurrencyID}}
+{{#each bills}}
+{{padl cCurrencyID 3}}{{padr ulValues 5}}{{padl ulCount 10}} = {{padl total 10}}
+{{/each}}
+Amount: {{padr cCurrencyID 4}}{{padl total 18}}
+{{/each}}
+</pre>
+</body>

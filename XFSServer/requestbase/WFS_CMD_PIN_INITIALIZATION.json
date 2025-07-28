@@ -1,0 +1,7 @@
+﻿{
+  "command": "WFS_CMD_PIN_INITIALIZATION",
+  "input": {
+    "lpxIdent": 0, 
+    "lpxKey": 0
+  }
+}

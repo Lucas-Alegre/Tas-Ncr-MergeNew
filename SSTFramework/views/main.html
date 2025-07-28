@@ -1,0 +1,84 @@
+﻿<!-- 
+    Includes all components    
+-->
+
+<script>
+    var screen_json = <%- JSON.stringify(locals) %>;
+</script>
+
+<% if(locals["title"]) {%>
+	<% include title.html %>
+<% } %>
+
+<% if(locals["message"]) {%>
+	<% include message.html %>
+<% } %>
+
+<% if(locals["messagecenter"]) {%>
+	<% include messagecenter.html %>
+<% } %>
+
+<% if(locals["floating_message"]) {%>
+	<% include floating_message.html %>
+<% } %>
+
+<% if(locals["video"]) {%>
+	<% include video.html %>
+<% } %>
+
+<% if(locals["subvideo"]) {%>
+	<% include subvideo.html %>
+<% } %>
+
+<% if(locals["imagen"]) {%>
+	<% include imagen.html %>
+<% } %>
+
+<% if(locals["inputarea"]) {%>
+	<% include inputarea.html %>
+<% } %>
+
+<% if(locals["input_fecha"]) {%>
+	<% include input_fecha.html %>
+<% } %>
+
+<% if(locals["input_cmc7"]) {%>
+	<% include input_cmc7.html %>
+<% } %>
+
+<% include petersen/navbar.html %>
+
+<% if(locals["numkeyboard"]) {%>
+	<% include numkeyboard.html %>
+<% } %>
+
+<% if(locals["numkeyboardNaranja"]) {%>
+	<% include numkeyboardNaranja.html %>
+<% } %>
+
+<% if(locals["alphakeyboard"]) {%>
+	<% include alphakeyboard.html %>
+<% } %>
+
+<% if(locals["select"]) {%>
+	<% include select.html %>
+<% } %>
+
+<% if(locals["version"]) {%>
+	<% include version.html %>
+<% } %>
+
+<% if(locals["cheques"]) {%>
+	<% include cheques.html %>
+<% } %>
+
+<!-- Componentes Petersen -->
+
+<% if(locals["subtitle"]) {%>
+	<% include petersen/subtitle.html %>
+<% } %>
+
+<% if(locals["nav"]) {%>
+	<% include petersen/nav.html %>
+<% } %>
+

@@ -1,0 +1,32 @@
+﻿{
+    "base": include(p/deposito_comms_confirma.json),
+
+    "properties": {
+        "trx": "WS201",
+        "storename": "comms.WS201",
+    },
+
+    "events": {
+        "comms_ok": function() {
+        	if (Vars.get("ipm_available")) {
+        		return "p/cheque/generar_imagen_tiff";
+        	} else {
+        		return "p/deposito_print_trx";
+        	}
+        },
+        "comms_error": function() {
+        	if (Vars.get("ipm_available")) {
+        		return "p/cheque/generar_imagen_tiff";
+        	} else {
+        		return "p/deposito_print_trx";
+        	}
+        },
+        "comms_general_error": function() {
+        	if (Vars.get("ipm_available")) {
+        		return "p/cheque/generar_imagen_tiff";
+        	} else {
+        		return "p/deposito_print_trx";
+        	}
+        },
+    }
+}

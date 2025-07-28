@@ -1,0 +1,29 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+		"default" : {
+			"title": {
+				"text" : "este tiene un titulo"
+			},
+            "subtitle": {
+                "text" : "y un subtitulo"
+            },
+			"message": { 
+				"text": "hola, esta es una prueba<br>de como se ven los mensajes<br>en esta ventana"
+			},
+
+			"nav": {
+			    "nav0" : {
+					"text": "Atrás",
+					"event": "atras" 
+				},
+
+			}
+		}
+	},
+
+	"events" : {
+		"atras": "main"
+	}
+}

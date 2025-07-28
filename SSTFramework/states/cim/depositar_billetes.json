@@ -1,0 +1,13 @@
+ssfw = {
+
+	"base" : include(cim/base_cim.json),
+
+	"type" : function() {
+		States.getProperty("cashInEnd")();
+	},
+
+	"events" : {
+		//"cim_cash_in_end_ok" : "cim/salida_ok", Esta salida se maneja desde base_cim
+		"cim_cash_in_end_error" : "cim/salida_error",	
+	}
+}

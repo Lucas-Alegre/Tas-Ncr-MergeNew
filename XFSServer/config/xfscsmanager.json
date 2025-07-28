@@ -1,0 +1,641 @@
+﻿{  
+    "platform_startup": {
+        "wait_platform_startup": true,
+        "wait_platform_startup_cmd": "ulwait.exe",
+        "wait_platform_startup_cmd_args": "/w 7200 /e"   
+    }, 
+
+    "xfs_environment": {
+        "_comment": "values for wfsstartup & default values for wfsopen",
+        "xfsversion": 303,      
+        "appname": "XfsServer",  
+        "tracelevel": 0, 
+        "open_timeout" : 180000
+    },
+    
+    "plugins": [
+        {
+            "name": "Available",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.Available",
+            "required": true
+        },   
+        {
+            "name": "RegistryExt",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.RegistryExt",
+            "required": true
+        },      
+        {
+            "name": "CDMController",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.CDMController",
+            "required": true
+        },
+        {
+            "name": "MonitorCount",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.MonitorCount",
+            "required": true
+        },
+        {
+            "name": "StartVDM",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.StartVDM",
+            "required": true
+        },             
+        {
+            "name": "PrintURL",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.PrintURL",
+            "required": true
+        }, 
+        {
+            "name": "Logger",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.Logger",
+            "required": true
+        }, 
+        {
+            "name": "LoadSettings",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.LoadSettings",
+            "required": true
+        }, 
+		{
+		    "name": "echo",
+		    "assembly": "XFSBasePlugins",
+		    "class": "XFSBasePlugins.EchoExtension",
+		    "required": false			
+		},
+        {
+		    "name": "IDCLights",
+		    "assembly": "XFSBasePlugins",
+		    "class": "XFSBasePlugins.Lights+IDCLights",
+		    "required": false			
+		}, 
+		{
+		    "name": "PTRLights",
+		    "assembly": "XFSBasePlugins",
+		    "class": "XFSBasePlugins.Lights+PTRLights",
+		    "required": false			
+		},
+        {
+            "name": "Journal",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.Journal",
+            "required": false			
+        }, 
+        {
+            "name": "SupervisorSwitch",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.SupervisorSwitch",
+            "required": false			
+        }, 
+		{
+		    "name": "CDMLights",
+		    "assembly": "XFSBasePlugins",
+		    "class": "XFSBasePlugins.Lights+CDMLights",
+		    "required": false			
+		}, 
+		{
+		    "name": "DEPLights",
+		    "assembly": "XFSBasePlugins",
+		    "class": "XFSBasePlugins.Lights+DEPLights",
+		    "required": false			
+		}, 		
+		{
+		    "name": "EventLogger",
+		    "assembly": "XFSBasePlugins",
+		    "class": "XFSBasePlugins.EventLogger",
+		    "required": false			
+		}, 		
+		{
+		    "name": "PinEncryptor",
+		    "assembly": "PinEncryptor",
+		    "class": "PinEncryptor.PinEncryptor",
+		    "required": true			
+		},
+		{
+		    "name": "CDMEvents",
+		    "assembly": "Petersen",
+		    "class": "Petersen.EventManager",
+		    "required": false			
+		},
+		{
+		    "name": "Auditoria",
+		    "assembly": "Petersen",
+		    "class": "Petersen.Auditoria",
+		    "required": false			
+		},
+		{
+		    "name": "Restart",
+		    "assembly": "Petersen",
+		    "class": "Petersen.Restart",
+		    "required": false			
+		},
+		{
+		    "name": "LogueoCheques",
+		    "assembly": "Petersen",
+		    "class": "Petersen.LogueoCheques",
+		    "required": false			
+		},
+		{
+            "name": "CIMGenericController",
+            "assembly": "GenericControllers",
+            "class": "GenericController.CIMGenericController",
+            "required": true
+        },
+        {
+            "name": "CIMLights",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.Lights+CIMLights",
+            "required": false
+        },
+		{
+            "name": "CIMLogger",
+            "assembly": "EJLoggers",
+            "class": "XFSService.EJLoggers.CIMLogger",
+            "required": true
+        },
+        {
+            "name": "IPMGenericController",
+            "assembly": "GenericControllers",
+            "class": "GenericController.IPMGenericController",
+            "required": false
+        },
+		{
+            "name": "IPMLights",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.Lights+IPMLights",
+            "required": false
+        },
+		{
+            "name": "IPMLogger",
+            "assembly": "EJLoggers",
+            "class": "XFSService.EJLoggers.IPMLogger",
+            "required": true
+        },
+		{
+            "name": "Reflection",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.Reflection",
+            "required": true
+        },
+        {
+            "name": "Supervisor",
+            "assembly": "Supervisor",
+            "class": "XFSCSLib.Supervisor.Supervisor",
+            "required": true
+        },
+         {
+            "name": "SupervisorExpose",
+            "assembly": "Supervisor",
+            "class": "XFSCSLib.Supervisor.SupervisorExpose",
+            "required": true
+        },
+         {
+            "name": "BlockManager",
+            "assembly": "XFSBasePlugins",
+            "class": "XFSBasePlugins.BlockManager",
+            "required": true
+        },
+        {
+            "name": "WindowsPrinterGenericController",
+            "assembly": "GenericControllers",
+            "class": "GenericController.WindowsPrinterController",
+            "required": false
+        },
+    ],
+
+    "classes": [
+		{
+		    "name": "dep",
+		    "assembly": "XfsServerLib",
+		    "serializer": "XfsServerLib.DEPSerializer",
+		    "const": "XfsServerLib.DEPConst"      
+		},
+        {
+            "name": "cdm",
+            "assembly": "XfsServerLib",
+            "serializer": "XfsServerLib.CDMSerializer",
+            "const": "XfsServerLib.CDMConst"      
+        },
+        {
+            "name": "idc",
+            "assembly": "XfsServerLib",
+            "serializer": "XfsServerLib.IDCSerializer",
+            "const": "XfsServerLib.IDCConst"      
+        },
+        {
+            "name": "vdm",
+            "assembly": "XfsServerLib",
+            "serializer": "XfsServerLib.VDMSerializer",
+            "const": "XfsServerLib.VDMConst"      
+        },
+        {
+            "name": "siu",
+            "assembly": "XfsServerLib",
+            "serializer": "XfsServerLib.SIUSerializer",
+            "const": "XfsServerLib.SIUConst"      
+        },
+        {
+            "name": "pin",
+            "assembly": "XfsServerLib",
+            "serializer": "XfsServerLib.PINSerializer",
+            "const": "XfsServerLib.PINConst"      
+        },
+        {
+            "name": "ptr",
+            "assembly": "XfsServerLib",
+            "serializer": "XfsServerLib.PTRSerializer",
+            "const": "XfsServerLib.PTRConst"      
+        },
+		{
+            "name": "cim",
+            "assembly": "XfsServerLib",
+            "serializer": "XfsServerLib.CIMSerializer",
+            "const": "XfsServerLib.CIMConst",
+        },
+        {
+            "name": "ipm",
+            "assembly": "XfsServerLib",
+            "serializer": "XfsServerLib.IPMSerializer",
+            "const": "XfsServerLib.IPMConst"
+        },
+    ],
+
+    "connections": [
+        {
+            "name": "tpa",
+            "type": "container",
+            "plugins": [
+                {
+                    "name": "BlockManager",
+                },
+            ],
+        },
+        {
+            "name": "server",
+            "plugins": [
+                {
+                    "name": "Logger",
+                },
+                {
+                    "name": "RegistryExt"
+                },
+                {
+                    "name": "Journal"
+                },
+                {
+                    "name": "SupervisorSwitch"
+                },
+				{
+                    "name": "Auditoria"
+                },
+				{
+                    "name": "Restart"
+                },
+				{
+                    "name": "LogueoCheques"
+                },
+				{
+                    "name": "Reflection"
+                },
+            ],
+        },
+         {
+            "name": "supervisor",
+            "type": "container",
+
+            "plugins": [
+                {
+                    "name": "Supervisor"
+                },
+                {
+                    "name": "SupervisorSwitch"
+                },
+                { 
+                    "name" :  "SupervisorExpose"
+                }
+            ],
+        },
+        {
+            "name": "journal",
+            "class": "ptr",
+            "version": 302,
+            "required": false,                        
+            "profiles": [
+                {
+                    "name": "JournalPrinter1"
+                }
+            ]            
+        },
+        
+
+        {
+            "name": "dep",
+            "class": "dep",
+            "version": 302,
+            "required": false,            
+            "plugins": [
+				{
+				    "name": "Available",
+				},
+                {				
+				    "name": "DEPLights",
+				    "light_index": "WFS_SIU_ENVDEPOSITORY"
+				},
+				{				
+                    "name": "EventLogger",					
+				},				
+            ],
+            
+            
+            "profiles": [
+                {
+                    "name": "Envelope1"
+                }
+            ]            
+        },
+        {
+            "name": "cdm",
+            "class": "cdm",
+            "version": 302,
+            "required": false,            
+            "plugins": [
+
+				{
+				    "name": "Available",
+				},
+                {				
+                    "name": "CDMController",
+                },		    
+                {				
+				    "name": "CDMLights",
+				    "light_index": "WFS_SIU_NOTESDISPENSER"
+				},
+                {				
+				    "name": "CDMEvents",
+				},
+            ],
+            
+            "profiles": [
+                {
+                    "name": "CurrencyDispenser1"
+                }
+            ]            
+        },
+        {
+            "name": "idc",
+            "class": "idc",
+            "version": 302,
+            "required": false,            
+            
+            "plugins": [
+				{
+				    "name": "Available",
+				},
+                {				
+				    "name": "IDCLights",
+				    "light_index": "WFS_SIU_CARDUNIT"
+				},		
+            ],
+            
+            
+            "profiles": [
+                {
+                    "name": "IDCardUnit1",
+                }
+            ]            
+        },
+        {
+            "name": "siu",
+            "class": "siu",
+            "version": 302,
+            "required": true,            
+            "profiles": [
+                {
+                    "name": "SIU"
+                }
+            ],
+            "plugins": [
+				{
+				    "name": "Available",
+				},
+            ]
+        },
+        {
+            "name": "coindispenser",
+            "class": "cdm",
+            "version": 302,
+            "required": false,            
+            "profiles": [                
+                {
+                    "name": "CoinDispenser1"
+                }
+            ],
+            "plugins": [
+				{
+				    "name": "Available",
+				},
+            ]
+        },       
+        {
+            "name": "barcode",
+            "class": "ptr",
+            "version": 302,
+            "required": false,            
+            "plugins": [
+				{
+				    "name": "Available",
+				},
+                {				
+                    "name": "EventLogger",					
+				},
+            ],		
+            "profiles": [
+                {
+                    "name": "UniversalBarcodeReader1"
+                },
+                {
+                    "name": "BarcodeReader1"
+                }
+            ],            
+        },         
+        {
+            "name": "lights_siu",
+            "class": "siu",
+            "version": 302,
+            "required": true,            
+            "profiles": [                
+                {
+                    "name": "SIU"
+                }
+            ],
+            "plugins": [
+                {
+                    "name": "Available",
+                },				
+            ],	             
+        },
+        {
+            "name": "vdm",
+            "class": "vdm",
+            "version": 302,
+            "required": false,            
+            "profiles": [
+                {
+                    "name": "VendorDependentMode1"
+                }
+            ],
+            "plugins": [
+                {
+                    "name": "StartVDM",
+                },		
+                {
+                    "name": "EventLogger",
+                },
+            ],	        
+        },
+        {
+            "name": "ptr",
+            "class": "ptr",
+            "version": 302,
+            "required": true,            
+            "plugins": [
+				{
+				    "name": "Available",
+				},
+                {				
+				    "name": "PTRLights",
+				    "light_index": "WFS_SIU_RECEIPTPRINTER"
+				},		
+                {				
+                    "name": "PrintURL",
+                    "temp_image": "c:\\xfs\\receipt.bmp"
+                },		
+                {   
+                    "name": "LoadSettings",
+                },
+                {				
+                    "name": "EventLogger",					
+                },
+                {
+                    "name": "WindowsPrinterGenericController",
+                    "printer_name": "NCR Receipt 01"
+                },
+            ],
+            "settings": { 
+                "receipt_width": 600,
+            },            
+            "profiles": [
+                { 
+                    "name": "ReceiptPrinter1",
+                }
+            ]            
+        },
+        {
+            "name": "pin",
+            "class": "pin",
+            "version": 302,
+            "required": false,            
+            "plugins": [
+				{
+					"name": "Available",
+				},
+				{
+					"name": "PinEncryptor",
+				}
+            ],
+
+            "profiles": [
+                {
+                    "name": "Pinpad1"
+                }
+            ]            
+        },
+		{
+            "name": "cim",
+            "class": "cim",
+            "version": 310,
+            "required": false,
+            "plugins": [
+                {
+                    "name": "Available",
+                },
+                {
+                    "name": "Reflection",
+                    "friendly_name": "Aceptador de efectivo",
+                    "has_capabilities": true,
+                    "has_status": true
+                },
+                {
+                    "name": "CIMLights",
+                    "light_index": "WFS_SIU_BILLACCEPTOR"
+                },
+                {
+                    "name": "CIMGenericController"
+                },
+                {
+                    "name": "Reflection"
+                },
+                {
+                    "name": "CIMLogger"
+                },
+				{
+                    "name": "EventLogger",
+                },
+            ],
+
+            "profiles": [
+                {
+                    "name": "CashInModule1",
+                },
+            ]
+        },
+		{
+            "name": "ipm",
+            "class": "ipm",
+            "version": 310,
+            "required": false,
+            "plugins": [
+                {
+                    "name": "Available"
+                },
+                {
+                    "name": "Reflection",
+                    "friendly_name": "Depósito cheques",
+                    "has_capabilities": true,
+                    "has_status": true
+                },
+                {
+                    "name": "IPMLights",
+                    "light_index": "WFS_SIU_CHEQUEUNIT"
+                },
+                {
+                    "name": "IPMGenericController",
+                    "replace_char": "X",
+                    "max_codeline_errors": 20,
+					"cheque_images_folder": "C:\\app\\Cheques"
+                },
+                {
+                    "name": "IPMLogger"
+                },
+				{
+                    "name": "EventLogger",
+                },
+            ],
+
+            "profiles": [
+                {
+                    "name": "BunchCheque1"
+                },
+                {
+                    "name": "BunchCheque2"
+                }
+            ]
+        },
+        
+    ]
+}

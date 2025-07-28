@@ -1,0 +1,20 @@
+﻿{
+    "type": "CimCashInEnd",
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+	},
+
+    "events": {
+        "CimCashInEnd_OK": "n/close_salir",
+		"CimCashInEnd_Error": "n/close_hardware_error",
+		"CimCashInEnd_Hardware_Error": "n/close_hardware_error",
+    }
+}

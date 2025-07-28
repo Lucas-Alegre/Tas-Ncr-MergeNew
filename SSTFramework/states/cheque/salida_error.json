@@ -1,0 +1,9 @@
+ssfw = {
+
+	"base" : include(cheque/base_ipm.json),
+
+    "type" : function() {
+    	States.handleEvent("salida_error");
+    },
+
+}

@@ -1,0 +1,163 @@
+﻿ssfw = {
+
+    "base" : include(cheque/base_ipm.json),
+
+    "type" : "General",
+
+	"properties" : {
+
+        "storename": "fecha",
+
+        "datachanged": function(args) {
+            return args.slice(0, 8);
+        },
+
+        "datapresented": function(args) {
+            return args.slice(0, 8);
+        },
+
+        "dataccept": function(args) {
+
+            if (args == 0) {
+                return false;
+            }
+
+            if (Vars.get("keys_pushed","").length == 8) {
+                var dia = parseInt(args.substring(0,2));
+                var mes = parseInt(args.substring(3,5));
+                var anio = parseInt(args.substring(6,8));
+
+                if ((dia <= 31) && (mes <= 12)) {
+                    var store = States.getProperty("storename");
+                    States.storeNamedValue(store, args);
+                    return true;
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+        },
+	},
+
+    "screens" : {
+
+        "default": {
+
+            include(p/chunk/title_transaccion.json),
+
+            "subtitle": {
+                "text": "Ingrese la fecha de pago del cheque"
+            },
+
+            "cheques" : {},
+
+            "input_fecha": {
+                "placeholder" : "DD/MM/AA"
+            },
+
+            "numkeyboard": {},
+
+            "nav": {
+                "nav1": {
+                    "text": "Cancelar",
+                    "event": "cancel",
+                },
+                "nav2": {
+                    "text": "Borrar",
+                    "event": "clear",
+                },
+                "nav3": {
+                    "text": "Confirmar",
+                    "event": "enter",
+                },
+            },
+        },
+
+        "espera": {
+
+            include(p/chunk/title_transaccion.json),
+
+            "message" : {
+                "text" : "Esperá un momento, por favor <br><div class='spinner'></div></img>"
+            },
+        },
+
+        "fecha_invalida": {
+
+            include(p/chunk/title_transaccion.json),
+            
+            "message": {
+                "text": "Cheque rechazado <br> La fecha no está dentro de los últimos 30 días <br><br> ¿Desea continuar?",
+            },
+
+            "nav": {
+                "nav1": {
+                    "text": "No",
+                    "event": "no",
+                },
+                "nav3": {
+                    "text": "Si",
+                    "event": "si",
+                },
+            },
+
+        },
+    },
+
+	"events" : {
+        "enter" : function() { 
+            States.fireCustomEvent("input.enter", null);
+        },
+        "clear" : function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+        "accept" : function() {
+            var date_30_days_before = new Date();
+            date_30_days_before.setDate(date_30_days_before.getDate()-30);
+            date_30_days_before.setHours(0);
+            date_30_days_before.setMinutes(0);
+            date_30_days_before.setSeconds(0);
+            date_30_days_before.setMilliseconds(0);
+
+            var today = new Date();
+            today.setHours(0);
+            today.setMinutes(0);
+            today.setSeconds(0);
+            today.setMilliseconds(0);
+
+            // Formateo fecha ingresada de cheque
+            var a = Vars.get("fecha").split("/");
+            var fecha_cheque = new Date(parseInt(a[1])+"/"+a[0]+"/"+a[2]);
+
+            // Verifico que la fecha ingresada este dentro del plazo de ultimos 30 dias
+            if ((fecha_cheque >= date_30_days_before) && (fecha_cheque <= today)){
+                var items_inserted = Vars.get("items_inserted", []);
+                var current_cheque_position = Vars.get("current_cheque_position");
+                items_inserted[current_cheque_position]["fecha"] = Vars.get("fecha");
+                Vars.set("items_inserted", items_inserted);
+                return "cheque/iterar_cheques";
+            } else {
+                SSFramework.displayScreen("espera");
+                var items_inserted = Vars.get("items_inserted", []);
+                var current_cheque_position = Vars.get("current_cheque_position");
+                items_inserted[current_cheque_position]["cmc7"] = "";
+                items_inserted[current_cheque_position]["banco"] = "";
+                items_inserted[current_cheque_position]["monto"] = "";
+                items_inserted[current_cheque_position]["fecha"] = "";
+                items_inserted[current_cheque_position]["rechazado"] = true;
+                Vars.set("items_inserted", items_inserted);
+                States.getProperty("setDestination")(Vars.get("current_cheque_position"),0);
+            }
+		},
+        "ipm_set_destination_ok" : function() {
+            SSFramework.displayScreen("fecha_invalida");
+        },
+        "ipm_set_destination_error" : "cheque/salida_error",
+        "si" : "cheque/iterar_cheques",
+        "no" : "cheque/devolver_cheques",    
+        "cancel" : "cheque/devolver_cheques",
+        "timeout" : "cheque/timeout_cheques"
+ 	}
+}

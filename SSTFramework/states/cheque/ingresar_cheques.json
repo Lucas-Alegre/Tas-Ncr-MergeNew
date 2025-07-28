@@ -1,0 +1,34 @@
+﻿ssfw = {
+
+	"base" : include(cheque/base_ipm.json),
+
+	"type" : function(state) { 
+       	States.getProperty("executeMediaIn")();
+	},
+
+    "events" : {
+        "ipm_media_in_waiting_items" : "",
+        "ipm_media_in_complete" : "cheque/iterar_cheques",    
+        "ipm_media_in_cancel" : function() {   
+            if (States.getProperty("timeout_event") == true) {
+                return "cheque/timeout_cheques";                
+            } else {
+                var cheque_list = Vars.get("items_inserted", []);
+                if(cheque_list.length > 0) {
+                    return "cheque/iterar_cheques";    
+                } else {
+                    return "cheque/salida_cancel";    
+                }
+            }
+        },
+        "ipm_media_in_error" : "cheque/devolver_cheques",
+        "cancelar" : function() {
+            States.getProperty("cancel")();
+		},
+        "timeout" : function() {
+            States.setProperty("timeout_event", true);
+            States.getProperty("cancel")();
+		},        
+    }
+}
+    

@@ -1,0 +1,25 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "cambio_pin",
+
+			"update": function() {
+			    var receipt = {};
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "print_ok": "p/cambio_pin_confirma",
+	    "hardware_error_ptr": "p/cambio_pin_confirma"
+	}
+
+}

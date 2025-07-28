@@ -1,0 +1,94 @@
+﻿{
+    
+    "type": "General",
+
+    "screens": {
+                        
+        "default" : {            
+                
+            "update": function(screen) {
+                
+                var status = States.getStoredValue("sup.dispenser_status");        
+                var reset = States.getStoredValue("sup.dispenser_reset");
+                var cashunit = States.getStoredValue("sup.dispenser_cashunit");
+                var set_cashunit = States.getStoredValue("sup.dispenser_setcashunit");
+                
+                States.setProperty("operacion", "Estado dispensador");
+                var op = States.getStoredValue("data.menu_principal");
+                if(op!=null)
+                    States.setProperty("operacion", op.text);
+                
+                
+
+                var table = "";
+
+                if(status!=null) {
+                    table += "<p>Estado General Cod: " + status.lpBuffer.fwDevice + "</p>";
+                }
+
+                if(cashunit!=null) {
+                    table += "<table width='100%'>";
+                    table += "<tr bgcolor='#808080'><td>ID</td><td>Moneda</td><td>Inicial</td><td>Actual</td><td>Nombre</td><td>Estado</td></tr>";
+                    for(var c=0; c<cashunit.lpBuffer.lppList.length; c++) {
+                        table += "<tr>";
+                        table += "<td>" + cashunit.lpBuffer.lppList[c].cUnitID + "</td>";
+                        table += "<td>" + cashunit.lpBuffer.lppList[c].cCurrencyID + " " + cashunit.lpBuffer.lppList[c].ulValues +"</td>";
+                        table += "<td>" + cashunit.lpBuffer.lppList[c].ulInitialCount + "</td>";
+                        table += "<td>" + cashunit.lpBuffer.lppList[c].ulCount + "</td>";
+                        table += "<td>" + cashunit.lpBuffer.lppList[c].lpszCashUnitName + "</td>";
+                        table += "<td>" + cashunit.lpBuffer.lppList[c].usStatus + "</td>";
+                        table += "</tr>";
+                    }
+                    table += "</table>";
+                }
+                
+                if(reset!=null) {
+                    table += "<table>";
+                    table += "<tr><td>Reset:</td><td>" + reset.hResultDesc + "(" + reset.hResult + ")</td></tr>";
+                    table += "</table>";
+                }
+
+                if(set_cashunit!=null) {
+                    table += "<table>";
+                    table += "<tr><td>SetCashUnitInfo:</td><td>" + set_cashunit.hResultDesc + "(" + set_cashunit.hResult + ")</td></tr>";
+                    table += "</table>";
+                }
+                                
+                States.setProperty("detalle", table);
+                States.storeNamedValue("sup.detalle", table);
+            },
+
+            "title": {
+                "text": "<%= operacion %>",
+                },            
+
+            "message": {
+                "text": "<%= detalle %>"
+            },
+        
+            "nav": {
+
+                "nav0": {
+                    "text": "Salir",
+                    "event": "salir",
+                },
+
+                "nav3": {
+                    "text": "Imprimir",
+                    "event": "imprimir"
+                }
+            },
+            
+        }
+    },
+
+    "events": {
+    
+        "imprimir": "p/sup_dispenser_test_print",
+
+        "salir": "p/sup_menu_select",
+     
+        "timeout": "p/sup_changestyle",
+    },
+
+}   

@@ -1,0 +1,4 @@
+﻿{
+    "command": "WFS_INF_CDM_PRESENT_STATUS",
+    "input" : "WFS_CDM_POSNULL"
+}

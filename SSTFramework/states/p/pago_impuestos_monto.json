@@ -1,0 +1,40 @@
+﻿{
+    
+    "base" : include(p/bases/ingreso_monto.json),
+
+    "properties": {
+
+        "accept_zero": "1",
+
+        "decimales": "2",
+
+        "storename": "monto",
+
+    },
+
+    "screens": {
+                        
+        "default" : {            
+                
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Por favor, ingrese el monto a pagar en $<br>Luego toque CONTINUAR",
+                },
+
+            include(p/chunk/nav_all.json),
+    
+        }
+    },
+
+    "events": {
+        include(p/chunk/event_timeout.json),
+        
+        "accept": "p/pago_impuestos_aclara",
+
+        "back": "p/pago_impuestos",
+
+        "cancel": "p/close_salir",
+    },
+
+}   

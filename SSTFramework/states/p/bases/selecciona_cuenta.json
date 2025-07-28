@@ -1,0 +1,92 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "storename": "cuenta",
+        "storeCallback": function(val) {
+            var storename = States.getProperty("storename", "cuenta");
+            var detalle = storename + "_detalle";
+
+            var prod = UserFuns.getProduct(storename); 
+            if(prod) {
+                States.storeNamedValue(detalle, prod);
+            } else {
+                States.storeNamedValue(detalle, null);
+            }
+            return val;
+        },
+
+        "nav": function() {
+            var prod = UserFuns.getProduct(States.getProperty("storename", "cuenta")); 
+            if(prod)
+                prod = UserFuns.formatProduct(prod, true);
+            else
+                return null;
+            return prod;
+        },
+
+        "flags_values": [
+            "TSEDEBITO", "TSECREEFE", "TSECRECHE", "TSETRANSF", "TSE_CONSU"
+        ],
+
+        "monedas": null,
+    },
+
+	"screens": {
+
+	    "default" : {
+            
+	        "update": function(screen) {				
+	            var nombre = States.getStoredValue("customer_name");
+	            States.setProperty("nombre_cliente", nombre);
+				
+	            var conceptos = States.getProperty("conceptos");
+	            var flags = States.getProperty("flags");
+	            var monedas = States.getProperty("monedas");
+
+				var cuentas = UserFuns.getFilteredProducts(conceptos, flags, monedas);
+				
+	            var opciones = [];	            
+	            
+	            for(var c=0; c<cuentas.length; c++) {
+					if (cuentas[c] != null) {
+						opciones.push({
+							text: UserFuns.formatProduct(cuentas[c], true),
+							value: c,
+						});
+					}
+				}                   
+	            
+	            var orden = ["select0", "select4", "select1", "select5", "select2", "select6", "select3"];
+	            UserFuns.selectFromList(screen, opciones, orden);
+	        },
+		
+            include(p/chunk/title_transaccion.json),
+
+      
+            "subtitle": {
+                "text": "Bienvenido <%= nombre_cliente %><br>Por favor, seleccione una cuenta",
+            },
+
+            include(p/chunk/nav_cancelar_anterior.json),
+
+            "select": {							    
+			    "select7" : {
+			        "text": "Más",
+					"event": "mas" 
+			    }
+			},
+		}
+	},
+    
+	"events" : {
+
+	    include(p/chunk/event_timeout.json),
+
+        "sin_opciones": "p/close_sin_opciones",
+
+	    "mas" : function() {
+	        States.refreshState();
+	    },
+	}
+}

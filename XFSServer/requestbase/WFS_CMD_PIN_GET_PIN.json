@@ -1,0 +1,13 @@
+﻿{
+    "command": "WFS_CMD_PIN_GET_PIN",
+    "input": {
+        "usMinLen": "4", 
+        "usMaxLen": "4", 
+        "bAutoEnd": 1, 
+        "cEcho": "0", 
+        "ulActiveFDKs": "0", 
+        "ulActiveKeys": "12287", 
+        "ulTerminateFDKs": "0", 
+        "ulTerminateKeys": "1024"
+    }
+}

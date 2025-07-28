@@ -1,0 +1,36 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "sup_dispenser",
+
+			"update": function() { 
+			    var op = States.getStoredValue("data.menu_principal");
+			    var receipt = {
+			        "detalle": States.getStoredValue("sup.detalle"),
+			        "operacion": op!=null ? op.text : ""
+			    };
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "print_ok": function() {
+			if (States.getStoredValue("selecciono_balanceo")) {
+				return "p/sup_balanceo";
+			} else {
+				return "p/sup_dispenser_test_timeouts";
+			}
+		},
+
+	    "hardware_error_ptr": "p/close_printer_error"
+	}
+
+}

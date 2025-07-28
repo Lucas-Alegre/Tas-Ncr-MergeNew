@@ -1,0 +1,34 @@
+{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WS201",
+        "storename": "comms.WS201",
+        "nombre": "confirma deposito",
+        "repeat_trx": false,
+        "simulacion":  true,
+
+        "requestHandler": function(request) {
+            if(States.getStoredValue("data.menu_principal").value =="deposito_terceros") {
+                request.cuenta_detalle = UserFuns.createObjectFromCuenta(
+                    States.getStoredValue("tipo_cuenta"), 
+                    States.getStoredValue("cuenta"));
+
+            } else {
+                request.cuenta_detalle = UserFuns.getProduct("cuenta");                        
+            }
+            request.monto = "1";
+            request.cheques = "1";
+            request.repeat_trx = States.getProperty("repeat_trx");
+            request.simulacion = States.getProperty("simulacion");
+        },
+
+    },
+    
+    "events": {
+        "comms_ok": "p/deposito_confirma_cheque",
+        "comms_error": "p/close_hardware_error",
+        "comms_general_error": "p/close_comms_error"
+    }
+
+}

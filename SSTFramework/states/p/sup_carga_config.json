@@ -1,0 +1,25 @@
+﻿{
+    "base" : include(p/status_startofday.json),
+
+    "properties": {
+        "application": "sup",
+    },
+
+
+
+	"screens": {
+
+	    "out_of_service" : {
+            
+	        "title": {
+	            "text": "Obteniendo configuración"
+	        },
+            
+            "message": {},
+		}
+	},
+
+	"events" : {
+	    "continue": "p/sup_menu_configuracion"        
+	}
+}

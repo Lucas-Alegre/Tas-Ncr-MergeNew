@@ -1,0 +1,28 @@
+﻿{
+    "base" : include(p/bases/ingreso_pin.json),
+
+	"screens": {
+        	
+		"default" : {
+			
+		    include(p/chunk/title_transaccion.json), 
+            
+            "subtitle": { 
+                "text": "Por favor, ingrese el nuevo PIN" 
+            },
+
+		}
+	},
+
+	"properties" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "storename": "pinblocknew",
+	},
+
+
+	"events" : {
+        "pin_entered": "p/cambio_pin2",
+        "cancel": "p/close_salir",
+    }
+}

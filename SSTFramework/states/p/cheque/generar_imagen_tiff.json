@@ -1,0 +1,74 @@
+ssfw = {
+
+    "base" : include(cheque/base_ipm.json),
+
+    "type" : "Custom",
+
+    "run": function() {
+
+        var listado_cheques = Vars.get('listado_cheques', []);
+        var index = Vars.get("cheque_index", 0);
+        
+        var data = {};
+        data.method = "generateTiffImage";
+        data.paths = {};
+        data.paths.path_front = listado_cheques[index].path_image_front;
+        data.paths.path_back = listado_cheques[index].path_image_back;
+        
+        var ipm = new XFSDevice("ipm"); 
+        return ipm.extension("IPMGenericController", data)
+        .then(function(response) {
+            if (response.status = "ok") {
+
+                var entity = Vars.get("entidad");
+
+                switch (entity) {
+                    case "bersa":
+                        data.method = "generateMultiTiffImageWithName";
+                        data.image_name = listado_cheques[index].cmc7; 
+                        break;
+                    case "santacruz":
+                        data.method = "generateTiffImagesWithName";
+                        data.image_name = listado_cheques[index].nombre_imagen_tiff; 
+                        break;
+                    case "sanjuan":
+                        data.method = "generateTiffImagesWithName";
+                        data.image_name = listado_cheques[index].nombre_imagen_tiff;
+                        break;
+                    default:
+                        data.method = "generateMultiTiffImageWithName";
+                        data.image_name = listado_cheques[index].cmc7;
+                        break;
+                }
+
+                ipm.extension("IPMGenericController", data)
+                .then(function(response) {
+                    if (response.status = "ok") {
+                        States.handleEvent("proxima_imagen");
+                    } else {
+                        console.error("Error en generación de imagen tiff");
+                        States.handleEvent("proxima_imagen");
+                    }
+                });    
+            } else {
+                console.error("Error en generación de imagen tiff");
+                States.handleEvent("proxima_imagen");
+            }
+        });
+    },
+
+    "events" : {
+
+        "proxima_imagen": function(){
+            var listado_cheques = Vars.get("listado_cheques", []);
+            var index = Vars.get("cheque_index", 0);
+            if(listado_cheques.length <= index + 1){
+                Vars.remove("cheque_index");
+                return "p/cheque/generar_log_cheque";
+            } else{
+                Vars.set("cheque_index", index + 1);
+                return "p/cheque/generar_imagen_tiff";
+            }
+        },
+    }
+}

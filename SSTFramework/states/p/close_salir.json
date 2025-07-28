@@ -1,0 +1,19 @@
+﻿{
+    "type": "Close",
+
+	"screens": {
+
+	    "idc_card_eject" : {
+			            
+            "message": {
+                "text": "Por favor retire su tarjeta"
+            },
+            
+		}
+	},
+
+	"events" : {
+	    "card_complete": "cim/close_cim",
+        "timeout": "cim/close_cim",
+	}
+}

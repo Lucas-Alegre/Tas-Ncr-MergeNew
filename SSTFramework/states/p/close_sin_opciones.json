@@ -1,0 +1,32 @@
+﻿{
+	"type": "General",
+
+	"run": function(state){
+      xfsAudit("Error" , "Sr Cliente, la  transaccion que desea realizar, no esta habilitada/disponible para este tipo de producto.");
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+	        include(p/chunk/title_transaccion.json),
+
+            "message": { 
+                "text": "Sr Cliente, la  transacción que desea realizar, no está habilitada/disponible para este tipo de producto",
+            },
+
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+            },
+
+		}
+	},
+
+	"events" : {
+	    "cancel": "p/close_salir"
+	}
+}

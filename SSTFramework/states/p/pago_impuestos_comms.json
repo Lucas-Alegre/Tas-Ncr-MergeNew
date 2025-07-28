@@ -1,0 +1,55 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WS402",
+        "storename": "comms.WS402",
+         "nombre": "PAGO DE IMPUESTOS",
+        
+         "audit": function() {
+            
+             var str = "";
+             var sim = States.getProperty("simluacion");
+          
+             if(sim) {
+                 var medio_pago = States.getStoredValue("medio_pago");             
+                 var monto = UserFuns.formatFloatMonto(States.getStoredValue("monto"));
+                 var comprobantes = States.getStoredValue("servicios");
+
+                 str += (medio_pago=="debito" ? "Debito en cuenta" : "Cheque") + " " + monto + " " + comprobantes;
+                 if(medio_pago=="debito") {
+                     str += "\n";
+                     var cuenta = UserFuns.getProduct("cuenta");
+                     var tipo_cuenta = UserFuns.formatProductName(cuenta);
+                     var detalle_cuenta = UserFuns.formatProductValue(cuenta);
+                     str += tipo_cuenta + "\n" + detalle_cuenta;
+                 }
+             } else {
+                 return "confirmacion";
+             }
+             return str;
+        },
+
+        "repeat_trx": true,
+        "simluacion": false,
+
+        "requestHandler": function(obj) {
+            if(States.getStoredValue("medio_pago")=="debito") {
+                obj.cuenta_detalle = UserFuns.getProduct("cuenta");
+            }
+            if(States.getStoredValue("medio_pago")=="cheque") {
+                obj.cheques = 1;
+            }
+            obj.repeat_trx = States.getProperty("repeat_trx");            
+            obj.simulacion = States.getProperty("simulacion");      
+        },
+        
+    },
+
+    "events": {
+        "comms_ok": "p/pago_impuestos_print",
+        "comms_error": "p/pago_impuestos_print",            
+        "comms_general_error": "p/pago_impuestos_print"
+    }
+
+}

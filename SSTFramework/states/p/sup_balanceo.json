@@ -1,0 +1,155 @@
+{
+    
+    "type": "General",
+
+    "run" : function(state) {
+
+		States.storeNamedValue("selecciono_balanceo", false);
+        
+        var cdm = new XFSDevice("cdm");
+
+        return cdm.getInfo("WFS_INF_CDM_CASH_UNIT_INFO")
+            
+        .then(function(res) {
+             States.storeNamedValue("sup.dispenser_cashunit", res);
+        })
+
+        .then(function(res) {
+            var cashunit = States.getStoredValue("sup.dispenser_cashunit");
+
+            for(var c=0; c<cashunit.lpBuffer.lppList.length; c++) {
+                cashunit.lpBuffer.lppList[c].ulInitialCount = 0;
+                cashunit.lpBuffer.lppList[c].ulCount = 0;
+                cashunit.lpBuffer.lppList[c].ulRejectCount = 0;
+                States.storeNamedValue("sup.dispenser_cashunit", cashunit);
+            }
+
+            cdm.execute("WFS_CMD_CDM_SET_CASH_UNIT_INFO", cashunit.lpBuffer)
+        });
+    },
+   
+
+    "screens": {
+                        
+        "default" : {            
+                
+            "update": function(screen) {
+
+                var status = States.getStoredValue("sup.dispenser_status");        
+                var reset = States.getStoredValue("sup.dispenser_reset");
+                var cashunit = States.getStoredValue("sup.dispenser_cashunit");
+                var set_cashunit = States.getStoredValue("sup.dispenser_setcashunit");
+                
+                States.setProperty("operacion", "Estado dispensador");
+                var op = States.getStoredValue("data.menu_principal");
+                if(op!=null)
+                    States.setProperty("operacion", op.text);
+                
+                var table = "";
+
+                if(status!=null) {
+                    table += "<p>Estado General Cod: " + status.lpBuffer.fwDevice + "</p>";
+                }
+
+                var ticket = "";
+                ticket += op.text + "\r\n";                       
+                ticket += "ID" + " Moneda" + " Inicial" + " Actual" + " Disp" + " Rech.";
+
+            
+                if(cashunit!=null) {
+                    table += "<table class='dispenser_table' width='100%'>";
+                    table += "<tr><td>ID</td><td>Moneda</td><td>Inicial</td><td>Actual</td><td>Disp</td><td>Rech.</td><td>Nombre</td><td>Estado</td></tr>";
+
+                    for(var c=0; c<cashunit.lpBuffer.lppList.length; c++) {
+                        var cas = cashunit.lpBuffer.lppList[c];
+                        var initial_count = cas.ulInitialCount; 
+                        var count = cas.ulCount;
+                        var reject = cas.ulRejectCount;
+                        var dispensed =  initial_count - count - reject;
+                        table += "<tr>";
+                        table += "<td>" + cas.cUnitID + "</td>";
+                        table += "<td>" + (cas.usType==2 ? "" : (cas.cCurrencyID + " " + cas.ulValues)) +"</td>";
+                        table += "<td>" + initial_count + "</td>";
+                        table += "<td>" + count + "</td>";
+                        table += "<td>" + dispensed + "</td>";
+                        table += "<td>" + reject + "</td>";
+                        table += "<td>" + cas.lpszCashUnitName + "</td>";
+                        table += "<td>" + cas.usStatus + "</td>";
+                        ticket += "\r\n" + cas.cUnitID + "    " + cas.cCurrencyID + "      " + initial_count + "      " + count + "    " + dispensed + "    " + reject;
+                        table += "</tr>";
+                    }
+                    table += "</table>";
+                }
+
+                //Imprime tabla en tira auditora
+                xfsAudit("",ticket);
+                
+                if(reset!=null) {
+                    table += "<table>";
+                    table += "<tr><td>Reset:</td><td>" + reset.hResultDesc + "(" + reset.hResult + ")</td></tr>";
+                    table += "</table>";
+                }
+
+                if(set_cashunit!=null) {
+                    table += "<table>";
+                    table += "<tr><td>SetCashUnitInfo:</td><td>" + set_cashunit.hResultDesc + "(" + set_cashunit.hResult + ")</td></tr>";
+                    table += "</table>";
+                }
+                                    
+                States.setProperty("detalle", table);
+                States.storeNamedValue("sup.detalle", table);
+            },
+
+            "title": {
+                "text": "<%= operacion %>",
+                },            
+
+            "message": {
+                "text": "<%= detalle %>"
+            },
+        
+            "nav": {
+
+                "nav0": {
+                    "text": "Salir",
+                    "event": "salir",
+                },
+
+                "nav3": {
+                    "text": "Imprimir",
+                    "event": "imprimir"
+                }
+            },
+            
+        }
+    },
+
+    "events": {
+    
+        "imprimir": function() {
+			var datos = {};
+			datos.operacion = "CopyClosed";
+			var dev = new XFSDevice("server");		
+			dev.extension("Auditoria", datos);
+			return "p/sup_dispenser_test_print";
+		},
+
+        "salir": function() {
+			var datos = {};
+			datos.operacion = "CopyClosed";
+			var dev = new XFSDevice("server");		
+			dev.extension("Auditoria", datos);
+			return "p/sup_menu_select";
+		},
+     
+        "timeout": function() {
+			var datos = {};
+			datos.operacion = "CopyClosed";
+			var dev = new XFSDevice("server");		
+			dev.extension("Auditoria", datos);
+			return "p/sup_changestyle";
+		},
+		
+    },
+
+}   

@@ -1,0 +1,18 @@
+﻿{
+    "base": include(p/bases/estado_dev.json),
+
+    "events": {
+        "hardware_error_dep": "p/close_hardware_error",
+        "check_complete": function() {
+            if (States.getStoredValue("data.menu_principal").value == "pago_ttcc") {
+                return "p/pago_ttcc_comms_simulacion";
+            }
+
+            if (States.getStoredValue("deposito_tipo").text == "Efectivo") {
+                return "p/deposito_monto";
+            } else {
+                return "p/deposito_cantidad_cheques";
+            } 
+        }  
+    }
+}

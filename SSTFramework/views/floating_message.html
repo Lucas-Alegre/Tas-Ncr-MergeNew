@@ -1,0 +1,42 @@
+<!--
+    Data:  
+        floating_message.text: text to display
+        floating_message.top: vertical position of message
+
+    FireEvents:
+        -
+
+    ListenEvents:
+        -
+-->
+
+<div class="floating_message_panel">
+    <div class="floating_message" id="floating_message">
+        <%- floating_message.text %>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        var component_data = <%- JSON.stringify(floating_message) %>;
+
+        var obj = $("#floating_message");
+        if(component_data.top) {
+            obj.css("top", component_data.top);
+        }
+
+        $.each(component_data, function(key, value) {
+            obj.data(key, value);
+        });
+
+        ////////////////////////
+        ///centrado vertical
+        SSFramework.centerInDiv("#floating_message");
+
+        ////////////////////////
+        //tween inicial
+        var obj = $("#floating_message");
+        obj.tween(TweenHelpers.tweenSide(obj, "top", false, 500, 0, false));
+    });
+</script>

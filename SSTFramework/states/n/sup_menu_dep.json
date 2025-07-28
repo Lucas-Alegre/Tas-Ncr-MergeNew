@@ -1,0 +1,57 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "storename": "data.menu_principal",
+        "nav": function() {
+            return States.getStoredValue("data.menu_principal").text;
+        }
+    },
+
+	"screens": {
+
+	    "default" : {
+
+			"title": {				
+				"text" : "Menú Principal"
+			},
+
+            "subtitle": {
+                "text": "Seleccione la operación que desea realizar"
+            },
+            
+			"select": {
+			    "select0" : {
+					"text": "Iniciar VDM",
+					"event": "vdm", 
+				},
+				"select4" : {
+					"text": "Imprimir Contadores",
+					"event": "ptr_count", 
+				},
+				"select1" : {
+					"text": "Borrar Contadores",
+					"event": "clr_count", 
+				},
+			},
+
+            "nav": {
+				include(n/chunk/nav_btn_cancelar.json),
+			}
+		}
+	},
+
+    "events": {
+        "timeout": "n/sup_changestyle",
+        "cancel": "n/sup_changestyle",        
+        "vdm": "n/sup_vdm",
+		"ptr_count": function() {
+			States.storeNamedValue("clr_counts", false);
+			return "n/CimCashUnitInfo";
+		},
+		"clr_count": function() {
+			States.storeNamedValue("clr_counts", true);
+			return "n/CimCashUnitInfo";
+        }
+	}
+}

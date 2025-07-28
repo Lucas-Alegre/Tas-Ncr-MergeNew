@@ -1,0 +1,39 @@
+﻿{
+    "type": "General",
+
+	"screens": {
+
+	
+		"default" : {
+			
+		    include(p/chunk/title_transaccion.json),
+
+            
+            "subtitle": { 
+                "text": "Clave ingresada" 
+            },
+            "message": {
+				"text": "Clave ingresada Caducada"
+			},
+			"nav": {
+				"nav1": {
+					 "text": "Salir",
+                    "event": "cancel"
+				},
+				"nav3": {
+					 "text": "Cambiar PIN",
+                    "event": "cambio_pin"
+				}
+			}
+
+		}
+	},
+
+	
+	"events" : {
+		include(p/chunk/event_timeout.json),
+	    "cancel": "p/close_salir",
+        "hardware_error": "return",
+        "cambio_pin": "p/cambio_pin1",
+    }
+}

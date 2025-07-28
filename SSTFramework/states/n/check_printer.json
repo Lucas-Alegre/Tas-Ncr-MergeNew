@@ -1,0 +1,12 @@
+﻿{
+    "base": include(n/bases/estado_dev.json),
+
+    "events": {
+        "hardware_error_ptr": "n/close_hardware_error",
+        //"hardware_error_pin": "n/close_hardware_error",
+		//"hardware_error_dep": "n/close_hardware_error",
+		//"hardware_error_cdm": "n/close_hardware_error",
+		"hardware_error_cim": "n/close_hardware_error",
+        "check_complete": "n/identificacion_manual_ingreso",       
+    }
+}

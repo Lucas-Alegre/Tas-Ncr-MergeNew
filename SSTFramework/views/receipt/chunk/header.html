@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+    <script>
+
+        function getDateString() {
+            var m = new Date();
+            var dateString =
+              ("0" + m.getDate()).slice(-2) + "/" +
+              ("0" + (m.getMonth() + 1)).slice(-2) + "/" +
+              (m.getFullYear());
+            return dateString;
+        }
+
+        function getTimeString() {
+            var m = new Date();
+            var dateString =
+              ("0" + m.getHours()).slice(-2) + ":" +
+              ("0" + m.getMinutes()).slice(-2)
+            return dateString;
+        }
+
+        function formatTerminalName(name) {
+            name = name.toString();
+            var tipo = name.slice(0, 1);
+            var suc = name.slice(1, 4);
+            var tas = name.slice(4);
+
+            return (
+                (""+tipo) + "-" +
+                suc + "-" + tas
+            );
+        }
+
+        
+    </script>
+    <style>
+        * {
+            font-family: sans-serif;
+            -webkit-font-smoothing: none;
+        }
+
+        html, body {
+            margin: 0px;
+            top: 0px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        p, table, tr, td {
+            font-size: 28px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+    </style>
+
+    

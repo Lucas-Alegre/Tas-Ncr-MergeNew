@@ -1,0 +1,15 @@
+<div class="img_cheque" id="cheque"">
+	<img style="" src="">	
+</div>
+
+
+<script>
+  $(function () {
+            var cheque = Vars.get("current_cheque");
+            
+            if (cheque != undefined){
+                $("#cheque").empty();
+                $('<img style="width: 500px; top: 455px; left: 10px; position:absolute" src="' + cheque.images[0].image.file_ticket +'">').appendTo('#cheque');
+        }       
+  });
+</script>

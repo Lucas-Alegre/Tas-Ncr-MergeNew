@@ -1,0 +1,16 @@
+﻿{ 
+
+    "base" : include(p/pago_impuestos_print_sobre.json),
+        
+    "properties" : {
+        "sobre": false,              
+    },
+    
+	"events": { 	
+	    "cancel": "p/close_salir",
+        "enter": "p/close_salir",
+	    "print_ok": "p/close_salir",
+	    "hardware_error_ptr": "p/close_printer_error"
+	}
+
+}

@@ -1,0 +1,29 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+
+		"default" : {
+			
+		    "title": {
+		        "text": "haciendo algo que demora tiempo"
+		    },
+            
+            "floating_message": { 
+			    "text": "Espere un momento por favor<br><div class='spinner'></div>",
+			},
+
+			"select": {
+				"select3" : {
+					"text": "Atrás",
+					"event": "atras" 
+				},
+
+			}
+		}
+	},
+
+	"events" : {
+		"atras": "main"
+	}
+}

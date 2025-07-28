@@ -1,0 +1,71 @@
+{
+    "type": "Custom",
+
+    "run": function(statedata) {
+
+    	SSFramework.displayScreen(statedata.screens.espera);
+
+    	var cashunit = States.getStoredValue("sup.dispenser_cashunit");
+
+       if(cashunit!=null) {
+            for(var c=0; c<cashunit.lpBuffer.lppList.length; c++) {
+                var cas = cashunit.lpBuffer.lppList[c];
+                var initial_count = cas.ulInitialCount; 
+                var count = cas.ulCount;
+                var reject = cas.ulRejectCount;
+                var dispensed =  initial_count - count - reject;
+                if(initial_count != 0 || count != 0 || reject != 0 || dispensed != 0) {
+                	contadores_en_cero = false;
+                	break;
+                } else {
+                	contadores_en_cero = true;
+                	
+                }
+            }
+
+            if (contadores_en_cero) {
+				States.handleEvent("contadores_en_cero");
+            } else {
+            	SSFramework.displayScreen(statedata.screens.requiere_balanceo);
+                xfsAudit("","Retener" + "\r\n" + "Debe hacer un balanceo primero");
+				window.setTimeout(function(){
+					States.handleEvent("contadores_distinto_de_cero");
+				}, 3000);
+            }
+        }
+    },
+
+	"screens": {
+
+	    "espera" : {
+			
+	        "title": {
+	            "text": "Realizando tarea"
+	        },
+            
+            "message": { 
+                "text": "Espere un momento por favor<br><div class='spinner'></div>",
+            },
+	    },
+
+	   	"requiere_balanceo" : {
+			
+	        "title": {
+	            "text": "Advertencia"
+	        },
+            
+            "message": { 
+                "text": "Debe hacer un balanceo primero<br><div class='spinner'></div>",
+            },
+	    },
+	},
+    
+    "events": {
+        "contadores_en_cero": function() {
+        	return States.getStoredValue("proximo_estado");
+        },
+        "contadores_distinto_de_cero": "p/sup_menu_cash",
+    } 
+}
+
+

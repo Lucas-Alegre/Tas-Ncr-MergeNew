@@ -1,0 +1,18 @@
+﻿{ 
+
+    "base" : include(p/pago_ttcc_print_sobre.json),
+
+    
+    "properties" : {
+        "sobre": false,              
+        },
+    
+
+	"events": { 	
+	    "cancel": "p/close_salir",
+        "enter": "p/close_salir",
+	    "print_ok": "p/pago_ttcc_pregunta_adesion",       
+        "hardware_error_ptr": "p/close_printer_error"
+    }
+
+}

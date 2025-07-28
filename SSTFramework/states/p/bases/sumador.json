@@ -1,0 +1,112 @@
+﻿{
+    "type": "Custom",
+
+    "run": function(state) {
+
+        SSFramework.displayScreen(state.screens.default)
+
+        .then(function() {
+            States.setProperty("textacumulado", state.screens.default.subtitle.text);
+            States.getProperty("sumar")(0);
+        });
+
+    },
+
+    "properties": {
+
+        "acumulado": 0,
+        
+        "sumar": function(numero) {
+            numero = parseInt(numero, 10);
+            if(isNaN(numero)==false) {
+                var acumulado = States.getProperty("acumulado");
+                acumulado += numero;
+                States.setProperty("acumulado", acumulado);
+                var text = States.getProperty("textacumulado");
+                text = text.replace("<suma>", SSUtil.formatNumber((parseFloat(acumulado)/100).toFixed(2), 2));
+                $("#subtitle").html(text);
+                SSFramework.centerInDiv("#subtitle");
+            }
+            States.handleEvent("clear");
+        },
+        
+        "datachanged": function(args) {	
+            return args.slice(0, 12);
+        },
+
+		"datapresented": function(args) { 
+		    return SSUtil.formatNumber((parseFloat(args)/100).toFixed(2), 2);
+		},
+        
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        "title": {
+                "text": "Sumador",
+	        },
+
+	        "subtitle": {
+                "text": "Ingrese un monto a sumar. <br>Total Acumulador: <suma>",
+	        },
+
+            "inputarea": {},
+
+			"numkeyboard": {},
+           
+            "nav": {
+                "nav0": {
+                    "text": "Volver",
+                    "event": "back",
+                    },
+                "nav1": {
+                    "text": "Borrar",
+                    "event": "clear",
+                    },
+                "nav2": {
+                    "text": "+",
+                    "event": "mas",
+                    },
+                "nav3": {                    
+                    "text": "=",
+                    "event": "igual",
+                },
+            }
+	    }
+	},
+
+	"events" : {
+
+	    include(p/chunk/event_timeout.json),
+
+        "mas": function() {
+            var val = States.getProperty("value");
+            States.setProperty("value", 0);
+            States.getProperty("sumar")(val);
+            return false;
+        },
+
+        "igual": function() {
+            var val = States.getProperty("value");
+            States.setProperty("value", 0);
+            States.getProperty("sumar")(val);
+
+            var acc = States.getProperty("acumulado");
+            States.storeNamedValue("valor_sumador", acc);
+            States.handleEvent("continue");
+            return false;
+        },
+        	    
+		"accept": function() { 
+		    States.handleEvent("mas");
+		    return false;
+		},
+
+        "clear": function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+
+	}
+}

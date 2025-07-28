@@ -1,0 +1,296 @@
+ssfw = {
+
+	"base" : include(cheque/ipmcontroller.json),
+
+	"properties" : {        
+        "campos_a_validar" : [
+            {
+                "campo" : "cmc7",
+                "estado" : "p/cheque/ingresar_cmc7", 
+            },
+            {
+                "campo" : "banco",
+                "estado" : "p/cheque/verificar_banco", 
+            },
+            {
+                "campo" : "fecha",
+                "estado" : "p/cheque/ingresar_fecha", 
+            },
+            {
+                "campo" : "monto",
+                "estado" : "p/cheque/ingresar_monto", 
+            },
+        ],
+	},
+
+	"screens": {
+
+        "ipm_media_in_insert": {
+
+            "update": function(screen) {
+                var cantidad_maxima_cheques = States.getProperty("max_items_accepted");
+                screen.subtitle.text = "Por favor, ingrese los cheques.<br>" +
+                                        "Hasta un máximo de " + cantidad_maxima_cheques + " cheques";
+            },
+
+            include(p/chunk/title_transaccion.json),
+
+            "subtitle": {
+                "text": "",
+            },
+
+            "video": {
+                "class": "video_deposita_cheques",
+                "src": "<%= SSUtil.readCSS('video_deposita_cheques') %>"
+            },
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancelar",
+                },
+            },
+
+        },
+
+        "ipm_detail" : {
+
+            "update": function(screen) {
+
+                var cantidad_cheques = States.getProperty('detail').cantidad;
+                var cantidad_cheques_rechazados = States.getProperty('detail').cantidad_rechazados;
+                var importe_total = States.getProperty('detail').total;
+
+                var log = "Cantidad: " + cantidad_cheques + " - Importe total: $ " + importe_total;
+                xfsAuditNtrx("CHEQUES INGRESADOS", log);
+
+                if (cantidad_cheques == 0) {
+                    delete(screen.nav.nav3);
+                }
+
+                if(States.getStoredValue("data.menu_principal").value =="pago_ttcc") {
+                    
+                    var tarjeta = UserFuns.getProduct("tarjeta_pago");
+                    var numero_tarjeta = UserFuns.formatProductValue(tarjeta);
+                    var cuenta = tarjeta.TNUCUENTA;
+                    Vars.set("cuenta_cheque",cuenta);
+
+                    var text = "Tarjeta: " + numero_tarjeta + "<br>" +
+                        "Cuenta: " + cuenta + "<br>" +
+                        "Cantidad de cheques aceptados: " + cantidad_cheques + "<br>" +
+                        "Importe total: $ " + importe_total;
+
+                    if (cantidad_cheques_rechazados > 0) {
+                        text = text + "<br><br>" + "Cantidad de cheques rechazados: " + cantidad_cheques_rechazados; 
+                    }
+
+                    screen.message.text = text;
+
+                    return;
+                }
+
+                if(States.getStoredValue("data.menu_principal").value =="deposito_terceros") {
+                    cuenta = UserFuns.createObjectFromCuenta(
+                        States.getStoredValue("tipo_cuenta"), 
+                        States.getStoredValue("cuenta"));
+                    var tipo_cuenta  = UserFuns.formatProductName(cuenta);
+                    var nro_cuenta = cuenta.ACU_OFICI + "-" +
+                            cuenta.WCUNUMCUE + "/" +
+                            cuenta.ACUDIGVER;  
+
+                } else {
+                    cuenta = UserFuns.getProduct("cuenta");
+                    var tipo_cuenta  = UserFuns.formatProductName(cuenta);
+                    var nro_cuenta = States.getStoredValue("cuenta_detalle").ACU_OFICI + "-" +
+                            States.getStoredValue("cuenta_detalle").WCUNUMCUE + "/" +
+                            States.getStoredValue("cuenta_detalle").ACUDIGVER;                   
+                }
+
+                Vars.set("cuenta_cheque",nro_cuenta);
+
+                var text = "Cuenta: " + tipo_cuenta + " " + nro_cuenta + "<br>" +
+                                        "Cantidad de cheques: " + cantidad_cheques + "<br>" +
+                                        "Importe total: $ " + importe_total;
+
+                if (cantidad_cheques_rechazados > 0) {
+                    text = text + "<br><br>" + "Cantidad de cheques rechazados: " + cantidad_cheques_rechazados; 
+                }
+
+                screen.message.text = text;
+
+            },
+
+            include(p/chunk/title_transaccion.json),
+
+            "subtitle": {
+                "text": "Detalle de los cheques depositados",
+            },
+
+            "message": {
+                "text": "",
+            },
+
+            "nav": {
+                "nav1": {
+                    "text": "Cancelar",
+                    "event": "cancelar",
+                },
+                "nav2": {
+                    "text": "Agregar",
+                    "event": "agregar",
+                },
+                "nav3": {
+                    "text": "Confirmar",
+                    "event": "confirmar",
+                },
+            },
+        },
+
+        "ipm_take_media": {
+
+            include(p/chunk/title_transaccion.json),
+
+            "subtitle": {
+                "text": "Por favor, retire los cheques",
+            },
+
+            "video": {
+                "class": "video_retira_cheques",
+                "src": "<%= SSUtil.readCSS('video_retira_cheques') %>"
+            },
+        },
+
+        "ipm_wait": {
+
+            include(p/chunk/title_transaccion.json),
+
+            "message" : {
+                "text" : "Esperá un momento, por favor <br><div class='spinner'></div></img>"
+            },
+        },
+
+        "ipm_media_in_rollback": {
+
+            include(p/chunk/title_transaccion.json),
+
+            "message": { 
+                "text": "Devolviendo cheques. Aguarde por favor <br><div class='spinner'></div></img>",
+            },
+        },
+
+        "ipm_media_in_retract": {
+
+            include(p/chunk/title_transaccion.json),
+
+            "message": { 
+                "text": "Capturando cheques. Aguarde por favor <br><div class='spinner'></div></img>",
+            },
+
+        },
+
+        "ipm_max_items_inserted" : {
+
+            include(p/chunk/title_transaccion.json),
+
+            "message": { 
+                "text": "Alcanzaste el limite máximo permitido.",
+            },
+
+        },
+
+        "ipm_timeout" : {
+
+           "title": {           
+                "text" : "Tiempo de espera superado"
+            },
+
+            "subtitle": {           
+                "text" : "Necesita más tiempo?"
+            },
+
+            "nav": {
+                "nav0": {
+                    "text": "No",
+                    "event": "no",
+                    },
+
+                "nav3": {
+                    "text": "Si",
+                    "event": "si",
+                }
+            }
+        }
+    },
+
+    "events" : {
+        "confirmar": function() {
+            var items_inserted = Vars.get("items_inserted", []);
+            var cheques = [];
+            for(var i=0; i<items_inserted.length; i++) {
+                if (!items_inserted[i].rechazado) {
+                    var cheque = {};
+                    cheque.cmc7 = items_inserted[i].cmc7;
+                    cheque.banco = items_inserted[i].data.bank;
+                    cheque.numero = items_inserted[i].data.cheque_number;
+                    cheque.monto = items_inserted[i].monto;
+                    cheque.monto_formateado = UserFuns.formatFloatMonto(items_inserted[i].monto);
+                    cheque.mediaid = items_inserted[i].mediaid;
+                    cheque.path_image_front = items_inserted[i].path_image_front;
+                    cheque.path_image_back = items_inserted[i].path_image_back;
+                    cheque.nombre_imagen_tiff = Vars.get("TerminalName") + States.getSequencialChequeNumber("secuencial_cheque_number", true);
+                    cheques.push(cheque);
+                }
+            }
+            Vars.set("listado_cheques",cheques);
+
+            /*var items_inserted = Vars.get("items_inserted", []);
+            for(var i=0; i<items_inserted.length; i++) {
+                items_inserted[0].images = "";
+            }*/
+            Vars.remove("items_inserted");            
+            Vars.remove("current_cheque");
+
+            Vars.set("tipo_deposito","cheque");
+            States.storeNamedValue("cheques",Vars.get("cantidad_cheques"));
+            States.storeNamedValue("monto", Vars.get("monto_total_cheques"));
+            if (States.getStoredValue("data.menu_principal").value == "pago_ttcc") {
+                return "p/pago_ttcc_comms";
+            } else {
+                return "p/deposito_comms_cheques_confirma";
+            }
+        }, 
+        "salida_ok": function() {
+            var path = window.location.protocol + "//" + window.location.host + "?name=p/status_inservice";
+            window.location = path;
+        },
+        "salida_error": function() { 
+            return "p/close_hardware_error";      
+        }, 
+        "salida_cancel": function() {
+            return "p/close_salir";      
+        },
+        "salida_timeout": function() { 
+            return "p/close_salir";       
+        },
+        "ipm_media_in_end_complete" : function() {
+            if (States.getStoredValue("data.menu_principal").value == "pago_ttcc") {
+                return "p/pago_ttcc_print_cheque";
+            } else {
+                return "p/deposito_print_trx";
+            }
+        },
+        "ipm_available" : function() {
+            Vars.set("ipm_available",true);
+            if (States.getStoredValue("data.menu_principal").value == "pago_ttcc") {
+                return "cheque/ingresar_cheques";
+            } else {
+                return "p/deposito_comms_cheques_intelig_simulacion";
+            }
+        },
+        "ipm_unavailable" : function() {
+            Vars.set("ipm_available",false);
+            return "p/deposito_check_dep"; 
+        }
+    },
+}
+    

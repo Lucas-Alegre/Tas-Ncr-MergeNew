@@ -1,0 +1,25 @@
+﻿{
+    "command": "WFS_CMD_IPM_MEDIA_IN",
+    "timeout": 300000,
+    "input" : {
+        "wCodelineFormat": "WFS_IPM_CODELINECMC7",
+        "usMaxMediaOnStacker": 25,
+        "bApplicationRefuse": 1,
+        "lppImage": [
+            {
+                "wImageSource": 1,
+                "wImageType": 4,
+                "wImageColorFormat": 4,
+                "wImageScanColor": 0,
+                "lpszImageFile": "c:\\cpm",
+            },          
+               {
+                   "wImageSource": 2,
+                   "wImageType": 4,
+                   "wImageColorFormat": 4,
+                   "wImageScanColor": 0,
+                   "lpszImageFile": "c:\\cpm",
+               },          
+        ]
+    }
+}

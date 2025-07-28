@@ -1,0 +1,59 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+		"default" : {
+
+			"ref": "screen1",
+
+			"title": {
+				"text" : "Ingreso de datos"
+			},
+
+            "inputarea": { },
+
+
+			"numkeyboard": {},
+
+			"select": {
+			    "select3" : {
+					"text": "Atrás",
+					"event": "atras" 
+				},
+
+				"select7" : {
+					"text": "Aceptar",
+					"event": "enter" 
+				},
+			}
+		}
+	},
+
+	"properties" : {
+
+		"storename": "numkey_entry",
+
+		"datachanged": function(args) {			
+			return args.slice(-15);
+		},
+
+		"datapresented": function(args) { 
+		    return SSUtil.formatNumber(SSUtil.intAsFloat(args, 2), 2);
+		},
+
+	},
+
+
+	"events" : {
+		"atras": "main2",
+	
+		"enter": function() { 
+			States.fireCustomEvent("input.enter", null);
+		},
+
+		"accept": "ingreso_numerico",
+
+		"cancel": "main2"
+
+	}
+}

@@ -1,0 +1,9 @@
+ssfw = {
+
+    "base" : include(cim/retract_billetes.json),
+
+	"events" : {
+        "cim_retract_error" : "cim/salida_timeout"
+	}
+}
+

@@ -1,0 +1,97 @@
+﻿{
+    "type": "Receipt",
+
+    "run": function(statedata) {
+
+    },
+
+    "properties": {
+        
+    },
+
+	"screens": {
+		"receipt": {
+	        "name": "naranja_count",
+ 			"update": function() { 
+			    var receipt = { 
+					"logo": "naranja",
+					"machine": "040120102",
+					"data": "",
+			    };
+				var CimCashUnitInfo = States.getStoredValue("CimCashUnitInfo");
+				var CimNoteTypes = States.getStoredValue("CimNoteTypes");
+				var cCurrencyID = States.getStoredValue("cCurrencyID");
+				var Notetypes = ["2", "5", "10", "20", "50", "100"];
+				for(var c=0; c < CimCashUnitInfo.lppCashIn.length; c++) {
+					var Notecount = [];
+					for (var f = 0; f < Notetypes.length; f++) {
+						Notecount[f] = 0;
+					}
+					receipt.data += "<tr><td><b>" + CimCashUnitInfo.lppCashIn[c].cUnitID + "</b></td><td align='right'><b>" + CimCashUnitInfo.lppCashIn[c].ulCount + "</b></td><td>&nbsp;</td></tr>";
+					if (JSON.stringify(CimCashUnitInfo.lppCashIn[c].lpNoteNumberList).length > 3) {
+						for (var e = 0; e < CimCashUnitInfo.lppCashIn[c].lpNoteNumberList.lppNoteNumber.length; e++) {
+							for (var g = 0; g < Notetypes.length; g++) {
+								if (Notetypes[g] == SSUtil.obtieneDetalle(CimCashUnitInfo.lppCashIn[c].lpNoteNumberList.lppNoteNumber[e].usNoteID)) {
+									Notecount[g] += CimCashUnitInfo.lppCashIn[c].lpNoteNumberList.lppNoteNumber[e].ulCount;
+								}
+							}
+						}
+					}
+					for (var d = 0; d < Notetypes.length; d++) {
+						receipt.data += "<tr><td>" + cCurrencyID + " " + Notetypes[d] + "</td><td align='right'>" + Notecount[d] + "</td><td>" + cCurrencyID + " " + (parseInt(Notetypes[d]) * Notecount[d]) + "</td></tr>";
+					}
+					receipt.data += "<tr><td colspan='3'><hr></td></tr>";
+					CimCashUnitInfo.lppCashIn[c].ulCount = 0;
+					CimCashUnitInfo.lppCashIn[c].ulCashInCount = 0;
+					CimCashUnitInfo.lppCashIn[c].lpNoteNumberList = [];
+				}
+				if (States.getStoredValue("clr_counts")) {
+					States.storeNamedValue("CimCashUnitInfo", CimCashUnitInfo);
+				}
+				return receipt;
+			}
+	    },	
+
+        "printing": {
+			"title": {
+				"text": "¡Imprimiendo!"
+			},
+            "subtitle": {
+                "text": "Por favor, esperá un momento"
+            },
+            "message": {
+                "text": "<div class='spinner'></div>"
+            }
+        },
+
+        "print_ok": {
+			"title": {
+				"text": "Imprimir Contadores"
+			},
+            "subtitle": {
+                "text": "¡Tu recibo está listo!"
+            },
+            "video": {
+                "class": "video_impresora",
+                "src": "<%= SSUtil.readCSS('video_impresora') %>"
+            },
+        },
+
+        "hardware_error_ptr": {
+            "message": {
+                "text": "No fue posible imprimir el recibo"
+            }
+        }
+	},
+    
+    "events": {
+        "print_ok": function(){
+			if (States.getStoredValue("clr_counts")) {
+				return "n/CimStartExchange";
+			} else {
+				return "n/sup_menu_dep";
+			}
+		},
+	    "hardware_error_ptr": "n/sup_menu_dep"
+    }
+}

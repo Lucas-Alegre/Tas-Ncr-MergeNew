@@ -1,0 +1,46 @@
+﻿{
+    
+    "type": "General",
+
+    "properties": {
+
+        "storename": "deposito.otra"
+
+    },
+
+    "screens": {
+                        
+        "default" : {            
+                
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "¿Desea realizar otro depósito en la misma cuenta?",
+            },
+			
+			"nav": {
+	            "nav0": {
+	                "text": "No",
+                    "event": "no",
+                    },
+
+                "nav3": {
+                    "text": "Si",
+                    "event": "si",
+                }
+	        }
+    
+        }
+    },
+
+    "events": {
+
+        "si": "cim/check_status",
+
+        "no": "p/close_salir",
+    
+        "timeout": "p/close_salir",
+
+    },
+
+}   

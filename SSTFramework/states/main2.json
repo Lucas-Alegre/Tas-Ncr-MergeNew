@@ -1,0 +1,52 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+		"default" : {
+
+			"update": function(screen) { 
+				screen.title.text = "update de la pantalla";
+			},
+
+			"title": {
+				"text" : "Segunda pantalla"
+			},
+
+			"select": {
+			    "select0" : {
+					"text": "Ingreso de datos<br>tipo PIN",
+					"event": "ingreso_pin" 
+				},
+
+				"select4" : {
+					"text": "Ingreso con<br>teclado numérico",
+					"event": "ingreso_numerico" 
+				},
+
+				"select1" : {
+					"text": "Ingreso con<br>teclado alpha numérico",
+					"event": "ingreso_alpha" 
+				},
+
+				"select5" : {
+					"text": "Pantalla con cuentas<br>del server",
+					"event": "selecciona_cuentas" 
+				},
+				
+				"select3" : {
+					"text": "Atrás",
+					"event": "atras" 
+				},
+			}
+		}
+	},
+
+
+	"events" : {
+		"atras": "main",
+		"ingreso_pin": "ingreso_pin",
+		"ingreso_numerico": "ingreso_numerico",
+		"ingreso_alpha": "ingreso_alpha",
+		"selecciona_cuentas": "selecciona_cuenta"
+	}
+}

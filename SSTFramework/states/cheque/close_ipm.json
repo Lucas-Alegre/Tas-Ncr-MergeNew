@@ -1,0 +1,20 @@
+﻿ssfw = {
+
+    "base" : include(cheque/base_ipm.json),
+
+    "type": function(state) {
+
+        States.getProperty("executeMediaInEnd")()
+        .then(
+            function(ok){},
+            function(error){} 
+        )
+        .caugth(function(e){});
+
+    },
+
+    "events" : {
+        "ipm_media_in_end_complete" : "cheque/salida_ok",
+        "ipm_media_in_end_error" : "cheque/salida_ok",
+    }
+}

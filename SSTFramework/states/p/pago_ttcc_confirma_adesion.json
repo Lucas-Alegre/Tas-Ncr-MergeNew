@@ -1,0 +1,41 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+
+	    "default" : {
+
+	        "update": function() {	        
+	            var cuenta = UserFuns.getProduct("cuenta");
+	            var tarjeta = UserFuns.getProduct("tarjeta_pago");  
+	            var tipo_debito  = States.getStoredValue("tipo_debito");
+
+	            States.setProperty("banco", SSUtil.getLocal("entity", "banco"));
+	            States.setProperty("marca", tarjeta.WNO_CLIE1);
+	            States.setProperty("numero", UserFuns.formatProductValue(tarjeta));
+	            States.setProperty("cuenta", UserFuns.formatProductValue(cuenta));
+	            States.setProperty("pago", tipo_debito=="T" ? "Total" : "Mínimo");	      
+	        },
+			
+            include(p/chunk/title_transaccion.json),
+
+            "subtitle": {
+                "text": "Toque CONTINUAR para realizar la adhesión"
+            },
+
+            include(p/chunk/nav_cancelar_continuar.json),
+    
+
+            "message": { 
+                "text": "En mi carácter de titular de la Tarjeta de Crédito <%= marca %> cuenta número <%= numero %>, autorizo expresamente al <%= banco %> a debitar de mi cuenta <%= cuenta %> de mi titularidad, el pago <%= pago %> que resulte del Resumen de Cuenta de mi Tarjeta de Crédito que se encontrare adeudado, con más los insumos, cargos e intereses que con posterioridad se devenguen."
+            },
+
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+	    "enter": "p/pago_ttcc_adesion_comms",
+        "cancel": "p/close_salir",
+    }
+}

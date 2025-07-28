@@ -1,0 +1,51 @@
+ssfw = {
+
+	"base" : include(cim/base_cim.json),
+
+	"type" : function() {
+        States.getProperty("cashInStatus")()
+        .then(
+            function(ok) {},
+            function(error) {
+                States.handleEvent("cim_cash_in_status_error");
+            } 
+        )
+        .caugth(function(e) {
+            States.handleEvent("cim_cash_in_status_error");
+        });
+	},
+    
+	"events" : {
+        "cim_cash_in_status_ok" : function(ev, data) {
+            var bills_inserted = States.getProperty("areItemsInserted")(data);
+            if (Vars.get("cim_error")) {
+                Vars.remove("cim_error");
+                if (bills_inserted) {
+                    States.getProperty("retract")();
+                } else {
+                    Vars.remove("cim_start");
+                    SSFramework.displayScreen("cim_wait");
+                    States.getProperty("reset")();
+                }
+            } else {
+                States.handleEvent("cim_close_ok");
+            }
+        },
+        "cim_cash_in_status_error" : "cim/salida_ok",
+        "cim_close_ok" : "cim/salida_ok",
+        "cim_retract_ok" : function() {
+            States.handleEvent("cim_close_ok");
+        },
+        "cim_retract_error" : function() {
+            Vars.remove("cim_start");
+            SSFramework.displayScreen("cim_wait");
+            States.getProperty("reset")();
+        },
+        "module_reset_ok" : function() {
+            States.handleEvent("cim_close_ok");
+        },
+        "module_reset_error" : function() {
+            States.handleEvent("cim_close_ok");
+        },
+	}
+}

@@ -1,0 +1,29 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+
+	    "default" : {
+			
+	        "title": {
+                "text": "Fuera de servicio",
+	        },
+            "message": { 
+                "text": "Lo sentimos, por problemas técnicos<br>este equipo se encuentra fuera de servicio",
+            },
+
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+            },
+
+		}
+	},
+
+	"events" : {
+	    "cancel": "n/close_salir"
+	}
+}

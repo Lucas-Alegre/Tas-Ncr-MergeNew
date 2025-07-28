@@ -1,0 +1,49 @@
+﻿{
+    "type": "General",
+
+
+    "properties": {
+        "storename": "pago_resumen_tipo",   
+     },
+
+    "screens": {
+
+        "default" : {
+			            
+            include(p/chunk/title_transaccion.json),
+
+            "subtitle": {			
+                "text" : "Seleccione la forma de ingreso de la tarjeta"
+            },
+
+			"select": {
+
+			    "select0": {
+			        "text": "Número de cuenta",
+                    "event": "cuenta",
+                    "value": "cuenta",
+			    },
+                
+                
+                "select1": {
+                    "text": "Número de tarjeta",
+                    "event": "tarjeta",
+                    "value": "tarjeta",
+                },
+			},
+
+            include(p/chunk/nav_cancelar_anterior.json),
+            }
+    },
+
+      	"events" : {
+      	    include(p/chunk/event_timeout.json),
+
+      	    "tarjeta": "p/pago_ttcc_resumen_numero_tarjeta",
+            "cuenta": "p/pago_ttcc_resumen_tipo_tarjeta",
+            "back": "p/pago_ttcc_tipo",
+            "cancel": "p/close_salir",	    
+        },
+
+  
+}

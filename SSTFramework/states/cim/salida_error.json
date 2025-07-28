@@ -1,0 +1,10 @@
+ssfw = {
+
+	"base" : include(cim/base_cim.json),
+
+    "type" : function() {
+    	Vars.set("cim_error",true);
+       	States.handleEvent("salida_error");
+    },
+
+}

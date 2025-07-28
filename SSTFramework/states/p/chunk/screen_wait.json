@@ -1,0 +1,5 @@
+﻿include(p/chunk/title_transaccion.json),
+            
+    "message": { 
+        "text": "Espere un momento por favor<br><div class='spinner'></div>",
+    }

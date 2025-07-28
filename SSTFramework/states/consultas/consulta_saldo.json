@@ -1,0 +1,58 @@
+﻿{ 
+
+	"type": "Receipt",
+	
+	"screens": { 
+
+	    "receipt": {
+	        "name": "receipt1",
+
+			"update": function() { 
+				var receipt = { 
+					cuenta: "12348374",
+					saldo: "$ " + SSUtil.formatNumber("94283", 2),
+					movimientos: [], 
+				};
+				for(var c=0; c<20; c++) { 
+					receipt.movimientos.push({ 
+						"descripcion": "movimiento " + c,
+						"monto": "$ " + SSUtil.formatNumber(100 * c, 2)
+					});
+				}	
+				UserFuns.addPrinterHeader(receipt);
+				return receipt;			 			 
+			}
+		},
+	
+		"default": { 
+			"floating_message": { 
+			    "text": "Espere un momento por favor<br><div class='spinner'></div>"
+			}
+		},
+
+		"printing": {
+			"floating_message": {  
+			    "text": "Imprimiendo, por favor espere<br><div class='spinner'></div></img>"
+			}
+		},
+
+		"print_ok": { 
+			"floating_message": {  
+				"text": "Por favor, retire su recibo<br><img src='/images/RemoveReceipt.png'></img>"
+			}
+		},
+
+        "hardware_error_ptr": { 
+            "floating_message": {  
+                "text": "No fue posible imprimir el recibo"
+            }
+        }
+	},	
+
+
+	"events": { 
+		"print_ok": "main",
+		"print_error": "main"
+	}
+
+}

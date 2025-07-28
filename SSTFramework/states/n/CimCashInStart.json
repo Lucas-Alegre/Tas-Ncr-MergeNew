@@ -1,0 +1,39 @@
+﻿{
+    "type": "Custom",
+
+	//"properties": {
+	//	"nav": {"position": "cashinstart", "value": "cashinstarts"}
+	//},
+
+	"run": function(statedata) {
+		SSFramework.displayScreen(statedata.screens.espera);
+		var cim = new XFSDevice("cim");
+		return cim.execute("WFS_CMD_CIM_CASH_IN_START")
+		.then(function(result) {
+			if(result.hResult==0) {
+				States.handleEvent("CimCashInStart_OK");
+			} else {
+				  States.handleEvent("CimCashInStart_Error");
+			}
+		})
+		.catch(function(err) {
+				  States.handleEvent("CimCashInStart_Error");
+		});
+	},
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+	},
+
+    "events": {
+        "CimCashInStart_OK": "n/CimCashIn",
+        "CimCashInStart_Error": "n/CimReset"
+    }
+}

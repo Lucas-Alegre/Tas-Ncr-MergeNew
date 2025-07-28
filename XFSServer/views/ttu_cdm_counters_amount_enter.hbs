@@ -1,0 +1,10 @@
+﻿{{>ttu_header}}
+{{padl data.connection 32}}
+Enter note count
+
+{{padr "ID" 17}}{{padl "Init" 6}}{{padl "Curr" 5}}{{padl "Rjct" 4}}
+{{#each data.cashunit}}
+{{padl position 2}}{{padl separator 1}}{{padr cUnitID 6}}{{padl cCurrencyID 4}}{{padr ulValues 4}}{{padl ulInitialCount 6}}{{padl ulCount 5}}{{padl ulRejectCount 4}}
+{{/each}}
+
+Enter note count to {{data.operation}}

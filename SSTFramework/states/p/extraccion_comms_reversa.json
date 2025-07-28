@@ -1,0 +1,25 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WS401",
+        "storename": "comms.WS401",
+         "nombre": "reversa extraccion",
+       
+
+        "requestHandler": function(obj) {
+            var lastmsg = States.getStoredValue("comms.last_esb_request");
+            obj.cuenta_detalle = UserFuns.getProduct("cuenta");
+            obj.reversa = "S";
+            obj.reversa_numtrx = lastmsg.numtrx;
+        },
+        
+    },
+
+    "events": {
+        "comms_ok": "p/close_hardware_error",  
+        "comms_error": "p/close_comms_error_reversa",
+        "comms_general_error": "p/close_comms_error_reversa",
+    }
+
+}

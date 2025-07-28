@@ -1,0 +1,41 @@
+﻿{
+    "type": "General",
+    "run": function(state) {
+        States.storeNamedValue("temp.mensaje_position", 0);
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        "update": function(screen) {
+	        	var mensajes = "_"
+	        	mensajes = "Su clave de canales vence en "
+	            mensajes = mensajes + States.getStoredValue("dias_restantes") + " días<br>" + SSUtil.getLocal("mensajeApi");
+	            console.log(mensajes);
+	            screen.message.text = mensajes;
+            },
+			
+            include(p/chunk/title_transaccion.json),
+
+            "message": { 
+                "text": "",
+            },
+
+
+            "nav": {
+                "nav3": {
+                    "text": "Continuar",
+                    "event": "continuar"
+                },
+            },
+
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+        "continuar": "p/identificacion_mensajes",
+	}
+}

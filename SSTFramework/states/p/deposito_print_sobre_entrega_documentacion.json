@@ -1,0 +1,51 @@
+﻿{ 
+
+    "base" : include(p/deposito_print_sobre.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+			"name": "deposito_entrega_documentacion",
+
+ 			"update": function() { 
+
+			var tipo_identificacion = "";
+					if (States.getStoredValue("origen_id").toString().length < 10){
+						tipo_identificacion_origen = "DNI:"
+					} else {
+						tipo_identificacion_origen = "CUIT:"
+					}
+
+					if (States.getStoredValue("destino_id").toString().length < 10){
+						tipo_identificacion_destino = "DNI:"
+					} else {
+						tipo_identificacion_destino = "CUIT:"
+					}
+
+					if (States.getStoredValue("origen_name") != null){
+						nombre_origen = States.getStoredValue("origen_name");
+					} else {
+						nombre_origen = States.getStoredValue("origen_id");
+					}
+
+			    var receipt = { 
+			        "monto": UserFuns.formatFloatMonto(States.getStoredValue("monto")),
+			        "tipo_deposito": States.getStoredValue("deposito_tipo").text,
+			        "cheques": States.getStoredValue("cheques"),
+			        "sobre": States.getProperty("sobre"),
+			        "nombre_origen": nombre_origen,
+					"nombre_destino": States.getStoredValue("destino_name"),
+					"tipo_identificacion_origen":tipo_identificacion_origen,
+					"tipo_identificacion_destino":tipo_identificacion_destino,
+					"ente_origen": States.getStoredValue("origen_id"),
+					"ente_destino": States.getStoredValue("destino_id"),
+			    };
+
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},	
+
+}

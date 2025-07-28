@@ -1,0 +1,30 @@
+﻿{
+    "type": "General",
+
+	"run": function(statedata) {
+		States.storeNamedValue("data.navbar", []);
+	},
+
+	"screens": {
+
+	    "default" : {
+
+            "subtitle": { 
+                "text": "Lo sentimos, pero por problemas técnicos, no es posible realizar la operación",
+            },
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+            },
+
+		}
+	},
+
+	"events" : {
+		"timeout": "n/CimRollback",
+	    "cancel": "n/CimRollback"
+	}
+}

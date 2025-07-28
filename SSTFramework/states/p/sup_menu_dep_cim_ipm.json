@@ -1,0 +1,128 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        
+        "storename": "data.menu_principal",
+        "nav": function() {
+            return States.getStoredValue("data.menu_principal").text;
+        }
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	    	"update" : function(screen) {
+	    		if (Vars.get("cim_available") && Vars.get("ipm_available")) {
+	    			return;
+	    		}
+
+	    		if (Vars.get("cim_available")) {
+	    			delete(screen.select.select2);
+	    			delete(screen.select.select6);
+	    			return;
+	    		}
+
+	    		if (Vars.get("ipm_available")) {
+	    			delete(screen.select.select1);
+	    			delete(screen.select.select5);
+	    			return;
+	    		}
+
+	    	},
+
+			"title": {				
+				"text" : "Menú Principal"
+			},
+
+            "subtitle": {
+                "text": "Seleccione la operación que desea realizar"
+            },
+            
+			"select": {
+
+			    "select0" : {
+					"text": "Iniciar VDM",
+					"event": "vdm", 
+                    "value": {
+                        "text": "VDM",
+                        "value": "vdm",
+                    }
+				},
+
+				"select1" : {
+				    "text": "Consulta de Billetes",
+					"event": "consulta_billetes", 
+                    "value": {
+                        "text": "Consulta de Billetes",
+                        "value": "consulta_billetes",
+                    } 
+				},
+
+                "select2" : {
+                    "text": "Consulta de Cheques",
+                    "event": "consulta_cheques", 
+                    "value": {
+                        "text": "Consulta de Cheques",
+                        "value": "consulta_cheques",
+                    } 
+                },
+
+                "select3" : {
+                    "text": "Reiniciar",
+                    "event": "reiniciar", 
+                    "value": {
+                        "text": "Reiniciar",
+                        "value": "reiniciar",
+                        }
+
+                },
+
+                "select4" : {
+                    "text": "Configuracion",
+                    "event": "configuracion", 
+                    "value": {
+                        "text": "Configuracion",
+                        "value": "configuracion",
+                        }
+                },
+
+				"select5" : {
+					"text": "Retiro de Billetes depositados",
+					"event": "retiro_billetes", 
+                    "value": {
+                        "text": "Retiro de Billetes depositados",
+                        "value": "retiro_billetes",
+                    }
+				},
+
+                "select6" : {
+                    "text": "Retiro de Cheques depositados",
+                    "event": "retiro_cheques", 
+                    "value": {
+                        "text": "Retiro de Cheques depositados",
+                        "value": "retiro_cheques",
+                    }
+                },
+
+			},
+
+            include(p/chunk/nav_cancelar.json),
+
+		}
+	},
+
+    "events": {
+        "timeout": "p/sup_changestyle",
+        "cancel": "p/sup_changestyle",        
+        "vdm": "p/sup_vdm",
+        "consulta_billetes": "p/sup_consulta_contadores_cim",
+        "consulta_cheques": "p/sup_consulta_contadores_ipm",
+        "configuracion": "p/sup_menu_configuracion",
+        "retiro_billetes": "p/sup_retiro_inicio_cim",
+        "retiro_cheques": "p/sup_retiro_inicio_ipm",
+        "reiniciar": "p/sup_reiniciar_confirmar",
+        }
+
+}

@@ -1,0 +1,49 @@
+﻿ssfw = {
+	
+	"base" : include(cheque/base_ipm.json),
+
+	"type" : function() {
+
+		var detail = {};
+        var cheque_list = Vars.get("items_inserted", []);
+        var total = 0.0;
+        var cantidad_cheques = 0;
+        var cantidad_cheques_rechazados = 0;
+
+        for(var c=0; c < cheque_list.length; c++) {
+            if (!cheque_list[c].rechazado) {
+                total += parseFloat(cheque_list[c].monto);
+                cantidad_cheques++;
+            } else {
+                cantidad_cheques_rechazados++;
+            }
+        }
+
+        Vars.set("monto_total_cheques", total.toFixed(2));
+        Vars.set("monto_total_cheques_formateado", UserFuns.formatFloatMonto(total));        
+        Vars.set("cantidad_cheques", cantidad_cheques);
+
+        detail.total = Vars.get("monto_total_cheques_formateado");
+        detail.cantidad = Vars.get("cantidad_cheques");
+        detail.cantidad_rechazados = cantidad_cheques_rechazados;
+        States.setProperty("detail", detail);
+
+		SSFramework.displayScreen("ipm_detail");
+	},
+    
+	"events" : {
+        "agregar" : function() {
+            if (Vars.get("items_inserted").length >= States.getProperty("max_items_accepted")) {
+                SSFramework.displayScreen("ipm_max_items_inserted");
+                window.setTimeout(function() {
+                    SSFramework.displayScreen("ipm_detail");
+                }, 5000); 
+            } else {
+                return "cheque/ingresar_cheques";
+            }
+        },
+        "cancelar" : "cheque/devolver_cheques",       
+		"timeout" : "cheque/timeout_cheques",
+	},
+
+}

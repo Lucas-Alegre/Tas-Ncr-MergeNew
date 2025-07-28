@@ -1,0 +1,19 @@
+﻿{
+    "type": "Custom",
+
+    "run": function(state) {
+
+        if(SSUtil.getLocal("identified")==true) {
+            States.handleEvent("identified");
+        } else {
+            States.handleEvent("not_identified");
+        }
+
+    },
+
+    "events": {
+        "identified": "p/identificacion_pin",
+
+        "not_identified": "p/identificacion_start",    
+    }
+}

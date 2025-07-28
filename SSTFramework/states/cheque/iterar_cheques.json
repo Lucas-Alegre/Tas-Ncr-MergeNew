@@ -1,0 +1,43 @@
+ssfw = {
+
+    "base" : include(cheque/base_ipm.json),
+
+    "type" : "Custom",
+	
+    "run" : function() {
+        SSFramework.displayScreen("ipm_wait");
+
+        var items_inserted = Vars.get("items_inserted", []);
+        if (items_inserted.length == 0) {
+            States.handleEvent("items_inserted_empty");
+            return;
+        }
+
+        var campos_a_validar = States.getProperty("campos_a_validar");
+        for(var i=0; i<items_inserted.length; i++) {
+            for(var j=0; j<campos_a_validar.length; j++) {
+                var campo = campos_a_validar[j].campo;
+                if (items_inserted[i][campo] == undefined) {
+                    var estado = campos_a_validar[j].estado;
+                    Vars.set("current_cheque_position",i);
+                    Vars.set("current_cheque",items_inserted[i]);
+                    Vars.set("next_state",estado);
+                    States.handleEvent("next_state");
+                    return;
+                }
+            }
+        }
+
+        States.handleEvent("items_inserted_complete");
+        return;
+    },
+
+    "events" : {
+        "next_state" : function() {
+            var estado = Vars.get("next_state");
+            return estado;
+        },
+        "items_inserted_empty" : "cheque/ingresar_cheques",
+        "items_inserted_complete" : "cheque/mostrar_detalle",
+    }
+}

@@ -1,0 +1,157 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        
+        "storename": "data.menu_principal",
+        "nav": function() {
+            return States.getStoredValue("data.menu_principal").text;
+        }
+    },
+
+	"run": function() {
+		States.storeNamedValue("selecciono_balanceo", false);
+	},
+
+	"screens": {
+
+	    "default" : {
+
+			"title": {				
+				"text" : "Menú Principal"
+			},
+
+            "subtitle": {
+                "text": "Seleccione la operación que desea realizar"
+            },
+            
+			"select": {
+
+			    "select0" : {
+					"text": "Iniciar VDM",
+					"event": "vdm", 
+                    "value": {
+                        "text": "VDM",
+                        "value": "vdm",
+                    }
+				},
+
+				"select1" : {
+				    "text": "Estimado Casetes",
+					"event": "estimado", 
+                    "value": {
+                        "text": "Estimado Casetes",
+                        "value": "estimado",
+                    } 
+				},
+                
+				"select2" : {
+				    "text": "Retener Casetes",
+					"event": "retener", 
+                    "value": {
+                        "text": "Retener Casetes",
+                        "value": "retener",
+                    }
+				},
+
+                				"select3" : {
+                				    "text": "Agregar billetes",
+                                    "event": "agregar", 
+                                    "value": {
+                                        "text": "Agregar billetes",
+                                        "value": "agregar",
+                                        }
+                				},
+
+                				"select6" : {
+                				    "text": "Sacar billetes",
+                                    "event": "sacar", 
+                                    "value": {
+                                        "text": "Sacar billetes",
+                                        "value": "sacar",
+                                        }
+                				},
+
+
+
+                "select4" : {
+                    "text": "Configuracion",
+					"event": "configuracion", 
+                    "value": {
+                        "text": "Configuracion",
+                        "value": "configuracion",
+                        }
+                },
+
+
+				"select7" : {
+					"text": "Configurar Casetes",
+					"event": "configurar", 
+                    "value": {
+                        "text": "Configurar Casetes",
+                        "value": "configurar",
+                    }
+				},
+
+                "select5" : {
+                    "text": "Test dispensador",
+					"event": "test", 
+                    "value": {
+                        "text": "Test dispensador",
+                        "value": "test",
+                        }
+
+                },
+
+                  "select8" : {
+                    "text": "Balanceo",
+                    "event": "balanceo", 
+                    "value": {
+                        "text": "Balanceo",
+                        "value": "balanceo",
+                        }
+
+                },
+
+
+                 "select9" : {
+                    "text": "Reiniciar",
+                    "event": "reiniciar", 
+                    "value": {
+                        "text": "Reiniciar",
+                        "value": "reiniciar",
+                        }
+
+                },
+			},
+
+            include(p/chunk/nav_cancelar.json),
+
+		}
+	},
+
+    "events": {
+        "timeout": "p/sup_changestyle",
+        "cancel": "p/sup_changestyle",
+        "vdm": "p/sup_vdm",
+        "estimado": "p/sup_estimado_inicio",
+        "retener": function() {
+            States.storeNamedValue("proximo_estado", "p/sup_retener_ingreso");
+            return "p/sup_retener_inicio";
+        },
+        "agregar": "p/sup_add_inicio",
+        "sacar": "p/sup_sub_inicio",
+        "configurar": function() {
+            States.storeNamedValue("proximo_estado", "p/sup_configura_ingreso_getconfig");
+            return "p/sup_configura_inicio";
+        },
+        "configuracion": "p/sup_menu_configuracion",
+        "test": "p/sup_dispenser_test_inicio",
+        "balanceo": function() {
+			States.storeNamedValue("selecciono_balanceo", true);
+			return "p/sup_estimado_inicio";
+		},
+        "reiniciar": "p/sup_reiniciar_confirmar",
+        }
+
+}

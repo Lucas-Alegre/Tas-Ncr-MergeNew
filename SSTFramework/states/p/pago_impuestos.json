@@ -1,0 +1,70 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "storename": "medio_pago",
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        "update": function(screen) {
+	            States.setProperty("entity", SSUtil.getLocal("entity") );
+				
+				
+				UserFuns.deleteUnenabledSelects(screen.select);
+				
+				if (UserFuns.executeUniqueSelect(screen.select))
+					States.storeNamedValue("seleccion_medio_pago", false);
+				else
+					States.storeNamedValue("seleccion_medio_pago", true);
+				
+				UserFuns.reorganizeSelects(screen.select, [0,1]);
+	        },
+
+	        include(p/chunk/title_transaccion.json),
+
+      
+            "subtitle": {
+                "text": "Seleccione la forma de pago",
+            },
+
+            include(p/chunk/nav_cancelar_anterior.json),
+
+            "select": {							    
+                "select0" : {
+                    "text": "Débito en cuenta",
+					"event": "debito",
+					"value": "debito",
+					"funciones": {
+						"tarjeta": ["PiTDe"]
+					}
+			    },
+
+                "select1" : {
+                    "text": "Cheque <%= entity %>",
+					"event": "cheque",
+					"value": "cheque",
+					"funciones": {
+						"tarjeta": ["PiTCh"]
+					}
+				},
+
+            },
+		}
+	},
+    
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "debito" : "p/pago_impuestos_cuenta_debito",
+
+        "cheque" : "p/pago_impuestos_comprobantes",
+
+        "back": "p/close_salir",
+
+        "cancel": "p/close_salir",
+
+	}
+}

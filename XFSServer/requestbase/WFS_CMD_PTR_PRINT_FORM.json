@@ -1,0 +1,14 @@
+﻿{
+    "command": "WFS_CMD_PTR_PRINT_FORM",
+    "timeout": "10000",
+    "input": {
+        "lpszFormName": "ReceiptImage", 
+        "lpszMediaName": "ReceiptImage", 
+        "wAlignment": "0", 
+        "wOffsetX": "0", 
+        "wOffsetY": "0", 
+        "wResolution": "1", 
+        "dwMediaControl": "WFS_PTR_CTRLCUT", 
+        "wPaperSource": "1"
+    }
+}

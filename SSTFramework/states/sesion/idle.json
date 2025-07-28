@@ -1,0 +1,55 @@
+﻿{ 
+
+	"type": "CardEntry",
+	
+	"screens": { 
+	
+	    "idc_ok_dip": { 
+	        "floating_message": {
+	            "top": "15%",
+		        "text" : "Por favor ingrese y retire su tarjeta para operar<br><img src='/images/InsertCard.png'></img><br>o presione el botón para realizar operaciones sin tarjeta"
+	        }, 
+
+			"select": { 
+			    "select7": { 
+			        "text": "Operaciones sin tarjeta",
+					"event": "sin_tarjeta",
+					},
+			}
+	    },
+
+		"idc_ok": { 
+		    "floating_message": {
+                "top": "15%",
+		        "text" : "Por favor ingrese su tarjeta para operar<br><img src='/images/InsertCard.png'></img><br>o presione el botón para realizar operaciones sin tarjeta"
+		    }, 
+
+			"select": { 
+			    "select7": { 
+					"text": "Operaciones sin tarjeta",
+					"event": "sin_tarjeta",
+				},
+			}
+		},
+
+        "idc_error": {
+            "floating_message": {
+                "text" : "Presione el botón para realizar operaciones sin tarjeta"
+            },
+
+            "select": { 
+                "select7": { 
+                    "text": "Operaciones sin tarjeta",
+					"event": "sin_tarjeta",
+					},
+			}
+        }
+	},
+
+
+	"events": {
+	    "card_read": "sesion/close",
+		"sin_tarjeta": "main",
+	}
+
+}

@@ -1,0 +1,35 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "consulta_tarjeta",
+            
+			"update": function() { 
+			    var cuenta = UserFuns.getProduct("cuenta");
+			    var receipt = { 
+			        "numero": UserFuns.formatProductValue(cuenta),
+			        "cuenta": cuenta.TNUCUENTA,
+			        "total_pesos": UserFuns.formatMonto(cuenta.CSA_DISPO),
+			        "pago_minimo": UserFuns.formatMonto(cuenta.CSA_CONFO),
+			        "total_dolares": "0",
+			        "vencimiento": UserFuns.formatFecha(cuenta.FFE_VENCI),
+			        "cierre": UserFuns.formatFecha(cuenta.SFECIERRE),			        
+			    };
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "cancel": "p/close_salir",
+        "print_ok": "p/close_salir",
+	    "hardware_error_ptr": "p/close_printer_error"
+    }
+
+}

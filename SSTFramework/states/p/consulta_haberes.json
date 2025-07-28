@@ -1,0 +1,43 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "recibo_haberes",
+        "storename": "comms.recibo_haberes",   
+        "nombre": "consulta haberes",
+        "requestHandler": function(msg) {
+            msg.customer = parseInt(msg.customer, 10);
+        },
+
+        "generalResponseHandler": function(response) {
+            
+            var receipt = null;
+            if(response.hasOwnProperty("Envelope")) {
+                receipt = response.Envelope.Body.obtenerReciboHaberesResponse;
+            } else {
+                receipt = response.obtenerReciboHaberesResponse;
+            }
+
+            if(receipt.hasOwnProperty("return")) {
+                receipt = receipt.return.acreditacion;
+                var list = "";
+
+                while(receipt.length>0) {
+                    list += receipt.slice(0, 36) + "<br>";
+                    receipt = receipt.slice(36);
+                }
+                return list.replace(new RegExp(" ", 'g'), "&nbsp;");
+            } else {
+
+                response.commserror = "sin_datos";
+                return 
+            }
+            
+        },
+    },
+
+    "events": {
+        "comms_ok": "p/consulta_haberes_print",
+    }
+
+}

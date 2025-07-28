@@ -1,0 +1,34 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "extraccion",
+
+			"update": function() { 
+			    var cuenta = UserFuns.getProduct("cuenta");
+			    var receipt = { 
+			        "tipo_cuenta": UserFuns.formatProductName(cuenta),
+			        "sucursal": cuenta.ACU_OFICI,
+			        "cuenta": UserFuns.formatProductValue(cuenta, 1),
+			        "monto": UserFuns.formatMonto(States.getStoredValue("monto"), "", 0),
+			        "saldo": UserFuns.formatMonto(cuenta.CSA_DISPO),			    			        
+			    };
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	  
+	    "cancel": "p/close_salir",
+        "enter": "p/close_salir",
+	    "print_ok": "p/close_salir",
+	    "hardware_error_ptr": "p/close_printer_error"
+	}
+
+}

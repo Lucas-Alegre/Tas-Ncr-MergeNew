@@ -1,0 +1,9 @@
+ssfw = {
+
+	"base" : include(cim/base_cim.json),
+
+    "type" : function() {
+    	States.handleEvent("salida_cancel");
+    },
+
+}

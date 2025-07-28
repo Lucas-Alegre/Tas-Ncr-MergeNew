@@ -1,0 +1,80 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+		"default" : {
+			
+			"title": {				
+				"text" : "Pantalla de inicio"
+			},
+
+            "subtitle": {
+                "text": "Subtitlo a mostrar en la pantalla<br>de inicio"
+            },
+
+            "nav": {
+                "nav0": {
+                    "text": "navigation 0"
+                },
+
+                "nav1": {
+                    "text": "navigation 1"
+                },
+
+                "nav2": {
+                    "text": "navigation 2"
+                },
+
+                "nav3": {
+                    "text": "navigation 3"
+                },
+
+                "nav4": {
+                    "text": "navigation 4"
+                },
+            },
+
+			"select": {
+			    "select0" : {
+					"text": "Mensaje",
+					"event": "mensaje" 
+				},
+
+				"select4" : {
+					"text": "Mensaje<br>Flotando",
+					"event": "mensaje_flotando" 
+				},
+
+				"select5" : {
+					"text": "Cambiar<br>Estilo",
+					"event": "cambiar_estilo" 
+				},
+
+				"select1" : {
+					"text": "Todas las fdk",
+					"event": "teclas" 
+				},
+
+				"select7" : {
+					"text": "Más",
+					"event": "mas" 
+				}
+			}
+		}
+	},
+
+	"events" : {
+		"mensaje": "mensaje",
+		"teclas": "teclas",
+		"mas": "main2",
+		"mensaje_flotando": "floating_message",
+		"cambiar_estilo": function() { 
+		    var estilos = ["petersen", "alt", "basic"];
+		    var style = SSUtil.getSetting("style");
+		    var c;
+		    for(c=0; estilos[c]!=style && c<estilos.length; c++);
+            SSFramework.setSetting("style", estilos[(c+1)%estilos.length]);
+		    return "main";
+		}
+	}
+}

@@ -1,0 +1,104 @@
+﻿{
+	"base": include(p/bases/comms.json),
+	
+	"properties": {
+        "trx": "WSECO",
+		"hidescreen": true,
+    },
+	
+    "run": function(state) {
+	
+		SSFramework.displayScreen(state.screens.video);
+
+        SSUtil.setApplicationState("tpa", "idle");
+                
+        ////states
+        SSUtil.setLocal("identified", false);
+
+
+        UserFuns.storeStatus();
+        
+        
+        //switch
+        supervisorSwitch(function(res) {
+            if(res.state=="supervisor" || res.state=="supervisor_gop") {
+                States.handleEvent(res.state);
+            }             
+        });
+
+        var _this = this;
+
+        return readRegistry("video")
+
+        .then(function(reg) {
+            if(SSUtil.isDef(reg)) {
+                state.screens.video.video.src = reg;
+            }
+        })
+            //fuerza la carga de config por un tema que vimos en el lab con davis. 
+        .then(function() {
+            return readRegistry("config.server")
+        })
+
+        .then(function(conf) {
+            SSUtil.setLocal("config.server", conf);
+            var to = parseInt(SSUtil.getLocal("ConfigurationTimeout"));
+            if(to>0) {
+                SSFramework.timeout_secs = to;
+            }
+        })
+
+		.then(function() {
+			var datos = {};
+			datos.operacion = "CopyOnline";
+			var dev = new XFSDevice("server");	
+			
+			dev.extension("Auditoria", datos)
+			.then(function(data) {
+			})
+			.caught(function(err) {
+			})
+		});
+
+    },
+
+	"screens": {
+
+	    "video" : {
+
+            "update" : function(screen) {
+                screen.video.src = Vars.get("video");
+            },
+
+	        "video": {
+	            "fullscreen": "true",
+                "src": "/video/prestamos.webm"
+	        },
+						
+		}
+	},
+
+	"events" : {
+        "supervisor": function() {
+            xfsAuditNtrx("INGRESO MODO SUPERVISOR", "");
+            return "p/sup_changestyle";
+        },
+	    
+        "supervisor_gop": function() {
+            xfsAuditNtrx("INGRESO MODO SUPERVISOR", "");
+            return "p/status_ooservice";
+        },   
+        
+        "video": "p/check_printer",
+		
+		
+        "comms_ok": function() {
+			window.setTimeout(function () {
+				if (States.CurrentState == "p/status_inservice")
+					States.StateTypes[States.CurrentStateData.type](States.CurrentStateData);
+            }, 120000);
+		},
+        "comms_error": "p/status_conn_error",
+        "comms_general_error": "p/status_conn_error",
+	}
+}

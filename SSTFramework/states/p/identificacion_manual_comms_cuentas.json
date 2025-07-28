@@ -1,0 +1,37 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WSCCC",
+        "storename": "comms.WSCCC",        
+        "nombre": "valida cliente",
+
+
+        "responseHandler": function(response) { 
+            console.log("comms cuentas");
+        console.log(response);
+
+            if(response.hasOwnProperty("LineItems")) {
+                States.storeNamedValue("data.cuentas", [].concat(response.LineItems));
+                var products = UserFuns.getProducts();
+                for(var c=0; c<products.length; c++) {
+                    if(products[c].hasOwnProperty("WNO_CLIE1") && products[c].WNO_CLIE1!=null) {
+                        nombre = products[c].WNO_CLIE1;
+                    }
+                }
+            } else {
+                response.commserror = "sin_productos";
+            }
+            return response;            
+        }
+    },
+
+    "events": {
+        "comms_ok": "p/identificacion_manual_comms_diasrestantes", 
+        "invalid_pin": "p/identificacion_pin_error",
+        "blocked_pin": "p/identificacion_pin_bloqueado",
+        "disabled_pin": "p/identificacion_pin_deshabilitado",
+        "expired_pin": "p/identificacion_pin_caducado", 
+    }
+
+}

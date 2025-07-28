@@ -1,0 +1,24 @@
+﻿<!--
+    Data:
+        messagecenter.text: text to display
+
+    FireEvents:
+        -
+
+    ListenEvents:
+        -
+-->
+
+<div class="messagecenter" id="messagecenter">
+<%- messagecenter.text %>&nbsp;<img id="imagen" src="<%- messagecenter.imagen %>" style="width: 96px;" />
+</div>
+
+<script>
+    $(function () {
+
+        SSFramework.centerInDiv("#messagecenter");
+
+        var tit = $(".messagecenter");
+        tit.tween(TweenHelpers.tweenSide(tit, "top", false, 400, 0));
+    });
+</script>

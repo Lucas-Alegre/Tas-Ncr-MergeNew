@@ -1,0 +1,13 @@
+﻿{{>header}}
+<div class="td100 tright">{{data.connection}}</div>
+<div class="td100 tcenter">Cassette Totals</div>
+<body><pre>
+Last update: {{data.clear_time}}
+
+{{#each data.cashunits}}
+{{padr cUnitID 4}}{{padl logical.cCurrencyID 3}}{{padr logical.ulValues 4 }}{{padl ulInitialCount 9}}{{padl ulCount 10}}{{padl ulRejectCount 10}}
+{{/each}}
+
+Amount: $ {{padl data.retained 20}}
+ Count:   {{padl data.max 20}}
+</pre></body>

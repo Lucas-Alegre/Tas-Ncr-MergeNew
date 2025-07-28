@@ -1,0 +1,13 @@
+﻿{ 
+	"type": "Close",
+	
+	"screens": { 	
+	    "remove_card": {},
+        "complete": {},
+	},
+
+	"events": {
+	    "continue": "",
+	}
+
+}

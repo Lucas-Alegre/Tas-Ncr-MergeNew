@@ -1,0 +1,53 @@
+﻿<!--
+    Requires:
+        tipo_cuenta:
+        sucursal:
+        cuenta: account number, formatted for display
+        saldo: account balance, formatted for display
+        saldo_conformar:
+        saldo_48hs:
+        movimientos[] {
+            fecha: fecha del movimiento
+            descripcion: description of the transaction
+            monto: amount of the transaction
+        }
+-->
+
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+
+<hr />
+<h1>Consulta de Movimientos</h1>
+<hr />
+<% include chunk/account_detail.html %>
+<br />
+<table>
+    <tr><td>Saldo total: </td><td align="right"> <%- receipt.saldo %></td> </tr>
+    <tr><td>&nbsp;</td><td /></tr>
+    <tr><td>Saldo a Conformar: </td><td align="right"> <%- receipt.saldo_conformar %></td> </tr>
+    <tr><td>Saldo Operativo: </td><td align="right"> <%- receipt.saldo_real%></td> </tr>
+<tr><td>Saldo a 48 hs.: </td><td align="right"> <%- receipt.saldo_48hs %></td> </tr>
+</table>
+<br />
+<table>
+    <tr><td>Fecha</td><td>Concepto</td><td>Importe</td></tr>
+    <% for(var i=0; i<receipt.movimientos.length; i++) { %>
+        <tr><td><%- receipt.movimientos[i].fecha %></td><td><%- receipt.movimientos[i].descripcion %></td><td align="right"><%- receipt.movimientos[i].monto %></td></tr>
+        <% if(receipt.movimientos[i].tipoDoc != null) { %>
+             <% footer_consulta = 1 %>
+            <tr><td>Originante:</td><td colspan="2"><%- receipt.movimientos[i].nombre %></td></tr>
+            <% if(receipt.movimientos[i].tipoDoc == 35) { %>
+                <tr><td>CUIT:</td><td colspan="2"><%- receipt.movimientos[i].numeroDoc %></td></tr>
+            <% } %>
+            <% if(receipt.movimientos[i].tipoDoc == 34) { %>
+                <tr><td>CUIL:</td><td colspan="2"><%- receipt.movimientos[i].numeroDoc %></td></tr>
+            <% } %>
+            <% if(receipt.movimientos[i].tipoDoc == 30) { %>
+                <tr><td>CDI:</td><td colspan="2"><%- receipt.movimientos[i].numeroDoc %></td></tr>
+            <% } %>
+        <% } %>
+    <% } %>
+</table>
+
+<% include chunk/footer_transferencia.html %>

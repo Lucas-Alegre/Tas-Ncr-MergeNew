@@ -1,0 +1,47 @@
+ssfw = {
+
+    "base" : include(cheque/base_ipm.json),
+
+    "type" : function(state) {
+        SSFramework.displayScreen("ipm_wait");
+
+        var date = new Date();
+        var fecha = (date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString()) + "/" +
+        ((date.getMonth() + 1) > 10 ? (date.getMonth() + 1).toString() : "0" + (date.getMonth() + 1).toString()) +"/" +  
+        date.getFullYear().toString()  + " " +
+        ("0" + date.getHours()).slice(-2) + ":" +
+        ("0" + date.getMinutes()).slice(-2);
+
+        var cheques = Vars.get("listado_cheques",[]);
+        var endorses = [];
+
+        for (var i in cheques) {
+            var cheque = cheques[i];
+
+            var endorse_string = "{BANCO} {FECHA} {TERMINAL} {CUENTA} {LEYENDA}";
+            endorse_string = endorse_string.replace("{BANCO}", "BANCO");
+            endorse_string = endorse_string.replace("{FECHA}", fecha);
+            endorse_string = endorse_string.replace("{TERMINAL}", SSUtil.getLocal("TerminalName"));
+            endorse_string = endorse_string.replace("{CUENTA}", Vars.get("cuenta_cheque"));
+            endorse_string = endorse_string.replace("{LEYENDA}", "CHEQUE DEPOSITADO ELECTRONICAMENTE");
+  
+            endorses.push(States.getProperty("executeEndorse")(cheque.mediaid, endorse_string))
+        }
+        return new Promise.all(endorses)
+        .then(function(res) {
+            States.getProperty("executeMediaInEnd")();			
+        })
+        .caught(function(ex) {
+            console.error("error endorsing cheques");
+            States.getProperty("executeMediaInEnd")();		
+        });        
+    },
+
+    "events" : {
+        "ipm_media_taken" : function() {            
+            SSFramework.displayScreen("ipm_wait");
+        },
+        //"ipm_media_in_end_complete" : "cheque/salida_ok", Esta salida se maneja desde base_cim
+        "ipm_media_in_end_error" : "cheque/salida_error",
+    }
+}

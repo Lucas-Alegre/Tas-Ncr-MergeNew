@@ -1,0 +1,16 @@
+﻿{
+    "base" : include(p/identificacion_pin.json),
+
+	"screens": {
+
+	
+		"default" : {			
+          
+            "subtitle": { 
+                "text": "El PIN ingresado era inválido.<br>Por favor ingrese su PIN" 
+            },
+
+		}
+	},
+
+}

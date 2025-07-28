@@ -1,0 +1,41 @@
+﻿{
+    "type": "General",
+
+	"run": function(statedata) {
+		States.storeNamedValue("monto_operacion", 0);
+		States.storeNamedValue("data.navbar", []);
+		SSUtil.setApplicationState("tpa", "idle");
+		supervisorSwitch(function(res) {
+            if(res.state=="supervisor" || res.state=="supervisor_gop") {
+                States.handleEvent(res.state);
+            }             
+        })
+	},
+
+	"screens": {
+	    "default" : {
+			"title": {
+				"text" : "¡Bienvenido!"
+			},
+			"subtitle": {			
+				"text" : "<span>Tocá la pantalla para abonar tu Resumen</span>"
+			},
+	        "imagen": {
+				"src": "/images/naranja/pic-mujer.png"
+	        },	
+		},
+		"out_of_service" : {
+	        "subtitle": {
+	            "text": "Equipo fuera de servicio"
+	        },
+            
+            "message": {},
+		}
+	},
+
+	"events" : {
+		"supervisor": "n/sup_changestyle",
+        "supervisor_gop": "n/status_ooservice",	
+        "imagen": "n/check_printer"        
+	}
+}

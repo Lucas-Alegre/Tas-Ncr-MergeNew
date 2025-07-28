@@ -1,0 +1,101 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        
+        "storename": "data.menu_principal",
+        "nav": function() {
+            return States.getStoredValue("data.menu_principal").text;
+        }
+    },
+
+	"screens": {
+
+	    "default" : {
+		
+			"update": function(screen) {
+				UserFuns.deleteUnenabledSelects(screen.select, "menu_principal");
+				
+				UserFuns.reorganizeSelects(screen.select);
+			},
+
+			"title": {				
+				"text" : "Menú Principal"
+			},
+
+            "subtitle": {
+                "text": "Seleccione la operación que desea realizar"
+            },
+            
+			"select": {
+
+			    "select0" : {
+					"text": "Consultas",
+					"event": "consultas", 
+                    "value": {
+                        "text": "Consultas",
+                        "value": "consultas",
+                    },
+					"funciones": {
+						"menu_principal": ["CoTSa","CoTTa","CoTMo","CoTCbu","CoTPf","CoTRh","CoMSa","CoMTa","CoMMo","CoMCbu","CoMPf","CoMRh"]
+					}
+				},
+
+				"select1" : {
+				    "text": "Extracción",
+					"event": "extraccion", 
+                    "value": {
+                        "text": "Extracción",
+                        "value": "extraccion",
+                    },
+					"funciones": {
+						"menu_principal": ["ExTPe","ExTDo"]
+					}
+				},
+                
+				"select2" : {
+				    "text": "Transferencias",
+					"event": "transferencia", 
+                    "value": {
+                        "text": "Transferencias",
+                        "value": "transferencia",
+                    },
+					"funciones": {
+						"menu_principal": ["TrTCp","TrTCt"]
+					}
+				},
+
+				"select4" : {
+					"text": "Cambio de PIN",
+					"event": "cambio_pin", 
+                    "value": {
+                        "text": "Cambio de PIN",
+                        "value": "cambio_pin",
+                    },
+					"funciones": {
+						"menu_principal": ["CpTPin","CpMPin"]
+					}
+				},
+
+                "select5" : {
+                    "text": "Pago TTCC",
+					"event": "pago_ttcc", 
+                    "value": {
+                        "text": "Pago TTCC",
+                        "value": "pago_ttcc",
+                        },
+					"funciones": {
+						"menu_principal": ["PtTPt"]
+					}
+
+                },
+			},
+
+            include(p/chunk/nav_cancelar.json),
+
+		}
+	},
+
+    include(p/chunk/events_menu_principal.json),
+
+}

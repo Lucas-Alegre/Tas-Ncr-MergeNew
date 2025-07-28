@@ -1,0 +1,76 @@
+﻿{
+    "type": "Custom",
+
+    "run": function(statedata) {
+
+        var _this = this;
+           
+        var msg = "";
+        var log = function(str) {
+            msg += str + "<br>";
+            $("#message").html(msg);      
+            SSFramework.centerInDiv("#message");
+        }
+
+        var logRes = function(conn, res) {
+            log("Inicio " + conn + ": " + res.hResult + (res.hasOwnProperty("hResultDesc") ? "(" + res.hResultDesc + ")" : ""));            
+        }
+
+        log("Iniciando el equipo. <br>Un momento por favor<br>");
+
+        SSFramework.displayScreen(statedata.screens.out_of_service)
+        .then(function () {
+            var cim = new XFSDevice("cim");
+            log("Iniciando CIM");
+            return cim.execute("WFS_CMD_CIM_RESET")            
+        })
+
+        .then(function (res) {
+            logRes("CIM", res);
+            return res;
+        })
+		.delay(2000)
+
+        //.then(function () {
+        //    var cdm = new XFSDevice("cdm");
+        //    log("Iniciando CDM");
+        //    return cdm.execute("WFS_CMD_CDM_RESET")            
+        //})
+
+        //.then(function (res) {
+        //    logRes("CDM", res);
+        //    return res;
+        //})
+
+        //.then(function () {
+        //    var idc = new XFSDevice("idc");
+        //    log("Iniciando IDC");
+        //    return idc.execute("WFS_CMD_IDC_RESET")            
+        //})
+
+        //.then(function (res) {
+        //    logRes("IDC", res);
+        //    return res;
+        //})
+          
+        .finally(function() {
+            States.handleEvent("continue");
+        });
+    },
+
+	"screens": {
+
+	    "out_of_service" : {
+	        "subtitle": {
+	            "text": "Equipo fuera de servicio"
+	        },
+            
+            "message": {},
+
+		}
+	},
+
+	"events" : {
+	    "continue": "n/CimBanknotetypes"        
+	}
+}

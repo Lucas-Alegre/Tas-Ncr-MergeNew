@@ -1,0 +1,52 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "storename": "sucursal_cuenta",
+        
+        "datachanged": function(args) {		
+            return args.slice(0, 3);
+        },
+
+		"datapresented": function(args) { 
+		    return args;
+		},
+        
+        "dataccept": function(args) {
+            if(args.length<1)
+                return false;
+            return true;
+        },
+
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+            "inputarea": {},
+
+			"numkeyboard": {},
+
+	    }
+	},
+
+	"events" : {
+
+	    include(p/chunk/event_timeout.json),
+        
+	    "reject" : function() {
+	        States.refreshState();
+	    },
+	    
+		"enter": function() { 
+		    States.fireCustomEvent("input.enter", null);
+		},
+
+       
+        "clear": function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+
+	}
+}

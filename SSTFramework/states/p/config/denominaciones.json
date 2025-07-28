@@ -1,0 +1,56 @@
+﻿[
+	{
+	    "text": "",
+	    "value": {
+	        "moneda": "ARS",
+	        "denominacion": "100",
+	    },
+	},
+    {
+        "text": "",
+        "value": {
+            "moneda": "ARS",
+            "denominacion": "50",
+        },
+    }, {
+        "text": "",
+        "value": {
+            "moneda": "ARS",
+            "denominacion": "20",
+        },
+    }, {
+        "text": "",
+        "value": {
+            "moneda": "ARS",
+            "denominacion": "10",
+        },
+    },
+    {
+        "text": "",
+        "value": {
+            "moneda": "USD",
+            "denominacion": "100",
+        },
+    },
+    {
+        "text": "",
+        "value": {
+            "moneda": "USD",
+            "denominacion": "50",
+        },
+    },
+    {
+        "text": "",
+        "value": {
+            "moneda": "USD",
+            "denominacion": "20",
+        },
+    },
+    {
+        "text": "",
+        "value": {
+            "moneda": "USD",
+            "denominacion": "10",
+        },
+    },
+]

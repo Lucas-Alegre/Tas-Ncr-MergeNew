@@ -1,0 +1,9 @@
+﻿{
+    "command": "WFS_CMD_CIM_CASH_IN_START",
+    "input" : {
+		"usTellerID" : 0,
+		"bUseRecycleUnits": true,
+		"fwOutputPosition": "WFS_CIM_POSNULL",
+		"fwInputPosition": "WFS_CIM_POSNULL",
+	},
+}

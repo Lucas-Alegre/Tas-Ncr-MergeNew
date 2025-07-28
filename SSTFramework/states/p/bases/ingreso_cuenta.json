@@ -1,0 +1,75 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "storename": "cuenta",
+
+        "storename_sucursal": "sucursal_cuenta",
+
+        "nav": function() {
+            return States.getStoredValue(States.getProperty("storename", "ingreso_cuenta"));               
+        },
+
+        "datachanged": function(args) {		
+            return args.slice(0, 7);
+        },
+
+		"datapresented": function(args) { 
+		    return UserFuns.formatCuenta(args, true);
+		},
+        
+        "dataccept": function(args) {
+
+            if(args.length<2)
+                return false;
+            
+            var store = States.getProperty("storename");
+            var data = States.getStoredValue(store);
+
+            var store_sucursal = States.getProperty("storename_sucursal");
+            var data_sucursal = States.getStoredValue(store_sucursal, "000");
+
+            var oficinalen = 3;
+            var cuentalen = 6;
+            var digitolen = 1;
+
+            var p1 = SSUtil.pad(data_sucursal, "0", oficinalen, 1);
+            var p2 = SSUtil.pad(data, "0", cuentalen+digitolen, 1);
+            
+            States.storeNamedValue(store, p1 + p2);
+            return true;
+        },
+
+
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+            "inputarea": {},
+
+			"numkeyboard": {},
+
+	    }
+	},
+
+	"events" : {
+
+	    include(p/chunk/event_timeout.json),
+        
+	    "reject" : function() {
+	        States.refreshState();
+	    },
+	    
+		"enter": function() { 
+		    States.fireCustomEvent("input.enter", null);
+		},
+
+       
+        "clear": function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+
+	}
+}

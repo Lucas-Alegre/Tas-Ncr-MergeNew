@@ -1,0 +1,19 @@
+﻿{
+    "base": include(p/bases/buzon_entrega_sobre.json),
+
+      "screens": {
+                        
+          "default" : {            
+
+              "subtitle": {
+                  "text": "Por favor, ingrese los valores en el sobre. Luego toque CONTINUAR",
+                  },
+
+          },
+    },
+    
+    "events": {
+        "enter": "p/pago_ttcc_deposito_sobre",
+    }
+
+}

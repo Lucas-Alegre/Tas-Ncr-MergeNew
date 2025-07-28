@@ -1,0 +1,34 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "consulta_cbu",
+
+			"update": function() { 
+			    var cuenta = UserFuns.getProduct("cuenta");
+			    var receipt = { 
+			        "tipo_cuenta": UserFuns.formatProductName(cuenta),
+			        "sucursal": cuenta.ACU_OFICI,
+			        "cuenta": UserFuns.formatProductValue(cuenta, 1),
+			        "cbu": cuenta.CNU_CBUP1 + "-" + cuenta.CNU_CBUP2,
+			        "nombre1": cuenta.WNO_CLIE1!=null ? cuenta.WNO_CLIE1 : "",
+			        "nombre2": cuenta.WNO_CLIE2!=null ? cuenta.WNO_CLIE2 : "",
+			        "nombre3": cuenta.WNO_CLIE3!=null ? cuenta.WNO_CLIE3 : "",			        
+			    };
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "print_ok": "p/close_salir",
+	    "hardware_error_ptr": "p/close_printer_error"
+    }
+
+}

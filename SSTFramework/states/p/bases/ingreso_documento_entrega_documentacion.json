@@ -1,0 +1,74 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+
+        "storename": "documento",
+
+        "datachanged": function(args) {			
+            return args.slice(0, 12);
+        },
+
+		"datapresented": function(args) { 
+			if(States.getStoredValue("customer_id_type")==35) {
+		        args = args.toString();
+		        var p1 = args.slice(0, 2);
+		        var p2 = args.slice(2, 10);
+		        var p3 = args.slice(10, 11);
+
+                var ret = 
+		        SSUtil.pad(p1, "_", 2, -1) + "-" +
+                SSUtil.pad(p2, "_", 8, -1) + "-" +
+                SSUtil.pad(p3, "_", 1, -1);
+
+                return ret; 
+
+
+		    } else {
+		        return SSUtil.formatNumber(parseInt(args, 10), 0);
+		    }
+		},
+
+        "dataccept": function(args) {
+            if(args.length<6)
+                return false;
+            return true;
+        },
+
+    },
+
+	"screens": {
+
+	    "default" : {		            
+	        
+            "inputarea": {},
+
+			"numkeyboard": {},
+
+            include(p/chunk/nav_all.json),
+    
+        }
+	},
+
+    
+	"events" : {
+
+	    include(p/chunk/event_timeout.json),
+
+
+		"enter": function() { 
+		    States.fireCustomEvent("input.enter", null);
+		},
+
+        "clear": function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+
+        "reject" : function() {
+            States.refreshState();
+        },
+
+    }
+
+
+}

@@ -1,0 +1,84 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+
+	    "default" : {
+
+	        "update": function() {
+	        
+	            var tabla = "";
+	            var idtarjeta = States.getStoredValue("tarjeta_pago");
+
+	            if(States.getStoredValue("medio_pago_tarjeta")=="debito") {
+	                var medio_pago_tarjeta = "Débito en cuenta";
+	            } else {
+	                if(States.getStoredValue("medio_pago_tarjeta")=="efectivo") {
+	                    var medio_pago_tarjeta = "Efectivo";
+	                } else {
+	                    var medio_pago_tarjeta = "Cheque";
+	                }
+	            }
+
+	            var tipo_pago_tarjeta = States.getStoredValue("tipo_pago_tarjeta");
+	            var monto = States.getStoredValue("monto");
+                
+	            tabla += "<table id='detalle'>";
+	            if(idtarjeta=="resumen") {
+	                tabla += "<tr><td>Pago de resumen</td><td></td></tr>";
+	                if(States.getStoredValue("pago_resumen_tipo")=="tarjeta") {
+	                    tabla += "<tr><td>Tarjeta</td><td>" + UserFuns.formatTarjeta(States.getStoredValue("tarjeta")) + "</td></tr>";	                
+	                } else {
+	                    tabla += "<tr><td>Cuenta</td><td>" + States.getStoredValue("cuenta_tarjeta") + "</td></tr>";	                
+	                }
+	            } else {
+	                var tarjeta = UserFuns.getProduct("tarjeta_pago");
+	                tabla += "<tr><td>Número:</td><td>" + UserFuns.formatProductValue(tarjeta) + "</td></tr>";	         
+	                tabla += "<tr><td>Cuenta:</td><td>" + tarjeta.TNUCUENTA + "</td></tr>";
+	            }
+	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	            tabla += "<tr><td>Forma de pago:</td><td>" + medio_pago_tarjeta + "</td></tr>";	         
+	            if(States.getStoredValue("medio_pago_tarjeta")=="debito") {
+	                var cuentadebito = UserFuns.getProduct("cuenta_debito");
+	                tabla += "<tr><td>" + UserFuns.formatProductName(cuentadebito) + "</td><td>" + UserFuns.formatProductValue(cuentadebito) + "</td></tr>";	            
+	            }
+	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	             
+	            tabla += "<tr><td>Monto pago:</td><td>" + UserFuns.formatFloatMonto(monto) + "</td></tr>";
+	            tabla += "</table>";
+
+	            States.setProperty("detalle", tabla);
+	        },
+			
+              include(p/chunk/title_transaccion.json),
+
+            "subtitle": {
+                "text": "Toque CONTINUAR para confirmar el pago"
+            },
+
+            include(p/chunk/nav_cancelar_continuar.json),
+    
+
+            "message": { 
+                "text": "<%= detalle %>"
+            },
+
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+	    "enter": function() {
+	        if(States.getStoredValue("medio_pago_tarjeta") == "debito") {
+	            return "p/pago_ttcc_reingreso_pin";
+	        } else {
+	            if(States.getStoredValue("medio_pago_tarjeta") == "efectivo") {
+		            return "cim/check_status";
+		        } else {
+		            return "cheque/check_status";
+		        }
+	        }
+	    },
+        "cancel": "p/close_salir",
+    }
+}

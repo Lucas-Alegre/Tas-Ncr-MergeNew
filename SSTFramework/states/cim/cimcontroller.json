@@ -1,0 +1,309 @@
+ssfw = {
+
+    "type" : function(){},
+
+    "base" : include(module_actions/modulecontroller.json),
+
+    "properties": {
+
+        "module" :  "cim",
+
+        "controller" : "CIMGenericController",
+
+        // List of currencies to be accepted
+        "accept": [
+            {
+                "cCurrencyID": "ARS",
+            },
+            {
+                "cCurrencyID": "USD",
+            }
+        ],
+
+        // List of bill to be ignored
+        "ignore": [
+            {
+                "cCurrencyID": "ARS",
+                "ulValues": 2,
+            },
+            {
+                "cCurrencyID": "ARS",
+                "ulValues": 5,
+            }
+        ],
+
+        "general_timer" : 30,
+        "module_timer" : 30,
+        "max_insert_attemps" : 3,
+        "retract_bills_in_timeout" : true,
+
+        "cim_bills" : {},
+        "cim_items_refused" : false,
+        "cim_timeout" : false,
+
+        "callbacks" : function(evt) {
+            if (evt.event){
+                console.log("cim: " + evt.event);
+            }
+
+            switch (evt.event) {
+
+                case "insert_items":
+                    States.handleEvent("cim_insert_items");
+                    SSFramework.displayScreen("cim_insert_items");
+                    break;
+
+                case "items_inserted":
+                    SSFramework.initTimeout();
+                    States.handleEvent("cim_items_inserted");
+                    SSFramework.displayScreen("cim_wait");
+                    break;
+
+                case "items_refused":
+                    SSFramework.timeout_secs = States.getProperty("general_timer");
+                    SSFramework.initTimeout();
+                    States.setProperty("cim_items_refused", true);
+                    break;
+
+                case "items_presented":
+                    SSFramework.initTimeout();
+                    States.handleEvent("cim_items_presented");
+                    SSFramework.displayScreen("cim_take_items");
+                    break;
+
+                case "items_taken":
+                    States.handleEvent("cim_items_taken");
+                    SSFramework.displayScreen("cim_wait");
+                    break;
+
+                default:
+                    break;
+            }
+        },
+
+        "cashIn": function() {
+            return new Promise(function(resolve, reject) {
+                SSFramework.timeout_secs = States.getProperty("module_timer");
+                States.setProperty("cim_timeout", false);
+                States.getProperty("init")()
+                .then(function(cim) {
+                    SSFramework.displayScreen("cim_insert_items");
+                    var cim_start = Vars.get("cim_start", true);
+                    var cmd = {
+                        "accept": States.getProperty("accept"),
+                        "ignore": States.getProperty("ignore"),
+                        "start": cim_start,
+                        "method": "cashIn",
+                    };
+                    
+                    cim.extension("CIMGenericController", cmd)
+                    .then(function(data) {
+                        SSFramework.timeout_secs = States.getProperty("general_timer");
+                        Vars.set("cim_start", false);
+                        switch (data.hResult) {
+                            case 0:
+                                if (!States.getProperty("cim_items_refused")) {
+                                    States.setProperty("cim_bills", data.value);
+                                    States.handleEvent("cim_cash_in_ok", data.value);
+                                    return resolve(data.value);
+                                } else {
+                                    States.setProperty("cim_items_refused", false);
+                                    States.handleEvent("cim_cash_in_items_refused", data);
+                                    return resolve(data.value);
+                                }
+                                break;
+                            case -4:
+                                States.handleEvent("cim_cash_in_canceled");
+                                return reject(data);
+                                break;
+                            case -1307:
+                                States.handleEvent("cim_cash_in_too_many_items");
+                                return reject(data);
+                                break;
+                            default:
+                                States.handleEvent("cim_cash_in_error");
+                                return reject(data.value);
+                                break;
+                        }
+                    })
+                    .caught(function(res) {
+                        return reject(res);
+                    });
+                })
+                .caught(function(res) {
+                    return reject(res);
+                });
+            });
+        },
+
+        "cashInStatus": function() {
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(cim) {
+                    cim.extension("CIMGenericController", { "method": "cashInStatus" })
+                    .then(function(status) {
+                        if (status.hResult == 0 ) {
+                            States.setProperty("cim_bills", status.value);
+                            States.handleEvent("cim_cash_in_status_ok", status);
+                            return resolve(status);
+                        }
+                        return reject(status);
+                    })
+                    .caught(function(res) {
+                        States.handleEvent("cim_cash_in_status_error", res);
+                        return reject(res);
+                    });
+                })
+                .catch(function(e){
+                    States.handleEvent("cim_cash_in_status_error", res);
+                    return reject(e);       
+                });
+            });
+        },
+
+        "handleSerials": function() {
+        },
+
+        "retract" :  function(){
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(cim){
+                    SSFramework.displayScreen("cim_wait");
+                    cim.extension("CIMGenericController", { "method": "retract" })
+                    .then(function(response) {
+                        Vars.remove("cim_start");
+                        if (response.hResult != 0) {
+                            return reject(res);
+                        }
+                        States.handleEvent("cim_retract_ok");
+                        return resolve(res);
+                    })
+                    .caught(function(res) {
+                        States.handleEvent("cim_retract_error");
+                        return resolve(res);                 
+                    })
+                })
+                .caught(function(res) {
+                    States.handleEvent("cim_retract_error");
+                    return resolve(res);                 
+                })
+            });
+        },
+
+        "cashInRollback": function() {
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(cim) {
+                    SSFramework.displayScreen("cim_wait");
+                    cim.extension("CIMGenericController", { "method": "cashInRollback" })
+                    .then(function(res) {
+                        Vars.remove("cim_start");
+                        if (res.hResult != 0) {
+                            States.handleEvent("cim_cash_in_rollback_error")
+                            return reject(res);
+                        }
+                        States.setProperty("cim_bills", {});
+                        States.handleEvent("cim_cash_in_rollback_ok");
+                        return resolve(res);
+                    })
+                    .caught(function(res) {
+                        States.handleEvent("cim_cash_in_rollback_error")
+                        return reject(res);
+                    });
+                })
+                .caught(function(res) {
+                    States.handleEvent("cim_cash_in_rollback_error")
+                    return reject(res);
+                });
+            });
+        },
+
+        "cashInEnd": function() {
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(cim) {
+                    SSFramework.displayScreen("cim_wait");
+                    cim.extension("CIMGenericController", { "method": "cashInEnd" })
+                    .then(function(data) {
+                        Vars.remove("cim_start");
+                        if (data.hResult == "0") {
+                            States.handleEvent("cim_cash_in_end_ok");
+                            return resolve(data);
+                        } else {
+                            States.handleEvent("cim_cash_in_end_error");
+                            return reject(data);
+                        }
+                    })
+                    .caught(function(res) {
+                        States.handleEvent("cim_cash_in_end_error");
+                        return reject(data);
+                    });
+                })
+                .caught(function(res) {
+                    States.handleEvent("cim_cash_in_end_error");
+                    return reject(res);
+                });
+            });  
+        },
+
+        "areItemsInserted": function(data, check_cim_status) {
+            var bills_inserted = false;
+            if (check_cim_status != false) {
+                if ((data.lpBuffer.wStatus == 2) && (data.value.totals.input != undefined) && (data.value.totals.input.length > 0)) {
+                    bills_inserted = true;
+                }
+            } else {
+                if ((data.value.totals.input != undefined) && (data.value.totals.input.length > 0)) {
+                    bills_inserted = true;
+                }
+            }
+            return bills_inserted;
+        },
+
+		"checkStatus": function() {
+            return new Promise(function(resolve, reject) {
+                SSFramework.displayScreen("cim_wait");
+				var cim = new XFSDevice("cim");
+				return cim.available()
+                .then(function(res) {
+                    if(res.available) {
+						States.handleEvent("cim_available");
+						return resolve(res);
+					} else {
+						States.handleEvent("cim_unavailable");
+						return reject(res);
+					}
+                })
+                .caught(function(res) {
+                    States.handleEvent("cim_unavailable");
+                    return reject(res);
+                });
+            });  
+        },
+    },
+
+    "screens": {
+        "cim_cash_in_status": "",
+        "cim_insert_items": "",
+        "cim_take_items": "",
+        "cim_retract": "",
+        "cim_wait": ""
+    },
+
+    "events": {
+        "cim_available" : "",
+        "cim_unavailable" : "",
+        "cim_cash_in_ok" : "",
+        "cim_cash_in_error" : "",
+        "cim_cash_in_end_ok" : "",
+        "cim_cash_in_end_error" : "",
+        "cim_cash_in_items_refused" : "",
+        "cim_cash_in_rollback_ok" : "",
+        "cim_cash_in_rollback_error" : "",
+        "cim_cash_in_status_ok" : "",
+        "cim_cash_in_status_error" : "",
+        "cim_items_taken" : "",
+        "cim_retract_ok" : "",
+        "cim_retract_error" : ""
+    }
+}

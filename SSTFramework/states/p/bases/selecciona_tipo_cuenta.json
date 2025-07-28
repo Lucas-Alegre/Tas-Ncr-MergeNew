@@ -1,0 +1,53 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "storename": "tipo_cuenta",
+        
+        "monedas": [80],            
+        "nav": function() {
+
+            var tipo = States.getStoredValue(States.getProperty("storename")); 
+            var opciones = include(p/config/tipo_cuenta.json);
+            var text = "";
+            for(var c=0; c<opciones.length; c++) {
+                if(opciones[c].value.concepto==tipo.concepto) {
+                    text = opciones[c].text;
+                    break;
+                }
+            }
+            return text;
+        },
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        "update": function(screen) {			
+	            var opciones = include(p/config/tipo_cuenta.json);
+
+	            var monedas = States.getProperty("monedas");
+
+	            var lista = [];	            
+	            for(var c=0; c<opciones.length; c++) {
+	                if(monedas==null || monedas.indexOf(opciones[c].value.moneda)!=-1) {
+	                    lista.push({
+	                        text: opciones[c].text,
+	                        value: opciones[c].value,
+	                    });
+	                }	                
+	            }                    	      
+
+	            var orden = ["select0", "select1", "select2", "select3", "select4", "select5", "select6"];
+	            UserFuns.selectFromList(screen, lista, orden);
+	        },
+
+            "select": {},
+	
+            include(p/chunk/nav_cancelar_anterior.json),
+        },
+
+    }
+    
+}

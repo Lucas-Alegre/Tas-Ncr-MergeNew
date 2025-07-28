@@ -1,0 +1,52 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+
+        "trx": "obtener_mensaje",
+        "storename": "comms.obtener_mensaje", 
+        "hidescreen": true,
+
+        
+        "requestHandler": function(msg) {
+            //msg.customer = "27102297577";
+        },
+
+        "generalResponseHandler": function(response) {            
+            var mensajes = [];
+            var list = null;
+            var responsenode = null;
+            if(response.hasOwnProperty("Envelope")) {
+                responsenode = response.Envelope.Body;
+            } else {
+                responsenode = response;
+            }
+
+            if(SSUtil.isDef(responsenode.obtenerMensajesPorClienteResponse) && 
+                SSUtil.isDef(responsenode.obtenerMensajesPorClienteResponse.return))
+                list = responsenode.obtenerMensajesPorClienteResponse.return;
+            for(var c=0; list!=null && c<list.length; c++) {
+                mensajes.push({
+                    "mensaje": list[c].mensaje,
+                    "id": list[c].idSolicitud
+                });
+            }
+            if(mensajes.length>0)
+                return mensajes;
+            return null; //ignore
+        },
+    },
+
+    "events": {
+        "comms_ok": "p/identificacion_mensajes_muestra",
+
+        "comms_error": function() {
+            States.handleEvent("identificacion_ok");   
+        },
+
+        "comms_general_error": function() {
+            States.handleEvent("identificacion_ok");   
+        },
+    }
+
+}

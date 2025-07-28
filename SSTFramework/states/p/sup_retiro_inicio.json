@@ -1,0 +1,90 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "clear": true,
+    },
+
+    "run": function(statedata) {
+        States.storeNamedValue("sup.status", null);              
+        States.storeNamedValue("sup.reset", null);              
+        States.storeNamedValue("sup.total", null);              
+        States.storeNamedValue("sup.hora", null);              
+                   
+        var dep = new XFSDevice("dep");
+        var total = 0;
+        var last_hora = null;
+
+        return readRegistry("hora", null) 
+
+        .then(function(res) {           
+            last_hora = res;
+            return readRegistry("total_sobres", null)        
+        })
+        
+        .then(function(res) {
+            var day1 = new Date(JSON.parse(last_hora)).getDay();
+            var day2 = new Date().getDay();
+            if(res!=null)
+                total = parseInt(res);
+            if(day1!=day2)
+                total = 0;
+            States.storeNamedValue("sup.total", total);                         
+            return dep.getInfo("WFS_INF_DEP_STATUS");
+        })
+
+        .then(function(res) {
+            States.storeNamedValue("sup.status", res);              
+            if(res.hResult && res.hResult!=0)
+                throw res.hResult;
+            return res;
+        })
+
+        .then(function(res) {
+            if(States.getProperty("clear")==true) {
+                total += res.lpBuffer.wNumOfDeposits;
+                var datestr = JSON.stringify(new Date());
+                setRegistry("total_sobres", total);
+                setRegistry("hora", datestr);
+                States.storeNamedValue("sup.hora", datestr);         
+                return dep.execute("WFS_CMD_DEP_RESET_COUNT");
+            } else {
+                return true;
+            }
+        })
+
+        .then(function(res) {
+            if(res!=true) {
+                States.storeNamedValue("sup.reset", res);                                 
+            }
+            States.handleEvent("continue");
+            return true;
+        })
+
+        .catch(function(ex) {
+            States.handleEvent("error");
+        });
+
+    },
+
+    
+	"screens": {
+
+	    "default" : {
+			
+	        "title": {
+	            "text": "Realizando tarea"
+	        },
+            
+            "message": { 
+                "text": "Espere un momento por favor<br><div class='spinner'></div>",
+            },
+	    }
+	},
+
+    "events": {
+        "continue": "p/sup_retiro_comms",
+        "error": "p/close_hardware_error",
+    }
+
+}

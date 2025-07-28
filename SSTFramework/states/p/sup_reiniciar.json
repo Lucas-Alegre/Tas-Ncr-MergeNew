@@ -1,0 +1,33 @@
+{
+    "type": "General",
+
+    "run": function(statedata) {
+            
+        var dev = new XFSDevice("server");      
+        dev.extension("Restart")
+        .then(function(data) {
+            xfsAuditNtrx("Reiniciando","");
+        })
+        .caught(function(err) {
+            xfsAuditNtrx("Error al intentar reiniciar","");
+            States.handleEvent("error");
+        }); 
+
+    },
+
+    "screens": {
+                        
+        "default" : {
+            "message": {  
+                "text": "Reiniciando, por favor espere<br><div class='spinner'></div></img>"
+            }
+        }     
+           
+    },
+
+    "events": {
+
+        "error": "p/sup_menu_select",
+
+    },
+}   

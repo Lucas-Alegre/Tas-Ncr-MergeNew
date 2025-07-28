@@ -1,0 +1,20 @@
+﻿{
+    "type": "CimStartExchange",
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+	},
+
+    "events": {
+		"CimStartExchange_OK": "n/CimEndExchange",
+		"CimStartExchange_Error": "n/CimReset",
+		"CimStartExchange_Hardware_Error": "n/CimReset",
+    }
+}

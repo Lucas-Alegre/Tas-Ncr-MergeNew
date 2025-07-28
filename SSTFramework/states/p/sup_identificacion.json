@@ -1,0 +1,137 @@
+﻿{
+    "type": "General",
+
+    "run": function(statedata) {
+
+        SSUtil.setApplicationState("sup", "idle");
+
+        States.storeNamedValue("Supervisor_Used", true);
+
+        supervisorSwitch(function(res) {
+            if(res.state=="normal" || res.state=="normal_gop") {
+                States.handleEvent(res.state);
+            }
+        });
+        return readRegistry("config.server")
+        .then(function(conf) {
+            return SSUtil.storeLocalConfig(conf);        
+        })
+        .then(function() {
+            return readRegistry("last_sequential_reset", -1);
+        })
+        .then(function(valor) {
+            SSUtil.setLocal("last_sequential_reset", valor);
+        })
+        .then(function() {
+            return readRegistry("AppVersion");
+        })      
+        
+		.then(function(appversion) {
+			statedata.screens.default.version.text = "Versión: " + appversion;
+            return readRegistry("sup");
+        })    
+
+        .then(function(value) {
+            if(value==null) 
+                throw "err";
+            States.setProperty("supkey", value);
+            var suppass = SSUtil.getLocal("TerminalSupervisorPassword", ""); 
+            if(suppass !="") {
+                States.setProperty("supkey", suppass);
+            }
+            return true;
+        })
+
+        .then(function() {
+            return readRegistry("config.numtrx",0);
+        })
+            
+        .then(function(data){
+            console.log("numtrx sup: " + data);
+            SSUtil.setLocal("config.numtrx", data);
+        })
+
+        .catch(function(ex) {
+            States.handleEvent("err");
+            return false;
+        });
+    },
+
+    "properties": {
+
+        "storename": "clave_supervisor",
+
+        "largo": 12,
+
+        "datachanged": function(args) {	
+            var largo = parseInt(States.getProperty("largo"));
+            return args.slice(0, largo);
+        },
+    
+        "datapresented": function(args) { 
+        	    var pin = "";
+        	    for(var c=0; c<args.length; c++)
+        	        pin += "&#x25cf;";
+        	    return pin; 
+        	},
+	
+         "dataccept": function(args) {
+             var key = States.getProperty("supkey"); 
+             if(args!=key)
+                 return false;
+             return true;
+         },
+    },
+
+	"screens": {
+
+	    "default" : {
+		
+	        "title": {
+                "text": "Menú Supervisor"
+	        },
+
+            "subtitle": {
+                "text": "Ingrese la clave de supervisor",
+            },
+            
+	        "inputarea": {},
+
+			"numkeyboard": {},
+
+            include(p/chunk/nav_all.json),
+
+			"version": {
+				"text": "Versión:"
+			},
+
+	    }
+	},
+
+	"events" : {
+
+	    
+		"enter": function() { 
+		    States.fireCustomEvent("input.enter", null);
+		},
+
+       
+        "clear": function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+		
+        "accept": "p/sup_menu_select",
+
+        "reject": "p/sup_changestyle",
+
+        "normal": function() {
+            xfsAuditNtrx("SALIDA MODO SUPERVISOR","");
+            return "p/status_startofday";
+        },
+
+        "normal_gop": function() {
+            xfsAuditNtrx("SALIDA MODO SUPERVISOR","");
+            return "p/sup_ooservice";
+        },
+	}
+}

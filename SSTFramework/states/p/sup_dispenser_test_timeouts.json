@@ -1,0 +1,29 @@
+﻿{ 
+
+    "type" : "Custom", 
+
+    "run": function() {
+        return readRegistry("trx.timeout", '{ "trx": [] }')
+        .then(function(data){
+            var trx = JSON.parse(data);
+            if(trx!=null && trx.trx.length>0) {
+                SSUtil.setLocal("trx.timeout", trx);
+                SSUtil.setLocal("trx.timeout.pos", 0);
+                States.handleEvent("print");
+            } else {
+                States.handleEvent("continue");
+            }
+        })
+        .caught(function() {
+            States.handleEvent("continue");
+        });
+    },
+
+
+	"events": { 	
+	    "continue": "p/sup_menu_cash",
+        
+        "print": "p/sup_dispenser_test_timeouts_print"
+	}
+
+}

@@ -1,0 +1,56 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+
+	    "default" : {
+
+	        "update": function() {
+	            var tabla = "";
+	            var medio_pago = (States.getStoredValue("medio_pago")=="cheque" ? "Cheque" : "Débito en cuenta");
+	            var monto = parseFloat(States.getStoredValue("monto"))*100;
+
+	            tabla += "<table id='detalle'>";
+	            tabla += "<tr><td>Cantidad de comprobantes:</td><td>" + States.getStoredValue("servicios") + "</td></tr>";
+	            tabla += "<tr><td>Monto pago:</td><td>" + UserFuns.formatMonto(monto) + "</td></tr>";
+	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	            tabla += "<tr><td>Medio de pago:</td><td>" + medio_pago + "</td></tr>";
+
+	            if(States.getStoredValue("medio_pago")!="cheque") {
+	                var cuenta = States.getStoredValue("cuenta_detalle");
+	                tabla += "<tr><td>" + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
+	            } 
+	            tabla += "</table>";
+	            States.setProperty("detalle", tabla);
+	        },
+			
+            include(p/chunk/title_transaccion.json),
+
+
+            "subtitle": {
+                "text": "Toque CONTINUAR para confirmar el pago"
+            },
+
+            include(p/chunk/nav_cancelar_continuar.json),
+    
+
+            "message": { 
+                "text": "<%= detalle %>"
+            },
+
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+        "enter": function() {
+            if(States.getStoredValue("medio_pago")=="debito")
+                return "p/pago_impuestos_reingreso_pin";
+            else
+                return "p/pago_impuestos_comms_simulacion";
+        },
+
+	    "cancel": "p/close_salir",
+    }
+}

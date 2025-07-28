@@ -1,0 +1,15 @@
+﻿{
+
+    "base" : include(p/sup_retiro_inicio.json),
+
+    "properties": {
+        "clear": false,
+        },
+
+    "events": {
+    
+        "continue": "p/sup_consulta_sobres_print",
+
+    },
+
+}   

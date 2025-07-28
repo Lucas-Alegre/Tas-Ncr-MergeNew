@@ -1,0 +1,9 @@
+ssfw = {
+
+    "base" : include(cim/devolver_billetes.json),
+
+	"events" : {
+        "cim_cash_in_rollback_error" : "cim/salida_cancel"
+	}
+}
+

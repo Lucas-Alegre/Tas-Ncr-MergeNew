@@ -1,0 +1,49 @@
+﻿<!--
+    Requires:
+        tipo_cuenta:
+        sucursal:
+        cuenta: account number, formatted for display
+        saldo: account balance, formatted for display
+        saldo_conformar:
+        saldo_48hs:
+        saldo_72hs:
+        saldo_96hs:
+        saldo_otro:
+        dep_cheques_a_conf:
+        dep_a_conf:
+        intereses:
+        limite_credito:
+        debitos_pendientes:
+-->
+
+
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+
+<hr />
+<h1>Consulta de Saldos</h1>
+<hr />
+<% include chunk/account_detail.html %>
+<br />
+<table>
+    <tr><td>Saldo total: </td><td align="right"> <%- receipt.saldo %></td> </tr>
+    <tr><td>&nbsp;</td><td /></tr>
+    <tr><td>Saldo a Conformar: </td><td align="right"> <%- receipt.saldo_conformar %></td> </tr>
+    <tr><td>Saldo Operativo: </td><td align="right"> <%- receipt.saldo_real%></td> </tr>
+    <tr><td>Saldo a 48 hs.: </td><td align="right"> <%- receipt.saldo_48hs %></td> </tr>
+    <!--
+    <tr><td>Saldo a 72 hs.: </td><td align="right"> <%- receipt.saldo_72hs %></td> </tr>
+    <tr><td>Saldo a 96 hs.: </td><td align="right"> <%- receipt.saldo_96hs %></td> </tr>
+    <tr><td>Otro Saldo: </td><td align="right"><%- receipt.saldo_otro %></td> </tr>
+    -->
+    <tr><td>Dep. Cheques a Conf: </td><td align="right"> <%- receipt.dep_cheques_a_conf %></td> </tr>
+    <tr><td>Dep. a Confirmar: </td><td align="right"> <%- receipt.dep_a_conf%></td> </tr>
+    <!-- 
+    <tr><td>Intereses Devengados: </td><td align="right"> <%- receipt.intereses %></td> </tr>
+    <tr><td>Límite de Crédito: </td><td align="right"> <%- receipt.limite_credito %></td> </tr>
+    <tr><td>Débitos Pendientes: </td><td align="right"> <%- receipt.debitos_pendientes %></td> </tr>
+    -->
+</table>
+
+<% include chunk/footer.html %>

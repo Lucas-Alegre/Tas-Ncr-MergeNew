@@ -1,0 +1,16 @@
+﻿{
+    "type": "Close",
+
+	"screens": {
+	    "idc_card_eject": {
+            "subtitle": {
+                "text": "Por favor, retirá su tarjeta"
+            },
+		}
+	},
+
+	"events" : {
+	    "card_complete": "n/close_saludo", 
+        "timeout": "n/close_saludo",
+	}
+}

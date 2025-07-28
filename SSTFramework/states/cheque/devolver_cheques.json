@@ -1,0 +1,17 @@
+ssfw = {
+
+    "base" : include(cheque/base_ipm.json),
+
+    "type" : function(state) {
+        States.getProperty("executeMediaInRollback")();	
+    },
+
+    "events" : {
+        "ipm_media_taken": function() {            
+            SSFramework.displayScreen("ipm_wait");
+        },
+        "ipm_media_in_rollback_complete" : "cheque/salida_cancel",  
+        "ipm_media_in_rollback_error" : "cheque/salida_error",  
+        "ipm_media_in_rollback_timeout" : "cheque/salida_timeout",
+    }
+}

@@ -1,0 +1,36 @@
+﻿{
+    
+    "base" : include(p/bases/ingreso_monto.json),
+
+    "properties": {
+
+        "storename": "monto",
+        
+        "decimales": "0",
+
+    },
+
+    "screens": {
+                        
+        "default" : {            
+                
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Por favor, ingrese el monto a depositar",
+                },
+
+            include(p/chunk/nav_cancelar_continuar.json),
+    
+        }
+    },
+
+    "events": {
+    
+        "accept": "p/deposito_comms_simulacion",
+
+        "cancel": "p/close_salir",
+
+    },
+
+}   

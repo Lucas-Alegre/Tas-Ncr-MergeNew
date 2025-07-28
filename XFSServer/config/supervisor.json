@@ -1,0 +1,298 @@
+﻿{
+    "connections": {
+        "tpa": "tpa",
+        "pin": "pin",
+        "cim": "cim",
+        "cdm": "cdm",
+        "ptr": "ptr",
+        "siu": "lights_siu",
+        "ttu": "ttu",
+        "idc": "idc",
+        "ipm": "ipm",
+        "cdmrecycler": "cdm2",
+        "cimrecycler": "cim2",
+        "vdm": "vdm"
+    },
+
+    
+
+    "tasks": {
+
+        "start": {
+            "task": "idle",
+            //"task": "terminal_name",
+            //"task": "supervisor_main",
+            //"task": "cim_clear_counters",
+        },
+
+        "idle": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,idle",
+            "next_normal": "idle",
+            "next_supervisor": "supervisor_main",
+        },
+
+        
+        "clear_all": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,clearAllCounters",
+            "next_complete": "back",
+        },
+            
+        "print_all": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,printAllCounters",
+            "next_complete": "back",
+        },
+            
+        
+        "close": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,close",
+            "next_complete": "idle",
+        },
+
+        "cdm_print_counters": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,cdmPrintCounters",
+            "next_complete": "supervisor_main",
+        },
+
+        "cdm_configure": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,cdmConfigureCashUnits",
+            "next_complete": "supervisor_main",
+        },
+
+        "cim_configure": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,cimConfigureCashUnits",
+            "next_complete": "supervisor_main",
+        },
+
+        "recycler_configure": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,recyclerConfigureCashUnits",
+            "next_complete": "supervisor_main",
+        },
+
+        "supervisor_main": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,menu",
+            "screen": "main_menu",
+            "next_1": "settlement",
+            "next_2": "not_implemented",
+            "next_3": "config_menu",
+            "next_4": "not_implemented",
+            "next_5": "not_implemented",
+            "next_6": "not_implemented",
+            "next_7": "diagnostic",
+            "next_8": "transfer",
+            "next_0": "close"
+        },
+
+        "diagnostic": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,startVDM",
+            "next_complete": "back",
+        },
+
+        "transfer": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,transfer",
+            "next_complete": "back",
+        },
+
+
+        "settlement": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,menu",
+            "screen": "settlement_menu",            
+            "next_1": "clear_all",
+            "next_2": "local_counts",
+            "next_0": "supervisor_main",
+        },
+
+        "local_counts": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,menu",
+            "screen": "local_counts",
+            "next_1": "cdm_cash_set",
+            "next_2": "cim_clear_counters",
+            "next_3": "cdm_cash_set_recycler",
+            "next_4": "ipm_clear_counters",
+            "next_5": "idc_clear_counters",            
+            "next_6": "print_all",   
+            "next_0": "settlement"
+        },
+
+        "counts_dispenser": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,menu",
+            "screen": "counts_dispenser",
+            "next_1": "cdm_cash_set",
+            "next_2": "cdm_cash_add",
+            "next_3": "cdm_cash_remove",
+            "next_4": "not_implemented",
+            "next_0": "back"
+        },
+
+        "idc_clear_counters": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,idcClearCounters",
+            "next_complete": "back"
+        },
+
+        "dep_clear_counters": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,depClearCounters",
+            "next_complete": "back"
+        },
+                
+        
+        "ipm_clear_counters": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,ipmClearCounters",
+            "next_complete": "back"
+        },
+
+		"ipm_clear_counters_exposed": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,ipmClearCounterExposed",
+            "next_complete": "back",
+            "exposed" :  1
+        },
+        
+        "cim_clear_counters": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,cimClearCounters",
+            "next_complete": "back"
+        },
+        
+        "cim_clear_counters_exposed": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,cimClearCounterExposed",
+            "next_complete": "back",
+            "exposed" :  1
+        },
+
+        "cdm_cash_set": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,cdmAddCash",
+            "type": "set",
+            "next_complete": "back",
+        },
+
+        "cdm_cash_set_recycler": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,recyclerAddCash",
+            "type": "set",
+            "cdmconnection": "cdmrecycler",
+            "cimconnection": "cimrecycler",
+            "next_complete": "back",
+        },
+
+        "counts_acceptor": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,menu",
+            "screen": "counts_acceptor",
+            "next_1": "cim_clear_counters",
+            "next_0": "back"
+        },
+        
+        "counts_acceptor_json": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,cimPrintCounters",
+            "next_complete": "supervisor_main",
+            "exposed" :  1
+        },
+
+        
+        "counts_recycler": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,menu",
+            "screen": "counts_recycler",
+            "next_0": "back"
+        },
+        
+        "counts_cheque": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,menu",
+            "screen": "counts_cheque",
+            "next_0": "back"
+        },
+		
+		"counts_cheque_json": {
+            "task": "Supervisor,XFSCSLib.Supervisor.GeneralTasks,ipmPrintCounters",
+            "next_complete": "supervisor_main",
+            "exposed" :  1
+        },
+        
+        "counts_cards": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,menu",
+            "screen": "counts_cards",
+            "next_0": "back"
+        },
+        
+        "not_implemented": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,notImplemented",
+            "next_complete": "back"
+        },
+
+        
+        "terminal_name": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,enterValue",
+            "variable_name": "terminal_name",
+            "variable_length": 10,
+            "storemap": "I{0}D",
+            "next_complete": "back"
+        },
+
+        "terminal_pass": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,enterValue",
+            "variable_name": "terminal_pass",
+            "variable_length": 10,
+            "storemap": "I{0}D",
+            "next_complete": "back"
+        },
+
+
+        "config_menu": {
+            "task": "Supervisor,XFSCSLib.Supervisor.Utility,menu",
+            "screen": "config_menu",
+            "next_1": "terminal_name",
+            "next_2": "terminal_pass",            
+            "next_3": "cdm_configure",            
+            "next_4": "cim_configure",            
+            "next_5": "recycler_configure",                       
+            "next_0": "supervisor_main"
+        },
+
+
+    },
+
+    "screens": {
+
+        "reset_devices": {
+            "title": "Device clear",
+            "message": "info placeholder",
+            "strings": {
+                "clear": "Clearing device {0}",
+                "complete": "{0} reset complete: {1}"
+            }
+        },
+
+        "login": {
+            "title": "Login",
+            "message": "Please input your id",
+        },
+
+        "login_password": {
+            "title": "[login.title]",
+            "message": "Please input your password",
+        },
+
+        "receipt_test": {
+            "title": "Printing test receipt",
+            "message": "Wait a moment please",
+        },
+
+        "main_menu": {
+            "title": "Select menu",
+            "options": [
+                "Reset devices",
+                "Login",
+                "Print test",
+                "Exit supervisor"
+            ],
+            "prompt": "please input option"
+        },
+
+
+        "config_menu": {
+            "title": "Config menu",
+            "options": [
+                "Reset devices",
+                "Login",
+                "Print test",
+                "Exit supervisor"
+            ],
+            "prompt": "please input option"
+        }
+
+    }
+}

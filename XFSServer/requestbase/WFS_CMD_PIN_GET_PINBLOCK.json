@@ -1,0 +1,11 @@
+﻿{
+    "command": "WFS_CMD_PIN_GET_PINBLOCK",
+    "input": {
+        "lpsCustomerData": 0, 
+        "lpsXORData": 0, 
+        "bPadding": 15, 
+        "wFormat": "WFS_PIN_FORMISO0", 
+        "lpsKey": "PINKEY", 
+        "lpsKeyEncKey": 0
+    }
+}

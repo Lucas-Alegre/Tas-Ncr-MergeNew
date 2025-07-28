@@ -1,0 +1,13 @@
+﻿{{>ttu_header}}
+{{padl data.connection 32}}
+Cheque deposit totals
+Last update: {{data.clear_time}}
+
+{{padr "BinID" 8}}{{padl "Count" 8}}{{padl "MediaIn" 8}}{{padl "Retract" 8}}
+{{#each data.cashunits}}
+{{padr lpstrPositionName 8}}{{padl ulCount 8}}{{padl ulMediaInCount 8}}{{padl ulRetractOperations 8}}
+{{/each}}
+Total:{{padl data.total 10}}
+
+To clear press 4
+Press 0 to exit

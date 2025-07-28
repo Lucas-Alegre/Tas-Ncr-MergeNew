@@ -1,0 +1,39 @@
+﻿{
+    "base": include(p/bases/selecciona_cuenta.json),
+
+    "properties": {
+        "storename": "cuenta_debito",
+        "conceptos": [1, 2],  
+        "flags": ["TSEDEBITO" ],
+        "monedas": [80],
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        include(p/chunk/title_transaccion.json),
+
+      
+            "subtitle": {
+                "text": "Seleccione una cuenta donde realizar el débito",
+            },
+
+            include(p/chunk/nav_cancelar_anterior.json),
+
+		}
+	},
+    
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+        
+        "sin_opciones": "p/close_sin_opciones",
+
+        "select": "p/pago_ttcc_confirma",
+
+            "cancel": "p/close_salir",
+        "back": "p/pago_ttcc_tipo_pago",
+
+    }
+}

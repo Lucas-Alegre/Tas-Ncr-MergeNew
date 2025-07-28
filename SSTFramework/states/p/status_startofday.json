@@ -1,0 +1,305 @@
+﻿{
+    "type": "Custom",
+
+    "properties": {
+        "application": "tpa",
+    },
+    
+    "run": function(statedata) {
+        var msg = "";
+        var log = function(str) {
+            msg += str + "<br>";
+            $("#message").html(msg);      
+            SSFramework.centerInDiv("#message");
+        }
+              
+        var initMachine = function() {
+
+           
+
+			// Se cargan los parametros de toda la aplicacion
+			var config_params = {};
+			//config_params.leyenda_ticket = "Los depósitos en pesos y en moneda extranjera cuentan con la garantía de hasta $450.000. En las operaciones a nombre de dos o más personas, la garantía se prorrateará entre sus titulares. En ningún caso, el total de la garantía por persona y por depósito podrá exceder de $450.000, cualquiera sea el número de cuentas y/odepósitos. Ley 24.485, Decreto 540/95 y Com. “A” 2337 y sus modificatorias y complementaria. Se encuentran excluidos los captados a tasas superiores a la de referencia, los que hayan contado con incentivos o retribuciones especiales diferentes de la tasa de interés, los adquiridos por endoso y los efectuados por personas vinculadas a la entidad financiera.””";
+		    // config_params.ARS_2 = "false";
+            // config_params.ARS_5 = "false";
+            // config_params.ARS_10 = "true";
+            // config_params.ARS_20 = "true";
+            // config_params.ARS_50 = "true";
+            // config_params.ARS_100 = "true";
+            // config_params.ARS_200 = "true";
+            // config_params.ARS_500 = "true";
+            // config_params.ARS_1000 = "true";
+
+			SSUtil.setLocal("config_params", config_params);
+			
+            var configurl = "";
+            var terminalname = "";
+            var keyhash = "";
+            var entity = "";
+            var lconfig = null;
+            msg = "";
+
+            console.log("************");
+            console.log("start of day");
+            console.log("************");
+
+            //activo el switch de supervisor
+            initSupervisorSwitch();
+            SSFramework.changeStyle();
+
+            //switch
+            supervisorSwitch(function(res) {
+                if(res.state=="supervisor" || res.state=="supervisor_gop") {
+                    States.handleEvent(res.state);
+                }             
+            })
+
+
+            SSUtil.setApplicationState(States.getProperty("application"), "oos");
+
+            return readRegistry("config.numtrx",0)
+            
+		    .then(function(data){
+		        console.log("numtrx: " + data);
+		        SSUtil.setLocal("config.numtrx", data);
+                return readRegistry("secuencial_cheque_number")
+		    })
+
+            .then(function(data){
+                SSUtil.setLocal("secuencial_cheque_number", data);
+                return readRegistry("secuencial_cheque_transaction_number")
+            })
+
+            .then(function(data){
+                SSUtil.setLocal("secuencial_cheque_transaction_number", data);
+                return readRegistry("secuencial_cheque_close_number")
+            })
+
+            .then(function(data){
+                SSUtil.setLocal("secuencial_cheque_close_number", data);
+            })
+
+            .then(function() {
+                return readRegistry("trx.timeout", '{ "trx": [] }');
+            })
+
+		    .then(function(data){
+		        SSUtil.setLocal("trx.timeout", JSON.parse(data));
+		        return SSUtil.storeLocalConfig(null)                     
+		    })
+
+            .then(function(config) {
+
+                log("Conectando");
+
+                configurl = SSUtil.getLocal("ConfigServer", "");
+                if(configurl=="") {
+                    log("Por el momento, no es posible leer la configuración");
+                    throw "config_error";
+                }
+
+                var keyhash = SSUtil.getLocal("Keyhash", "");
+                if(keyhash!="") {
+                    log("Keyhash: " + keyhash);
+                }
+            
+                var entity = SSUtil.getLocal("Entity", "");
+                if(entity!="") {
+                    //log("Entity: " + entity);
+                }
+
+				var appversion = SSUtil.getLocal("AppVersion", "");
+                if(appversion!="") {
+                    log("Versión: " + appversion);
+                }
+
+                var terminalname = SSUtil.getLocal("TerminalName", "");
+                if(terminalname=="" || terminalname=="000000" || parseInt(terminalname)==0) {
+                    log("Falta configurar número de máquina en supervisor");
+                    throw "config_error";
+                } else {
+                    log("Equipo: " + terminalname);
+                }
+            
+            
+                if(terminalname=="" || configurl=="") {
+                    throw "config_error";
+                }
+
+                return true;
+            })
+            
+            .then(function() {
+                return readRegistry("last_sequential_reset", -1);
+            })  
+            
+            .then(function(valor) {
+                SSUtil.setLocal("last_sequential_reset", valor);
+            })
+            
+
+            .then(function() {
+                return UserFuns.getConfig();
+            })
+            
+            .then(function(config) {
+                lconfig = config;
+				
+                console.log("obteniendo billetes aceptados");
+                //var config = SSUtil.getStoredConfig();
+                //console.log(JSON.stringify(lconfig));
+                const listaBilletes = config.Bills.split(',');
+                
+                console.log(JSON.stringify(listaBilletes));
+                // console.log("prueba billete de 2 y de 10");
+                // console.log(JSON.stringify(listaBilletes.indexOf('ARS2')));
+                // console.log(JSON.stringify(listaBilletes.indexOf('ARS10')));
+
+                config_params.ARS_2 = listaBilletes.indexOf('ARS2') < 0 ? "false" : "true";
+                config_params.ARS_5 = listaBilletes.indexOf('ARS5') < 0 ? "false" : "true";
+                config_params.ARS_10 = listaBilletes.indexOf('ARS10') < 0 ? "false" : "true";
+                config_params.ARS_20 = listaBilletes.indexOf('ARS20') < 0 ? "false" : "true";
+                config_params.ARS_50 = listaBilletes.indexOf('ARS50') < 0 ? "false" : "true";
+                config_params.ARS_100 = listaBilletes.indexOf('ARS100') < 0 ? "false" : "true";
+                config_params.ARS_200 = listaBilletes.indexOf('ARS200') < 0 ? "false" : "true";
+                config_params.ARS_500 = listaBilletes.indexOf('ARS500') < 0 ? "false" : "true";
+                config_params.ARS_1000 = listaBilletes.indexOf('ARS1000') < 0 ? "false" : "true";
+
+
+                console.log("prueba de leyenda");
+                console.log(config.Config[0].Value);
+                config_params.leyenda_ticket = config.Config[0].Value;
+
+				for(var i = 0; i < config.Config.length; i++){
+					config_params[config.Config[i].Name] = config.Config[i].Value;
+				}
+				
+				SSUtil.setLocal("config_params", config_params);
+				//console.log(SSUtil.getLocal("config_params").leyenda_ticket);
+                    
+                if(config.hasOwnProperty("ConfigurationStyle")) {
+                    log("Estilo: " + config.ConfigurationStyle);
+                    Vars.set("entidad",config.ConfigurationStyle, true);
+					SSFramework.changeStyle(config.ConfigurationStyle);
+                }
+
+				if(config.hasOwnProperty("ConfigurationVideo")) {
+                    log("Video: " + config.ConfigurationVideo);
+                    Vars.set("video",config.ConfigurationVideo, true);      
+                    setRegistry("video", config.ConfigurationVideo);
+                }
+
+                log("Configuración obtenida");                
+                log("Sucursal: " + config.BranchName);
+                log("");
+
+                if(UserFuns.getHash(config.TerminalEncryptorKey)!=keyhash) {
+                    log("Cargando llave");                
+                    var pin = new XFSDevice("pin");
+                    var key = config.TerminalEncryptorKey;
+                    //var key = "350E93F7BB1D7B682D8FA8F63683CA00";
+                    var input = {"key": key};
+					return pin.extension("PinEncryptor", input);
+                } else {
+                    return {"hResult": 1};
+                }
+            })
+
+            .then(function(res) {
+                if(res.hResult==0) {
+                    var hash = UserFuns.getHash(lconfig.TerminalEncryptorKey);
+                    log("Llave cargada. Hash: " + Math.abs(hash));
+                    States.storeNamedValue("Error_key", false);
+                } else {
+                    States.storeNamedValue("Error_key", true);
+                    log("Error cargando llave: " + res.hResult);
+					throw "Error cargando la llave";
+                }
+            })
+			
+			.then(function() {
+				console.log("Obteniendo feriados");
+				UserFuns.getFeriados();
+			})
+
+            .delay(1000)
+
+            .then(function() {
+                States.handleEvent("continue");
+            })
+            
+            .catch(function (ex) {
+                log("Excepción: " + JSON.stringify(ex));
+                log("Error de conexión");
+                window.setTimeout(function() {
+                    initMachine();
+                }, 60000);
+            });
+
+            
+
+        }     
+        
+        var initState = function() {
+            msg = "";
+            SSFramework.displayScreen(statedata.screens.out_of_service)
+            .delay(3000)
+            .then(function() {
+                return readRegistry("IPESB", -1)
+            })
+            .then(function(data) {
+                if(data==-1) {
+                    throw "esb_error";
+                }
+            })
+            .then(function () {
+                SSUtil.storeLocalConfig(null);
+            })
+            .then(function() {
+                initMachine();
+            })
+            .caught(function (ex) {
+                var er = "Error de conexión";
+                if(ex=="esb_error")
+                    er = "Error de conexión al XFSServer.<br>Reintentando en 30s";
+                log(er);
+                window.setTimeout(function() {
+                    initState();
+                }, 30000);
+            });
+        }
+      initState();
+
+
+      var sup_used = States.getStoredValue("Supervisor_Used");
+      if (!sup_used){
+        xfsAuditNtrx("INICIO DE APLICACION", "");
+        States.storeNamedValue("Supervisor_Used", true);
+      }
+
+    },
+
+	"screens": {
+	    "out_of_service": {
+	        "title": {
+	            "text": "Equipo fuera de servicio"
+	        },
+            "message": {
+                "text": "Iniciando<br/><div class='spinner'></div>"
+            }
+		}
+	},
+
+	"events" : {
+	    "continue": "p/status_storeconfig",
+        "supervisor": function() {
+            xfsAuditNtrx("INGRESO MODO SUPERVISOR","");
+            return "p/sup_changestyle";
+        },
+        
+        "supervisor_gop": function() {
+            xfsAuditNtrx("INGRESO MODO SUPERVISOR","");
+            return "p/status_ooservice";
+        },  
+	}
+}

@@ -1,0 +1,14 @@
+﻿ssfw = {
+	"base" : include(cim/check_status.json),
+
+	"events": {
+        "cim_available" : function() {
+        	Vars.set("cim_available",true);
+        	return "p/sup_check_ipm";
+        },
+        "cim_unavailable" : function() {
+        	Vars.set("cim_available",false);
+        	return "p/sup_check_ipm";
+        }
+    }
+}

@@ -1,0 +1,46 @@
+﻿{
+    "base": include(p/bases/selecciona_cuenta.json),
+
+    "properties": {
+        "storename": "tarjeta_pago",        
+        "conceptos": [25], 
+        "monedas": [80],
+    },
+
+    
+	"screens": {
+                
+	    "default" : {
+
+	        include(p/chunk/title_transaccion.json),
+
+            "subtitle": {
+                "text": "Seleccione la tarjeta que desea pagar",
+            },
+
+            include(p/chunk/nav_cancelar_anterior.json),
+
+            "nav": {							    
+                "nav3" : {
+                    "text": "Por resumen de cuenta",
+					"event": "resumen",
+                    "value": "resumen",
+                }
+            },
+		}
+	},
+    
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+        "select": "p/pago_ttcc_tipo_medio",
+                
+        "sin_opciones": "p/close_sin_opciones",
+
+	    "resumen" : "p/pago_ttcc_resumen_tipo_ingreso",
+
+        "cancel": "p/close_salir",
+        "back": "p/menu_principal_select",
+
+	}
+}

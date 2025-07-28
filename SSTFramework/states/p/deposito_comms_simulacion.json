@@ -1,0 +1,15 @@
+﻿{
+    "base": include(p/deposito_comms_confirma.json),
+
+    "properties": {
+        "repeat_trx": false,
+        "simulacion":  true,
+    },
+    
+    "events": {
+        "comms_ok": "p/deposito_confirma",
+        "comms_error": "p/close_hardware_error",
+        "comms_general_error": "p/close_comms_error"  
+    }
+
+}

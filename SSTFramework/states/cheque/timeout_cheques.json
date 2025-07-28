@@ -1,0 +1,20 @@
+ssfw = {
+	
+	"base" : include(cheque/base_ipm.json),
+
+	"type" : function() {
+		SSFramework.displayScreen("ipm_timeout");
+	},
+    
+    "events" : {
+		"si" : function() {
+            States.runState(
+                Vars.get("temp.timeout_state"),
+                Vars.get("temp.params")
+            );
+            return false;
+        },
+        "no" : "cheque/devolver_cheques",
+        "timeout" : "cheque/retract_cheques", 
+    }
+}

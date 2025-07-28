@@ -1,0 +1,56 @@
+﻿{
+    "type": "PinEntry",
+
+    "screens": {
+
+
+        "default": {
+
+            include(p/chunk/title_transaccion.json),
+
+            "subtitle": {
+                "text": "Digite su PIN usando el teclado del equipo"
+            },
+
+            "inputarea": {
+                "pin": "true",
+            },
+
+            "video": {
+                "class": "video_ingreso_pin",
+                "src": "<%= SSUtil.readCSS('video_ingreso_pin') %>"
+            },
+
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+
+            }
+        }
+    },
+
+	"properties" : {
+
+	
+	    "storename": "pinblock",
+
+		"datachanged": function(args) {			
+		    return args.slice(0, 12);
+		},
+
+		"datapresented": function(args) { 
+		    var pin = "";
+		    for(var c=0; c<args.length; c++)
+		        pin += "&#x25cf;";
+		    return pin; 
+		},
+	
+	},
+    
+    "events": {
+        include(p/chunk/event_timeout.json),
+    }
+}

@@ -1,0 +1,41 @@
+﻿{ 
+
+	"type": "General",
+	
+	"screens": { 
+	
+		"default": { 
+
+			"title": {
+				"text": "Elija la consulta que quiere realizar" 
+			},
+
+			"select": { 
+
+			    "select0": { 
+					"text": "Consulta de saldo",
+					"event": "consulta_saldo",
+				},
+
+				"select4": { 
+					"text": "Últimos movimientos",
+					"event": "ultimos_movimientos"
+				},
+
+				"select3": { 
+					"text": "Atrás",
+					"event": "atras",
+				}
+
+			}
+		}
+	},
+
+
+	"events": {
+	    "back": "main",
+		"consulta_saldo": "consultas/consulta_saldo",
+		"ultimos_movimientos": "consultas/ultimos_movimientos"
+	}
+
+}

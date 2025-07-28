@@ -1,0 +1,52 @@
+﻿{
+    "type": "General",
+    "run": function(state) {
+        States.storeNamedValue("temp.mensaje_position", 0);
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        "update": function(screen) {
+	            var mensajes = States.getStoredValue("comms.obtener_mensaje");
+	            var position = States.getStoredValue("temp.mensaje_position");
+	            screen.message.text = mensajes[position].mensaje;
+            },
+			
+            include(p/chunk/title_transaccion.json),
+
+            "message": { 
+                "text": "",
+            },
+
+
+            "nav": {
+                "nav3": {
+                    "text": "Continuar",
+                    "event": "continuar"
+                },
+            },
+
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "continuar": function() {
+	        var mensajes = States.getStoredValue("comms.obtener_mensaje");
+	        var position = States.getStoredValue("temp.mensaje_position");
+	        position++;
+	        States.storeNamedValue("temp.mensaje_position", position);
+	            
+	        if(position<mensajes.length) {
+	            SSFramework.displayScreen(States.CurrentStateData.screens.default);
+	        } else {
+	            States.handleEvent("salir");
+	        }	            	            
+	    },
+
+        "salir": "p/identificacion_mensajes_avisa",
+	}
+}

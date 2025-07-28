@@ -1,0 +1,26 @@
+﻿{
+    "base" : include(p/sup_retener_ingreso.json),
+
+    
+    "properties": {
+
+        "operation": "add",
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        "title": {
+	            "text": "Ingrese la cantidad de billetes agregados en<br>la casetera <%= detalle_cassetera %>"
+	        },      
+        },
+    },
+    
+    "events": {
+        "accept": "p/sup_add_ingreso",
+    }
+}
+
+    
+ 

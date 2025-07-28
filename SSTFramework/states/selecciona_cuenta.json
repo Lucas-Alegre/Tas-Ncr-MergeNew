@@ -1,0 +1,50 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+
+		"default" : {
+			
+			"update": function(screen) {				
+				var cuentas = ["134910342", "192834729", "520349853", "41234992", "123491238", "142394283", "1234822349", "2348234298", "1234822349", "2348234298"];
+				var orden = ["select0", "select4", "select1", "select5", "select2", "select6"];
+				var list = [];
+				for(var c=0; c<cuentas.length; c++) {
+				    list.push({
+				        "text": "caja de ahorros<br>" + cuentas[c],
+				        "value": cuentas[c]
+				    });
+				}
+				UserFuns.selectFromList(screen, list, orden);
+			},
+			
+			"title": {			
+				"text" : "Seleccione la cuenta con la que desea operar"
+			},
+
+			"select": {				
+			    "select3" : {
+			        "text": "Atrás",
+					"event": "atras" 
+			    },
+
+				"select7" : {
+				    "text": "Más",
+					"event": "mas" 
+				}
+			}
+		}
+	},
+
+	"events" : {
+		"select": function(obj) { 
+			alert("eligió la cuenta: " + obj.data("value"));
+		},
+
+		"mas" : function() {
+			 States.refreshState();
+		},
+
+		"atras": "main2"		
+	}
+}

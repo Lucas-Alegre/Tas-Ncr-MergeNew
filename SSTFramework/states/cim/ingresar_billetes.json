@@ -1,0 +1,81 @@
+ssfw = {
+
+    "base" : include(cim/base_cim.json),
+
+    "type" : function() {
+
+        //Configuro denominación a aceptar
+        var denominaciones = [];
+        var denominacion = {};
+        denominacion.cCurrencyID = "ARS";
+        denominaciones.push(denominacion);
+        States.setProperty("accept",denominaciones)
+
+        //Configurro billetes a ignorar
+        var billetes_ignorados = [];
+        var billetes = [2,5,10,20,50,100,200,500,1000];
+        for(var i in billetes) {
+            if (SSUtil.getLocal("config_params")["ARS_"+billetes[i]] != "true") {
+                var billete_ignorado = {};
+                billete_ignorado.cCurrencyID = "ARS";
+                billete_ignorado.ulValues = billetes[i];
+                billetes_ignorados.push(billete_ignorado);
+            }
+        }
+        States.setProperty("ignore",billetes_ignorados)
+        
+        States.getProperty("cashIn")()
+        .then(
+            function(ok){},
+            function(error){} 
+        )
+        .caugth(function(e){});
+    },
+
+    "events" : {
+        
+        "cim_cash_in_ok" : "cim/resumen_billetes",
+        "cim_cash_in_error" : "cim/salida_error",
+        "cim_cash_in_too_many_items" : "cim/resumen_billetes",
+        "cim_items_taken" : "",
+        "cim_items_presented" : "",
+        "module_cancel_ok" : "cim/resumen_billetes",
+        "module_cancel_error" : "",
+
+        "cim_cash_in_items_refused" : function(ev, data) {
+            var bills_inserted = States.getProperty("areItemsInserted")(data, false);
+            if ((!bills_inserted) && (States.getProperty("insert_attemp", 0) < States.getProperty("max_insert_attemps"))) {
+                States.setProperty("insert_attemp", States.getProperty("insert_attemp", 1) + 1);
+                    States.getProperty("cashIn")();
+            } else {
+                return "cim/resumen_billetes";
+            }    
+        },
+
+        "timeout" : function() {
+            SSFramework.timeout_secs = States.getProperty("general_timer");
+            if (States.getProperty("cim_items_refused")) {
+                var cim = new XFSDevice("cim");
+                cim.cancelAsyncRequest({ RequestID: 0 });
+                return;
+            }
+            States.setProperty("cim_timeout",true);
+            States.getProperty("cancel")(false);
+        },
+
+        "cim_cash_in_canceled" : function() {
+            if (States.getProperty("cim_items_refused")) {
+                return "cim/retract_billetes";
+            }
+            if (States.getProperty("cim_timeout")) {
+                return "cim/timeout_cim";
+            }
+        },
+
+        "cancel" : function() {
+            States.getProperty("cancel")();
+        }
+
+    }
+}
+

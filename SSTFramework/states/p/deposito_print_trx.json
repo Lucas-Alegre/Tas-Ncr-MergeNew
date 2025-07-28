@@ -1,0 +1,35 @@
+﻿{ 
+
+	"type": "General",
+
+    "run": function(statedata) {
+		if(States.getStoredValue("data.menu_principal").value =="entrega_documentacion") {
+			States.handleEvent("entrega_documentacion");   
+        } else {
+        	if (Vars.get("tipo_deposito") == "efectivo") {
+				States.handleEvent("deposito_efectivo");
+        	} else {
+				if (Vars.get("tipo_deposito") == "cheque") {
+                    States.handleEvent("deposito_cheque");
+                } else {
+                    States.handleEvent("operaciones");
+                }
+        	}
+        }
+    },
+
+	 "screens": {
+                        
+        "default" : {            
+                
+        }
+    },
+
+	"events": { 	
+	    "entrega_documentacion": "p/deposito_print_trx_entrega_documentacion",
+	    "operaciones": "p/deposito_print_trx_operaciones",
+	    "deposito_efectivo": "p/deposito_print_trx_deposito_efectivo",
+        "deposito_cheque": "p/deposito_print_trx_deposito_cheque",
+    }
+
+}

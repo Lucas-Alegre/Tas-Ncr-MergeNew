@@ -1,0 +1,51 @@
+﻿{
+    "type": "Receipt",
+
+    "screens": {
+		"receipt": {
+	        "name": "naranja",
+ 			"update": function() { 
+			    var receipt = { 
+					"logo": "naranja",
+					"machine": "040120102",
+			    };
+				receipt.documento = SSUtil.formatNumber(parseInt(States.getStoredValue("customer_id"), 10), 0);
+				receipt.monto_ingresado = "$ " + UserFuns.formatMonto(States.getStoredValue("monto_operacion"), "", 0);
+			    return receipt;			 			 
+			}
+	    },	
+
+        "printing": {
+			"title": {
+				"text": "¡Imprimiendo!"
+			},
+            "subtitle": {
+                "text": "<span>Por favor, esperá un momento</span>"
+            },
+            "message": {
+                "text": "<div class='spinner'></div>"
+            }
+        },
+
+        "print_ok": {
+            "subtitle": {
+                "text": "¡Tu recibo está listo!"
+            },
+            "video": {
+                "class": "video_impresora",
+                "src": "<%= SSUtil.readCSS('video_impresora') %>"
+            },
+        },
+
+        "hardware_error_ptr": {
+            "floating_message": {
+                "text": "No fue posible imprimir el recibo"
+            }
+        }
+    },	
+
+	"events": { 	    
+		"print_ok": "n/status_file",
+	    "hardware_error_ptr": "n/status_file"
+	}
+}

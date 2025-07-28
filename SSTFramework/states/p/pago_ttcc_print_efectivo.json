@@ -1,0 +1,56 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+    
+    "properties" : {
+        "sobre": false,
+    },
+
+    "screens": { 
+
+	    "receipt": {
+
+	        "name": "pago_ttcc_efectivo",
+               
+			"update": function() { 
+			    var tarjeta = States.getStoredValue("tarjeta_pago");   
+			    if(tarjeta=="resumen") {   
+			        if(States.getStoredValue("pago_resumen_tipo")=="tarjeta") {
+			            tarjeta = UserFuns.formatTarjeta(States.getStoredValue("tarjeta"));
+			        } else {
+			            tarjeta = States.getStoredValue("cuenta_tarjeta");
+			        }
+			    } else {
+			        tarjeta = UserFuns.formatProductValue(UserFuns.getProduct("tarjeta_pago"));
+			    }
+			    var receipt = { 
+			        "tarjeta": tarjeta,
+			        "tipo_cuenta": "",
+			        "sucursal": "",
+			        "cuenta": "",
+			        "nombre": "",
+			        "forma_de_pago": "Efectivo",
+			        "monto": UserFuns.formatFloatMonto(States.getStoredValue("monto")),
+			        "numero_sobre": "0",
+			        "customer_id": States.getStoredValue("customer_id"),
+			        "customer_id_type": States.getStoredValue("customer_id_type"),               
+			        "intersucursal": false,
+			        "sobre": States.getProperty("sobre"),
+			        "denominaciones_depositadas": Vars.get("denominaciones_depositadas"),
+			    };
+
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},
+    
+	"events": { 	
+	    "cancel": "p/close_salir",
+        "enter": "p/close_salir",
+	    "print_ok": "p/pago_ttcc_pregunta_adesion",       
+        "hardware_error_ptr": "p/close_printer_error"
+    }
+
+}

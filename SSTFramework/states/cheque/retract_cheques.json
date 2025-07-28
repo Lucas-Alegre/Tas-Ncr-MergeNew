@@ -1,0 +1,13 @@
+ssfw = {
+
+    "base" : include(cheque/base_ipm.json),
+
+    "type" : function(state) {
+        States.getProperty("executeMediaInRetract")();		
+    },
+
+    "events" : {       
+        "ipm_media_in_retract_complete": "cheque/salida_timeout",   
+        "ipm_media_in_retract_error": "cheque/salida_error",    
+    }
+}

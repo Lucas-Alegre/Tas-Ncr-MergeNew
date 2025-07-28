@@ -1,0 +1,21 @@
+﻿{
+    "type": "CimConfigureNotetypes",
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+	},
+
+    "events": {
+		//"CimConfigureNotetypes_WFS_CMD_CIM_CONFIGURE_NOTETYPES": "n/status_inservice",
+		"CimConfigureNotetypes_OK": "n/status_inservice",
+		"CimConfigureNotetypes_Error": "n/status_inservice",
+		"CimConfigureNotetypes_Hardware_Error": "n/status_inservice",
+    }
+}

@@ -1,0 +1,9 @@
+﻿{
+    "base": include(p/sup_retener_comms.json),
+
+    "properties": {
+        "subtrx": "configuracion_dispensador",
+        "storename": "comms.configuracion_dispensador",
+    },
+
+}

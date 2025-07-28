@@ -1,0 +1,17 @@
+﻿[
+	{
+		value: [ "ARS", 100 ]
+	}, {
+	    value: [ "ARS", 200 ]
+	}, {
+	    value: [ "ARS", 300 ]
+    }, {
+    	value: [ "ARS", 400 ]
+    }, {
+        value: [ "ARS", 500 ]
+    }, {
+        value: [ "ARS", 600 ]
+    }, {
+        value: [ "ARS", 700 ]
+    },
+]

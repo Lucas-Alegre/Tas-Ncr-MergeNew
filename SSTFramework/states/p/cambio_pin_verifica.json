@@ -1,0 +1,23 @@
+﻿{
+    "type": "Custom",
+
+    "run": function() {
+
+        var pblock1 = States.getStoredValue("pinblocknew");        
+        var pblock2 = States.getStoredValue("pinblocknew2");
+        
+        if(pblock1==pblock2) {
+            States.handleEvent("match");
+        } else {
+            States.handleEvent("no_match");
+        }
+    },
+
+	"screens": {
+	},
+
+	"events" : {
+	    "match": "p/cambio_pin_comms",
+        "no_match": "p/cambio_pin1_error",        
+	}
+}

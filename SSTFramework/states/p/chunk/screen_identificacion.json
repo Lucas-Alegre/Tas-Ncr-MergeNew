@@ -1,0 +1,56 @@
+﻿
+include(p/chunk/nav_cancelar_anterior.json),
+
+"update": function(screen) {
+       
+    if((States.getStoredValue("data.menu_principal").value !="deposito_terceros" && 
+		States.getStoredValue("data.menu_principal").value !="entrega_documentacion")) {
+        delete screen.select.select4;
+    }
+
+	if(((SSUtil.getLocal("type", "dep")!="dep") || (UserFuns.getStatus("dep")==false)) && 
+		(Vars.get("cim_available") == false) && 
+		(Vars.get("ipm_available") == false)) {
+        delete screen.select.select4;
+    }
+
+	switch (States.getStoredValue("data.menu_principal").value){
+		case "consultas":
+			break;
+		case "cambio_pin":
+			break;
+		case "mensajes":
+			break;
+		case "deposito":
+			break;
+		case "deposito_terceros":
+			break;
+		case "entrega_documentacion":
+			break;
+		default:
+			screen.subtitle.text = "Inserte su tarjeta";
+			delete screen.select.select0;
+			break;
+	}
+	
+	var identifyingModes = States.getStoredValue("identifying_modes", "");
+	if ( !identifyingModes.includes("M") )
+		delete screen.select.select0;
+	if ( !identifyingModes.includes("N") )
+		delete screen.select.select4;
+	if ( !identifyingModes.includes("M") && !identifyingModes.includes("N") )
+		screen.subtitle.text = "Inserte su tarjeta";
+},
+
+"select": {
+
+    "select0" : {
+	    "text": "Identificación<br>manual",
+		"event": "identificacion_manual" 
+    },
+
+    "select4": {
+          "text": "No cliente",
+          "event": "no_cliente",
+    }
+}

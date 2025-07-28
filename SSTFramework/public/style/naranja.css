@@ -1,0 +1,521 @@
+﻿/* habilito los componentes de petersen */
+.navbtn {
+    display: inline;
+}
+
+.navbar {
+    display: inline;
+}
+
+
+body {
+    background: url(/images/naranja/fondo1.jpg);
+    background-size: cover;
+}
+
+@font-face { 
+    font-family: 'Open Sans Regular'; 
+    src: url(/style/opensans-regular-webfont.ttf) format("truetype"); 
+} 
+
+* { 
+    font-family: 'Open Sans Regular'; 
+}
+
+div, td {
+    font-size: 18pt;
+}
+
+
+#ScreenPanel {                                      
+  /*  background-image: url(/images/petersen/icon1.jpg);
+    background-repeat: no-repeat;
+    background-position: 1% 1%;    
+    background-size: 27% 27%; */
+}
+
+
+.navbtn:active {
+    background-color: rgba(244,96,34,1);
+}
+
+.navbtn {
+    width: 200px;
+    height: 58px;
+    position: absolute;
+    color: white;
+    /*background: linear-gradient(to bottom, rgba(133,0,14,1), rgba(244,96,34,1));*/
+    background-color: rgba(109,109,109,1);
+    border: 1px solid #FFF;
+    border-radius: 20px;
+    bottom: 5%;
+    text-transform: none;
+}
+
+#nav3 {
+    background-color: rgba(244,96,34,1);
+}
+
+#nav3:active {
+    background: rgba(109,109,109,1);
+}
+
+.navbtn td {
+    font-weight: bolder;
+    font-size: 16pt;
+}
+
+#nav0 {
+    left: 45px;
+}
+
+#nav1 {
+    left: 290px;
+}
+
+#nav2 {
+    right: 290px;
+}
+
+#nav3 {
+    right: 45px;
+}
+
+#nav4 {
+    left: 5%;
+    top: 66%;
+}
+
+
+.selectbtn:active {
+    background: rgba(109,109,109,1);
+}
+
+.selectbtn {
+    border: 1px solid white;
+    border-radius: 20px;
+    color: white;
+    width: 24.5%;
+    height: 10%;
+    position: absolute;
+    text-transform: uppercase;
+    /*background: linear-gradient(to bottom, rgba(133,0,14,1), rgba(244,96,34,1));*/
+    background-color: rgba(244,96,34,1);
+}
+
+.selectbtn td {
+    font-size: 16pt;
+}
+
+.selectbtnleft {
+    left: 38.3%;
+}
+
+.selectbtnright {
+    right: 5%;
+}
+
+#select0, #select4 {
+    top: 25%;
+}
+
+#select1, #select5 {
+    top: 38%;
+}
+
+#select2, #select6 {
+    top: 51%;
+}
+
+#select3, #select7 {
+    top: 64%;
+}
+
+.title, .subtitle, .messagecenter, .subvideo {
+    position: absolute;
+    text-align: center;
+    /*font-weight: bolder;*/
+    top: 0px;
+    width: 90%;
+    right: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border: 0px solid white;
+}
+
+.title td {
+    font-size: 45px;
+    color: rgba(244,96,34,1);
+    font-weight: bold;
+}
+
+.messagecenter td {
+    font-size: 96px;
+    color: rgba(109,109,109,1);
+}
+
+.subvideo td {
+    font-size: 18pt;
+    color: rgba(109,109,109,1);  
+}
+
+.messagecenter {
+    top: 250px;
+}
+
+.subvideo {
+    top: 550px;
+}
+
+.title, .messagecenter, .subvideo {
+    background-color: transparent;
+    height: 8%;
+    /*text-transform: uppercase;*/
+}
+
+.title tr td, .messagecenter tr td, .subvideo tr td {
+    vertical-align: bottom;
+}
+
+.subtitle td {
+    min-height: 75px;
+    font-size: 32px;
+    color: rgba(244,96,34,1);  
+}
+
+.subtitle {
+    background-color: transparent;
+    display: inline;
+    top: 10.5%;
+}
+
+.subtitle span {
+    color: rgba(109,109,109,1);
+}
+
+.floating_message {
+    width: 50%;
+    right: 25%;
+    top: 25%;
+    position: absolute;
+    font-size: 18pt;
+    color: white;
+}
+
+.message {
+    background-color: rgba(109,109,109,1);
+    border: 1px solid white;
+    border-radius: 20px;
+    color: white;
+    width: 50%;
+    right: 25%;
+    bottom: 25%;
+    height: 50%;
+    position: absolute;
+}
+
+.numeric_keyboard {
+    top: 33.8%;
+    right: 32.3%;
+    width: 360px;
+    position: absolute;
+}
+
+#inputarea_panel {
+    top: 25%;
+    right: 32.3%;
+    width: 360px;
+    position: absolute;
+    font-weight: bold;
+}
+
+.numkey {
+    /*font-family: sans-serif;*/
+    position: relative;
+    /*min-width: 70px;*/
+    width: 68px;
+    height: 68px;
+    line-height: 68px;
+    color: transparent;
+}
+
+#numkey1 {
+    background: url('../images/naranja/teclado/uno.png') no-repeat;
+}
+
+#numkey2 {
+    background: url('../images/naranja/teclado/dos.png') no-repeat;
+}
+
+#numkey3 {
+    background: url('../images/naranja/teclado/tres.png') no-repeat;
+}
+
+#numkey4 {
+    background: url('../images/naranja/teclado/cuatro.png') no-repeat;
+}
+
+#numkey5 {
+    background: url('../images/naranja/teclado/cinco.png') no-repeat;
+}
+
+#numkey6 {
+    background: url('../images/naranja/teclado/seis.png') no-repeat;
+}
+
+#numkey7 {
+    background: url('../images/naranja/teclado/siete.png') no-repeat;
+}
+
+#numkey8 {
+    background: url('../images/naranja/teclado/ocho.png') no-repeat;
+}
+
+#numkey9 {
+    background: url('../images/naranja/teclado/nueve.png') no-repeat;
+}
+
+#numkey0 {
+    background: url('../images/naranja/teclado/cero.png') no-repeat;
+}
+
+#numkey1:active {
+    background: url('../images/naranja/teclado/uno-hover.png') no-repeat;
+}
+
+#numkey2:active {
+    background: url('../images/naranja/teclado/dos-hover.png') no-repeat;
+}
+
+#numkey3:active {
+    background: url('../images/naranja/teclado/tres-hover.png') no-repeat;
+}
+
+#numkey4:active {
+    background: url('../images/naranja/teclado/cuatro-hover.png') no-repeat;
+}
+
+#numkey5:active {
+    background: url('../images/naranja/teclado/cinco-hover.png') no-repeat;
+}
+
+#numkey6:active {
+    background: url('../images/naranja/teclado/seis-hover.png') no-repeat;
+}
+
+#numkey7:active {
+    background: url('../images/naranja/teclado/siete-hover.png') no-repeat;
+}
+
+#numkey8:active {
+    background: url('../images/naranja/teclado/ocho-hover.png') no-repeat;
+}
+
+#numkey9:active {
+    background: url('../images/naranja/teclado/nueve-hover.png') no-repeat;
+}
+
+#numkey0:active {
+    background: url('../images/naranja/teclado/cero-hover.png') no-repeat;
+}
+
+.inputarea_panel_table td {
+    /*font-family: sans-serif;*/
+    position: relative;
+    /*min-width: 70px;*/
+    width: 284px;
+    height: 45px;
+    line-height: 45px;
+    background-color: white;
+    /*border-radius: 5px;*/
+    border: 2px solid lightgray;
+}
+
+.numeric_keyboard_table {
+    /*width: 326px;*/
+    border-spacing: 20px;
+    margin: 0 auto;
+    /*background: rgba(109,109,109,1);
+    border-radius: 0px 0px 20px 20px;*/
+}
+
+.inputarea_panel_table {
+    border-spacing: 20px;
+    margin: 0 auto;
+    /*background: rgba(109,109,109,1);
+    border-radius: 20px;*/
+}
+
+#inputarea {
+    /*position: absolute;*/
+    font-size: 22pt;
+    width: 100%;
+    height: 100%;
+    line-height: 45px;
+}
+
+.inputarea_text {
+    /*color: white;
+    padding-top: 10px;*/
+}
+
+.alphakeyboard {
+    top: 34%;
+    left: 50%;
+    margin-left: -421px;    
+    position: absolute;
+}
+
+.numkey:active div {
+    /* height: 125px; */
+    /*background: rgba(109,109,109,1);*/
+}
+
+.numkey div {
+    /*width: 100%;
+    height: 100%;
+    left: 0px;
+    bottom: 0px;
+    text-align: center;
+    position: absolute;
+    font-size: 22pt;
+    font-weight: bolder;
+    color: #FFF;*/
+    /*background: linear-gradient(to bottom, rgba(133,0,14,1), rgba(244,96,34,1));*/
+    /*background-color: rgba(244,96,34,1);
+    border: 1px solid white;
+    border-radius: 25px;*/
+}
+
+.navbar {
+    position: absolute;
+    left: 5%;
+    width: 250px;
+    top: 25%;
+    table-layout: fixed;
+    border-spacing: 0px;
+    /*background: linear-gradient(to bottom, rgba(133,0,14,1), rgba(244,96,34,1));*/
+    background-color: rgba(244,96,34,1);
+    border-radius: 20px;
+}
+
+
+.navbar td {
+    width: 250px;
+    height: 40px;
+}
+
+.navitem {
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-bottom: 0px;
+    color: white;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 18pt;
+}
+
+.navitemtop {
+    border-radius: 20px 20px 0px 0px;
+}
+
+.navitemunique {
+    border-radius: 20px;
+    border-bottom: 1px solid white;
+}
+
+.navitembottom {
+    border-radius: 0px 0px 20px 20px;
+    border-bottom: 1px solid white;
+}
+
+#detalle, #detalle_chico {
+    width: 100%;
+}
+
+#detalle tr {
+    width: 100%;
+    height: 30px;
+    margin: auto;
+}
+
+#detalle_chico tr {
+    width: 100%;
+    height: 20px;
+    margin: auto;
+}
+
+#detalle td, #detalle_chico td {
+    padding-right: 10%;
+    text-align: right;
+}
+
+
+#detalle td:first-child, #detalle_chico td:first-child {
+    padding-left: 10%;
+    text-align: left;
+} 
+
+#detalle_chico td {
+    font-size: 18pt;    
+}
+
+.detalle_chico_td_left {
+    width: 320px;
+}
+
+.floatvideo {
+    /*box-shadow: -4px 4px 4px #000;*/
+    box-shadow: none;
+    border-radius: 20px;
+    border: 2px solid rgba(109,109,109,1);
+    width: 50%; height: 50%; z-index: 0;
+ }
+
+.video_deposita_sobre {
+    right: 25%;
+    bottom: 25%;
+}
+
+.video_deposita_efectivo {
+    right: 25%;
+    bottom: 25%;
+}
+
+.video_retira_efectivo {
+    right: 25%;
+    bottom: 25%;
+}
+
+.video_entrega_sobre {
+    right: 25%;
+    bottom: 25%;
+}
+
+.video_ingreso_pin {
+    right: 25%;
+    bottom: 25%;
+}
+
+.video_impresora {
+    right: 25%;
+    bottom: 25%;
+}
+
+.video_extraccion {
+    right: 25%;
+    bottom: 25%;
+}
+
+.video_ingreso_tarjeta_motorizada {
+    right: 25%;
+    bottom: 25%;
+}
+
+.video_ingreso_tarjeta_dip {
+    right: 25%;
+    bottom: 25%;
+}

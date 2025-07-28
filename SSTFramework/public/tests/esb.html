@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="/libs/jquery-1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="/libs/jstween-1.1/jstween-1.1.js"></script>
+    <script src="/libs/misc/bluebird.js"></script>
+    <script src="/libs/misc/NumberFormat154.js"></script>
+    <script src="/libs/ejs/ejs.min.js"></script>
+
+    <script src="/libs/xfsframework/tweenhelpers.js"></script>
+    <script src="/libs/xfsframework/ssframework.js"></script>
+    <script src="/libs/xfsframework/xfsdevices.js"></script>
+
+
+</head>
+<body>
+
+    <p id="plog"/>
+
+    <script>
+
+        var msg1 = {
+            "protocol": "petersen",
+            "auth": "petersen",
+            "branch": "1234",
+            "machine": "2345",
+            "trx": "WSCCL",
+        };
+
+        //
+
+        function log(str) {
+            var p = document.createElement("p");
+            p.innerHTML = str;
+            plog.appendChild(p);
+        }
+
+        function findResultNode(key, value) {
+            if (key.indexOf("Result") > -1)
+                return true;
+            return false;
+        }
+
+        function runTest(postobj) {
+            log("sending: " + JSON.stringify(postobj));
+
+            SSFramework.callESB(msg1)
+
+            .then(function (response) {
+                response = SSUtil.findChild(response, findResultNode);
+                log("response: " + JSON.stringify(response));
+            })
+
+            .catch(function (err) {
+                log("error: " + JSON.stringify(err));
+            });
+        }
+
+        runTest(msg1);
+
+    </script>
+
+</body>
+</html>

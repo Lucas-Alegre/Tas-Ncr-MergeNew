@@ -1,0 +1,77 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "reset": true,
+    },
+
+    "run": function(statedata) {
+
+        States.storeNamedValue("sup.dispenser_setcashunit", null);              
+        States.storeNamedValue("sup.dispenser_status", null);        
+        States.storeNamedValue("sup.dispenser_reset", null);
+        States.storeNamedValue("sup.dispenser_cashunit", null);
+        States.storeNamedValue("sup.configure_pos", 0);
+                
+        var cdm = new XFSDevice("cdm");
+
+        return cdm.getInfo("WFS_INF_CDM_STATUS")
+
+        .then(function(res) {
+
+            States.storeNamedValue("sup.dispenser_status", res);
+            if(res.hResult && res.hResult!=0)
+                throw res.hResult;
+            return cdm.getInfo("WFS_INF_CDM_CASH_UNIT_INFO");
+            console.log(cdm);
+        })
+        
+        .then(function(res) {
+            States.storeNamedValue("sup.dispenser_cashunit", res);
+            if(res.hResult && res.hResult!=0)
+                throw res.hResult;
+            if(States.getProperty("reset")==true) {
+                return cdm.extension("CDMController", { "method": "reset", "supervisor": 1 })
+            } else {
+                return true;
+            }
+        })
+
+            
+        .then(function(res) {
+            if(res && res!=true) {
+                States.storeNamedValue("sup.dispenser_reset", res);
+                if(res.hResult && res.hResult!=0)
+                    throw res.hResult;
+            }
+            States.handleEvent("continue");
+            return res;
+        })
+            
+        .catch(function(ex) {
+            States.handleEvent("error");
+        });
+
+    },
+
+    
+	"screens": {
+
+	    "default" : {
+			
+	        "title": {
+	            "text": "Realizando tarea"
+	        },
+            
+            "message": { 
+                "text": "Espere un momento por favor<br><div class='spinner'></div>",
+            },
+	    }
+	},
+
+    "events": {
+        "continue": "p/sup_dispenser_test_confirma",
+        "error": "p/close_hardware_error",
+     }
+
+}

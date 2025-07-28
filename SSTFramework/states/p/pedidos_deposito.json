@@ -1,0 +1,23 @@
+﻿
+{
+    "base": include(p/bases/buzon_deposita_sobre.json),
+
+    "properties": {
+        "printLine": function() {
+            var date = new Date();
+            var datestr = UserFuns.getDateString(date) + " " + UserFuns.getTimeString(date)
+            var line = SSUtil.getLocal("TerminalName", "") + " " + datestr;   
+            try { 
+                line += " " + States.getSequencialNumber("config.numtrx", false);
+                line += " Pedido";
+                line += " " + States.getStoredValue("customer", "0");
+            } catch(ex) {}
+            return line;
+        }
+    },
+
+    "events": {
+        "deposit_ok": "p/pedidos_print",
+    }
+
+}

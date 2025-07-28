@@ -1,0 +1,34 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WSCDR",
+        "storename": "comms.WSCDR",        
+        "nombre": "valida cliente",
+
+
+        "responseHandler": function(response) { 
+        console.log("dias restantes");
+        console.log(response);    
+            if(response.hasOwnProperty("remaining_days")) {
+
+                console.log("dias restantes: " + response.remaining_days);
+                States.storeNamedValue("dias_restantes", response.remaining_days);      
+                States.handleEvent("dias_restantes"); 
+
+                var origen_id = States.getStoredValue("origen_id");
+
+                console.log("origen_id: " + origen_id);
+
+                return response;      
+
+            }
+        }
+    },
+
+    "events": {
+        "ok": "p/identificacion_diasrestantes_muestra", 
+        "dias_restantes": "p/identificacion_diasrestantes_muestra"
+    }
+
+}

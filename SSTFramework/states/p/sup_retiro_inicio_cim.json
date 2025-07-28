@@ -1,0 +1,48 @@
+ssfw = {
+	"type" : "General",
+	"run" : function(state){
+		var sup = new XFSDevice("supervisor");
+		var cmd = {
+		    "method": "runExposedTask",
+		    "task" : "cim_clear_counters_exposed"
+		}
+		
+		sup.extension("SupervisorExpose", cmd)
+		.then(function(data){
+			console.log(JSON.stringify(data));
+			States.handleEvent("continue");
+		})
+		.caugth(function(err){
+			SSFramework.displayScreen(state.screens.error);
+		})
+	},
+	"screens" : {
+		"default" : {
+			
+	        "title": {
+	            "text": "Realizando tarea"
+	        },
+            
+            "message": { 
+                "text": "Espere un momento por favor<br><div class='spinner'></div>",
+            }
+	    },
+
+	    "error" : {
+	    	"update" : function(){
+	    		setTimeout(function() {States.handleEvent("continue_error")}, 10000);
+	    	},
+	    	 "title": {
+	            "text": "Ocurrió un error"
+	        },
+            
+            "message": { 
+                "text": "Ha ocurrido un error reseteando los contadores",
+            }
+	    }
+	},
+	"events" : {
+		"continue" : "p/sup_menu_select",
+		"continue_error" : "p/sup_menu_select",
+	}
+}

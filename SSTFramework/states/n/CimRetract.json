@@ -1,0 +1,31 @@
+﻿{
+    "type": "CimRetract",
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+		"retire_billetes": {
+			"subtitle": {
+				"text": "Por favor, retirá los billetes"
+			},
+			"video": {
+                "class": "video_retira_efectivo",
+                "src": "<%= SSUtil.readCSS('video_retira_efectivo') %>"
+            },
+		},
+	},
+
+    "events": {
+		"CimRetract_OK": "n/close_salir",
+        "CimRetract_WFS_SRVE_CIM_ITEMSTAKEN": "n/close_salir",
+		"CimRetract_WFS_ERR_CIM_NOITEMS": "n/close_salir",
+		"CimRetract_Error": "n/CimReset",
+		"CimRetract_Hardware_Error": "n/CimReset",
+    }
+}

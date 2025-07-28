@@ -1,0 +1,23 @@
+﻿<!--l
+    
+    Requires:
+        detalle:
+-->
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+<hr />
+<h1><%- receipt.operacion %></h1>
+<hr />
+<br />
+
+<style>
+    .dispenser_table td {
+        font-size: 20px;
+    }
+</style>
+<div style="width: 100%">
+    <%- receipt.detalle %>
+</div>
+
+<% include chunk/footer.html %>

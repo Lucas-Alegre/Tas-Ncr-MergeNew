@@ -1,0 +1,90 @@
+﻿{
+    "base" : include(p/bases/ingreso_pin.json),
+
+"run": function(statedata) {
+
+    ///el estado se repite
+    if(States.CurrentState != States.PreviousState) {
+        States.storeNamedValue("temp.intentos", 1);                
+    } else {
+        statedata.screens.default.subtitle.text = States.getProperty("subtitle2");
+    }
+        
+    var idc = new XFSDevice("idc");
+    var _this = this;
+    
+    if(States.getStoredValue("carddata", null)==null) {
+        //ingreso sin tarjeta, no verificar el lector
+        
+    } else {
+        States.setProperty("intentos", 0);
+
+        return idc.getInfo("WFS_INF_IDC_CAPABILITIES")
+    
+        .then(function (caps) {
+
+            if (SSUtil.getObj("lpBuffer.fwType", caps) == 1) {
+                //motorizada, no pedir pin
+                States.handleEvent("validacion_ok");   
+                return false;
+            }
+
+        }) 
+        
+        .catch(function(ex) {
+        });
+    }
+    return true;
+},
+
+
+	"screens": {
+
+	
+	    "default" : {
+			
+	        include(p/chunk/title_transaccion.json),
+
+            "subtitle": { 
+                "text": "Digite su PIN usando el teclado del equipo" 
+            },
+
+		}
+	},
+
+	"properties" : {
+	    "storename": "pinblock2",
+	    "pinblock": "pinblock",
+        "subtitle2": "PIN incorrecto. Por favor intente nuevamente"
+    },
+    
+	"events" : {
+	    "pin_entered": function(event) {
+	        var pblock = States.getStoredValue(States.getProperty("pinblock"));
+	        var pblock2 = States.getStoredValue(States.getProperty("storename"));
+	        if(pblock==pblock2) {
+	            States.handleEvent("validacion_ok");
+	        } else {
+	            
+	            var intentos = States.getStoredValue("temp.intentos");
+	            if(intentos<3) {
+	                intentos++;
+                    States.storeNamedValue("temp.intentos", intentos);
+                    States.refreshState();
+	            } else {
+	                States.handleEvent("validacion_error");
+	                return false;
+	            }
+	        }
+	        return false;
+	    },
+
+        "cancel": "p/close_salir",
+        
+        "validacion_ok": "",
+
+        "validacion_error": "",
+
+        "hardware_error": "p/close_hardware_error",
+    }
+}

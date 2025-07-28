@@ -1,0 +1,26 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "pinchange",
+        "storename": "comms.pinchage",
+        "nombre": "cambio de pin",
+        "requestHandler": function(obj) {
+            //obj.customer = "20165313004";
+            //obj.pinblock = "17FC85CBF051FE71";
+            //obj.pinblocknew = "3D06C823E2E7D1BB";
+            //obj.numtrx = "4228";
+            return obj;
+        },
+
+    },
+    
+    "events": {
+        "ok": "p/cambio_pin_print",
+        "pin_change_invalid": "p/cambio_pin_invalid",
+        "pin_change_blocked": "p/cambio_pin_blocked",
+        "pin_change_disabled": "p/cambio_pin_disabled",
+        "pin_change_repeat": "p/cambio_pin_repeat",
+    }
+
+}

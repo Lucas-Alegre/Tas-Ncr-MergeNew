@@ -1,0 +1,43 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WS401",
+        "storename": "comms.WS401",
+        "nombre": "extraccion",
+        "audit": function() {
+            var cuenta = UserFuns.getProduct("cuenta");
+            var str = "";
+            str += UserFuns.formatProductName(cuenta) + "\n";
+            str += UserFuns.formatProductValue(cuenta) + " ";
+            str += UserFuns.formatMonto(States.getStoredValue("monto"), "", 0);
+            return str;
+        },
+
+        "requestHandler": function(obj) {
+            obj.cuenta_detalle = UserFuns.getProduct("cuenta");
+        },
+        
+    },
+
+    "events": {
+        "comms_ok": "p/extraccion_extrae",  
+        "comms_error": function() {
+            var rtimeout = States.getStoredValue("trx_timeout", false);
+            if(rtimeout) {
+                var trx = SSUtil.getLocal("trx.timeout", { "trx": [] });
+                var lastmsg = States.getStoredValue("comms.last_esb_request");   
+                var msg = new Date().toLocaleString() + ", " + lastmsg.numtrx + "\n";
+                msg += States.getProperty("audit")().replace(/\n/g, ' ');
+                trx.trx.push(msg);
+                SSUtil.setLocal("trx.timeout", trx);
+                setRegistry("trx.timeout", JSON.stringify(trx));
+                return "p/extraccion_comms_reversa";
+            } else {
+                return "p/close_comms_error";
+            }
+        }
+
+    }
+
+}

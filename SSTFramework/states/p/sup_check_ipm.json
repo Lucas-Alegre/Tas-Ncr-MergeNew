@@ -1,0 +1,18 @@
+﻿ssfw = {
+	"base" : include(cheque/check_status.json),
+
+	"events": {
+        "ipm_available" : function() {
+        	Vars.set("ipm_available",true);
+        	return "p/sup_menu_dep_cim_ipm";
+        },
+        "ipm_unavailable" : function() {
+        	Vars.set("ipm_available",false);
+        	if (Vars.get("cim_available")) {
+        		return "p/sup_menu_dep_cim_ipm";
+        	} else {
+        		return "p/sup_menu_dep";
+        	}
+        }
+    }
+}

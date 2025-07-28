@@ -1,0 +1,75 @@
+﻿{
+    "type": "Custom",
+
+    "run": function(statedata) {
+        if(SSUtil.getLocal("type", "dep")!="dep") {
+            States.storeValue("debito");                              
+            States.handleEvent("debito");        
+        } else {
+            SSFramework.displayScreen(statedata.screens.default);
+        }
+    },
+
+    "properties": {
+
+        "storename": "medio_pago_tarjeta",
+
+        "nav": function() {
+            return States.getStoredValue(States.getProperty("storename", "medio_pago_tarjeta"));
+        },
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        "update": function() {
+	            States.setProperty("entity", SSUtil.getLocal("entity") );
+	        },
+
+	        include(p/chunk/title_transaccion.json),
+
+      
+            "subtitle": {
+                "text": "Seleccione la forma de pago",
+            },
+
+            include(p/chunk/nav_cancelar_anterior.json),
+
+            "select": {							    
+                "select0" : {
+                    "text": "Débito en cuenta",
+					"event": "debito",
+					"value": "debito",
+			    },
+
+                "select1" : {
+                    "text": "Cheque <%= entity %>",
+					"event": "cheque",
+					"value": "cheque",
+					},
+
+                "select2" : {
+                    "text": "Efectivo",
+                    "event": "efectivo",
+                    "value": "efectivo",
+                },
+
+            },
+		}
+	},
+    
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "debito" : "p/pago_ttcc_tipo_pago",
+
+        "cheque" : "p/pago_ttcc_tipo_pago",
+
+        "efectivo" : "p/pago_ttcc_tipo_pago",
+
+        "back" : "p/pago_ttcc_tipo",
+
+        "cancel" : "p/close_salir",
+	}
+}

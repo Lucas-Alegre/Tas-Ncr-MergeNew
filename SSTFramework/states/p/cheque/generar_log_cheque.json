@@ -1,0 +1,101 @@
+﻿ssfw = {
+
+	"type": "General",
+
+	"run" : function() {
+
+		var entity = Vars.get("entidad");
+        var banco_actual = "";
+        switch (entity) {
+            case "bersa":
+                banco_actual = "386"; 
+                break;
+            case "santacruz":
+                banco_actual = "086"; 
+                break;
+            case "sanjuan":
+                banco_actual = "045"; 
+                break;
+            default:
+                banco_actual = "";
+                break;
+        }
+
+        var listado_cheques = Vars.get("listado_cheques");
+        var cheques = [];
+        for(var i=0; i<listado_cheques.length; i++) {
+            var cheque = {};
+            cheque.cmc7 = listado_cheques[i].cmc7;
+            cheque.monto = listado_cheques[i].monto_formateado.replace(/\./g, '').replace(',', '').replace('+', '');            cheque.nombre_imagen_tiff = listado_cheques[i].nombre_imagen_tiff;
+            cheques.push(cheque);
+        }
+
+        if (Vars.get("tipo_cuenta_deposito")) {
+	        if (Vars.get("entidad") == "bersa") {
+	        	if (Vars.get("tipo_cuenta_deposito") == "CC") {
+	        		Vars.set("tipo_cuenta_deposito","01");
+	        	} else {
+	        		Vars.set("tipo_cuenta_deposito","11");
+	        	}
+	        } else {
+	        	if (Vars.get("tipo_cuenta_deposito") == "CC") {
+	        		Vars.set("tipo_cuenta_deposito","92");
+	        	} else {
+	        		Vars.set("tipo_cuenta_deposito","91");
+	        	}        	
+	        }
+	    } else {
+	    	if (Vars.get("entidad") == "bersa") {
+	    		Vars.set("tipo_cuenta_deposito","25");
+	    	} else {
+	    		Vars.set("tipo_cuenta_deposito","00");
+	    	}
+	    }
+
+		if (States.getStoredValue("data.menu_principal").value == "pago_ttcc") {
+            var pago_tc = "true";
+        } else {
+            var pago_tc = "false";
+        }
+
+		var datos = {};
+		datos.cierre = "false";
+		datos.banco_actual = banco_actual;
+		datos.sucursal_tas = Vars.get("TerminalName").substring(1,4);
+		datos.cuenta_deposito = Vars.get("cuenta_deposito","");
+		datos.tipo_cuenta_deposito = Vars.get("tipo_cuenta_deposito");
+		datos.cheques = cheques;
+		datos.pago_tc = pago_tc;
+		datos.sucursal_cuenta_deposito = Vars.get("sucursal_cuenta_deposito","");
+		datos.identificacion_depositante = Vars.get("identificacion_depositante");
+		datos.numero_de_transaccion = States.getSequencialNumber("config.numtrx", false);
+		datos.secuencial_cheque_transaction_number = States.getSequencialChequeNumber("secuencial_cheque_transaction_number", true);
+		datos.secuencial_cheque_close_number = States.getSequencialChequeCloseNumber("secuencial_cheque_close_number", false);
+
+		var dev = new XFSDevice("server");		
+		dev.extension("LogueoCheques", datos)
+		.then(function(data) {
+			States.handleEvent("continue");
+		})
+		.caught(function(err) {
+			States.handleEvent("continue");
+		});
+	},
+    
+	"screens" : {
+
+	    "default" : {
+
+	    	include(p/chunk/title_transaccion.json),
+
+            "message" : {
+                "text" : "Esperá un momento, por favor <br><div class='spinner'></div></img>"
+            },
+		},
+
+	},
+        
+	"events" : {
+		"continue" : "cheque/completar_cheques",
+	}
+}

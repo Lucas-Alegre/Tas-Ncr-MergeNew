@@ -1,0 +1,69 @@
+﻿"events" : {
+
+    "cancel": "p/close_salir",
+
+    "consultas": {
+        "call": "p/identificacion",
+        "events": {
+            "identificacion_ok" : "p/consultas",
+            "hardware_error_pin": "p/close_hardware_error",
+            "cancel" : "p/close_salir"
+        }
+    },
+        
+    "mensajes": "p/pedidos_check_dep",
+
+    "deposito": {
+		"call": "p/identificacion",
+        "events": {
+            "identificacion_ok" : "p/deposito_cuenta_propia",
+            "hardware_error_pin": "p/close_hardware_error",
+            "cancel" : "p/close_salir"
+        }
+	},
+     
+    "deposito_terceros": "p/deposito_terceros_check_dep",
+    
+    "cambio_pin": {
+		    "call": "p/identificacion",
+            "events": {
+                "identificacion_ok" : "p/cambio_pin1",
+                "hardware_error_pin": "p/close_hardware_error",
+                "cancel" : "p/close_salir"
+            }
+		},
+
+		"extraccion": {
+		    "call": "p/identificacion",
+            "events": {
+                "identificacion_ok" : "p/selecciona_moneda",
+                "hardware_error_pin": "p/close_hardware_error",
+                "cancel" : "p/close_salir"
+            }
+		},
+
+		"transferencia": {
+		    "call": "p/identificacion",	
+            "events": {
+                "identificacion_ok" : "p/transf_cuenta_origen",
+                "hardware_error_pin": "p/close_hardware_error",
+                "cancel" : "p/close_salir"
+            }
+		},
+
+    "pago_ttcc": {
+        "call": "p/identificacion",	
+        "events": {
+            "identificacion_ok" : "p/pago_ttcc_tipo",
+            "hardware_error_pin": "p/close_hardware_error",
+            "cancel" : "p/close_salir"
+        }
+    },
+
+    "pago_impuestos": "p/pago_impuestos_check_dep",
+
+	"entrega_documentacion": "p/entrega_documentacion_check_dep",
+
+    include(p/chunk/event_timeout.json),
+
+}

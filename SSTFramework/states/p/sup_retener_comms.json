@@ -1,0 +1,22 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "supervisor",
+        "subtrx": "contadores_dispensador",
+        "storename": "comms.contadores_dispensador",
+
+        "requestHandler": function(obj) {          
+            obj.cashunits = States.getStoredValue("sup.dispenser_cashunit").lpBuffer.lppList;
+            obj.subtrx = States.getProperty("subtrx");
+        },
+        
+    },
+
+    "events": {
+        "ok": "p/sup_dispenser_test_confirma",        
+        "comms_error": "p/sup_dispenser_test_confirma",        
+        "comms_general_error": "p/sup_dispenser_test_confirma",        
+        }
+
+}

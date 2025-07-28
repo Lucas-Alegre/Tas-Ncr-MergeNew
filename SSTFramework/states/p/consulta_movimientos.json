@@ -1,0 +1,49 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+
+	    "default" : {
+            
+	        "update": function() {
+	            var tabla = "";
+	            var cuenta = UserFuns.getProduct("cuenta");
+	            tabla += "<table id='detalle'>";
+	            tabla += "<tr><td>" + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
+	            tabla += "<tr><td></td><td></td></tr>";
+	            tabla += "<tr><td>Saldo Operativo: </td><td>" + UserFuns.formatMonto(cuenta.CSA_DISPO) + "</td></tr>";
+	            tabla += "<tr><td>Saldo a Conformar: </td><td>" + UserFuns.formatMonto(cuenta.CSA_CONFO) + "</td></tr>";
+	            tabla += "<tr><td>Saldo Contable: </td><td>" + UserFuns.formatMonto(cuenta.CSAEFEHOY) + "</td></tr>";
+	            tabla += "<tr><td>Saldo 48hs:</td><td>" + UserFuns.formatMonto(cuenta.CSAFLOH2) + "</td></tr>";
+	            tabla += "<tr><td>Dep. Cheque a Conf:</td><td>" + UserFuns.formatMonto(cuenta.CSAFLOH1) + "</td></tr>";
+	            tabla += "<tr><td>Depósito a Conf.:</td><td>" + UserFuns.formatMonto(cuenta.CSAFLOE1) + "</td></tr>";
+	            tabla += "</table>";
+	            tabla += "<b>** Se imprimieron " + States.getStoredValue("comms.movimientos") + " movimientos **</b>";
+	            States.setProperty("detalle", tabla);
+	        },
+			
+	        
+            include(p/chunk/title_transaccion.json),
+
+
+            "subtitle": {
+                "text": "Toque CONTINUAR para seguir operando"
+            },
+
+            include(p/chunk/nav_cancelar_continuar.json),
+    
+
+            "message": { 
+                "text": "<%= detalle %>"
+            },
+
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "enter": "p/close_salir",
+        "cancel": "p/close_salir",
+	}
+}

@@ -1,0 +1,70 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+    "properties" : {
+        "sobre": true,              
+    },
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "deposito",
+
+ 			"update": function() { 
+			    var cuenta = "";
+			    if(States.getStoredValue("data.menu_principal").value =="deposito_terceros") {
+			        cuenta = UserFuns.createObjectFromCuenta(
+                        States.getStoredValue("tipo_cuenta"), 
+                        States.getStoredValue("cuenta"));
+
+			    } else {
+			        cuenta = UserFuns.getProduct("cuenta");                        
+			    }
+
+			    var tipo = States.getStoredValue("deposito_tipo");
+			    
+			    var store = tipo.value!= 0 ? "comms.WS201" : "comms.WS200";
+			    var msg = States.getStoredValue("comms.last_esb_reply"); //Saco directamente última respuesta exitosa. el store se borra si no responde (y está bien). 
+			    
+			    var nombre = "";
+			    var ente = "";
+
+			    if(msg.hasOwnProperty("SD_PARTE1")) {
+			        nombre = msg.SD_PARTE1;
+			    }
+			    if(msg.hasOwnProperty("SD_ENTE1")) {
+			        ente = msg.SD_ENTE1;
+			    }
+
+
+			    
+			    var receipt = { 
+			        "tipo_cuenta": UserFuns.formatProductName(cuenta),
+			        "sucursal": cuenta.ACU_OFICI,
+			        "cuenta": UserFuns.formatProductValue(cuenta, 1),
+			        "numero_sobre": States.getStoredValue("sobre"),
+			        "monto": UserFuns.formatFloatMonto(States.getStoredValue("monto")),
+			        "tipo_deposito": tipo.text,
+			
+			        "intersucursal": tipo.value == 2,
+			        "cheques": tipo.value!= 0 ? States.getStoredValue("cheques") : 0,
+			        "sobre": States.getProperty("sobre"),
+			        "nombre": nombre,
+            	"ente": ente,
+            	"leyenda_ticket": SSUtil.getLocal("config_params").leyenda_ticket,
+			    };
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "print_ok": "p/deposito_entrega_sobre",
+	    "hardware_error_ptr": "p/close_printer_error"
+    }
+
+}

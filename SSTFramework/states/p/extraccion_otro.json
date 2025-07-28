@@ -1,0 +1,37 @@
+﻿{
+    
+    "base" : include(p/bases/ingreso_teclado.json),
+
+    "properties": {
+        "storename": "monto",
+
+        "decimales": "0",
+
+        "datapresented": function(args) {
+			var currency = UserFuns.findCurrDesc(States.getStoredValue("moneda", 80))[1];
+            return currency + " " + SSUtil.formatNumber(parseInt(args), 0);
+        },
+
+    },
+
+    "screens": {
+                        
+        "default" : {            
+    
+            include(p/chunk/title_transaccion.json),
+            
+            "subtitle": {
+                "text": "Ingrese un monto (Denom. disp.: 100)<br>y toque CONTINUAR",
+            },
+
+            include(p/chunk/nav_all.json),
+    
+        }
+    },
+
+    "events": {
+        "back": "p/extraccion_fast",
+        "accept": "p/extraccion_valida",    
+	},
+
+}   

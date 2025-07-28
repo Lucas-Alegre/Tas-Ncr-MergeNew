@@ -1,0 +1,20 @@
+﻿{
+    "type": "CimEndExchange",
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+	},
+
+    "events": {
+		"CimEndExchange_OK": "n/sup_menu_dep",
+		"CimEndExchange_Error": "n/sup_menu_dep",
+		"CimEndExchange_Hardware_Error": "n/sup_menu_dep",
+    }
+}

@@ -1,0 +1,31 @@
+﻿{
+    "type": "CimRollback",
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+		"retire_billetes": {
+			"subtitle": {
+				"text": "Por favor, retirá los billetes"
+			},
+			"video": {
+                "class": "video_retira_efectivo",
+                "src": "<%= SSUtil.readCSS('video_retira_efectivo') %>"
+            },
+		},
+	},
+
+    "events": {
+        "CimRollback_WFS_SRVE_CIM_ITEMSTAKEN": "n/close_salir",
+		"CimRollback_WFS_ERR_CIM_NOITEMS": "n/close_salir",
+		"timeout": "n/CimRetract",
+		"CimRollback_Error": "n/CimRetract",
+		"CimRollback_Hardware_Error": "n/CimRetract",
+    }
+}

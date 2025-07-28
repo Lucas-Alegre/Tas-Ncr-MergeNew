@@ -1,0 +1,55 @@
+﻿<!--
+    
+    Requires:
+        tipo_cuenta:
+        sucursal: 
+        cuenta: account number, formatted for display
+        
+        tipo_cuenta_destino:
+        sucursal_destino: 
+        cuenta_destino: account number, formatted for display
+        
+        monto: 
+
+    Optional:
+        nombre:
+        nombre_destino:
+-->
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+<hr />
+<h1>Transferencia</h1>
+<hr />
+<br />
+<p><b><u>Cuenta origen</u></b></p>
+<table>
+    <tr><td>Tipo:</td><td align="right"> <%- receipt.tipo_cuenta %></td> </tr>
+    <tr><td>Sucursal:</td><td align="right"> <%- receipt.sucursal %></td> </tr>
+    <tr><td>Número:</td><td align="right"> <%- receipt.cuenta %></td> </tr>
+    <% if(receipt.hasOwnProperty('nombre')) { %>
+        <tr><td>Nombre:</td><td align="right"> <%- receipt.nombre %></td> </tr>
+    <% } %>
+    <% if(receipt.hasOwnProperty('ente')) { %>
+    <tr><td>CUIT:</td><td align="right"> <%- receipt.ente %></td> </tr>
+    <% } %>
+    <tr><td>Monto deb.:</td><td align="right"> <%- receipt.monto %></td> </tr>
+
+</table>
+<br />
+<p><b><u>Cuenta destino</u></b></p>
+<table>
+    <tr><td>Tipo:</td><td align="right"> <%- receipt.tipo_cuenta_destino %></td> </tr>
+    <tr><td>Sucursal:</td><td align="right"> <%- receipt.sucursal_destino %></td> </tr>
+    <tr><td>Número:</td><td align="right"> <%- receipt.cuenta_destino %></td> </tr>
+    <% if(receipt.hasOwnProperty('nombre_destino')) { %>
+        <tr><td>Nombre:</td><td align="right"> <%- receipt.nombre_destino %></td> </tr>
+    <% } %>
+    <% if(receipt.hasOwnProperty('ente2')) { %>
+    <tr><td>CUIT:</td><td align="right"> <%- receipt.ente2 %></td> </tr>
+    <% } %>
+    <tr><td>Monto acr.:</td><td align="right"> <%- receipt.monto %></td> </tr>
+
+</table>
+
+<% include chunk/footer_transferencia.html %>

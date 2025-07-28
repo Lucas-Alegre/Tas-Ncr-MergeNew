@@ -1,0 +1,37 @@
+<!--
+    Data:
+        inputarea.top: vertical position of message
+-->
+
+<div class="alphakeyboard">
+    <table class="alphakeyboard_table">
+        <tr><td class="numkey"><div>q</div></td><td class="numkey"><div>w</div></td><td class="numkey"><div>e</div></td><td class="numkey"><div>r</div></td><td class="numkey"><div>t</div></td><td class="numkey"><div>y</div></td><td class="numkey"><div>u</div></td><td class="numkey"><div>i</div></td><td class="numkey"><div>o</div></td><td class="numkey"><div>p</div></td><td class="numkey"><div>borrar</div></td></tr>
+    </table>    
+    <table class="alphakeyboard_table">
+        <tr><td class="numkey"><div>a</div></td><td class="numkey"><div>s</div></td><td class="numkey"><div>d</div></td><td class="numkey"><div>f</div></td><td class="numkey"><div>g</div></td><td class="numkey"><div>h</div></td><td class="numkey"><div>j</div></td><td class="numkey"><div>k</div></td><td class="numkey"><div>l</div></td><td class="numkey"><div>&ntilde;</div></td></tr>
+    </table>
+    <table class="alphakeyboard_table">
+        <tr><td class="numkey"><div>z</div></td><td class="numkey"><div>x</div></td><td class="numkey"><div>c</div></td><td class="numkey"><div>v</div></td><td class="numkey"><div>b</div></td><td class="numkey"><div>n</div></td><td class="numkey"><div>m</div></td><td class="numkey"><div>,</div></td><td class="numkey"><div>.</div></td><td class="numkey"><div>@</div></td></tr>
+    </table>    
+</div>
+
+<script>
+    $(function () {
+
+        var component_data = <%- JSON.stringify(alphakeyboard) %>;
+
+        $.each($(".numkey"), function(index, key) {
+            var elkey = $(key);
+            elkey.data("value", elkey.text());
+            elkey.click(elkey.data("value"), function(event) {
+                SSFramework.playAudio("boton.wav");
+                States.fireCustomEvent("input.key", event.data);
+            })
+        });
+
+        var alphakeyboard = $(".alphakeyboard");
+        if(alphakeyboard)
+            alphakeyboard.tween(TweenHelpers.tweenSide(alphakeyboard, "top", false, -500, 0));
+
+    });
+</script>

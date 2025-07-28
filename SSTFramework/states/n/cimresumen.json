@@ -1,0 +1,74 @@
+﻿{
+
+    "type": "General",
+
+	"run": function(statedata){
+		if (parseInt(States.getStoredValue("monto_operacion")) == 0) {
+			delete statedata.screens.default.nav.nav3;
+		}
+	},
+
+	"screens": {
+
+		"default": {
+
+			"update": function() {
+
+	            var tipo = JSON.stringify(SSUtil.obtieneDetalle(516, States.getStoredValue("deposito_operacion").lppNoteNumber));
+
+	            var tabla = "";
+	            tabla += "<table id='detalle_chico'>";
+                tabla += "<tr><td class='detalle_chico_td_left'>Documento:</td><td>" + SSUtil.formatNumber(parseInt(States.getStoredValue("customer_id"), 10), 0) + "</td></tr>";
+	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	            tabla += "<tr><td>Monto Ingresado: </td><td>$ " + UserFuns.formatMonto(States.getStoredValue("monto_operacion"), "", 0) + "</td></tr>";
+	            //tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+                //tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	            //tabla += "<tr><td colspan='2' style='text-align:center'>Advertencia: la cantidad máxima de billetes es de 40</td></tr>";
+	            tabla += "</table>";
+	            
+	            States.setProperty("detalle", tabla);
+            },
+
+			"subtitle": {
+                "text": "Verificá los datos ingresados y tocá Confirmar para continuar"
+            },
+
+			"message": {
+				"text": "<%= detalle %>"
+			},
+
+			"nav": {
+                include(n/chunk/nav_btn_cancelar.json),
+
+                "nav1": {
+                    "text": "Agregar Billetes",
+                    "event": "add_deposit"
+                },
+
+                "nav3": {
+                    "text": "Confirmar",
+                    "event": "confirm_deposit"
+                },
+
+
+            },
+
+
+		},
+
+		
+
+		"espera": {
+			"message": { 
+			    "text": "Esperá un momento por favor<br><div class='spinner'></div>"
+			}
+		},
+	},
+
+    "events": {
+		"timeout": "n/timeout",
+		"add_deposit": "n/CimCashIn",
+		"cancel": "n/CimRollback",
+		"confirm_deposit": "n/print_receipt",
+    }
+}

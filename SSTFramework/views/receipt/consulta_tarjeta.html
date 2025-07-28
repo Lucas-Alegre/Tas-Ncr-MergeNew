@@ -1,0 +1,34 @@
+﻿<!--
+    Requires:
+        numero:
+        cuenta:
+        total_pesos: total pesos
+        pago_minimo: pago minimo
+        total_dolares: total dolares
+        vencimiento:
+        cierre:
+-->
+
+
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+
+<hr />
+<h1>Consulta de Tarjetas</h1>
+<hr />
+
+<table>
+    <tr><td>Número:</td><td align="right"> <%- receipt.numero %></td> </tr>
+    <tr><td>Cuenta:</td><td align="right"> <%- receipt.cuenta %></td> </tr>
+    <tr><td>&nbsp;</td><td /></tr>
+    <tr><td>Total resumen $:</td><td align="right"> <%- receipt.total_pesos %></td> </tr>
+    <tr><td>Pago mínimo $:</td><td align="right"> <%- receipt.pago_minimo %></td> </tr>
+   <!--
+    <tr><td>Total a pagar U$S:</td><td align="right"> <%- receipt.total_dolares %></td> </tr>
+    -->
+    <tr><td>Vencimiento Resumen:</td><td align="right"> <%- receipt.vencimiento %></td> </tr>
+    <tr><td>Fecha de cierre:</td><td align="right"> <%- receipt.cierre %></td> </tr>
+</table>
+
+<% include chunk/footer.html %>

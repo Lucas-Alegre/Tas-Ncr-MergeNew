@@ -1,0 +1,26 @@
+﻿{
+    "type": "Custom",
+
+    "run": function(statedata) {
+    
+        return readRegistry("config.server")
+
+        .then(function(conf) {
+            return SSUtil.storeLocalConfig(conf);        
+        })
+
+        .then(function() {
+            States.handleEvent("continue");
+        })
+
+        .catch(function(ex) {
+            console.log("error storing config: " + ex.toString());
+            States.handleEvent("continue");
+        });
+    },
+
+    "events": {
+        "continue": "p/status_hardware_reset",
+    }
+
+}

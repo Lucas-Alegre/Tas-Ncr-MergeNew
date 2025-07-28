@@ -1,0 +1,15 @@
+﻿{
+    "base": include(p/pago_impuestos_comms.json),
+
+    "properties": {
+        "repeat_trx": false,
+        "simulacion": true,
+    },
+
+    "events": {
+        "comms_ok": "p/pago_impuestos_print_sobre",
+        "comms_error": "p/close_hardware_error",
+        "comms_general_error": "p/close_comms_error"  
+    }
+
+}

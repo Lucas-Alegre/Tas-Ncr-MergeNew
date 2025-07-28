@@ -1,0 +1,33 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WSTAT",
+        "storename": "comms.WSTAT",
+        "nombre": "Adhesion",
+
+         "audit": function() {            
+             var str = "";
+             var cuenta = UserFuns.getProduct("cuenta");
+             var tipo_cuenta = UserFuns.formatProductName(cuenta);
+             var detalle_cuenta = UserFuns.formatProductValue(cuenta);
+             str += tipo_cuenta + "\n" + detalle_cuenta;
+             //str += UserFuns.getProduct("tarjeta_pago").ALF01DE22;
+             str += UserFuns.getProduct("tarjeta_pago").WCUNUMCUE;
+             return str;
+         },
+
+        
+        "requestHandler": function(obj) {
+            obj.cuenta_detalle = UserFuns.getProduct("cuenta");
+            //obj.tarjeta = UserFuns.getProduct("tarjeta_pago").ALF01DE22;
+            obj.tarjeta = UserFuns.getProduct("tarjeta_pago").WCUNUMCUE;
+        },
+        
+    },
+
+    "events": {
+        "comms_ok": "p/pago_ttcc_adesion_print",
+    }
+
+}

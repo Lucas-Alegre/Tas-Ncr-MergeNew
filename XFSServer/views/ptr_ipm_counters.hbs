@@ -1,0 +1,14 @@
+﻿{{>header}}
+<div class="td100 tright">{{data.connection}}</div>
+<div class="td100 tcenter">Cheque deposit totals</div>
+<body><pre>
+Last update: {{data.clear_time}}
+
+{{padr "BinID" 15}}{{padl "Count" 8}}{{padl "MediaIn" 8}}{{padl "Retract" 8}}
+{{#each data.cashunits}}
+{{padr lpstrPositionName 15}}{{padl ulCount 8}}{{padl ulMediaInCount 8}}{{padl ulRetractOperations 8}}
+{{/each}}
+
+Total: {{padl data.total 16}}
+</pre>
+</body>

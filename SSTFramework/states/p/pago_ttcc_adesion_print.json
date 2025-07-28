@@ -1,0 +1,38 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "pago_ttcc_adesion",
+               
+			"update": function() {
+			    var cuenta = UserFuns.getProduct("cuenta");
+			    var tarjeta = UserFuns.getProduct("tarjeta_pago");  
+			    var tipo_debito  = States.getStoredValue("tipo_debito");
+
+			    var receipt = { 
+			        "banco": SSUtil.getLocal("entity", "banco"),
+			        "marca": tarjeta.WNO_CLIE1,
+			        "numero": UserFuns.formatProductValue(tarjeta),
+			        "cuenta": UserFuns.formatProductValue(cuenta),
+			        "pago": tipo_debito=="T" ? "Total" : "Mínimo",
+			    };
+
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "cancel": "p/close_salir",
+        "enter": "p/close_salir",
+	    "print_ok": "p/close_salir",       
+        "hardware_error_ptr": "p/close_printer_error"
+	}
+
+}

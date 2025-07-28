@@ -1,0 +1,145 @@
+﻿<!--
+    Data:
+        inputarea.top: vertical position of message
+        inputarea.pin: only take commands from the keyboard
+
+    FireEvents:
+        accept: Fired when data entry is complete
+        cancel: Fired when cancel key is pressed.
+
+    FireGuiEvents:
+        dataaccept(data): Sends data to a function for validation
+        datachanged(data): Sends data to a function to alter value
+        datapresented(data): Sends data to a function for formatting
+
+    ListenEvents:
+        input.key: Call to make the input process a key
+        input.enter: Call to make the input validate and accept the entered data
+        input.clear: Call to clear input box.
+-->
+
+<div id="inputarea_panel">
+    <table class="inputarea_panel_table">
+        <tr>
+            <% if(input_cmc7.text) { %>
+            <td><div class="inputarea_text"><%- input_cmc7.text %></div></td>
+        </tr>
+        <tr>
+            <% } %>
+            <td><div id="inputarea"><%- input_cmc7.placeholder %></div></td>
+        </tr>
+    </table>
+</div>
+
+        <script>
+            $(function () {
+
+                var component_data = <%- JSON.stringify(input_cmc7) %>;
+
+                Vars.set("placeholder_modificado",component_data.placeholder);
+        		Vars.set("placeholder_modificado_html",component_data.placeholder);
+
+                var inputarea = $("#inputarea");
+                var inputarea_panel = $("#inputarea_panel");
+
+                if(component_data.top) {
+                    inputarea_panel.css("top", component_data.top);
+                }
+                if(component_data.left) {
+                    inputarea_panel.css("left", component_data.left);
+                }
+                if(component_data.right) {
+                    inputarea_panel.css("right", component_data.right);
+                }
+
+                var refreshData = function() {
+                    inputarea.html(States.handleGUIEvent("datapresented", States.getProperty("value")));
+                };
+
+                States.setProperty("value", "");
+
+                States.registerCustomEvent("input.key", function(key) {
+                    if(key=="clear") {
+                    	States.setProperty("value", component_data.placeholder);
+                        var data = States.getProperty("value");
+                        if(States.getProperty("clearall")!="true" && typeof data!=='undefined') {
+                            data = data.toString();
+                            if(data.length>0) {
+                                data = data.slice(0, data.length-1);
+                            }
+                        } else {
+                            data = "";
+                        }
+                        Vars.set("placeholder_modificado",Vars.get("placeholder"));
+                        Vars.set("placeholder_modificado_html",Vars.get("placeholder"));
+                        States.setProperty("value", States.handleGUIEvent("datachanged", Vars.get("placeholder")));
+                    } else {
+			            var placeholder_modificado = Vars.get("placeholder_modificado");
+			            var placeholder_modificado_html = Vars.get("placeholder_modificado_html");
+			            placeholder_modificado = placeholder_modificado.replace("_", key);
+			            placeholder_modificado_html = placeholder_modificado_html.replace("_", "<span style=\"color:red; font-weight: bold;\">" + key + "</span>");
+			            Vars.set("placeholder_modificado",placeholder_modificado);
+			            Vars.set("placeholder_modificado_html",placeholder_modificado_html);
+                        States.setProperty("value", States.handleGUIEvent("datachanged", placeholder_modificado_html));
+                    }
+                    refreshData();
+                });
+
+                States.registerCustomEvent("input.enter", function() {
+                    var val = States.getProperty("value");
+                    States.storeValue(val);
+                    var validatefun = States.getProperty("dataccept");
+                    if(validatefun!=null) {
+                        if(validatefun(val)) {
+                            States.handleEvent('accept');
+                        } else {
+                            States.handleEvent('reject');
+                        }
+                    } else {
+                        States.handleEvent('accept');
+                    }
+                });
+
+                States.registerCustomEvent("input.clear", function() {
+                    States.fireCustomEvent("input.key", "clear");
+                });
+
+                //States.fireCustomEvent("input.clear");
+
+                if(States.getProperty("start_value",null)!= null) {
+                    States.setProperty("value", States.getProperty("start_value"));
+                    refreshData();
+                }
+
+                if(typeof component_data.top==='undefined')
+                    $(document).keydown(function(e) {
+
+                        var consts = "0123456789";
+                        var strkey = String.fromCharCode(e.keyCode || e.which);
+
+                        if(consts.indexOf(strkey)!=-1) {
+                            States.fireCustomEvent("input.key", strkey);
+                        }
+
+                        if(e.which==13) {
+                            States.fireCustomEvent("input.enter");
+                        }
+
+                        if(e.which==8) {
+                            States.fireCustomEvent("input.clear");
+                        }
+
+                        if(e.which==27) {
+                            States.handleEvent('cancel');
+                        }
+
+                        if(!(e.which>=114 && e.which<=123))
+                            e.preventDefault();
+                    });
+
+
+                ////////////////////////
+                //tween inicial
+                inputarea_panel.tween(TweenHelpers.tweenSide(inputarea_panel, "top", false, 500, 0));
+            });
+        </script>

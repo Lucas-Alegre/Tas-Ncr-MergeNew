@@ -1,0 +1,28 @@
+﻿{
+    "base" : include(p/bases/ingreso_pin.json),
+
+	"screens": {
+
+	
+		"default" : {
+			
+		    include(p/chunk/title_transaccion.json),
+
+            
+            "subtitle": { 
+                "text": "Digite su PIN usando el teclado del equipo" 
+            },
+
+		}
+	},
+
+	"properties" : {
+	    "storename": "pinblock",
+	},
+
+
+	"events" : {
+	    "pin_entered": "p/identificacion_manual_comms_cuentas",
+        "hardware_error": "return",
+    }
+}

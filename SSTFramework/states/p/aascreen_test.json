@@ -1,0 +1,15 @@
+﻿{
+	"type": "General",
+
+    "run": function() {
+        xfsAudit("inicio", "esta es el trace para el mensaje de aosef jaosiej foiasej foiasje foiasj eofija seofijasoiejfaois ejfoiasejfoaisjefoiasjefoiasjefoiajsefoiasjeinicio");
+    },
+
+	"screens": {
+
+	    "default" : {
+
+		}
+	},
+
+}

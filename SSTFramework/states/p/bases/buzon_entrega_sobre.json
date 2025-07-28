@@ -1,0 +1,33 @@
+﻿{
+    "type": "EnvelopeDispense",
+
+    "properties": {
+        "button": "#nav3"
+    },
+
+    "screens": {
+
+        "default": {
+
+            include(p/chunk/title_transaccion.json),
+
+            "subtitle": {
+                "text": "Por favor, introduzca los valores junto con el ticket en el sobre. Luego toque CONTINUAR",
+            },
+
+            include(p/chunk/nav_continuar.json),
+
+            "video": {
+                "class": "video_entrega_sobre",
+                "src": "<%= SSUtil.readCSS('video_entrega_sobre') %>"
+            },
+        },
+    },
+    
+    "events": {
+        include(p/chunk/event_timeout.json),
+        "cancel": "p/close_salir",
+        "enter": "p/bases/buzon_deposita_sobre",
+    }
+
+}

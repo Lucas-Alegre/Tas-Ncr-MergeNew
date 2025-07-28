@@ -1,0 +1,15 @@
+﻿{
+    
+    "base" : include(p/sup_dispenser_test_inicio.json),
+    
+    "properties": {
+        "reset": false,
+        },
+
+    
+    "events": {
+        "continue": "p/sup_add_ingreso",
+        "error": "p/close_hardware_error",
+        }
+
+}   

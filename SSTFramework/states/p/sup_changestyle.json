@@ -1,0 +1,12 @@
+﻿{
+    "type": "Custom",
+
+    "run": function(statedata) {
+      SSFramework.changeStyle("supervisor"); 
+      States.handleEvent("continue");
+    },
+
+	"events" : {
+        "continue": "p/sup_identificacion"
+	}
+}

@@ -1,0 +1,107 @@
+<!--
+    Presents a 8 button selection panel. 
+
+    Data:
+        select[0-7].text: text to display in the button
+        select[0-7].event: event fired when the button is pressed. select[0-7].text if not included.
+        select[0-7].value: value stored when the button is pressed. uses event name if not included.
+
+    FireEvents:
+        Defined in data.
+
+    ListenEvents:
+        -
+-->
+<% if(select.select0) { %>
+    <div class="selectbtn selectbtnleft" id="select0">select0</div>
+<% } %>
+
+<% if(select.select1) { %>
+    <div class="selectbtn selectbtnleft" id="select1">select1</div>
+<% } %>
+
+<% if(select.select2) { %>
+    <div class="selectbtn selectbtnleft" id="select2">select2</div>
+<% } %>
+
+<% if(select.select3) { %>
+    <div class="selectbtn selectbtnleft" id="select3">select3</div>
+<% } %>
+
+<% if(select.select4) { %>
+    <div class="selectbtn selectbtnright" id="select4">select4</div>
+<% } %>
+
+<% if(select.select5) { %>
+    <div class="selectbtn selectbtnright" id="select5">select5</div>
+<% } %>
+
+<% if(select.select6) { %>
+    <div class="selectbtn selectbtnright" id="select6">select6</div>
+<% } %>
+
+<% if(select.select7) { %>
+    <div class="selectbtn selectbtnright" id="select7">select7</div>
+<% } %>
+
+<% if(select.select8) { %>
+    <div class="selectbtn selectbtnleft" id="select8">select8</div>
+<% } %>
+
+<% if(select.select9) { %>
+    <div class="selectbtn selectbtnright" id="select9">select9</div>
+<% } %>
+
+<script>
+    $(function () {
+
+        var component_data = <%- JSON.stringify(select) %>;
+        
+
+        $.each(component_data, function(key, value) {
+            var element = $("#"+key);
+            element.click(function(evt) {
+                SSFramework.playAudio('boton.wav');
+                if(component_data[key].hasOwnProperty('value')) {
+                    States.storeValue(component_data[key].value);                    
+                }
+                States.handleEvent(element)
+            });
+            $.each(component_data[key], function(subkey, value) {
+                element.data(subkey, value);
+                if(subkey=="text")
+                    element.html(value);
+            });
+        });
+
+        ////////////////////////
+        ///centrado vertical
+        SSFramework.centerInDiv(".selectbtn");
+
+        ////////////////////////
+        //tween inicial
+        for (var c = 0; c < 10; c++) {
+            var tweendata = "";
+            var el = $("#select" + c);
+            if(el) {
+				switch (true) {
+					case (c < 4):
+						tweendata = TweenHelpers.tweenSide(el, "left", false, 500, c);
+						break;
+					case (c > 3 && c < 8):
+						tweendata = TweenHelpers.tweenSide(el, "right", false, 500, c - 4);
+						break;
+					case (c == 8):
+						tweendata = TweenHelpers.tweenSide(el, "left", false, 500, 4);
+						break;
+					case (c == 9):
+						tweendata = TweenHelpers.tweenSide(el, "right", false, 500, 4);
+						break;
+					default:
+						break;
+				}
+            }
+            $("#select" + c).tween(tweendata);
+        }
+    });
+</script>

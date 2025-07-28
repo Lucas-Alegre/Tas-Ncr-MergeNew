@@ -1,0 +1,10 @@
+﻿{
+    "command": "WFS_CMD_PTR_READ_FORM",
+    "timeout": "30000",
+    "input": {
+        "lpszFormName": "ReadBarcode", 
+        "lpszMediaName": 0, 
+        "dwMediaControl": "WFS_PTR_CTRLEJECT", 
+        "lpszFieldNames": 0,        
+    }
+}

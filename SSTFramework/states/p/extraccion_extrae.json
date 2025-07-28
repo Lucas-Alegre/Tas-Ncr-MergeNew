@@ -1,0 +1,35 @@
+﻿{
+    "type": "Dispense",
+
+    "properties": {
+        "test_mix": false,
+    },
+
+    "screens": {
+
+
+        "default": {
+
+            include(p/chunk/title_transaccion.json),
+
+
+            "subtitle": {
+                "text": "Retire su dinero"
+            },
+
+
+            "video": {
+                "class": "video_extraccion",
+                "src": "<%= SSUtil.readCSS('video_extraccion') %>"
+            },
+
+        }
+    },
+
+	"events" : {
+	    "dispense_ok": "p/extraccion_comms_cuentas",
+	    "hardware_error_cdm": "p/extraccion_comms_reversa",
+        "invalid_mix": "p/extraccion_comms_reversa",
+    }
+
+}

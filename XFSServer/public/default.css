@@ -1,0 +1,39 @@
+﻿* {
+    font-size: 25px;
+    font-family: 'Lucida Console';
+}
+
+pre {
+    font-size:23.4px; 
+    font-family: 'Lucida Console';
+}
+
+.tcenter {
+    text-align: center;
+}
+
+.tright {
+    text-align: right;
+}
+
+.td25 {
+    width: 25%;
+}
+
+.td33 {
+    width: 33%;
+}
+
+
+.td50 {
+    width: 50%;
+}
+
+
+.td100 {
+    width: 100%;
+}
+
+table thead {
+    font-weight: bolder;
+}

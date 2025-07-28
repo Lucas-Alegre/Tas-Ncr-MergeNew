@@ -1,0 +1,32 @@
+﻿{
+    "base" : include(p/bases/ingreso_documento.json),
+
+    "properties": {
+        "storename": "customer_id",
+    },
+
+	"screens": {
+
+	    "default" : {
+			            
+	        include(p/chunk/title_transaccion.json),
+
+            "subtitle": {			
+                "text" : "Ingrese su número de cliente<br>y toque CONTINUAR"
+            },
+    
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "back": "p/identificacion_manual",
+        
+		"accept": "p/identificacion_manual_comms",
+ 
+        "reject": function() {
+            States.refreshState();
+        },
+	}
+}

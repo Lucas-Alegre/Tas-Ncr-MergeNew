@@ -1,0 +1,22 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "supervisor",
+        "subtrx": "cierre_deposito",
+        "storename": "comms.cierre_deposito",
+
+        "requestHandler": function(obj) {
+            obj.sobres = States.getStoredValue("sup.status").lpBuffer.wNumOfDeposits;			   
+            obj.subtrx = States.getProperty("subtrx");
+        },
+        
+    },
+
+    "events": {
+        "ok": "p/sup_retiro_sobres_print",        
+        "comms_error": "p/sup_retiro_sobres_print",        
+        "comms_general_error": "p/sup_retiro_sobres_print",        
+    }
+
+}

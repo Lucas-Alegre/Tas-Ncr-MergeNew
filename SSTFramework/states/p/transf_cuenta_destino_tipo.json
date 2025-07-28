@@ -1,0 +1,60 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "storename": "tipo_cuenta"
+    },
+
+    "screens": {
+
+                
+        "default" : {
+	
+			"update": function(screen) {
+				UserFuns.deleteUnenabledSelects(screen.select);
+				
+				UserFuns.reorganizeSelects(screen.select, [0,1]);
+			},            
+    
+       
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Por favor, seleccione el tipo de cuenta",
+            },
+
+            include(p/chunk/nav_cancelar_anterior.json),
+
+            "select": {							    
+                "select0" : {
+                    "text": "Cuenta propia",
+                    "value": "propia",
+					"event": "propia",
+					"funciones": {
+						"tarjeta": ["TrTCp"]
+					}
+                },
+
+                "select1" : {
+                    "text": "Cuenta de terceros",
+                    "value": "terceros",
+                    "event": "terceros",
+					"funciones": {
+						"tarjeta": ["TrTCt"]
+					}
+                }
+
+            },
+        }
+    },
+
+    "events": {
+        include(p/chunk/event_timeout.json),
+
+        "propia": "p/transf_cuenta_destino_propia",
+        "terceros": "p/transf_terceros_tipo",
+        "back": "p/transf_cuenta_origen",
+        "cancel": "p/close_salir",
+    },
+
+}   

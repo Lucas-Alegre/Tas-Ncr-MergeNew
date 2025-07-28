@@ -1,0 +1,23 @@
+﻿{
+    "base": include(p/bases/selecciona_cuenta.json),
+    
+    "properties": {
+        "conceptos": [1, 2],
+        "flags": ["TSECREEFE", "TSECRECHE" ],
+        "monedas": [80],
+    },
+
+	"screens": {
+	    "default" : {
+	        include(p/chunk/title_transaccion.json),
+	        }
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+        "sin_opciones": "p/close_sin_opciones",
+	    "select": "p/deposito_tipo",
+        "cancel": "p/close_salir",
+	    "back": "p/menu_principal_select",
+    }
+}

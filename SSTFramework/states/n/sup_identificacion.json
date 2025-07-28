@@ -1,0 +1,116 @@
+﻿{
+    "type": "General",
+
+    "run": function(statedata) {
+
+        SSUtil.setApplicationState("sup", "idle");
+
+        supervisorSwitch(function(res) {
+            if(res.state=="normal" || res.state=="normal_gop") {
+                States.handleEvent(res.state);
+            }
+        });
+
+        
+        return readRegistry("config.server")
+
+        .then(function(conf) {
+            return SSUtil.storeLocalConfig(conf);        
+        })
+
+        .then(function(conf) {
+            return readRegistry("sup")
+        })      
+        
+        .then(function(value) {
+            if(value==null) 
+                throw "err";
+            States.setProperty("supkey", value);
+            var suppass = SSUtil.getLocal("TerminalSupervisorPassword", ""); 
+            if(suppass !="") {
+                States.setProperty("supkey", suppass);
+            }
+            return true;
+        })
+
+        .catch(function(ex) {
+            States.handleEvent("err");
+            return false;
+        });
+    },
+
+    "properties": {
+
+        "storename": "clave_supervisor",
+
+        "largo": 12,
+
+        "datachanged": function(args) {	
+            var largo = parseInt(States.getProperty("largo"));
+            return args.slice(0, largo);
+        },
+    
+        "datapresented": function(args) { 
+        	    var pin = "";
+        	    for(var c=0; c<args.length; c++)
+        	        pin += "&#x25cf;";
+        	    return pin; 
+        	},
+	
+         "dataccept": function(args) {
+             var key = States.getProperty("supkey"); 
+             if(args!=key)
+                 return false;
+             return true;
+         },
+
+
+    },
+
+	"screens": {
+
+	    "default" : {
+		
+	        "title": {
+                "text": "Menú Supervisor"
+	        },
+
+            "subtitle": {
+                "text": "Ingrese la clave de supervisor",
+            },
+            
+	        "inputarea": {},
+
+			"numkeyboard": {},
+
+            "nav": {
+				include(n/chunk/nav_btn_cancelar.json),
+				include(n/chunk/nav_btn_borrar.json),
+				include(n/chunk/nav_btn_continuar.json),
+			}
+
+	    }
+	},
+
+	"events" : {
+
+	    
+		"enter": function() { 
+		    States.fireCustomEvent("input.enter", null);
+		},
+
+       
+        "clear": function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+		
+        "accept": "n/sup_menu_dep",
+
+        "reject": "n/sup_changestyle",
+
+        "normal": "n/status_startofday",
+
+        "normal_gop": "n/sup_ooservice",
+
+	}
+}

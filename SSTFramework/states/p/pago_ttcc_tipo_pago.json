@@ -1,0 +1,87 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "storename": "tipo_pago_tarjeta",
+
+
+
+
+        "storeCallback": function(value) {
+            var cuenta = UserFuns.getProduct("tarjeta_pago");
+            if(value=="minimo") {
+                States.storeNamedValue("monto", SSUtil.intAsFloat(cuenta.CSA_CONFO));;
+            }
+
+            if(value=="total") {
+                States.storeNamedValue("monto", SSUtil.intAsFloat(cuenta.CSA_DISPO));;               
+            }
+            return value;
+        },
+
+        "nav": function() {
+            return States.getStoredValue(States.getProperty("storename", "ingreso_cuenta"));
+        },
+    },
+
+	"screens": {
+
+	    "default" : {
+	        include(p/chunk/title_transaccion.json),
+
+
+        
+            "update": function(screen) {        
+                var cuenta = UserFuns.getProduct("tarjeta_pago");                
+                States.setProperty("total", SSUtil.intAsFloat(cuenta.CSA_DISPO));                
+                States.setProperty("minimo", SSUtil.intAsFloat(cuenta.CSA_CONFO));
+            },
+
+      
+            "subtitle": {
+                "text": "Seleccione el monto de pago",
+            },
+
+            include(p/chunk/nav_cancelar_anterior.json),
+
+            "select": {							    
+                "select0" : {
+                    "text": "Pago Total ($ <%= total %>)",
+					"event": "select",
+					"value": "total",
+			    },
+
+                "select1" : {
+                    "text": "Pago Mínimo ($ <%= minimo %>)",
+					"event": "select",
+					"value": "minimo",
+					},
+
+                "select2" : {
+                    "text": "Otro importe",
+					"event": "otro",
+					"value": "otro",
+				},
+
+            },
+		}
+	},
+    
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+        "otro": "p/pago_ttcc_monto",
+
+	    "select" :  function() {
+            if (Vars.get("medio_pago_tarjeta") == "cheque") {
+                return "p/pago_ttcc_confirma";
+            } else {
+                return "p/pago_ttcc_cuenta_debito";
+            }
+        },
+	
+        "cancel": "p/close_salir",
+        "back": "p/pago_ttcc_tipo_medio",
+ 
+	   }
+}

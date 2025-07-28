@@ -1,0 +1,26 @@
+﻿{
+    "base": include(p/bases/selecciona_cuenta.json),
+	
+	"run": function() {
+		States.setProperty("monedas", [States.getStoredValue("moneda", 80)]);
+	},
+    
+    "properties": {
+        "conceptos": [1, 2],
+         "flags": ["TSEDEBITO" ],
+         "monedas": [80, 2],
+    },
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+        "select": "p/extraccion_fast",
+        "cancel": "p/close_salir",
+        "back":  function() {
+			if (States.getStoredValue("varias_monedas", false))
+				return "p/selecciona_moneda";
+			else
+				return "p/close_salir";
+		}
+    }
+}
+

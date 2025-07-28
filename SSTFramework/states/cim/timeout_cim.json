@@ -1,0 +1,24 @@
+ssfw = {
+	
+	"base" : include(cim/base_cim.json),
+
+	"type" : function() {
+		SSFramework.displayScreen("cim_timeout");
+	},
+    
+    "events" : {
+    	"si" : function() {
+            States.runState(
+                Vars.get("temp.timeout_state"),
+                Vars.get("temp.params")
+            );
+            return false;
+        },
+	    "no" : function() {
+	        return "cim/timeout_devolver_billetes";
+		},
+        "timeout" : function() {
+	    	return "cim/timeout_retract_billetes";
+		},
+    }
+}

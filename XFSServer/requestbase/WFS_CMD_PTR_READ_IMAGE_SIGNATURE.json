@@ -1,0 +1,13 @@
+﻿{
+  "command": "WFS_CMD_PTR_READ_IMAGE",
+  "input": {
+    "wFrontImageType": 4, 
+    "wBackImageType": 0, 
+    "wFrontImageColorFormat": 1,
+    "wBackImageColorFormat": 0,
+    "wCodelineFormat": 0,
+    "fwImageSource": 1,
+    "lpszFrontImageFile": "c:\\cpm",
+    "lpszBackImageFile": 0
+  }
+}

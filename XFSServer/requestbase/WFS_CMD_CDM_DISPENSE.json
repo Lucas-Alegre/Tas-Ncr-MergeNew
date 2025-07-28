@@ -1,0 +1,16 @@
+﻿{
+    "command": "WFS_CMD_CDM_DISPENSE",
+    "input" : {
+        "usTellerID": "0",
+        "usMixNumber": "WFS_CDM_INDIVIDUAL",
+        "bPresent": "1",
+        "fwPosition": "WFS_CDM_POSNULL",		
+        "lpDenomination": {
+            "lpulValues": 0,
+            "cCurrencyID": "XXX",
+            "ulAmount": "0",
+            "usCount": "0",
+            "ulCashBox": "0"
+        }
+    }
+}

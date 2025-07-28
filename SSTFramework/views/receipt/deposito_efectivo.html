@@ -1,0 +1,35 @@
+﻿<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+
+<hr/>
+<% if(receipt.intersucursal==true) { %>
+    <h2>Operación Intersucursal</h2>
+<% } %>
+
+<h1>Depósito por Autoservicio</h1>
+<hr/>
+
+<table>
+    <tr><td>Tipo de depósito: </td><td align="right"> <%- receipt.tipo_deposito %></td> </tr>
+</table>
+
+<% include chunk/account_detail.html %>
+
+<table>
+<% if(receipt.hasOwnProperty('cheques') && receipt.cheques>0) { %>
+    <tr><td>Cheques depositados:</td><td align="right"> <%- receipt.cheques%></td> </tr>
+<% } %>
+    <tr><td>Monto depositado: </td><td align="right"> <%- receipt.monto %></td> </tr>
+    <tr><td valign="top">Detalle billetes: </td><td align="right"><%- receipt.denominaciones_depositadas %></td> </tr>
+    <% if(receipt.hasOwnProperty('nombre') && receipt.nombre!="") { %>
+    <tr><td>Cliente:</td><td align="right"> <%- receipt.nombre%></td> </tr>
+    <% } %>
+    <% if(receipt.hasOwnProperty('ente') && receipt.ente!="") { %>
+    <tr><td>CUIT:</td><td align="right"> <%- receipt.ente%></td> </tr>
+    <% } %>
+
+</table>
+
+<% include chunk/footer_deposito_efectivo.html %>
+

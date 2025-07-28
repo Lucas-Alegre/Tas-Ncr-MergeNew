@@ -1,0 +1,10 @@
+﻿{
+    "base": include(p/bases/estado_dev.json),
+
+    "events": {
+        "hardware_error_ptr": "p/close_no_printer",
+        "hardware_error_pin": "p/close_no_printer",
+        "check_complete": "p/menu_principal_select",       
+    }
+
+}

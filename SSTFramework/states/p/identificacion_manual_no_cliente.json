@@ -1,0 +1,9 @@
+﻿{
+    "base" : include(p/identificacion_manual.json),
+
+	"events" : {
+	
+	    "select": "p/identificacion_manual_ingreso_no_cliente",
+    
+	}
+}

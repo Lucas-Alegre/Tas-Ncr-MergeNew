@@ -1,0 +1,40 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+	"run" : function() {
+		 // Elimino los datos de la tarjeta en caso de que tenga info		
+		 States.storeNamedValue("carddata", "");
+	},
+
+    "properties": {
+        "trx": "WSCCL",
+        "nombre": "identificacion",
+        "audit": function(res) {
+            return SSUtil.getObjValue(res, "SCO_IDENT") + "\n" + SSUtil.getObjValue(res, "SNO_CLIEN");
+        },
+
+        "storename": "comms.WSCCL",
+        "responseHandler": function(response) {     
+            if(response.hasOwnProperty("SNO_CLIEN")) {
+                States.storeNamedValue("destino_name", response.SNO_CLIEN);
+            }
+			if(response.hasOwnProperty("SCOTIPDOC")) {
+				States.storeNamedValue("destino_id_type", response.SCOTIPDOC);
+			}
+			if(response.hasOwnProperty("SNU_DOCUM")) {      
+				States.storeNamedValue("destino_id", response.SNU_DOCUM);
+			}
+			if(response.hasOwnProperty("SCO_IDENT")) {
+				if (response.SCO_IDENT > 0) {             
+					States.storeNamedValue("destino_id", response.SCO_IDENT);             
+				} 
+			}
+            return response;           
+        }
+    },
+
+    "events": {
+        "comms_ok": "p/seleccion_tipo_deposito",
+    }
+
+}

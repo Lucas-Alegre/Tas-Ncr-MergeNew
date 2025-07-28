@@ -1,0 +1,24 @@
+﻿{
+    "base": include(p/bases/selecciona_tipo_cuenta.json),
+
+	"screens": {
+
+	    "default" : {
+
+	        include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {			
+                "text" : "Seleccione el tipo de cuenta"
+	        },
+
+      }
+	},
+
+	"events" : {
+        include(p/chunk/event_timeout.json),
+	    "select": "p/transf_cuenta_destino_terceros_sucursal",
+        "back": "p/transf_cuenta_destino_tipo",
+        "cancel": "p/close_salir",
+
+	}
+}

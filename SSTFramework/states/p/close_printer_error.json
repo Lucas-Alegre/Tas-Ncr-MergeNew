@@ -1,0 +1,34 @@
+﻿{
+	"type": "General",
+
+	"run": function(state){
+      xfsAudit("Error" , "Lo sentimos, pero por problemas tecnicos.No es posible imprimir el recibo.");
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+	        include(p/chunk/title_transaccion.json),
+
+            "message": { 
+                "text": "Lo sentimos, pero por problemas técnicos<br>No es posible imprimir el recibo",
+            },
+
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+            },
+
+		}
+	},
+
+	"events" : {
+		"timeout": "p/close_salir",
+
+	    "cancel": "p/close_salir"
+	}
+}

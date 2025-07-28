@@ -1,0 +1,81 @@
+﻿{
+    "type": "General",
+
+
+    "properties": {
+        "storename": "deposito_tipo",   
+        
+        "nav": function() {
+            var valor = States.getStoredValue(States.getProperty("storename", "deposito_tipo"));
+            return valor.text;               
+        },
+     },
+
+    "screens": {
+
+        "default" : {
+	
+			"update": function(screen) {
+				UserFuns.deleteUnenabledSelects(screen.select);
+				
+				if (UserFuns.executeUniqueSelect(screen.select))
+					States.storeNamedValue("seleccion_tipo_deposito", false);
+				else
+					States.storeNamedValue("seleccion_tipo_deposito", true);
+				
+				UserFuns.reorganizeSelects(screen.select, [0,1]);
+			},
+			            
+            include(p/chunk/title_transaccion.json),
+
+            "subtitle": {			
+                "text" : "Seleccione el tipo de depósito"
+            },
+
+			"select": {
+
+			    "select0": {
+			        "text": "Efectivo",
+                    "event": "efectivo",
+                    "value": {
+                        "text": "Efectivo",
+                        "value": 0
+                    },
+					"funciones": {
+						"tarjeta": ["DtTEf"],
+						"manual": ["DtMEf"],
+						"no_cliente": ["DtNEf"]
+					}
+			    },
+                
+                
+                "select1": {
+                    "text": "Cheques",
+                    "event": "cheques",
+                    "value": {
+                        "text": "Cheques",
+                        "value": 1
+                    },
+					"funciones": {
+						"tarjeta": ["DtTCh"],
+						"manual": ["DtMCh"],
+						"no_cliente": ["DtNCh"]
+					}
+                },
+			},
+
+            include(p/chunk/nav_cancelar_anterior.json),
+            }
+    },
+
+      	"events" : {
+      	    include(p/chunk/event_timeout.json),
+
+            "efectivo": "cim/check_status",
+            "cheques": "cheque/check_status",
+            "back": "p/menu_principal_select",
+			"cancel": "p/close_salir",	    
+        },
+
+  
+}

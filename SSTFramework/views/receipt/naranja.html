@@ -1,0 +1,28 @@
+﻿<!--
+    Requires:
+        documento:
+        monto_ingresado:
+-->
+
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+
+<hr/>
+<h1>Pago Tarjeta Naranja S.A.</h1>
+<hr/>
+
+<table>
+    <tr><td>Documento: </td><td align="right"><%- receipt.documento %></td></tr>
+    <tr><td>Monto Ingresado: </td><td align="right"><%- receipt.monto_ingresado %></td></tr>
+</table>
+
+<hr />
+<h2>OPERACIÓN A CONFIRMAR</h2>
+<h2>- SUJETA A VERIFICACIÓN -</h2>
+<h2>El pago se acreditará a las 48hs</h2>
+<hr />
+<h3>Conserve este ticket como comprobante – SEUO –</h3>
+<h2>Gracias por operar con nosotros</h2>
+</body>
+</html>

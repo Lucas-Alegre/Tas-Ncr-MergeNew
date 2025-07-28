@@ -1,0 +1,139 @@
+﻿{
+    "type": "General",
+
+    "run": function(statedata) {
+	
+		var config = SSUtil.getStoredConfig();
+		if (SSUtil.getValue(config.Bills, "").length < 3) {
+			SSFramework.displayScreen(statedata.screens.sinOpciones);
+			return false;
+		}
+
+        var cashunit = States.getStoredValue("sup.dispenser_cashunit");
+        var position = States.getStoredValue("sup.configure_pos");
+        if(typeof position=='undefined' || position==null)
+            position = 0;
+		States.storeNamedValue("sup.configure_prev_pos", position);
+
+        for(var c=position; c<cashunit.lpBuffer.lppList.length; c++) {
+            if(cashunit.lpBuffer.lppList[c].usType==3) {
+                States.storeNamedValue("sup.configure_pos_current", c);        
+                States.setProperty("detalle_cassetera",  
+                    cashunit.lpBuffer.lppList[c].cUnitID + " '" + 
+                    cashunit.lpBuffer.lppList[c].lpszCashUnitName + "'");                
+                break;
+            }
+            position++;     
+        }
+        position++;
+        States.storeNamedValue("sup.configure_pos", position);  
+        
+        if(position>=cashunit.lpBuffer.lppList.length) {
+            var cdm = new XFSDevice("cdm");
+        
+            
+            return cdm.execute("WFS_CMD_CDM_START_EXCHANGE")
+            
+            .then(function(res) {
+                return cdm.execute("WFS_CMD_CDM_END_EXCHANGE", cashunit.lpBuffer)
+            })
+
+            .then(function(res) {
+                States.storeNamedValue("sup.dispenser_setcashunit", res);      
+                return cdm.getInfo("WFS_INF_CDM_CASH_UNIT_INFO");
+            })
+
+            .then(function(res) {
+                States.storeNamedValue("sup.dispenser_cashunit", res);
+                States.handleEvent("fin");
+                return false;
+            })
+
+            .catch(function(ex) {
+                States.handleEvent("fin");
+                return false;
+            });
+        }         
+    },
+
+    "properties": {
+        "storename": "cassette",       
+        
+        "storeCallback" : function(data) {
+            var position = States.getStoredValue("sup.configure_pos_current");        
+            var cashunit = States.getStoredValue("sup.dispenser_cashunit");
+        
+            cashunit.lpBuffer.lppList[position].cCurrencyID = data.moneda;
+            cashunit.lpBuffer.lppList[position].ulValues = data.denominacion;
+            cashunit.lpBuffer.lppList[position].ulCount = 0;
+
+            States.storeNamedValue("sup.dispenser_cashunit", cashunit);
+            return data;
+        },
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        "title": {
+	            "text": "Ingrese el tipo de denominación de <br>la casetera <%= detalle_cassetera %>"
+	        },
+
+	        "update": function(screen) {
+				var lista = [];
+				var config = SSUtil.getStoredConfig();
+				var billetes = SSUtil.getValue(config.Bills, "").split(",");
+				for(var c=0; c<billetes.length; c++) {
+					if (billetes[c].length < 3) continue;
+					var moneda = billetes[c].substring(0, 3);
+					var denominacion = billetes[c].substring(3);
+					lista.push({
+						text: moneda + " " + denominacion,
+						value: {
+							"moneda": moneda,
+							"denominacion": denominacion,
+						}
+					});
+	            }
+				var orden = ["select0", "select1", "select2", "select3", "select4", "select5", "select6"];
+				UserFuns.selectFromList(screen, lista, orden);
+	        },
+
+            "select": {							    
+			    "select7" : {
+			        "text": "Más",
+					"event": "mas" 
+			    }
+			},
+	
+            include(p/chunk/nav_cancelar.json),
+            },
+			
+			"sinOpciones" : {
+				"title": {
+					"text": "Configuración de Casetes"
+				},
+				
+				"message": { 
+					"text": "La configuración de esta terminal no cuenta con billetes habilitados para su utilización.",
+				},
+		
+				include(p/chunk/nav_cancelar.json),
+            },
+	    },
+    
+    "events": {
+		"mas": function() {
+			States.storeNamedValue("sup.configure_pos", States.getStoredValue("sup.configure_prev_pos"));
+	        States.refreshState();
+	    },
+        "select": function() {
+			sessionStorage["temp.select_from_list"] = -7;
+	        States.refreshState();
+	    },
+        "fin": "p/sup_configura_comms",
+        "timeout": "p/sup_changestyle",
+      "cancel": "p/sup_menu_select",
+    }
+}

@@ -1,0 +1,35 @@
+﻿{
+    "type": "Custom",
+
+    "properties": {
+        "app": "app",
+    },
+
+    "run": function() {
+
+       SSUtil.setApplicationState(States.getProperty("tpa"), "in_use");
+               
+        
+        //borra la data
+        States.storeNamedValue("submenu", null);     
+        States.storeNamedValue("data.navbar", []);
+        
+        ///decide el tipo de atm
+        UserFuns.identifyATM(function(dev) {
+            if(dev=="cash")
+                States.handleEvent("cash");
+            else if(dev=="ambos")
+                States.handleEvent("ambos");
+            else 
+                States.handleEvent("dep");
+        });
+    },
+
+    "events": {
+        "cash": "p/menu_principal_cash",
+
+        "dep": "p/menu_principal",
+
+        "ambos": "p/menu_principal_cash_and_dep",
+    }
+}

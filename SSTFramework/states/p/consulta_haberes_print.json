@@ -1,0 +1,27 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "consulta_haberes",
+
+			"update": function() { 
+			    var receipt = { 
+			        "detalle": States.getStoredValue("comms.recibo_haberes"),
+			    };                
+			    UserFuns.addPrinterHeader(receipt);			 
+			    return receipt;			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "print_ok": "p/close_salir",
+	    "hardware_error_ptr": "p/close_printer_error"
+    }
+
+}

@@ -1,0 +1,150 @@
+﻿{
+    "terminal_name": "I9990550D",
+
+    "terminal_pass": "I9990550D",
+
+    "cashunits": {
+        "RC1": {
+            "cCurrencyID": "ARS",
+            "ulValues": 100
+        },
+        "RC2": {
+            "cCurrencyID": "ARS",
+            "ulValues": 50
+        },
+        "RC3": {
+            "cCurrencyID": "ARS",
+            "ulValues": 20
+        },
+        "RC4": {
+            "cCurrencyID": "ARS",
+            "ulValues": 500
+        },
+        "RC5": {
+            "cCurrencyID": "ARS",
+            "ulValues": 500
+        },
+        "RC6": {
+            "cCurrencyID": "ARS",
+            "ulValues": 5
+        },
+        "RC7": {
+            "cCurrencyID": "ARS",
+            "ulValues": 100
+        },
+        "RC8": {
+            "cCurrencyID": "ARS",
+            "ulValues": 50
+        },
+        "RC9": {
+            "cCurrencyID": "ARS",
+            "ulValues": 20
+        },
+        "RC10": {
+            "cCurrencyID": "ARS",
+            "ulValues": 500
+        },
+        "RC11": {
+            "cCurrencyID": "ARS",
+            "ulValues": 500
+        },
+        "RC12": {
+            "cCurrencyID": "ARS",
+            "ulValues": 5
+        },
+        "RC13": {
+            "cCurrencyID": "ARS",
+            "ulValues": 500
+        },
+        "RC14": {
+            "cCurrencyID": "ARS",
+            "ulValues": 100
+        },
+        "RC15": {
+            "cCurrencyID": "ARS",
+            "ulValues": 5
+        },
+
+        "CI1": {
+            "cCurrencyID": "ARS",
+            "ulValues": 100
+        },
+        "CI2": {
+            "cCurrencyID": "ARS",
+            "ulValues": 100
+        },
+        "CI3": {
+            "cCurrencyID": "ARS",
+            "ulValues": 50
+        },
+        "CI4": {
+            "cCurrencyID": "ARS",
+            "ulValues": 10
+        },
+        "CI15": {
+            "cCurrencyID": "   ",
+            "ulValues": 0
+        },
+
+        "1": {
+            "cCurrencyID": "ARS",
+            "ulValues": 100
+        },
+        "2": {
+            "cCurrencyID": "ARS",
+            "ulValues": 50
+        },
+        "3": {
+            "cCurrencyID": "ARS",
+            "ulValues": 20
+        },
+        "4": {
+            "cCurrencyID": "ARS",
+            "ulValues": 500
+        },
+        "5": {
+            "cCurrencyID": "ARS",
+            "ulValues": 100
+        },
+        "6": {
+            "cCurrencyID": "ARS",
+            "ulValues": 50
+        },
+        "7": {
+            "cCurrencyID": "ARS",
+            "ulValues": 20
+        },
+        "8": {
+            "cCurrencyID": "ARS",
+            "ulValues": 500
+        },
+        "9": {
+            "cCurrencyID": "ARS",
+            "ulValues": 100
+        },
+        "10": {
+            "cCurrencyID": "ARS",
+            "ulValues": 50
+        },
+        "11": {
+            "cCurrencyID": "ARS",
+            "ulValues": 20
+        },
+        "12": {
+            "cCurrencyID": "ARS",
+            "ulValues": 500
+        },
+        "13": {
+            "cCurrencyID": "ARS",
+            "ulValues": 50
+        },
+        "14": {
+            "cCurrencyID": "ARS",
+            "ulValues": 20
+        },
+        "15": {
+            "cCurrencyID": "ARS",
+            "ulValues": 500
+        },
+    }
+}

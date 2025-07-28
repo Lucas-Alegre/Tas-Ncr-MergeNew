@@ -1,0 +1,12 @@
+﻿{{>ttu_header}}
+{{padl data.connection 32}}
+CIM Cassette Totals
+Last update: {{data.clear_time}}
+
+{{padr "ID" 13}}{{padl "Count" 10}}
+{{#each data.cashunits}}
+{{padr cUnitID 4}}{{padl logical.cCurrencyID 4}}{{padr logical.ulValues 5}}{{padl ulCount 8}}
+{{/each}}
+
+To clear press 4
+Press 0 to exit

@@ -1,0 +1,86 @@
+﻿{
+	"type": "General",
+
+	"screens": {
+
+	    "default" : {
+
+	        "update": function() {
+
+	            var msg = States.getStoredValue("comms.WS150");			    
+	            var nombre = "";
+	            var ente = "";
+	            var nombre2 = "";
+	            var ente2 = "";
+
+	            if(msg.hasOwnProperty("SD_PARTE1")) {
+	                nombre = msg.SD_PARTE1;
+	            }
+	            if(msg.hasOwnProperty("SD_ENTE1")) {
+	                ente = msg.SD_ENTE1;
+	            }
+
+	            if(msg.hasOwnProperty("SD_PARTE2")) {
+	                nombre2 = msg.SD_PARTE2;
+	            }
+	            if(msg.hasOwnProperty("SD_ENTE2")) {
+	                ente2 = msg.SD_ENTE2;
+	            }
+
+
+	            var tabla = "";
+	            var cuenta = UserFuns.getProduct("cuenta_origen");
+	            var destino = {};
+	            if(States.getStoredValue("tipo_cuenta")=="propia") {
+	                destino = UserFuns.getProduct("cuenta_destino");            
+	            } else {
+	                destino =   UserFuns.createObjectFromCuenta(
+                        States.getStoredValue("tipo_cuenta"), 
+                        States.getStoredValue("cuenta_destino"));
+	            }
+
+	            tabla += "<table id='detalle_chico'>";
+	            tabla += "<tr><td>Cuenta Origen </td><td/></tr>";
+	            tabla += "<tr><td class='detalle_chico_td_left'>Tipo: " + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
+	            tabla += "<tr><td>Monto a Debitar: </td><td>" + UserFuns.formatMonto(States.getStoredValue("monto"), "", 0) + "</td></tr>";
+	            if(nombre!="")
+	                tabla += "<tr><td>Cliente: </td><td>" + nombre + "</td></tr>";
+	            if(ente!="")
+	                tabla += "<tr><td>CUIT: </td><td>" + ente + "</td></tr>";
+	            
+	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	            tabla += "<tr><td>Cuenta Destino </td><td/></tr>";
+	            tabla += "<tr><td>Tipo: " + UserFuns.formatProductName(destino) + "</td><td>" + UserFuns.formatProductValue(destino)  + "</td></tr>";
+	            tabla += "<tr><td>Monto a Acreditar: </td><td>" + UserFuns.formatMonto(States.getStoredValue("monto"), "", 0) + "</td></tr>";
+	            if(nombre2!="")
+	                tabla += "<tr><td>Cliente: </td><td>" + nombre2 + "</td></tr>";
+	            if(ente2!="")
+	                tabla += "<tr><td>CUIT: </td><td>" + ente2 + "</td></tr>";
+	            tabla += "</table>";
+	            States.setProperty("detalle", tabla);
+            },
+			
+              include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Toque CONTINUAR para confirmar la transferencia"
+            },
+
+            include(p/chunk/nav_cancelar_continuar.json),
+    
+            "message": { 
+                "text": "<%= detalle %>"
+            },
+
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+        "enter": "p/transf_reingreso_pin",
+
+        "cancel": "p/close_salir",
+
+	}
+}

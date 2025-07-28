@@ -1,0 +1,37 @@
+﻿{
+    "type": "General",
+
+    "run": function(state){
+      xfsAudit("Error" , "Lo sentimos, no es posible retirar dinero en este momento.La transaccion fue cancelada.");
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+	        "title": {
+	            "text": "Error"
+	        },
+
+            "message": { 
+                "text": "Lo sentimos, no es posible retirar<br>dinero en este momento<br><br>La transacción fue cancelada",
+            },
+
+
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+            },
+
+		}
+	},
+
+	"events" : {
+		"timeout": "p/close_salir",
+
+	    "cancel": "p/close_salir"
+	}
+}

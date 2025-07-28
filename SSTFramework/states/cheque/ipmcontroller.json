@@ -1,0 +1,315 @@
+ssfw = {
+
+    "base" : include(module_actions/modulecontroller.json),
+
+    "properties": {
+
+        "module" : "ipm",
+        "controller" : "IPMGenericController",
+
+        "general_timer" : 30,
+        "module_timer" : 30,
+        "max_items_accepted" : 15,
+
+        "insert_display" : false, // Revisar
+        "items_inserted" : [],
+
+        "set_items_inserted" : function(varName) {
+            States.setProperty("items_inserted", Vars.get(varName,[]));  
+        },
+
+        "media_in_callback" : function(evt) {
+            return evt;
+        },
+
+        "callbacks" : function(evt) {
+            if (evt.event) {
+                console.log("ipm: " + evt.event);
+            } else {
+                if (evt.commandDesc == "WFS_EXEE_IPM_NOMEDIA") {       
+                    if (States.getProperty("insert_display") == false) { 
+                        States.setProperty("insert_display", true);
+                        SSFramework.displayScreen("ipm_media_in_insert");
+                        States.handleEvent("ipm_media_in_waiting_items");
+                    } 
+                } else if (evt.commandDesc=="WFS_CMD_IPM_MEDIA_IN" && 
+                           evt.hResultDesc=="WFS_ERR_CANCELED") {
+                    SSFramework.displayScreen("ipm_wait");
+                } 
+            }
+            switch (evt.event) {
+                case "media_inserted":
+                    SSFramework.initTimeout();
+                    States.setProperty("insert_display", true);
+                    SSFramework.displayScreen("ipm_wait");
+                    break;
+                case "media_presented":
+                    SSFramework.initTimeout();
+                    SSFramework.displayScreen("ipm_take_media");
+                    break;
+                case "media_taken":
+                    States.handleEvent("ipm_media_taken");
+                    break;
+                case "media_data":
+                    SSFramework.initTimeout();
+                    var cheques = Vars.get("items_inserted",[]);
+                    evt = States.getProperty("media_in_callback")(evt);
+                    evt.images[0].image.file = "";
+                    evt.images[1].image.file = "";
+                    evt.images[1].image.file_ticket = "";
+                    cheques.push(evt);
+                    States.setProperty("items_inserted",cheques);
+                    Vars.set("items_inserted",cheques);                                          
+                    break;
+                case "rejected":
+                //case "media_rejected": REVISAR THIS CHANGE
+                    States.handleEvent("ipm_media_rejected");
+                    break;
+                case "media_not_taken":
+                    States.handleEvent("ipm_not_taken");
+                    break;
+                default:
+                    break;
+            }
+        },
+
+        "executeMediaIn" : function(){  
+            return new Promise(function(resolve, reject) {
+                SSFramework.timeout_secs = States.getProperty("module_timer");
+                States.getProperty("init")()
+                .then(function(ipm) {
+                    SSFramework.displayScreen("ipm_wait");                               
+                    window.setTimeout(function() {
+                        if (States.getProperty("insert_display") == false) { 
+                            States.setProperty("insert_display", true);
+                            SSFramework.displayScreen("ipm_media_in_insert");
+                            States.handleEvent("ipm_media_in_waiting_items");
+                        }
+                    }, 2000);
+                    ipm.extension("IPMGenericController", {"method": "mediaIn", "usMaxMediaOnStacker": States.getProperty("max_items_accepted") })
+                    .then(function(data) {
+                        SSFramework.timeout_secs = States.getProperty("general_timer");         
+                        if (data.hResult == 0) {    
+                            States.handleEvent("ipm_media_in_complete");
+                            return resolve(data);
+                        }
+                        if (data.hResult == -4) {
+                            States.handleEvent("ipm_media_in_cancel");                            
+                            return reject(data);
+                        }
+                        console.error("ipm media in xfserror: " + data.hResultDesc);
+                        States.handleEvent("ipm_media_in_error");                        
+                        return reject(data);                                                                                     
+                    })                        
+                    .caught(function(res) {
+                        console.error("ipm media in error: " + res.messasge);  
+                        States.handleEvent("ipm_media_in_error"); 
+                        return reject(res);                       
+                    });
+                })
+                .caught(function(e){
+                    return reject(e);   
+                });    
+            });
+        },
+
+        "setDestination" : function(itemId, position) {
+            if (position == undefined) {
+                position = 1;
+            }
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(ipm){
+                    try {
+                        //var usMediaID = States.getProperty("items_inserted",[])[itemId].mediaid;
+                        var usMediaID = Vars.get("items_inserted",[])[itemId].mediaid;
+                    } catch(e) {
+                        States.handleEvent("ipm_set_destination_error");
+                        return reject();
+                    }
+                    ipm.extension("IPMGenericController", {"method": "setDestination", "usMediaID": usMediaID, "position": position })                  
+                    .then(function(res) {
+                        States.handleEvent("ipm_set_destination_ok");
+                        return resolve(res);
+                    })
+                    .caught(function(res) {                  
+                        States.handleEvent("ipm_set_destination_error");
+                        return reject();
+                    });
+                })
+                .caught(function(e){
+                    return reject(e);   
+                });   
+            });
+        },
+
+        "executeEndorse" : function(mediaId, endorseText) {
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(ipm){
+                    var results = [];
+                    var cmd = {
+                        "usMediaID": mediaId, 
+                        "bStamp": "0", 
+                        "lpszPrintData": endorseText 
+                    };
+                    return ipm.execute("WFS_CMD_IPM_PRINT_TEXT", cmd)
+                    .then(function(res) {
+                        if(res.hResult != 0) {
+                            console.error("error setEndoso: " + curr.mediaid);
+                            return reject(res);
+                        } 
+                        return resolve(res);
+                    })
+                    .caught(function(ex) {                  
+                        console.error("error setEndoso: " + ex.message);
+                        return reject(ex);
+                    });
+                })
+                .caught(function(e){
+                    return reject(e);   
+                });                 
+            });
+        },
+
+        "executeMediaInRollback" : function() {
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(ipm){
+                    SSFramework.displayScreen("ipm_media_in_rollback");
+                    ipm.extension("IPMGenericController", {"method": "mediaInRollback" })                
+                    .then(function(res) {
+                        if (res.hResult == 0) {
+                            States.getProperty("items_inserted",[]);
+                            States.handleEvent("ipm_media_in_rollback_complete");
+                            return resolve(res);
+                        }   
+                        if(res.hResult == -1601) { // no media present to return
+                            States.getProperty("items_inserted",[]);
+                            States.handleEvent("ipm_media_in_rollback_complete");
+                            return resolve(res);
+                        } 
+                        if(res.hResult == -48 || res.hResult == -4) { // timeout                        
+                            States.handleEvent("ipm_media_in_rollback_timeout");                                
+                            return reject(res);
+                        } 
+                        console.log("ipm rollback: " + res.hResult);
+                        States.handleEvent("ipm_media_in_rollback_error");                        
+                        return reject(res);
+                    })            
+                    .caught(function(res) {
+                        States.handleEvent("ipm_media_in_rollback_error");
+                        return reject(res);
+                    });
+                })
+                .caught(function(e){
+                    return reject(e);   
+                });  
+            });
+        },
+
+        "executeMediaInRetract" : function() {
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(ipm){
+                    States.setProperty("items_inserted",[]);
+                    SSFramework.displayScreen("ipm_media_in_retract");
+                    ipm.extension("IPMGenericController", {"method": "mediaInRetract" })                
+                    .then(function(res) {
+                        if (res.hResult == 0) {
+                            States.handleEvent("ipm_media_in_retract_complete");
+                            return resolve(res);
+                        } else {
+                            States.handleEvent("ipm_media_in_retract_error");
+                            return reject(res);
+                        }
+                    })            
+                    .caught(function(res) {
+                        States.handleEvent("ipm_media_in_retract_error");
+                        return reject(res);
+                    }); 
+                })
+                .caught(function(e){
+                    return reject(e);   
+                }); 
+            });
+        },
+
+        "executeMediaInEnd" : function() {
+            return new Promise(function(resolve, reject) {
+                States.getProperty("init")()
+                .then(function(ipm){
+                    SSFramework.displayScreen("ipm_wait");
+                    ipm.extension("IPMGenericController", {"method": "mediaInEnd" })
+                    .then(function(data){                    
+                        if(data.hResult==0) {
+                            States.handleEvent("ipm_media_in_end_complete"); 
+                            return resolve(data);                       
+                        }
+                        States.handleEvent("ipm_media_in_end_error");
+                        return reject(data);                                           
+                    })      
+                    .caught(function(res) {
+                        States.handleEvent("ipm_media_in_end_error");
+                        return reject(res);                  
+                    });       
+                })
+                .caught(function(e){
+                    return reject(e);   
+                }); 
+            });
+        },
+
+        "checkStatus": function() {
+            return new Promise(function(resolve, reject) {
+                SSFramework.displayScreen("ipm_wait");
+                var ipm = new XFSDevice("ipm");
+                return ipm.available()
+                .then(function(res) {
+                    if(res.available) {
+                        States.handleEvent("ipm_available");
+                        return resolve(res);
+                    } else {
+                        States.handleEvent("ipm_unavailable");
+                        return reject(res);
+                    }
+                })
+                .caught(function(res) {
+                    States.handleEvent("ipm_unavailable");
+                    return reject(res);
+                });
+            });  
+        },
+    },
+
+    "screens": {
+        "ipm_available" : "",
+        "ipm_unavailable" : "",
+        "ipm_media_in_insert" : "",
+        "ipm_take_media" : "",
+        "ipm_new_media" : "",
+        "ipm_media_in_retract" : "",
+        "ipm_media_in_rollback" : "",
+        "ipm_wait" : "",
+        "ipm_detail" : "",
+        "ipm_max_items_inserted" : "",
+    },
+
+    "events" : {
+        "ipm_media_in_cancel" : "",
+        "ipm_media_in_complete" : "",
+        "ipm_media_in_error" : "",
+        "ipm_media_in_end_complete" : "",
+        "ipm_media_in_end_error" : "",
+        "ipm_media_in_retract_complete" : "",
+        "ipm_media_in_retract_error" : "",
+        "ipm_media_in_rollback_complete" : "",
+        "ipm_media_in_rollback_error" : "",
+        "ipm_media_in_rollback_timeout" : "",
+        "ipm_media_in_waiting_items": "",
+        "ipm_media_rejected" : "",
+        "ipm_media_taken" : "",
+        "ipm_set_destination_error" : "",
+        "ipm_not_taken" : ""
+    }
+} 

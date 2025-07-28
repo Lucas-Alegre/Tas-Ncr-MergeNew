@@ -1,0 +1,56 @@
+﻿{
+    "type": "CimCashIn",
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+		"ingrese_billetes": {
+            "subtitle": {
+                "text": "Por favor, introducí los billetes",
+            },
+			"nav": {
+                include(n/chunk/nav_btn_cancelar.json),
+            },
+            "video": {
+                "class": "video_deposita_efectivo",
+                "src": "<%= SSUtil.readCSS('video_deposita_efectivo') %>"
+            },
+			"subvideo": {
+                "text": "Advertencia: la cantidad máxima de billetes es de 40"
+            },
+		},
+		"retire_billetes": {
+			"subtitle": {
+				"text": "Por favor, retirá los billetes"
+			},
+			"video": {
+                "class": "video_retira_efectivo",
+                "src": "<%= SSUtil.readCSS('video_retira_efectivo') %>"
+            },
+		},
+	},
+
+    "events": {
+        "CimCashIn_OK": "n/cimresumen",
+		"CimCashIn_Error": "n/CimRollback",
+		"CimCashIn_Hardware_Error": "n/CimRollback",
+		//"CimCashIn_Timeout": "n/CimRetract",
+		"CimCashIn_Cancel": "n/CimRollback",
+		"cancel": function() { 
+			var cim = new XFSDevice("cim");
+            cim.cancelAsyncRequest({ RequestID: 0 })
+			//return "n/CimRollback"; //ESTO ES RARO - REVISAR
+		},
+		"timeout": function() { 
+			var cim = new XFSDevice("cim");
+            cim.cancelAsyncRequest({ RequestID: 0 })
+			//return "n/timeout"; //ESTO ES RARO - REVISAR
+		},
+    }
+}

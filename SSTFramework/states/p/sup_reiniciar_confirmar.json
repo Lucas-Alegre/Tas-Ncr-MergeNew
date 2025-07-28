@@ -1,0 +1,41 @@
+{
+    "type": "General",
+
+    "screens": {
+                        
+        "default" : {
+
+
+            "title": {              
+                "text" : "Reiniciar"
+            },
+
+
+            "subtitle": {
+                "text": "¿Esta seguro de reiniciar el cajero?"
+            },
+
+            "nav": {
+
+                "nav1" : {
+                    "text": "No",
+                    "event": "no", 
+                },
+
+                "nav3": {
+                    "text": "Si",
+                    "event": "si",
+                },
+            },
+
+        }     
+           
+    },
+
+    "events": {
+
+        "si": "p/sup_reiniciar",
+        "no": "p/sup_menu_select",
+
+    },
+}   

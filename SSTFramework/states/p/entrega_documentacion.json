@@ -1,0 +1,60 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+       
+        "storename": "customer_id_type",
+         "nav": function(evt) {
+             if(evt.event && evt.event.text) {
+                 return evt.event.text;
+             }
+             return null;             
+         }
+    },
+
+	"screens": {
+
+	    "default" : {
+			            
+	        include(p/chunk/title_transaccion.json),
+
+            "subtitle": {			
+                "text" : "Seleccione el tipo de documento de destino"
+            },
+
+	        "update": function(screen) {				
+	            var opciones = include(p/config/docs.json);
+	            var orden = ["select0", "select4", "select1", "select5", "select2", "select6", "select3"];
+	            UserFuns.selectFromList(screen, opciones, orden);
+	        },
+			
+			"select": {							    
+				"select7" : {
+				    "text": "Otros",
+					"event": "otros" 
+				}
+			},
+
+            
+	        "nav": {
+	            "nav0": {
+	                "text": "Cancelar",
+                    "event": "cancel"
+	            },
+            }
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "select": "p/identificacion_destino",
+        "back": "p/identificacion",
+        "cancel": "p/close_salir",
+	    
+	    "otros" : function() {
+	        States.refreshState();
+	    },
+
+	}
+}

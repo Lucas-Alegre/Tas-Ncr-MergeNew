@@ -1,0 +1,35 @@
+﻿{
+	"type": "General",
+
+	"run": function(state){
+      xfsAudit("Error" , "Lo sentimos, por problemas tecnicos este equipo se encuentra fuera de servicio.");
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+	        "title": {
+                "text": "Fuera de servicio",
+	        },
+            "message": { 
+                "text": "Lo sentimos, por problemas técnicos<br>este equipo se encuentra fuera de servicio",
+            },
+
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+            },
+
+		}
+	},
+
+	"events" : {
+		"timeout": "p/close_salir",
+
+	    "cancel": "p/close_salir"
+	}
+}

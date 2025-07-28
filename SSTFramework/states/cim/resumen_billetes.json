@@ -1,0 +1,25 @@
+ssfw = {
+
+    "base" : include(cim/base_cim.json),
+
+    "type" : function() {
+        States.getProperty("cashInStatus")();
+    },
+
+	"events" : {
+        "cim_cash_in_status_ok" : function(ev, data) {
+            var bills_inserted = States.getProperty("areItemsInserted")(data);
+            if (bills_inserted) {
+                SSFramework.displayScreen("cim_cash_in_status");
+            } else {
+                States.getProperty("cashInRollback")();
+            }
+        },
+        "cim_cash_in_status_error" : "cim/salida_error",
+        "add_bills" : "cim/ingresar_billetes", 
+        "module_cancel" : "cim/devolver_billetes",
+        "timeout" : "cim/timeout_cim",
+        "cim_cash_in_rollback_ok" : "cim/salida_cancel",
+        "cim_cash_in_rollback_error" : "cim/salida_cancel",
+	}
+}

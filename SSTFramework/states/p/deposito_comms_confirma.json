@@ -1,0 +1,57 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WS200",
+        "storename": "comms.WS200",
+        "nombre": "confirma deposito",
+        "repeat_trx": true,
+        "simulacion":  false,
+
+        "requestHandler": function(request) {
+            if(States.getStoredValue("data.menu_principal").value =="deposito_terceros") {
+                request.cuenta_detalle = UserFuns.createObjectFromCuenta(
+                    States.getStoredValue("tipo_cuenta"), 
+                    States.getStoredValue("cuenta"));
+
+            } else {
+                request.cuenta_detalle = UserFuns.getProduct("cuenta");                        
+            }
+            request.repeat_trx = States.getProperty("repeat_trx");
+            if (Vars.get("tipo_deposito") == "efectivo") {
+                request.simulacion = false;
+            } else {
+                request.simulacion = States.getProperty("simulacion");
+            }
+        },
+
+    },
+    
+    "events": {
+        "comms_ok": function() {
+            if (Vars.get("cim_available")) {
+                return "cim/depositar_billetes";
+            } else {
+                return "p/deposito_print_trx";
+            }
+        },
+        //"comms_error": function() {
+        //    if (Vars.get("cim_available")) {
+        //        return "cim/depositar_billetes";
+        //    } else {
+        //        return "p/deposito_print_trx";
+        //    }
+        //},
+        "comms_error": "p/close_comms_error_deposito_inteligente",
+       
+        //"comms_general_error": function() {
+        //    if (Vars.get("cim_available")) {
+        //        return "cim/depositar_billetes";
+        //    } else {
+        //        return "p/deposito_print_trx";
+        //    }
+        //},
+        "comms_general_error": "p/close_comms_error_deposito_inteligente",
+    }
+
+}

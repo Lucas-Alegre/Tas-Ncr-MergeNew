@@ -1,0 +1,115 @@
+{
+	"type": "General",
+
+	"screens": {
+
+	    "default" : {
+
+	        "update": function() {
+			
+	            var tipo = States.getStoredValue("deposito_tipo");
+
+				if(States.getStoredValue("data.menu_principal").value !="entrega_documentacion") {
+					var store = tipo.value!= 0 ? "comms.WS201" : "comms.WS200";
+					var msg = States.getStoredValue(store);
+					var nombre = "";
+					var ente = "";
+
+					if(msg.hasOwnProperty("SD_PARTE1")) {
+						nombre = msg.SD_PARTE1;
+					}
+					if(msg.hasOwnProperty("SD_ENTE1")) {
+						ente = msg.SD_ENTE1;
+					}
+
+					var cuenta = "";
+					if(States.getStoredValue("data.menu_principal").value =="deposito_terceros") {
+						cuenta =   UserFuns.createObjectFromCuenta(
+							States.getStoredValue("tipo_cuenta"), 
+							States.getStoredValue("cuenta")
+						);                    
+					} else {
+						cuenta = UserFuns.getProduct("cuenta")
+					}
+				}
+  
+	            var deposito_tipo  = States.getStoredValue("deposito_tipo");
+	            var tabla = "";
+
+	            tabla += "<table id='detalle_chico'>";
+	            //tabla += "<tr><td colspan='2' style='text-align:center'>Nombre</td></tr>";
+                //tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+				if(States.getStoredValue("data.menu_principal").value =="entrega_documentacion") {
+	                tabla += "<tr><td class='detalle_chico_td_left'>Tipo de Deposito: </td><td>" + tipo.text + "</td></tr>";
+                } else {
+					tabla += "<tr><td class='detalle_chico_td_left'>" + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
+				};  
+				tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	            //tabla += "<tr><td>Monto a Depositar: </td><td>" + UserFuns.formatMonto(States.getStoredValue("monto"), "", 0) + "</td></tr>";
+	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+				if(States.getStoredValue("data.menu_principal").value =="entrega_documentacion") {
+
+	                tabla += "<tr><td>Cliente: </td><td>" + States.getStoredValue("destino_name") + "</td></tr>";
+					var tipo_identificacion = "";
+					if (States.getStoredValue("destino_id").toString().length < 10){
+						tipo_identificacion = "DNI:"
+					} else {
+						tipo_identificacion = "CUIT:"
+					}
+					tabla += "<tr><td>" + tipo_identificacion + "</td><td>" + States.getStoredValue("destino_id") + "</td></tr>";
+					tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+
+					if (States.getStoredValue("origen_name") != null){
+						tabla += "<tr><td>Mandatario: </td><td>" + States.getStoredValue("origen_name") + "</td></tr>";
+					} else {
+						tabla += "<tr><td>Mandatario: </td><td>" + States.getStoredValue("origen_id") + "</td></tr>";
+					}
+					
+					var tipo_identificacion = "";
+					if (States.getStoredValue("origen_id").toString().length < 10){
+						tipo_identificacion = "DNI:"
+					} else {
+						tipo_identificacion = "CUIT:"
+					}
+					tabla += "<tr><td>" + tipo_identificacion + "</td><td>" + States.getStoredValue("origen_id") + "</td></tr>";
+                
+				} else {
+					if(nombre!="")
+						tabla += "<tr><td>Cliente: </td><td>" + nombre + "</td></tr>";
+					if(ente!="")
+						tabla += "<tr><td>CUIT: </td><td>" + ente + "</td></tr>";
+				};
+	            if(deposito_tipo.value==1) { //cheques
+					tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	                tabla += "<tr><td>Cheques: </td><td>" + States.getStoredValue("cheques") + "</td></tr>";	          
+	            } else {
+					tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	                //tabla += "<tr><td colspan='2' style='text-align:center'>Advertencia: la cantidad máxima de billetes a poner en el sobre es de 40</td></tr>";
+	            }
+	            tabla += "</table>";
+	            States.setProperty("detalle", tabla);
+            },
+			
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Toque CONTINUAR para confirmar el depósito"
+            },
+
+            include(p/chunk/nav_cancelar_continuar.json),
+    
+            "message": { 
+                "text": "<%= detalle %>"
+            },
+
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "enter": "cim/ingresar_billetes",
+		
+        "cancel": "p/close_salir"
+	}
+}

@@ -1,0 +1,13 @@
+﻿
+include(p/chunk/nav_cancelar_continuar.json),
+
+include(p/chunk/title_pagos.json),
+
+"subtitle": {
+    "text": "Toque CONTINUAR para confirmar el pago"
+},
+
+"message": { 
+    "text": "Cantidad de comprobantes: 0<br>Cuenta Corriente $ Nro 000-1234/56<br><br>Monto a Pagar: $ 900,00<br>Monto a Debitar: $ 900,00"
+}
+

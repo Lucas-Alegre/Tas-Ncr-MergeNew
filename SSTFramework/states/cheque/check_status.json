@@ -1,0 +1,18 @@
+﻿ssfw = {
+
+    "base" : include(cheque/base_ipm.json),
+
+    "type" : function() {
+        States.getProperty("checkStatus")()
+        .then(
+            function(ok){},
+            function(error){} 
+        )
+        .caugth(function(e){});
+    },
+
+    "events" : {
+        //"ipm_available" : "", Esta salida se maneja desde base_ipm
+        //"ipm_unavailable" : ""   Esta salida se maneja desde base_ipm
+    }
+}

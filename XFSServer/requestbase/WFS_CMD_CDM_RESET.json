@@ -1,0 +1,8 @@
+﻿{
+    "command": "WFS_CMD_CDM_RESET",
+    "input" : {
+        "usNumber": "0",
+        "lpRetractArea": 0,
+        "fwOutputPosition": "WFS_CDM_POSNULL"
+    }
+}

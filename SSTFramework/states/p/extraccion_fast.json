@@ -1,0 +1,56 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        "storename": "monto",
+
+        "nav": function() {
+            return UserFuns.formatFloatMonto(States.getStoredValue("monto"));
+        }
+    },
+
+	"screens": {
+
+	    "default" : {
+			            
+	        include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {			
+                "text" : "Seleccione el monto a retirar"
+            },
+
+	        "update": function(screen) {				
+	            var opciones = include(p/config/extraccion.json);
+	            var orden = ["select0", "select4", "select1", "select5", "select2", "select6", "select3"];
+	            var formatted_options = [];
+	            
+				var currency = UserFuns.findCurrDesc(States.getStoredValue("moneda", 80))[1];
+				
+	            for(var c=0; c<opciones.length; c++) {
+	                formatted_options.push({
+	                    text: currency + " "  + opciones[c].value[1],
+                        value: opciones[c].value[1]
+	                });
+	            }
+	            UserFuns.selectFromList(screen, formatted_options, orden, false);
+	        },
+			
+			"select": {							    
+			    "select7" : {
+			        "text": "Otro importe",
+					"event": "otro" 
+			    }
+			},
+                        
+            include(p/chunk/nav_cancelar_anterior.json),
+	    }
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+		"cancel": "p/close_salir",
+	    "select": "p/extraccion_valida",    
+	    "back": "p/extraccion",
+        "otro" : "p/extraccion_otro"
+	}
+}

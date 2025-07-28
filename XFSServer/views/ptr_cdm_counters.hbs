@@ -1,0 +1,11 @@
+﻿{{>header}}
+<div class="td100 tright">{{data.connection}}</div>
+<div class="td100 tcenter">Dispenser totals</div>
+<body><pre>
+Last update: {{data.clear_time}}
+
+{{padr "Type" 14}}{{padl "Initial" 8}}{{padl "Current" 8}}{{padl "Reject" 8}}
+{{#each data.cashunits}}
+{{padr cUnitID 6}}{{padl cCurrencyID 4}}{{padr ulValues 4}}{{padl ulInitialCount 8}}{{padl ulCount 8}}{{padl ulRejectCount 8}}
+{{/each}}
+</pre></body>

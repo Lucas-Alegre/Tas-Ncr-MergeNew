@@ -1,0 +1,90 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+        
+        "storename": "data.menu_principal",
+        "nav": function() {
+            return States.getStoredValue("data.menu_principal").text;
+        }
+    },
+
+	"screens": {
+
+	    "default" : {
+
+			"title": {				
+				"text" : "Menú Principal"
+			},
+
+            "subtitle": {
+                "text": "Seleccione la operación que desea realizar"
+            },
+            
+			"select": {
+
+			    "select0" : {
+					"text": "Iniciar VDM",
+					"event": "vdm", 
+                    "value": {
+                        "text": "VDM",
+                        "value": "vdm",
+                    }
+				},
+
+				"select1" : {
+				    "text": "Consulta de Sobres",
+					"event": "consulta", 
+                    "value": {
+                        "text": "Consulta de sobres",
+                        "value": "consulta",
+                    } 
+				},
+
+                "select4" : {
+                    "text": "Configuracion",
+                    "event": "configuracion", 
+                    "value": {
+                        "text": "Configuracion",
+                        "value": "configuracion",
+                        }
+                },
+
+                
+				"select5" : {
+					"text": "Retiro de Sobres",
+					"event": "retiro", 
+                    "value": {
+                        "text": "Retiro de Sobres",
+                        "value": "retiro",
+                    }
+				},
+
+                 "select2" : {
+                    "text": "Reiniciar",
+                    "event": "reiniciar", 
+                    "value": {
+                        "text": "Reiniciar",
+                        "value": "reiniciar",
+                        }
+
+                },
+
+			},
+
+            include(p/chunk/nav_cancelar.json),
+
+		}
+	},
+
+    "events": {
+        "timeout": "p/sup_changestyle",
+        "cancel": "p/sup_changestyle",        
+        "vdm": "p/sup_vdm",
+        "consulta": "p/sup_consulta_inicio",
+        "configuracion": "p/sup_menu_configuracion",
+        "retiro": "p/sup_retiro_inicio",
+        "reiniciar": "p/sup_reiniciar_confirmar",
+        }
+
+}

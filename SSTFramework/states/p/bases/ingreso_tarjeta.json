@@ -1,0 +1,59 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+
+        "storename": "tarjeta",
+
+        "datachanged": function(args) {			
+            return args.slice(0, 16);
+        },
+
+
+		"datapresented": function(args) { 
+		    return UserFuns.formatTarjeta(args);
+		},
+
+        "dataccept": function(args) {
+            if(args.length<16)
+                return false;
+            return true;
+        },
+
+    },
+
+	"screens": {
+
+	    "default" : {		            
+	        
+            "inputarea": {},
+
+			"numkeyboard": {},
+
+            include(p/chunk/nav_all.json),
+    
+        }
+	},
+
+    
+	"events" : {
+
+	    include(p/chunk/event_timeout.json),
+
+
+		"enter": function() { 
+		    States.fireCustomEvent("input.enter", null);
+		},
+
+        "clear": function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+
+        "reject" : function() {
+            States.refreshState();
+        },
+
+    }
+
+
+}

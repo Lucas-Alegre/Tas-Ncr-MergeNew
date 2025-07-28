@@ -1,0 +1,173 @@
+﻿{
+    "type": "General",
+    
+    "properties": {
+        "storename": "submenu",
+        "nav": function() {
+            return States.getStoredValue("submenu");
+        }
+    },
+
+
+	"screens": {
+
+	    "default" : {
+	
+			"update": function(screen) {
+				UserFuns.deleteUnenabledSelects(screen.select);
+				
+				UserFuns.reorganizeSelects(screen.select);
+			},
+			
+	        include(p/chunk/title_transaccion.json),
+
+            "subtitle": {
+                "text": "Seleccione la consulta que desea realizar"
+            },
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+            },
+
+			"select": {
+
+			    "select0" : {
+					"text": "Saldos<br>de cuenta",
+					"event": "saldos",
+                    "value": "Saldos de cuenta",
+					"funciones": {
+						"tarjeta": ["CoTSa"],
+						"manual": ["CoMSa"],
+					}
+				},
+
+				"select1" : {
+					"text": "Movimientos<br>de cuenta",
+					"event": "movimientos",
+                    "value": "Movimientos de cuenta",
+					"funciones": {
+						"tarjeta": ["CoTMo"],
+						"manual": ["CoMMo"],
+					}
+				},
+
+				"select2" : {
+					"text": "Plazo fijo",
+					"event": "plazo_fijo",
+                    "value": "Plazo fijo",
+					"funciones": {
+						"tarjeta": ["CoTPf"],
+						"manual": ["CoMPf"],
+					}
+				},
+
+				"select4" : {
+					"text": "Tarjetas",
+					"event": "tarjetas",
+                    "value": "Tarjetas",
+					"funciones": {
+						"tarjeta": ["CoTTa"],
+						"manual": ["CoMTa"],
+					}
+				},
+
+                "select5" : {
+                    "text": "CBU",
+					"event": "cbu",
+                    "value": "CBU",
+					"funciones": {
+						"tarjeta": ["CoTCbu"],
+						"manual": ["CoMCbu"],
+					}
+                },
+
+                "select6" : {
+                    "text": "Recibo de<br>haberes",
+					"event": "haberes",
+                    "value": "Recibo de haberes",
+					"funciones": {
+						"tarjeta": ["CoTRh"],
+						"manual": ["CoMRh"],
+					}
+                },
+			}
+		}
+	},
+
+	"events" : {
+
+	    include(p/chunk/event_timeout.json),
+
+
+	    "cancel": "p/close_salir",
+
+	    "saldos": {
+	        "call": "p/bases/selecciona_cuenta",
+            "params": {
+                "title": "Consulta de saldos",
+                "conceptos": [1, 2]
+	        },
+            "events": {
+                "select": "p/consulta_saldo",
+                "back": "p/consultas",
+                "cancel": "p/close_salir",
+            }
+        },
+		"movimientos": {
+		    "call": "p/bases/selecciona_cuenta",
+            "params": {
+                "title": "Consulta de movimientos",
+                "conceptos": [1, 2]
+            },
+            "events": {
+                "select": "p/consulta_movimientos_comms",
+                "back": "p/consultas",
+                "cancel": "p/close_salir",
+            }
+		},
+        "plazo_fijo": {
+            "call": "p/bases/selecciona_cuenta",
+            "params": {
+                "title": "Consulta de plazo fijo",
+                "conceptos": [4]           
+            },
+            "events": {
+                "select": "p/consulta_plazo_fijo",
+                "back": "p/consultas",
+                "cancel": "p/close_salir",
+                }
+        },
+        "tarjetas": {
+            "call": "p/bases/selecciona_cuenta",
+            "params": {
+                "title": "Consulta de tarjetas",
+                "conceptos": [25]
+            },
+            "events": {
+                "select": "p/consulta_tarjetas",
+                "back": "p/consultas",
+                "cancel": "p/close_salir",
+
+            }
+        },
+        "cbu": {
+            "call": "p/bases/selecciona_cuenta",
+            "params": {
+                "title": "Consulta de CBU",
+                "conceptos": [1, 2]
+            },
+            "events": {
+                "select": "p/consulta_cbu",
+                "back": "p/consultas",
+                "cancel": "p/close_salir",
+            }
+        },
+
+        "back": "p/menu_principal_select",
+
+        "haberes": "p/consulta_haberes_periodo",
+	}
+}

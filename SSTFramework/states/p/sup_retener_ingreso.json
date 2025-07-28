@@ -1,0 +1,127 @@
+﻿{
+    "base" : include(p/bases/ingreso_sobre.json),
+
+    
+    "run": function(statedata) {
+
+        var position = States.getStoredValue("sup.configure_pos");
+        var cashunit = States.getStoredValue("sup.dispenser_cashunit");
+        if(typeof position=='undefined' || position==null)
+            position = 0;
+
+        if(position>=cashunit.lpBuffer.lppList.length) {
+            var cdm = new XFSDevice("cdm");
+
+            cdm.execute("WFS_CMD_CDM_SET_CASH_UNIT_INFO", cashunit.lpBuffer)
+
+            .then(function(res) {
+                States.storeNamedValue("sup.dispenser_setcashunit", res);      
+                return cdm.getInfo("WFS_INF_CDM_CASH_UNIT_INFO");
+            })
+
+            .then(function(res) {
+                States.storeNamedValue("sup.dispenser_cashunit", res);
+                States.handleEvent("fin");
+            })
+
+            .catch(function(ex) {
+                States.handleEvent("fin");
+            });
+            return false;
+
+        } else {
+              
+            var ret = false;
+            States.storeNamedValue("sup.configure_pos_current", position);     
+            
+            if(cashunit.lpBuffer.lppList[position].usType!=3) {
+                cashunit.lpBuffer.lppList[position].ulInitialCount = 0;
+                cashunit.lpBuffer.lppList[position].ulCount = 0;
+                cashunit.lpBuffer.lppList[position].ulRejectCount = 0;
+                States.storeNamedValue("sup.dispenser_cashunit", cashunit);            
+                States.handleEvent("accept");
+
+            } else {
+                States.setProperty("detalle_cassetera",  
+                    cashunit.lpBuffer.lppList[position].cUnitID + " '" + 
+                    cashunit.lpBuffer.lppList[position].lpszCashUnitName + "'");                
+                ret = true;
+            }
+            position++;     
+            States.storeNamedValue("sup.configure_pos", position);  
+            return ret;
+        }
+        
+    },
+
+    "properties": {
+
+        "operation": "set",
+
+        "nav":  function() { return ""; },
+
+        "storename": "contador",       
+        
+        "storeCallback" : function(data) {
+            var position = States.getStoredValue("sup.configure_pos_current");        
+            var cashunit = States.getStoredValue("sup.dispenser_cashunit");
+                    
+            if(data==null || data=="" || typeof(data)=='undefined')
+                data = 0;
+
+            data = parseInt(data);
+            var ulInitialCount = parseInt(cashunit.lpBuffer.lppList[position].ulInitialCount);
+            var ulCount = parseInt(cashunit.lpBuffer.lppList[position].ulCount);
+            
+            if(States.getProperty("operation")=="set") {
+                cashunit.lpBuffer.lppList[position].ulInitialCount = data;
+                cashunit.lpBuffer.lppList[position].ulCount = data;
+                cashunit.lpBuffer.lppList[position].ulRejectCount = 0;
+            }
+
+            if(States.getProperty("operation")=="add") {
+                cashunit.lpBuffer.lppList[position].ulInitialCount = ulInitialCount + data;
+                cashunit.lpBuffer.lppList[position].ulCount = ulCount + data;
+                //cashunit.lpBuffer.lppList[position].ulRejectCount = 0;
+            }
+
+            if(States.getProperty("operation")=="sub") {
+                cashunit.lpBuffer.lppList[position].ulInitialCount = ulInitialCount - data;
+                cashunit.lpBuffer.lppList[position].ulCount = ulCount - data;
+                if(cashunit.lpBuffer.lppList[position].ulInitialCount<0)
+                    cashunit.lpBuffer.lppList[position].ulInitialCount = 0;
+                if(cashunit.lpBuffer.lppList[position].ulCount<0)
+                    cashunit.lpBuffer.lppList[position].ulCount = 0;
+                //cashunit.lpBuffer.lppList[position].ulRejectCount = 0;
+            }
+            
+            States.storeNamedValue("sup.dispenser_cashunit", cashunit);
+            return data;
+        },
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        "title": {
+	            "text": "Ingrese la cantidad de billetes de <br>la casetera <%= detalle_cassetera %>"
+	        },      
+            
+            "update": function(data) {
+                delete data.subtitle;
+            }
+	        },
+        },
+    
+    "events": {
+        "accept": "p/sup_retener_ingreso",
+        "fin": "p/sup_retener_comms",
+        "timeout": "p/sup_changestyle",
+        "back": "p/sup_menu_select",
+        "cancel": "p/sup_menu_select",
+    }
+}
+
+    
+ 

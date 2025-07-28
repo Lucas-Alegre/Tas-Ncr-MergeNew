@@ -1,0 +1,47 @@
+﻿{
+    "type": "EnvelopeDeposit",
+
+    "properties": {
+        "printLine": function() {
+            return "DEPOSITO";
+        },
+
+    },
+
+      "screens": {
+                        
+          "default" : {            
+
+              include(p/chunk/title_transaccion.json),
+                      
+              "subtitle": {
+                  "text": "Por favor, ingrese el sobre en el buzón",
+                  },
+
+              "nav": {
+                  "nav0": {
+                      "text": "Cancelar",
+                      "event": "cancel_deposit"
+                  }
+              },
+               
+                   "video": {
+                       "class": "video_deposita_sobre",
+                       "src": "<%= SSUtil.readCSS('video_deposita_sobre') %>"
+                   },
+          },
+    },
+    
+    "events": {    
+        "deposit_ok": "p/close_salir",
+        "deposit_error": "p/close_hardware_error",
+        "hardware_error_dep": "p/close_hardware_error",  
+        "cancel_deposit": function() {
+            var dep = new XFSDevice("dep");
+            dep.cancelAsyncRequest({ RequestID: 0 });
+        },
+        "cancel": "p/close_salir",
+        "manual_timeout": "p/timeout",
+    }
+
+}

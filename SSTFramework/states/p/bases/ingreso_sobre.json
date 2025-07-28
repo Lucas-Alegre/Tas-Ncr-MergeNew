@@ -1,0 +1,67 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+
+        
+        "storename": "sobre",
+
+        "nav": function() {
+            return States.getStoredValue(States.getProperty("storename", "sobre"));              
+        },
+
+        "datachanged": function(args) {			
+            return args.slice(0, 5);
+        },
+
+		"datapresented": function(args) { 
+		    return parseInt(args, 10);
+		},
+
+        "dataccept": function(args) {
+            if(args.length<1)
+                return false;
+            return true;
+        },
+
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        include(p/chunk/title_transaccion.json),
+	
+	        "subtitle": {
+                "text": "Ingrese los últimos cinco números del sobre y toque CONTINUAR"
+	        },
+
+            "inputarea": {},
+
+			"numkeyboard": {},
+           
+            include(p/chunk/nav_all.json),
+
+	    }
+	},
+
+	"events" : {
+
+	    include(p/chunk/event_timeout.json),
+
+	    
+		"enter": function() { 
+		    States.fireCustomEvent("input.enter", null);
+		},
+
+       
+        "clear": function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+
+        "reject" : function() {
+            States.refreshState();
+        },
+
+	}
+}

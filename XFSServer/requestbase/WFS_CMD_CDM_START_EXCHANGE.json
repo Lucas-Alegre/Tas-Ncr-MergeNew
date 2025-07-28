@@ -1,0 +1,9 @@
+﻿{
+    "command": "WFS_CMD_CDM_START_EXCHANGE",
+    "input" : {
+        "fwExchangeType": "WFS_CDM_EXBYHAND",
+        "usTellerID": "0",
+        "usCount": "1",
+        "lpusCUNumList": [0]        
+    }
+}

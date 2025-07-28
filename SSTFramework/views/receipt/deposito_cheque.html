@@ -1,0 +1,53 @@
+﻿<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+
+<hr/>
+<% if(receipt.intersucursal==true) { %>
+    <h2>Operación Intersucursal</h2>
+<% } %>
+<% if(receipt.cheques==true) { %>
+    <% if(receipt.intersucursal==true) { %>
+        <h2>Depósito cheques para Otras Sucursales</h2>
+    <% } else { %>
+        <h2>Depósito de cheques</h2>
+    <% } %>
+<% } %>
+<h1>Depósito por Autoservicio</h1>
+<hr/>
+
+<table>
+    <tr><td>Tipo de depósito: </td><td align="right"> <%- receipt.tipo_deposito %></td> </tr>
+</table>
+
+<% include chunk/account_detail.html %>
+
+<table>
+<% if(receipt.hasOwnProperty('cheques') && receipt.cheques>0) { %>
+    <tr><td>Cheques depositados:</td><td align="right"> <%- receipt.cheques%></td> </tr>
+<% } %>
+    <tr><td>Monto depositado: </td><td align="right"> <%- receipt.monto %></td> </tr>
+</table>
+
+<table>
+    <tr><td align="center">Banco</td><td align="center">Nro cheque</td><td align="right">Importe</td></tr>
+	    <% for (var i = 0; i < receipt.listado_cheques.length; i++) {%>
+        <tr>
+            <td align="center">
+                <%- receipt.listado_cheques[i].banco %>
+            </td> 
+            <td align="center">
+                <%- receipt.listado_cheques[i].numero %>
+            </td>    
+            <td align="right">
+                <%- receipt.listado_cheques[i].monto_formateado %>
+            </td>
+        </tr>
+    	<% } %>
+</table>
+
+<% if(receipt.sobre==true) { %>
+    <% include chunk/footer_sobre.html %>
+<% } else { %>
+    <% include chunk/footer_deposito.html %>
+<% } %>

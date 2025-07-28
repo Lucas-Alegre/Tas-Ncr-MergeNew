@@ -1,0 +1,29 @@
+﻿{
+    "base": include(p/bases/comms.json),
+
+    "properties": {
+        "trx": "WS150",
+        "storename": "comms.WS150",
+        "repeat_trx": true,
+        "simulacion":  false,
+        
+        "requestHandler": function(obj) {
+            obj.cuenta_detalledb = UserFuns.getProduct("cuenta_origen");
+            if(States.getStoredValue("tipo_cuenta")=="propia") {
+                obj.cuenta_detallecr = UserFuns.getProduct("cuenta_destino");            
+            } else {
+                obj.cuenta_detallecr = UserFuns.createObjectFromCuenta(
+                    States.getStoredValue("tipo_cuenta"), 
+                    States.getStoredValue("cuenta_destino"));
+            }
+            obj.repeat_trx = States.getProperty("repeat_trx");
+            obj.simulacion = States.getProperty("simulacion");
+        },
+        
+    },
+
+    "events": {
+        "comms_ok": "p/transf_print",
+    }
+
+}

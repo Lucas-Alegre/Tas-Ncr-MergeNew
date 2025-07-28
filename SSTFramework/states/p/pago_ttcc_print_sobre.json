@@ -1,0 +1,76 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+        
+    "properties" : {
+        "sobre": true,              
+        },
+    
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "pago_ttcc",
+               
+			"update": function() { 
+			    var tarjeta = States.getStoredValue("tarjeta_pago");   
+			    if(tarjeta=="resumen") {   
+			        if(States.getStoredValue("pago_resumen_tipo")=="tarjeta") {
+			            tarjeta = UserFuns.formatTarjeta(States.getStoredValue("tarjeta"));
+			        } else {
+			            tarjeta = States.getStoredValue("cuenta_tarjeta");
+			        }
+			    } else {
+			        tarjeta = UserFuns.formatProductValue(UserFuns.getProduct("tarjeta_pago"));
+			    }
+
+			    if (States.getStoredValue("medio_pago_tarjeta") == "debito") {
+			    	var forma_de_pago = "Débito en cuenta";
+			    } else {
+			    	if (States.getStoredValue("medio_pago_tarjeta") == "efectivo") {
+				    	var forma_de_pago = "Efectivo";
+				    } else {
+				    	var forma_de_pago = "Cheque";
+				    }
+			    }
+
+			    var receipt = { 
+			        "tarjeta": tarjeta,
+			        "tipo_cuenta": "",
+			        "sucursal": "",
+			        "cuenta": "",
+			        "nombre": "",
+			        "forma_de_pago": forma_de_pago,
+			        "monto": UserFuns.formatFloatMonto(States.getStoredValue("monto")),
+			        "numero_sobre": "0",
+			        "customer_id": States.getStoredValue("customer_id"),
+			        "customer_id_type": States.getStoredValue("customer_id_type"),               
+			        "intersucursal": false,
+			        "sobre": States.getProperty("sobre"),
+			    };
+
+                
+			    if(States.getStoredValue("medio_pago_tarjeta")=="debito") {
+			        var cuenta = UserFuns.getProduct("cuenta_debito");
+			        receipt.tipo_cuenta = UserFuns.formatProductName(cuenta);
+			        receipt.sucursal =  cuenta.ACU_OFICI;
+			        receipt.cuenta = UserFuns.formatProductValue(cuenta, 1);
+			        receipt.nombre = cuenta.WNO_CLIE1;
+			    }
+			    
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "print_ok": "p/pago_ttcc_entrega_sobre",
+	    "print_error": "p/close_printer_error",
+        "hardware_error_ptr": "p/close_printer_error"
+	}
+
+}

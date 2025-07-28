@@ -1,0 +1,24 @@
+﻿<!--
+    Data:
+        subvideo.text: text to display
+
+    FireEvents:
+        -
+
+    ListenEvents:
+        -
+-->
+
+<div class="subvideo" id="subvideo">
+    <%- subvideo.text %>
+</div>
+
+<script>
+    $(function () {
+
+        SSFramework.centerInDiv("#subvideo");
+
+        var tit = $(".subvideo");
+        tit.tween(TweenHelpers.tweenSide(tit, "top", false, 50, 0));
+    });
+</script>

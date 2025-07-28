@@ -1,0 +1,3 @@
+﻿"title": {
+    "text": "<%= States.getStoredValue('submenu', null)==null ?   States.getStoredValue('data.menu_principal', 'Nombre transaccion').text : States.getStoredValue('submenu')  %>"
+}

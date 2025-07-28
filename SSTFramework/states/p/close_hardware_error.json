@@ -1,0 +1,36 @@
+﻿{
+    "type": "General",
+
+     "run": function(state){
+      xfsAudit("Error" , "Lo sentimos, pero por problemas tecnicos.No es posible realizar la operacion.");
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+	        "title": {
+	            "text": "Error"
+	        },
+
+            "message": { 
+                "text": "Lo sentimos, pero por problemas técnicos<br>No es posible realizar la operación",
+            },
+
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+            },
+
+		}
+	},
+
+	"events" : {
+		"timeout": "p/close_salir",
+
+	    "cancel": "p/close_salir"
+	}
+}

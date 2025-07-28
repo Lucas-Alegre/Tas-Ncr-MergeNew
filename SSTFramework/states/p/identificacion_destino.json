@@ -1,0 +1,34 @@
+﻿{
+    "base" : include(p/bases/ingreso_documento_entrega_documentacion.json),
+
+    "properties": {
+        "storename": "customer_id",
+    },
+
+	"screens": {
+
+	    "default" : {
+			            
+	        include(p/chunk/title_transaccion.json),
+
+            "subtitle": {			
+                "text" : "Ingrese el número de cliente de<br>destino y toque CONTINUAR"
+            },
+    
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "back": "p/entrega_documentacion",
+
+		"cancel": "p/close_salir",
+        
+		"accept": "p/identificacion_destino_comms",
+ 
+        "reject": function() {
+            States.refreshState();
+        },
+	}
+}

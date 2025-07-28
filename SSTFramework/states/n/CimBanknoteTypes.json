@@ -1,0 +1,20 @@
+﻿{
+    "type": "CimBanknoteTypes",
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+	},
+
+    "events": {
+		"CimBanknoteTypes_OK": "n/CimConfigureNotetypes",
+		"CimBanknoteTypes_Error": "n/CimConfigureNotetypes",
+		"CimBanknoteTypes_Hardware_Error": "n/CimConfigureNotetypes",
+    }
+}

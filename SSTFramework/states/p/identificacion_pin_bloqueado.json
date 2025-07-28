@@ -1,0 +1,34 @@
+﻿{
+    "type": "General",
+
+	"screens": {
+
+	
+		"default" : {
+			
+		    include(p/chunk/title_transaccion.json),
+
+            
+            "subtitle": { 
+                "text": "Clave ingresada" 
+            },
+            "message": {
+				"text": "Clave ingresada Bloqueada"
+			},
+			"nav": {
+				"nav1": {
+					 "text": "Salir",
+                    "event": "cancel"
+				}
+			}
+
+		}
+	},
+
+	
+	"events" : {
+		include(p/chunk/event_timeout.json),
+	    "cancel": "p/close_salir",
+        "hardware_error": "return",
+    }
+}

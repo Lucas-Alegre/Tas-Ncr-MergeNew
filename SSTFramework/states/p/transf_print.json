@@ -1,0 +1,73 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "transferencia",
+            
+			"update": function() { 
+			    var cuenta = UserFuns.getProduct("cuenta_origen");
+			    var cuenta_destino = {};
+			    if(States.getStoredValue("tipo_cuenta")=="propia") {
+			        cuenta_destino = UserFuns.getProduct("cuenta_destino");            
+			    } else {
+			        cuenta_destino =   UserFuns.createObjectFromCuenta(
+                        States.getStoredValue("tipo_cuenta"), 
+                        States.getStoredValue("cuenta_destino"));
+			    }
+
+			    var msg = States.getStoredValue("comms.WS150");			    
+			    
+			    var nombre = "";
+			    var ente = "";
+			    var nombre2 = "";
+			    var ente2 = "";
+
+			    if(msg.hasOwnProperty("SD_PARTE1")) {
+			        nombre = msg.SD_PARTE1;
+			    }
+
+			    if(msg.hasOwnProperty("SD_ENTE1")) {
+			        ente = msg.SD_ENTE1;
+			    }
+
+			    if(msg.hasOwnProperty("SD_PARTE2")) {
+			        nombre2 = msg.SD_PARTE2;
+			    }
+
+			    if(msg.hasOwnProperty("SD_ENTE2")) {
+			        ente2 = msg.SD_ENTE2;
+			    }
+                			    
+          var receipt = { 
+			        "tipo_cuenta": UserFuns.formatProductName(cuenta),
+			        "sucursal": cuenta.ACU_OFICI,
+			        "cuenta": UserFuns.formatProductValue(cuenta, 1),
+			        "tipo_cuenta_destino": UserFuns.formatProductName(cuenta_destino),
+			        "sucursal_destino": cuenta_destino.ACU_OFICI,
+			        "cuenta_destino": UserFuns.formatProductValue(cuenta_destino, 1),
+			        "monto": UserFuns.formatMonto(States.getStoredValue("monto"), "", 0),
+			        "nombre": nombre,
+			        "nombre_destino": nombre2,
+			        "ente": ente,
+              "ente2": ente2,
+              "leyenda_ticket": SSUtil.getLocal("config_params").leyenda_ticket,
+			    };
+                UserFuns.addPrinterHeader(receipt);
+                return receipt;			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	    
+	    "cancel": "p/close_salir",
+        "enter": "p/close_salir",
+	    "print_ok": "p/close_salir",
+	    "hardware_error_ptr": "p/close_printer_error"
+	}
+
+}

@@ -1,0 +1,27 @@
+ssfw = {
+
+    "base" : include(cim/base_cim.json),
+
+	"type" : function() {
+        States.getProperty("cashInRollback")()
+        .then(
+            function(ok){},
+            function(error){} 
+        )
+        .caugth(function(e){});
+	},
+
+	"events" : {
+        "cim_cash_in_rollback_ok" : "",
+        "cim_cash_in_rollback_error" : "cim/salida_error",
+        "cim_items_taken" : "cim/salida_cancel",
+        "timeout" : function() {
+        	if (States.getProperty("retract_bills_in_timeout")) {
+        		return "cim/retract_billetes";
+        	} else {
+                return "cim/salida_timeout_billetes_en_boquilla";
+            }
+        },
+	}
+}
+

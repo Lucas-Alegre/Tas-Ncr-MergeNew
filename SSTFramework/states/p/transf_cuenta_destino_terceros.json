@@ -1,0 +1,36 @@
+﻿{
+    
+    "base" : include(p/bases/ingreso_cuenta.json),
+
+    "properties": {
+        "storename": "cuenta_destino",
+        "conceptos": [1, 2]
+    },
+
+    "screens": {
+                        
+        "default" : {            
+    
+        
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Por favor, ingrese el número de cuenta",
+                },
+
+            include(p/chunk/nav_all.json),
+    
+        }
+    },
+
+    "events": {
+        include(p/chunk/event_timeout.json),
+
+        "accept": "p/transf_ingreso_monto",
+
+        "back": "p/transf_cuenta_destino_terceros_sucursal",
+        "cancel": "p/close_salir",
+
+    },
+
+}   

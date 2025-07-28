@@ -1,0 +1,46 @@
+﻿{
+    "type": "PinEntry",
+
+	"screens": {
+
+
+		"default" : {
+			
+			"inputarea": { 
+                "text": "Ingrese su PIN"
+			},
+
+			"select": {
+			    "select3" : {
+					"text": "Atrás",
+					"event": "atras" 
+				},			
+			}
+		}
+	},
+
+	"properties" : {
+
+		"storename": "pinblock",
+
+		"datachanged": function(args) {			
+			return args.slice(-12);
+		},
+
+		"datapresented": function(args) { 
+			var pin = "";
+			for(var c=0; c<args.length; c++)
+			    pin += "&#x25cf;";
+            return pin; 
+		},
+
+	},
+
+
+	"events" : {
+	    "atras": "sesion/close",
+		"pin_entered": "sesion/close",
+		"cancel": "sesion/idle",
+
+		}
+}

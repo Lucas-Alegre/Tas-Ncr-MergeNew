@@ -1,0 +1,21 @@
+﻿{
+    "type": "CimCashUnitInfo",
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+	},
+
+    "events": {
+		"CimCashUnitInfo_OK": "n/sup_ptr_count",
+		//"CimCashUnitInfo_WFS_INF_CIM_CASH_UNIT_INFO": "n/sup_ptr_count",
+		"CimCashUnitInfo_Error": "n/close_hardware_error",
+		"CimCashUnitInfo_Hardware_Error": "n/close_hardware_error",
+    }
+}

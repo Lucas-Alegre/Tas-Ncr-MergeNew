@@ -1,0 +1,49 @@
+﻿{ 
+
+    "base" : include(p/bases/print.json),
+
+    
+    "properties" : {
+        "sobre": true,              
+    },
+    
+
+	"screens": { 
+
+	    "receipt": {
+
+	        "name": "pago_impuestos",
+               
+			"update": function() { 
+			    var receipt = { 
+                    "tipo_cuenta": "",
+			        "sucursal": "",
+			        "cuenta": "",
+			        "forma_de_pago": States.getStoredValue("medio_pago")=="debito" ? "Débito en cuenta" : "Cheque",
+			        "monto": UserFuns.formatFloatMonto(States.getStoredValue("monto")),
+			        "numero_sobre": "0",
+			        "comprobantes": States.getStoredValue("servicios"),
+			        "intersucursal": false,
+			        "sobre": States.getProperty("sobre"),
+			    };
+			    if(States.getStoredValue("medio_pago")=="debito") {
+			        var cuenta = UserFuns.getProduct("cuenta");
+			        receipt.tipo_cuenta = UserFuns.formatProductName(cuenta);
+			        receipt.sucursal =  cuenta.ACU_OFICI;
+			        receipt.cuenta = UserFuns.formatProductValue(cuenta, 1);
+			    }
+			    UserFuns.addPrinterHeader(receipt);
+			    return receipt;			 			 
+			}
+	    },	
+	},	
+
+
+	"events": { 	
+	    "cancel": "p/close_salir",
+        "enter": "p/close_salir",
+	    "print_ok": "p/pago_impuestos_entrega_sobre",
+	    "hardware_error_ptr": "p/close_printer_error"
+    }
+
+}

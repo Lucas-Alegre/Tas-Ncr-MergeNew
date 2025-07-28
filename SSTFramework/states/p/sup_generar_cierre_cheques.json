@@ -1,0 +1,63 @@
+﻿ssfw = {
+
+	"type": "General",
+
+	"run" : function() {
+
+		var config_server = SSUtil.getLocal("config.server", "");
+        if (config_server != "") {
+            var config = JSON.parse(config_server);
+            Vars.set("entidad", config.ConfigurationStyle, true);
+        }
+
+		var entity = Vars.get("entidad");
+        var banco_actual = "";
+        switch (entity) {
+            case "bersa":
+                banco_actual = "386"; 
+                break;
+            case "santacruz":
+                banco_actual = "086"; 
+                break;
+            case "sanjuan":
+                banco_actual = "045"; 
+                break;
+            default:
+                banco_actual = "";
+                break;
+        }
+
+		var datos = {};
+		datos.cierre = "true";
+		datos.banco_actual = banco_actual;
+		datos.secuencial_cheque_close_number = States.getSequencialChequeCloseNumber("secuencial_cheque_close_number", true);
+		
+		var dev = new XFSDevice("server");		
+		dev.extension("LogueoCheques", datos)
+		.then(function(data) {
+			States.handleEvent("continue");
+		})
+		.caught(function(err) {
+			States.handleEvent("continue");
+		});
+	},
+    
+	"screens" : {
+
+	    "default" : {
+	        
+	        "title": {
+	            "text": "Realizando tarea"
+	        },
+            
+            "message": { 
+                "text": "Espere un momento por favor<br><div class='spinner'></div>",
+            }
+		},
+
+	},
+        
+	"events" : {
+		"continue" : "p/sup_menu_select"
+	}
+}

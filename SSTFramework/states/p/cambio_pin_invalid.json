@@ -1,0 +1,27 @@
+﻿{
+    "base" : include(p/bases/ingreso_pin.json),
+
+	"screens": {
+        	
+		"default" : {
+			
+		    include(p/chunk/title_transaccion.json),
+    
+            "subtitle": { 
+                "text": "El PIN ingresado es invalido<br>Por favor, ingrese el nuevo PIN" 
+            },
+
+		}
+	},
+
+	"properties" : {
+	    "storename": "pinblocknew",
+	},
+
+
+	"events" : {
+        include(p/chunk/event_timeout.json),
+		"cancel": "p/close_salir",
+	    "pin_entered": "p/cambio_pin2",
+    }
+}

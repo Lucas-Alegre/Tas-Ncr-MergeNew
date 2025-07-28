@@ -1,0 +1,11 @@
+﻿[
+    {
+        text: "Número de documento",
+        value: 31,
+        format: 0,
+    }, {
+		text: "C.U.I.L./C.U.I.T./C.D.I.", 
+		value: 35,
+		format: 1,
+	}, 
+]

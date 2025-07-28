@@ -1,0 +1,7 @@
+﻿{
+    "command": "WFS_CMD_DEP_RESET",
+    "input": {
+        "lpszPrintData": "",
+        "lpszUNICODEPrintData": ""
+    }
+}

@@ -1,0 +1,63 @@
+﻿{
+    "type": "General",
+
+    "run": function() {      
+        if(States.getStoredValue("tarjeta_pago")=="resumen") {
+            States.handleEvent("no_preguntar");         
+            return false;
+        } else {
+            var tarjeta = UserFuns.getProduct("tarjeta_pago");
+            if(!tarjeta || tarjeta.TSEDEBITO=="S") {
+                States.handleEvent("no_preguntar");         
+                return false;
+            }
+        }
+    },
+
+    "properties": {
+
+        "storename": "tipo_debito",
+
+        "nav": function() {
+            return States.getStoredValue(States.getProperty("storename", "adesion"));
+        },
+    },
+
+	"screens": {
+
+	    "default" : {
+	        include(p/chunk/title_transaccion.json),
+
+            include(p/chunk/nav_cancelar.json),
+
+            "subtitle": {
+                "text": "Sr. Cliente: Ud no se encuentra adherido al débito automático de su tarjeta de crédito. Si desea adherirse, seleccione la opción de pago total o mínimo",
+            },
+
+            "select": {							    
+                "select0" : {
+                    "text": "Pago total",
+					"event": "select",
+					"value": "T",
+					},
+
+                "select1" : {
+                    "text": "Pago mínimo",
+					"event": "select",
+					"value": "M",
+					},
+
+            },
+		}
+	},
+    
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "no_preguntar" : "p/close_salir",
+
+        "select" : "p/pago_ttcc_adesion_cuenta",
+
+        "cancel" : "p/close_salir",
+        }
+}

@@ -1,0 +1,41 @@
+﻿{
+  "command": "WFS_CMD_TTU_READ",
+  "input": {
+    "wNumOfChars": 2, 
+    "fwMode": "WFS_TTU_POSABSOLUTE", 
+    "wPosX": 0, 
+    "wPosY": 0, 
+    "fwEchoMode": "WFS_TTU_ECHOINVISIBLE", 
+    "fwEchoAttr": 0, 
+    "bCursor": false, 
+    "bFlush": true, 
+    "bAutoEnd": false, 
+    "lpszActiveKeys": "0123456789", 
+    "lpwszActiveUNICODEKeys": 0, 
+    "lpwActiveCommandKeys": [
+      1,
+      2,
+      4,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ], 
+    "lpwTerminateCommandKeys":[
+      1,
+      2,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ]
+  }
+}

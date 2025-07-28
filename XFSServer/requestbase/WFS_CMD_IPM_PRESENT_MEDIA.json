@@ -1,0 +1,6 @@
+﻿{
+    "command": "WFS_CMD_IPM_PRESENT_MEDIA",
+    "input" : {
+        "wPosition": 0,
+    }
+}

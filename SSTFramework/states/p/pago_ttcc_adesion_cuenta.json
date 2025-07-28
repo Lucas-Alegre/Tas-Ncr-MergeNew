@@ -1,0 +1,37 @@
+﻿{
+    
+    "base" : include(p/bases/selecciona_cuenta.json),
+
+    "properties": {
+        "storename": "cuenta",
+        "conceptos": [1, 2],
+        "monedas": [80],
+    },
+
+    "screens": {
+
+                
+        "default" : {            
+    
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Por favor, seleccione la cuenta de donde realizar los débitos",
+            },
+        }
+    },
+
+    "events": {
+        include(p/chunk/event_timeout.json),
+                
+        "sin_opciones": "p/close_sin_opciones",
+
+        "select": "p/pago_ttcc_confirma_adesion",
+
+        "back": "p/pago_ttcc_pregunta_adesion",
+
+        "cancel": "p/close_salir",
+
+    },
+
+}   

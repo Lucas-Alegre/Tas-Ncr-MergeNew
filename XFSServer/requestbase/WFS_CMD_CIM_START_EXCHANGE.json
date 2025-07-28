@@ -1,0 +1,14 @@
+﻿{
+    "command": "WFS_CMD_CIM_START_EXCHANGE",
+    "input" : {
+        "fwExchangeType": "WFS_CIM_EXBYHAND",
+        "usTellerID": "0",
+        "usCount": 0,
+        "lpusCUNumList": 0,
+		"lpOutput": {
+			"usLogicalNumber": "0",
+			"fwPosition": "WFS_CIM_POSNULL",
+			"usNumber": "0"
+		}
+    }
+}

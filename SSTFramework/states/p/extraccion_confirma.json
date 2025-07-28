@@ -1,0 +1,43 @@
+﻿{
+    "type": "General",
+
+	"screens": {
+
+	    "default" : {
+
+	        "update": function() {
+	            var tabla = "";
+	            var cuenta = UserFuns.getProduct("cuenta");
+				var currency = UserFuns.findCurrDesc(States.getStoredValue("moneda", 80))[1];
+	            tabla += "<table id='detalle'>";
+	            tabla += "<tr><td>" + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
+	            tabla += "<tr><td>Monto a Extraer:</td><td>" + currency + " " + UserFuns.formatMonto(States.getStoredValue("monto", "err"), "", 0) + "</td></tr>";
+	            tabla += "<tr><td>Monto a Debitar:</td><td>" + currency + " " + UserFuns.formatMonto(States.getStoredValue("monto", "err"), "", 0) + "</td></tr>";
+	            tabla += "</table>";
+	            States.setProperty("detalle", tabla);
+            },
+			
+              include(p/chunk/title_transaccion.json),
+    
+
+            "subtitle": {
+                "text": "Toque CONTINUAR para seguir"
+            },
+
+             include(p/chunk/nav_cancelar_continuar.json),
+    
+
+            "message": { 
+                "text": "<%= detalle %>"
+            },
+
+		}
+	},
+
+	"events" : {
+	    include(p/chunk/event_timeout.json),
+
+	    "enter": "p/extraccion_reingreso_pin",
+        "cancel": "p/extraccion_fast",
+    }       
+}

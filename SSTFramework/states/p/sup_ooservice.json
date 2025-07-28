@@ -1,0 +1,50 @@
+﻿{
+    "type": "Custom",
+
+    "run": function(statedata) {
+        SSFramework.changeStyle("supervisor");
+        SSFramework.displayScreen(statedata.screens.out_of_service)
+        .delay(10000)
+        .then(function() {
+            return readRegistry("AppVersion");
+        }) 
+        .then(function (appversion) {
+            SSUtil.setApplicationState("sup", "oos");
+
+            supervisorSwitch(function(res) {
+                if((res.state=="supervisor" || res.state=="supervisor_gop") && res.tpa=="oos") {
+                    States.handleEvent(res.state);
+                } 
+            });
+
+            if(appversion!="") {
+                statedata.screens.default.version.text = "Versión: " + appversion;
+            }
+            SSFramework.displayScreen(statedata.screens.default);
+        });
+    },
+
+	"screens": {
+	    "out_of_service": {
+	        "message": {
+	            "text": "Iniciando<br/><div class='spinner'></div>"
+	        }
+	    },
+	    "default": {
+	        "title": {
+	            "text": "Equipo en servicio"
+	        },
+            "message": {
+                "text": "Ponga el switch en modo supervisor para acceder a la aplicación de supervisor"
+            },
+			"version": {
+				"text": ""
+			},
+		}
+	},
+
+	"events" : {
+	    "supervisor": "p/sup_changestyle",
+        "supervisor_gop": "p/sup_changestyle",
+	}
+}

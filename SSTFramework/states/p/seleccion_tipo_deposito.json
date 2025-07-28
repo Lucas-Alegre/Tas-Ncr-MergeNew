@@ -1,0 +1,83 @@
+﻿{
+    "type": "General",
+
+
+    "properties": {
+        "storename": "deposito_tipo",   
+        
+        "nav": function() {
+            var valor = States.getStoredValue(States.getProperty("storename", "deposito_tipo"));
+            return valor.text;               
+        },
+     },
+
+    "screens": {
+
+        "default" : {
+	
+			"update": function(screen) {
+				UserFuns.deleteUnenabledSelects(screen.select);
+				
+				if (UserFuns.executeUniqueSelect(screen.select))
+					States.storeNamedValue("seleccion_tipo_deposito", false);
+				else
+					States.storeNamedValue("seleccion_tipo_deposito", true);
+				
+				UserFuns.reorganizeSelects(screen.select, [0,1]);
+			},
+			            
+            include(p/chunk/title_transaccion.json),
+
+            "subtitle": {			
+                "text" : "Seleccione el tipo de depósito"
+            },
+
+			"select": {
+
+			    "select0": {
+			        "text": "Entrega Cheque Remoto Valores Negociados",
+                    "event": "valores_negociados",
+                    "value": {
+                        "text": "Entrega Cheque Remoto Valores Negociados",
+                        "value": 1,
+						"title": "CHEQUES VALORES NEGOCIADOS"
+                    },
+					"funciones": {
+						"tarjeta": ["EdTVn"],
+						"manual": ["EdMVn"],
+						"no_cliente": ["EdNVn"],
+					}
+			    },
+                
+                
+                "select1": {
+                    "text": "Entrega Cheque Remoto Valores al Cobro",
+                    "event": "valores_al_cobro",
+                    "value": {
+                        "text": "Entrega Cheque Remoto Valores al Cobro",
+                        "value": 1,
+						"title": "CHEQUES VALORES AL COBRO"
+                    },
+					"funciones": {
+						"tarjeta": ["EdTVc"],
+						"manual": ["EdMVc"],
+						"no_cliente": ["EdNVc"],
+					}
+                },
+			},
+
+            include(p/chunk/nav_cancelar_anterior.json),
+            }
+    },
+
+      	"events" : {
+      	    include(p/chunk/event_timeout.json),
+
+            "valores_negociados": "p/deposito_cantidad_cheques",
+			"valores_al_cobro": "p/deposito_cantidad_cheques",
+            "back": "p/menu_principal_select",
+			"cancel": "p/close_salir",	    
+        },
+
+  
+}

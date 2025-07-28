@@ -1,0 +1,97 @@
+﻿{
+    "type": "Comms",
+
+    "properties": {
+
+        "trx": "nombre",
+
+        "audit": null,
+
+        "runAudit": function(resnode, err) {
+            var nombre = States.getProperty("nombre");
+            if(nombre==null)
+                nombre = States.getProperty("trx");            
+            var str = "";
+            try { 
+                var audit = States.getProperty("audit");
+                if(audit!=null) {
+                    str += audit(resnode) + "\r\n";
+                }
+            } catch(ex) {}
+            str += "resultado: " + err;
+			if ( nombre != "WSECO" )
+				xfsAudit(nombre, str);
+            return str;
+        },
+
+        "nombre": null,
+
+        "simulacion": false,
+
+        "repeat_trx": false,
+
+        "generalResponseHandler": function(response) {
+
+            var resnode = SSUtil.findChild(response, UserFuns.findResultNode);
+            var audit = States.getProperty("runAudit");
+                        
+            if(resnode!=null) {
+            
+                ///respuesta de unisys
+                if(resnode.hasOwnProperty("DCOMENSIS")) {
+                    audit(resnode, resnode.DCOMENSIS);
+                    if(resnode.DCOMENSIS!=0) {
+                        var errcode = "e" + resnode.DCOMENSIS;
+                        States.storeNamedValue("comms.error", errcode);
+                        resnode.commserror = errcode;
+                    }
+                    
+                } else {
+                    audit(resnode, "sin campo de estado");
+                }
+                return resnode;
+
+            } else {
+                ///respuesta del esb u otro servicio
+                if(response.hasOwnProperty("error")) {
+                     if(response.hasOwnProperty("remaining_days")) {
+
+                        console.log("dias restantes: " + response.remaining_days);
+                        States.storeNamedValue("dias_restantes", response.remaining_days);      
+                        //States.handleEvent("dias_restantes"); 
+                              
+                    }
+                    response.commserror = response.error;
+                    audit(response, response.error);
+                    return response;
+
+                } else {
+
+                    //respuesta desconocida
+                    audit(response, "invalid_msg");
+                    return { "commserror": "invalid_msg" };
+                }
+            }          
+        },
+
+        "responseHandler": function(response) {
+            return response;
+        }
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+	        include(p/chunk/screen_wait.json),
+            
+	    }
+	},
+
+    "events": {
+        "comms_ok": "return",
+        "comms_error": "p/close_hardware_error",
+        "comms_general_error": "p/close_comms_error",
+    }
+
+}

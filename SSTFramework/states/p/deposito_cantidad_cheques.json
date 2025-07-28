@@ -1,0 +1,47 @@
+﻿{
+    
+    "base" : include(p/bases/ingreso_teclado.json),
+
+    "properties": {
+        "storename": "cheques",
+        "largo": 2
+  
+    },
+
+    
+    "screens": {
+                        
+        "default" : {            
+                
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Por favor, ingrese la cantidad de cheques",
+                },
+
+            include(p/chunk/nav_all.json),
+    
+        }
+    },
+
+    "events": {
+    
+        "accept": "p/deposito_monto_cheques",
+    
+        "cancel": "p/close_salir",
+
+        "back": function() {
+			if ( States.getStoredValue("seleccion_tipo_deposito") == true ) {
+				if (States.getStoredValue("data.menu_principal").value == "deposito_terceros")
+					return "p/deposito_tipo_terceros";
+				else
+					if (States.getStoredValue("data.menu_principal").value == "entrega_documentacion")
+						return "p/seleccion_tipo_deposito";
+					else
+						return "p/deposito_tipo";
+			} else
+				return "p/close_salir";
+		}
+    },
+
+}   

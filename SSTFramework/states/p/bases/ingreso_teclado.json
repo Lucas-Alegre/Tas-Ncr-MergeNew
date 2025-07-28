@@ -1,0 +1,74 @@
+﻿{
+    "type": "General",
+
+    "properties": {
+
+        "accept_zero": "1",
+
+        "storename": "dato_ingresado",
+
+        "largo": 12,
+
+        "largo_minimo": 1,
+
+
+        "nav": function() {
+            return States.getStoredValue(States.getProperty("storename", "dato_ingresado"));           
+        },
+
+        "datachanged": function(args) {	
+            var largo = parseInt(States.getProperty("largo"));
+            return args.slice(0, largo);
+        },
+
+		"datapresented": function(args) { 
+		    return SSUtil.formatNumber(parseInt(args, 10), 0);
+		},
+
+         "dataccept": function(args) {
+             if(args.length<parseInt(States.getProperty("largo_minimo"))) {
+				return false;
+			 }
+             if(parseInt(States.getProperty("accept_zero"))==0) {
+                 if(parseInt(args)<=0) {
+					return false;
+				 }
+			 }
+			 if(parseInt(args)>parseInt(States.getProperty("valor_maximo"))) {
+				return false;
+			 }
+             return true;
+         },
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+            "inputarea": {},
+
+			"numkeyboard": {},
+
+	    }
+	},
+
+	"events" : {
+
+	    include(p/chunk/event_timeout.json),
+
+	    
+		"enter": function() { 
+		    States.fireCustomEvent("input.enter", null);
+		},
+
+       
+        "clear": function() { 
+            States.fireCustomEvent("input.clear", null);
+        },
+
+        "reject":  function() {
+            States.refreshState();
+        },
+		
+	}
+}

@@ -1,0 +1,76 @@
+﻿<!--
+    
+    Requires:
+        tipo_cuenta:
+        sucursal: 
+        cuenta: account number, formatted for display
+        
+        forma_de_pago:
+        monto: 
+        numero_sobre: account number, formatted for display
+        
+        nombre:
+        customer_id_type: 
+        customer_id: 
+
+    Optional:
+        sobre:
+-->
+
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+<hr />
+<% if(receipt.intersucursal==true) { %>
+<h2>Operación Intersucursal</h2>
+<% } %>
+<h1>Pago de TTCC</h1>
+<hr />
+<table>
+    <% if(parseInt(receipt.tarjeta)!=0) {%> 
+    <% if(receipt.tarjeta.length<=12) { %>
+        <tr><td>Nro. de cuenta:</td><td align="right"> <%- receipt.tarjeta %></td> </tr>
+    <% } else { %>
+        <tr><td>Nro. de tarjeta:</td><td align="right"> <%- receipt.tarjeta %></td> </tr>
+    <% } %>
+    <% } else { %>
+    <tr><td>Pago de resumen</td><td align="right"></td> </tr>
+    <% } %>
+
+</table>
+<% if(receipt.cuenta != "") { %>
+<% include chunk/account_detail.html %>
+<% } %>
+<table>
+    <tr><td>Forma de pago:</td><td align="right"> <%- receipt.forma_de_pago %></td> </tr>
+    <tr><td>Cheques depositados:</td><td align="right"> <%- receipt.cheques%></td> </tr>
+    <tr><td>Monto a pagar:</td><td align="right"> <%- receipt.monto %></td> </tr>
+</table>
+<table>
+    <tr><td align="center">Banco</td><td align="center">Nro cheque</td><td align="right">Importe</td></tr>
+        <% for (var i = 0; i < receipt.listado_cheques.length; i++) {%>
+        <tr>
+            <td align="center">
+                <%- receipt.listado_cheques[i].banco %>
+            </td> 
+            <td align="center">
+                <%- receipt.listado_cheques[i].numero %>
+            </td>    
+            <td align="right">
+                <%- receipt.listado_cheques[i].monto_formateado %>
+            </td>
+        </tr>
+        <% } %>
+</table>
+<br />
+<table>
+    <% if(receipt.cuenta != "") { %>
+    <tr><td>Nombre del cliente:</td><td align="right"> <%- receipt.nombre %></td> </tr>
+    <% } %>
+</table>
+
+<% if(receipt.sobre==true) { %>
+    <% include chunk/footer_sobre.html %>
+<% } else { %>
+    <% include chunk/footer_deposito.html %>
+<% } %>

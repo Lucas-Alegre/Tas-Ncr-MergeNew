@@ -1,0 +1,54 @@
+﻿
+General:
+Present the screen configured with the name default. 
+Screens:
+default
+
+
+CardEntry:
+Starts the card reader. 
+Screens:
+idc_ok: The card reader was enabled and is motorized. 
+idc_ok_dip: The card reader was enabled and is a dip.
+idc_error: There is no card reader or is not working.
+Events:
+card_read: When a card was accepted.
+card_read_error: When a card is not read correctly. 
+hardware_error: When the card reader cannot be started. 
+Properties:
+store: Name of the store where the card data will be placed. If not present uses the state id. 
+
+ 
+Close:
+Tries to recover all modules to a usable state. 
+Screens:
+remove_card: Displayed when a card was present and is presented to the customer.
+complete: Displayed for 3 seconds before sending the continue event.
+Events:
+continue: After it finishes its process. 
+
+
+PinEntry:
+Enables the keyboard for pinentry
+Events:
+cancel: Cancel key was pressed. 
+pin_entered: The pin was accepted correctly. 
+hardware_error: The pinpad is not working
+
+
+Receipt:
+Prints a receipt.
+Screens:
+default: Displayed while the receipt is being downloaded from the host.
+printing: Displayed while the receipt is printed.
+print_ok: Displayed after printing the receipt, to notify the customer to remove the receipt.
+hardware_error_ptr: Displayed for 3 seconds if an error takes place printing the receipt.
+Properties:
+receipt: This is the receipt. Needs the following items:
+	update: An update function to build the dynamic data.
+	name: Name of the receipt template. 
+Events:
+print_ok: The receipt was printed.
+hardware_error: The module is not working, or the receipt was not printed for some reason.
+
+ 

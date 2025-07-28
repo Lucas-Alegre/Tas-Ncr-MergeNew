@@ -1,0 +1,52 @@
+﻿{
+	"base": include(p/bases/comms.json),
+	
+	"properties": {
+        "trx": "WSECO",
+		"hidescreen": true
+    },
+	
+    "run": function(state) {
+	
+		SSFramework.displayScreen(state.screens.default);
+        
+        //switch
+        supervisorSwitch(function(res) {
+            if(res.state=="supervisor" || res.state=="supervisor_gop") {
+                States.handleEvent(res.state);
+            }             
+        });
+
+    },
+
+	"screens": {
+
+	    "default" : {
+			"title": {
+				"text" : "EQUIPO FUERA DE SERVICIO"
+			},
+			"subtitle": {
+                  "text": "Intentando reestablecer conexión",
+			},
+		}
+	},
+
+	"events" : {
+        "supervisor": "p/sup_changestyle",
+        "supervisor_gop": "p/status_ooservice",	 
+		
+        "comms_ok": "p/status_inservice",
+        "comms_error": function(state) {
+			window.setTimeout(function () {
+				if (States.CurrentState == "p/status_conn_error")
+					States.StateTypes[States.CurrentStateData.type](States.CurrentStateData);
+            }, 30000);
+		},
+        "comms_general_error": function(state) {
+			window.setTimeout(function () {
+				if (States.CurrentState == "p/status_conn_error")
+					States.StateTypes[States.CurrentStateData.type](States.CurrentStateData);
+            }, 30000);
+		}
+	}
+}

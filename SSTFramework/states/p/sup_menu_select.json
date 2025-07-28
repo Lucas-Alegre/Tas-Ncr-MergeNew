@@ -1,0 +1,14 @@
+﻿{
+    "base" : include(p/menu_principal_select.json),
+
+    
+    "properties": {
+        "app": "sup",
+    },
+        
+    "events": {
+        "cash": "p/sup_menu_cash",
+
+        "dep": "p/sup_check_cim",
+    }
+}

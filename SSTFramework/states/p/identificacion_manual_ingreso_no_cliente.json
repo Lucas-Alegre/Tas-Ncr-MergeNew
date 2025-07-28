@@ -1,0 +1,18 @@
+﻿{
+    "base" : include(p/identificacion_manual_ingreso.json),
+
+	"events" : {
+	
+	    "back": "p/identificacion_manual_no_cliente",
+        
+        "accept": function() {
+            States.storeNamedValue("customer", States.getStoredValue("customer_id"));
+			States.storeNamedValue("origen_id", States.getStoredValue("customer_id"));
+			States.storeNamedValue("origen_id_type", States.getStoredValue("customer_id_type"));
+			States.storeNamedValue("no_cliente", true);
+            Vars.set("identificacion_depositante", States.getStoredValue("customer_id"));
+            States.handleEvent("identificacion_ok");   
+        },
+
+	}
+}

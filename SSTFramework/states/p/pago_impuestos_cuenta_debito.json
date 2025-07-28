@@ -1,0 +1,38 @@
+﻿{
+    "base": include(p/bases/selecciona_cuenta.json),
+
+    "properties": {
+        "conceptos": [1, 2],        
+        "flags": ["TSEDEBITO" ],
+        "monedas": [80],
+    },
+
+	"screens": {
+
+	    "default" : {
+
+	        include(p/chunk/title_transaccion.json),
+
+      
+            "subtitle": {
+                "text": "Seleccione una cuenta donde realizar el débito",
+            },
+
+            include(p/chunk/nav_cancelar_anterior.json),
+
+		}
+	},
+    
+	"events" : {
+	    include(p/chunk/event_timeout.json),     
+        "back": function() {
+			if ( States.getStoredValue("seleccion_medio_pago") == true )
+				return "p/pago_impuestos";
+			else
+				return "p/close_salir";
+		},
+        "sin_opciones": "p/close_sin_opciones",
+        "select": "p/pago_impuestos_comprobantes",
+        "cancel": "p/close_salir",
+    }
+}

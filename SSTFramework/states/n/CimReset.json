@@ -1,0 +1,20 @@
+﻿{
+    "type": "CimReset",
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+	},
+
+    "events": {
+		"CimReset_OK": "n/close_salir",
+		"CimReset_Error": "n/close_hardware_error",
+		"CimReset_Hardware_Error": "n/close_hardware_error",
+    }
+}

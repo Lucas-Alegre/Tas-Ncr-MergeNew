@@ -1,0 +1,27 @@
+﻿
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+
+<hr/>
+<h1>ENTREGA DE DOCUMENTACION</h1>
+<hr/>
+
+<table>
+    <tr><td>Tipo de depósito: </td><td align="right"> <%- receipt.tipo_deposito %></td> </tr>
+</table>
+
+<table>
+    <tr><td>Cheques depositados:</td><td align="right"> <%- receipt.cheques%></td> </tr>
+    <tr><td>Monto depositado: </td><td align="right"> <%- receipt.monto %></td> </tr>
+    <tr><td>Cliente:</td><td align="right"> <%- receipt.nombre_destino%></td> </tr>
+    <tr><td> <%- receipt.tipo_identificacion_destino%></td><td align="right"> <%- receipt.ente_destino%></td> </tr>
+	<tr><td>Mandatario:</td><td align="right"> <%- receipt.nombre_origen%></td> </tr>
+	<tr><td> <%- receipt.tipo_identificacion_origen%></td><td align="right"> <%- receipt.ente_origen%></td> </tr>
+</table>
+
+<% if(receipt.sobre==true) { %>
+    <% include chunk/footer_sobre.html %>
+<% } else { %>
+    <% include chunk/footer_deposito.html %>
+<% } %>

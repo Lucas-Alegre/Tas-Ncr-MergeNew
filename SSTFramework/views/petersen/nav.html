@@ -1,0 +1,71 @@
+<!--
+    Presents a 5 button navigation panel.
+
+    Data:
+        nav[0-7].text: text to display in the button
+
+    FireEvents:
+        Defined in data.
+
+    ListenEvents:
+        -
+-->
+
+<% if(nav.nav0) { %>
+<div class="navbtn" id="nav0">nav0</div>
+<% } %>
+
+<% if(nav.nav1) { %>
+<div class="navbtn" id="nav1">nav1</div>
+<% } %>
+
+<% if(nav.nav2) { %>
+<div class="navbtn" id="nav2">nav2</div>
+<% } %>
+
+<% if(nav.nav3) { %>
+<div class="navbtn" id="nav3">nav3</div>
+<% } %>
+
+<% if(nav.nav4) { %>
+<div class="navbtn" id="nav4">nav4</div>
+<% } %>
+
+<script>
+    $(function () {
+
+        var component_data = <%- JSON.stringify(nav) %>;
+
+        $.each(component_data, function(key, value) {
+            var element = $("#"+key);
+            element.click(function(evt) {
+                SSFramework.playAudio('boton.wav');
+                if(component_data[key].hasOwnProperty('value')) {
+                    States.storeValue(component_data[key].value);                    
+                }
+                States.handleEvent(element)
+            });
+            $.each(component_data[key], function(subkey, value) {
+                element.data(subkey, value);
+                if(subkey=="text")
+                    element.html(value);
+            });
+        });
+
+
+        ////////////////////////
+        ///centrado vertical
+        SSFramework.centerInDiv(".navbtn");
+
+        ////////////////////////
+        //tween inicial
+        for (var c = 0; c < 5; c++) {
+            var el = $("#nav" + c);
+            if(el) {
+                el.tween(TweenHelpers.tweenSide(el, "top", false, -300, 0));                
+            }
+        }
+
+
+    });
+</script>

@@ -1,0 +1,36 @@
+﻿{
+    "type": "General",
+
+    "run": function(state){
+      xfsAudit("Error" , "Lo sentimos,el PIN ingresado no es correcto.No es posible completar la operacion.");
+    },
+
+	"screens": {
+
+	    "default" : {
+			
+	        "title": {
+	            "text": "Error"
+	        },
+
+            "message": { 
+                "text": "Lo sentimos, el PIN ingresado no es correcto<br>No es posible completar la operación",
+            },
+
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel"
+                },
+            },
+
+		}
+	},
+
+	"events" : {
+		"timeout": "p/close_salir",
+
+	    "cancel": "p/close_salir"
+	}
+}

@@ -1,0 +1,32 @@
+﻿{
+    "base": include(p/bases/ingreso_cuenta.json),
+
+    
+    "properties": {
+
+        "storename": "cuenta",
+        
+    },
+
+
+	"screens": {
+
+	    "default" : {
+
+	        include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {			
+                "text" : "Ingrese el número de cuenta"
+	        },
+
+            include(p/chunk/nav_all.json),
+	    }
+	},
+
+	"events" : {
+	    "accept": "p/deposito_tipo_terceros",
+        "back": "p/deposito_terceros_numero_sucursal",
+        "cancel": "p/close_salir",
+
+	}
+}

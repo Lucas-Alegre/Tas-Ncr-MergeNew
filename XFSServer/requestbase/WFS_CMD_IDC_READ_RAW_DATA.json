@@ -1,0 +1,5 @@
+﻿{
+    "command": "WFS_CMD_IDC_READ_RAW_DATA",
+    "timeout": 0,
+    "input": 7
+}

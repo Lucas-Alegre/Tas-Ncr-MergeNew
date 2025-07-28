@@ -1,0 +1,35 @@
+﻿{
+    "type": "Custom",
+
+	"run": function(statedata) {
+		SSFramework.displayScreen(statedata.screens.espera);
+		var dev = new XFSDevice("server");
+		var datos = { };
+		datos.documento = parseInt(States.getStoredValue("customer_id"), 10);
+		datos.monto_ingresado = States.getStoredValue("monto_operacion");
+		datos.cierre = "false";
+		dev.extension("PGPNaranja", datos)
+		.then(function(data) {
+			States.handleEvent("continue");
+		})
+		.catch(function(err) {
+			States.handleEvent("error");
+		});
+	},
+
+	"screens": {
+		"espera": {
+            "subtitle": {
+                "text": "Por favor, esperá un momento",
+            },
+			"message": { 
+			    "text": "<div class='spinner'></div>"
+			}
+		},
+	},
+
+    "events": {
+        "continue": "n/CimCashInEnd",
+        "error": "n/CimCashInEnd"
+    }
+}

@@ -1,0 +1,48 @@
+﻿{
+    
+    "base" : include(p/bases/ingreso_teclado.json),
+
+    "properties": {
+
+        "accept_zero": "0",
+
+        "valor_maximo": "10",
+
+        "largo": 2,
+
+        "storename": "servicios",
+
+    },
+
+    "screens": {
+                        
+        "default" : {            
+                
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Ingrese la cantidad de comprobantes<br>(máximo <%=States.getProperty('valor_maximo')%>) a pagar y toque CONTINUAR",
+                },
+
+            include(p/chunk/nav_all.json),
+    
+        }
+    },
+
+    "events": {
+        include(p/chunk/event_timeout.json),
+
+        "accept": "p/pago_impuestos_monto",
+
+		"back": function() {
+			if ( States.getStoredValue("seleccion_medio_pago") == true )
+				return "p/pago_impuestos";
+			else
+				return "p/close_salir";
+		},
+
+        "cancel": "p/close_salir",
+
+    },
+
+}   

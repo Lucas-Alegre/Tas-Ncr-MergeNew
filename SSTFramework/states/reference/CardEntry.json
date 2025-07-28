@@ -1,0 +1,17 @@
+﻿{ 
+
+	"type": "CardEntry",
+	
+	"screens": { 	
+	    "idc_ok_dip": { },
+		"idc_ok": { },
+        "idc_error": { }
+	},
+    
+	"events": {
+	    "card_read": "",
+        "card_read_error": "",
+        "hardware_error": ""
+	}
+
+}

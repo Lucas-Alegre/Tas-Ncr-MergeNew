@@ -1,0 +1,7 @@
+﻿{
+    "command": "WFS_CMD_IPM_RETRACT_MEDIA",
+    "input" : {
+        "wRetractLocation": "WFS_IPM_CTRLRETRACTTOBIN",
+        "usBinNumber": 2,
+    }
+}

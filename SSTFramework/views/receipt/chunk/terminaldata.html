@@ -1,0 +1,36 @@
+﻿<% if(receipt.theme) {%>
+<link id="appstyle" rel="stylesheet" type="text/css" href="<%- receipt.theme %>"/>
+<%}%>
+
+<center>
+    <img id="imagenLogo" />
+</center>
+
+<style>
+    #headerdata td {
+        text-align: center;
+        vertical-align: central;
+    }
+</style>
+
+<p>
+    <% if(receipt.nombreSucursal) {%>
+        <b>Sucursal:</b><%- receipt.nombreSucursal %>
+    <%}%>
+</p>
+
+
+<table id="headerdata">
+        <tr style="font-weight: bolder"><td>Fecha</td><td>Hora</td><td>Terminal</td><td><% if(receipt.colnumtrx) {%>Nro. Op.<%}%></td></tr>
+        <tr><td id="colfecha"></td><td id="colhora"></td><td id="colterminal"></td><td id="colnumtrx"></td></tr>
+</table>
+
+<script>
+    colfecha.innerHTML = getDateString();
+    colhora.innerHTML = getTimeString();
+    colterminal.innerHTML = formatTerminalName("<%- receipt.machine %>");
+    colnumtrx.innerHTML = "<%- receipt.numtrx %>";
+    imagenLogo.src = "http://localhost:8080/images/receiptimages/<%- receipt.logo %>.bmp";
+</script>
+
+

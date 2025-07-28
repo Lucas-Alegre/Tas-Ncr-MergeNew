@@ -1,0 +1,96 @@
+﻿{
+    
+    "base" : include(p/bases/ingreso_teclado.json),
+
+    
+            "run": function(scr) {
+
+                return readRegistry("IPESB").then(function(val) {
+                    States.setProperty("detalle", val);
+                });
+
+            },
+    
+
+    "properties": {
+
+        "accept_zero": "0",
+
+        "largo": 12,
+
+        "largo_minimo": 12,
+
+        "storename": "numero_terminal",
+
+        "formatip": function(args) { 
+
+            args = args.toString();
+            var p1 = args.slice(0, 3);
+            var p2 = args.slice(3, 6);
+            var p3 = args.slice(6, 9);
+            var p4 = args.slice(9, 12);
+
+            var ret = 
+		        SSUtil.pad(p1, "_", 3, -1) + "." +
+                SSUtil.pad(p2, "_", 3, -1) + "." +
+                SSUtil.pad(p3, "_", 3, -1) + "." +
+                SSUtil.pad(p4, "_", 3, -1);
+
+            return ret; 
+        },
+
+
+        "datapresented": function(args) { 
+            return States.getProperty("formatip")(args);
+        },
+
+
+    },
+
+    "screens": {
+                        
+        "default" : {            
+
+            "title": {
+                "text": "Ingreso IP Server",
+            },
+    
+            "subtitle": {
+                "text": "Ingrese el número IP del ESB y toque CONTINUAR.<br>Actual: <%= detalle %>",
+                },
+
+            include(p/chunk/nav_all.json),
+    
+            }
+    },
+
+    "events": {
+        include(p/chunk/event_timeout.json),
+
+        "accept": function() { 
+            var ipval = States.getProperty("value");
+            var val = States.getProperty("formatip")(ipval);     
+            
+            var arr = val.split(".");
+            var ip = "";
+            for(var c=0; c<arr.length; c++) {
+                ip += parseInt(arr[c]);
+                if(c<arr.length-1)
+                    ip += ".";
+            }
+
+            console.log("new ip: " + ip);
+
+            SSUtil.setLocal("IPESB", ip);
+            setRegistry("IPESB", ip);
+            
+            return "p/sup_carga_config";
+        },
+
+        "back": "p/sup_menu_configuracion",
+
+        "cancel": "p/sup_menu_configuracion",
+
+        },
+
+}   

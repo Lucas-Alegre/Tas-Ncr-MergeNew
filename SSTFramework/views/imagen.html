@@ -1,0 +1,18 @@
+<!--
+    Data:
+        imagen.src: Link to the image. 
+-->
+<img id="imagen" src="<%- imagen.src %>" />
+
+<script>
+    $(function () {
+
+        //var component_data = <%- JSON.stringify(imagen) %>;
+
+        var rimagen = $("#imagen"); 
+       
+        rimagen.click(function() {
+            States.handleEvent("imagen");
+        });
+    });
+</script>

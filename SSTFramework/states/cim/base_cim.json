@@ -1,0 +1,196 @@
+ssfw = {
+    //En este estado solo definimos las pantallas con los componentes de cada banco
+	"base" : include(cim/cimcontroller.json),
+
+	"screens" : {
+
+        "cim_insert_items" : {
+
+            "update": function(screen) {
+                if (States.getStoredValue("data.menu_principal").value == "pago_ttcc") {
+                    var cuenta = UserFuns.getProduct("tarjeta_pago");
+                    var monto_total = SSUtil.intAsFloat(cuenta.CSA_DISPO);
+                    var monto_minimo = SSUtil.intAsFloat(cuenta.CSA_CONFO);
+                    screen.subtitle.text = "Monto a pagar:" + "<br>" +
+                                            "Pago Total: $ " + monto_total + "<br>" +
+                                            "Pago mínimo: $ " + monto_minimo + "<br>" +
+                                            "El importe deberá ser ingresado en billetes, no se acepta dinero metálico. En caso de existir remanente, el mismo será imputado en la próxima liquidación.";
+                } else {
+                    screen.subtitle.text = "Por favor, ingrese los billetes.<br>Hasta un máximo de 40.";
+                }
+            },
+
+			include(p/chunk/title_transaccion.json),
+
+            "subtitle": {
+                "text": "",
+            },
+
+			"video": {
+				"class": "video_deposita_efectivo",
+                "src": "<%= SSUtil.readCSS('video_deposita_efectivo') %>"
+            },
+
+            "nav": {
+                "nav0": {
+                    "text": "Cancelar",
+                    "event": "cancel",
+                },
+            },
+      
+        },
+
+        "cim_take_items" : {
+
+			include(p/chunk/title_transaccion.json),
+
+			"subtitle": {
+                  "text": "Por favor, retire los billetes",
+            },
+
+			"video": {
+				"class": "video_retira_efectivo",
+                "src": "<%= SSUtil.readCSS('video_retira_efectivo') %>"
+            },
+        },
+
+        "cim_wait" : {
+
+			include(p/chunk/title_transaccion.json),
+
+            "message" : {
+                "text" : "Esperá un momento, por favor <br><div class='spinner'></div></img>"
+            },
+            
+        },
+
+        "cim_cash_in_status" : {
+
+            "update" : function(screen) {
+                var mensaje = "";
+                var mensaje_ej = "";
+                //console.log("***********************");
+                Vars.set("cim_bills",States.getProperty("cim_bills"));
+                var cim_bills = Vars.get("cim_bills").totals.input;
+                for(var i in cim_bills) {
+                    if (cim_bills[i].cCurrencyID == "ARS") {
+                        var currency = "$"; 
+                    }
+                    var cantidad = ("  " + cim_bills[i].ulCount).slice(-2);
+                    var denominacion = ("    " + cim_bills[i].ulValues).slice(-5);
+                    //console.log(cantidad + " x " + currency + " " + denominacion);
+					mensaje += cantidad + " x " + currency + " " + denominacion + "<br>";
+                    mensaje_ej += cim_bills[i].ulCount + "x" + currency + cim_bills[i].ulValues + " - ";
+                }
+                mensaje_ej = mensaje_ej.substring(mensaje_ej,mensaje_ej.length-3);
+                Vars.set("amount",Vars.get("cim_bills").totals.summary);
+                xfsAuditNtrx("BILLETES INGRESADOS", mensaje_ej);
+                mensaje = mensaje.replace(/ /g, '&nbsp;');
+                Vars.set("denominaciones_depositadas",mensaje);
+                //console.log("Monto ingresado: " + currency + " " + Vars.get("amount"));
+				mensaje += "<br>Monto ingresado: " + currency + " " + Vars.get("amount");
+                //console.log("***********************");
+
+                if (States.getStoredValue("data.menu_principal").value == "pago_ttcc") {
+                    mensaje += "<br><br>En caso de existir remanente, el mismo será imputado en la próxima liquidación."
+                }
+
+                screen.message.text = mensaje;
+            },
+
+			include(p/chunk/title_transaccion.json),
+
+            "message": { 
+                "text": "",
+            },
+
+			"nav": {
+				"nav1": {
+			        "text": "Cancelar depósito",
+                    "event": "module_cancel",
+			    },
+				"nav2": {
+			        "text": "Agregar más billetes",
+                    "event": "add_bills",
+			    },
+				"nav3": {
+			        "text": "confirmar depósito",
+                    "event": "confirm",
+			    },
+			},
+
+        },
+
+        "cim_timeout" : {
+
+           "title": {			
+	            "text" : "Tiempo de espera superado"
+	        },
+
+            "subtitle": {			
+                "text" : "Necesita más tiempo?"
+            },
+
+	        "nav": {
+	            "nav0": {
+	                "text": "No",
+                    "event": "no",
+                    },
+
+                "nav3": {
+                    "text": "Si",
+                    "event": "si",
+                }
+	        }
+        }
+    },
+
+    "events" : {
+
+        "confirm" : function() {
+            Vars.set("tipo_deposito","efectivo");
+            States.storeNamedValue("monto", Vars.get("amount"));
+            if (States.getStoredValue("data.menu_principal").value == "pago_ttcc") {
+                return "p/pago_ttcc_comms";
+            } else {
+                return "p/deposito_comms_confirma";
+            }
+        },
+    
+        "salida_ok" : function() {
+			return "cheque/close_ipm";
+        },
+        "salida_error" : function() {
+			return "p/close_hardware_error";
+        }, 
+        "salida_cancel" : function() {
+			return "p/close_salir";
+        },        
+        "salida_timeout" : function() {
+			return "p/close_salir";
+        },
+        "salida_timeout_billetes_en_boquilla" : function() {
+            return "cim/salida_timeout";
+        },
+        "cim_cash_in_end_ok" : function() {
+            if (States.getStoredValue("data.menu_principal").value == "pago_ttcc") {
+                return "p/pago_ttcc_print_efectivo";
+            } else {
+                return "p/deposito_print_trx";
+            }
+        },
+        "cim_available" : function() {
+            Vars.set("cim_available",true);
+            if (States.getStoredValue("data.menu_principal").value == "pago_ttcc") {
+                return "cim/ingresar_billetes";
+            } else {
+                return "p/deposito_comms_efectivo_intelig_simulacion";
+            }
+        },
+        "cim_unavailable" : function() {
+            Vars.set("cim_available",false);
+            return "p/deposito_check_dep";
+        }
+    },
+}
+    

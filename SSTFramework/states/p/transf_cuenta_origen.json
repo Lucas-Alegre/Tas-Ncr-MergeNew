@@ -1,0 +1,40 @@
+﻿{
+    "type": "General",
+
+    "base" : include(p/bases/selecciona_cuenta.json),
+
+    "properties": {
+        "storename": "cuenta_origen",
+        "conceptos": [1, 2],
+        "flags": ["TSETRANSF" ],
+        "monedas": [80],  
+    },
+
+    "screens": {
+
+                
+        "default" : {            
+    
+     
+            include(p/chunk/title_transaccion.json),
+    
+            "subtitle": {
+                "text": "Bienvenido <%= States.getStoredValue('customer_name') %><br>Por favor, seleccione la cuenta de origen",
+            },
+        }
+    },
+
+    "events": {
+        include(p/chunk/event_timeout.json),
+                
+        "sin_opciones": "p/close_sin_opciones",
+
+        "select": "p/transf_cuenta_destino_tipo",
+
+        "back": "p/menu_principal_select",
+
+        "cancel": "p/close_salir"
+
+    },
+
+}   

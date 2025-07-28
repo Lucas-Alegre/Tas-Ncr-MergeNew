@@ -1,0 +1,27 @@
+﻿<!--
+    
+    Requires:
+        sobres:
+        hora:
+        total_sobres: 
+
+-->
+
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+
+<hr />
+<h1>Retiro de sobres</h1>
+<hr />
+
+<p>Última apertura:</p>
+<p>Cantidad sobres: <%- receipt.sobres %></p>
+<p id="hora">Hora: <%- receipt.hora %></p>
+<br />
+<br />
+<p>Aperturas anteriores:</p>
+<p>Total sobres: <%- receipt.total_sobres %></p>
+
+<% include chunk/footer_sup.html %>
+

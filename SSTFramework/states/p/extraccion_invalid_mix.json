@@ -1,0 +1,15 @@
+﻿{
+    "base": include(p/extraccion_fast.json),
+
+	"screens": {
+
+	    "default" : {
+			            
+	        "subtitle": {			
+                "text" : "No es posible dispensar el monto solicitado<br>Se sugiere <%= States.getStoredValue('data.suggested') %>"
+            },
+
+	    }
+	},
+
+}

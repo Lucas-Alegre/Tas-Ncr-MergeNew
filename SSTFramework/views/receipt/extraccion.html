@@ -1,0 +1,26 @@
+﻿<!--
+    
+    Requires:
+        tipo_cuenta:
+        sucursal: 
+        cuenta: account number, formatted for display
+        monto: 
+        saldo: 
+-->
+<% include chunk/header.html %>
+
+<% include chunk/terminaldata.html %>
+<hr />
+<h1>Extracción por autoservicio</h1>
+<hr />
+<% include chunk/account_detail.html %>
+<table>
+    <tr><td>Monto entregado: </td><td align="right"> <%- receipt.monto %></td> </tr>
+    <tr><td>Monto debitado: </td><td align="right"> <%- receipt.monto %></td> </tr>
+</table>
+<br />
+<table>
+    <tr><td>Saldo total: </td><td align="right"> <%- receipt.saldo %></td> </tr>
+</table>
+
+<% include chunk/footer.html %>
