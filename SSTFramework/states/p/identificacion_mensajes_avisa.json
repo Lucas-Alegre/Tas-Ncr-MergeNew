@@ -26,17 +26,11 @@
     },
 
     "events": {
-        "comms_ok": function() {
-            States.handleEvent("identificacion_ok");   
-        },
+        "comms_ok": "p/menu_principal_select",
 
-        "comms_error": function() {
-            States.handleEvent("identificacion_ok");   
-        },
+        "comms_error":  "p/menu_principal_select",
 
-        "comms_general_error": function() {
-            States.handleEvent("identificacion_ok");   
-        },
+        "comms_general_error":  "p/menu_principal_select",
     }
 
 }
