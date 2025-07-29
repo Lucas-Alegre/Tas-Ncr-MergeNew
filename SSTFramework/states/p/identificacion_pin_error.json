@@ -6,7 +6,7 @@
 	
 		"default" : {			
           
-            "subtitle": { 
+            "sub_subtitle_intermedio": { 
                 "text": "El PIN ingresado era inválido.<br>Por favor ingrese su PIN" 
             },
 
