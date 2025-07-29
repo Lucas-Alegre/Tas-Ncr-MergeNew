@@ -1005,6 +1005,18 @@ var States = {
             console.log("invalid state type: " + type);
         }
     },
+    updateTheme: function(state) {
+        var body = document.body;
+    
+        if (state === "p/menu_principal" || state === "p/menu_principal_no_cliente"|| state === "p/identificacion_start" || 
+            state === "p/status_inservice" || state === "p/check_printer") {
+            body.classList.add("theme-dark");
+            body.classList.remove("theme-white");
+        } else {
+            body.classList.add("theme-white");
+            body.classList.remove("theme-dark");
+        }
+    },
 
 runState: function (name, params, eventargs) {
 
@@ -1031,6 +1043,9 @@ runState: function (name, params, eventargs) {
             try{
                                 OnlyView.checkState();
             }catch(e){}
+            setTimeout(function () {
+                _this.updateTheme(name);
+            }, 0);
             if (!States.CurrentStateData.hasOwnProperty('screens'))
                 States.CurrentStateData.screens = {};
             if (params) {
