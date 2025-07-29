@@ -11,8 +11,22 @@
 			            
 	        include(p/chunk/title_transaccion.json),
 
-            "subtitle": {			
-                "text" : "Ingrese su número de cliente<br>y toque CONTINUAR"
+            "update": function(screen) {
+                var tipo = States.getStoredValue("customer_id_type");
+
+                if (tipo === 31) {
+                    screen.sub_subtitle_intermedio = {
+                        text: "Ingresá tu DNI"
+                    };
+                } else if (tipo === 35) {
+                    screen.sub_subtitle_intermedio = {
+                        text: "Ingresá tu C.U.I.L./C.U.I.T./C.D.I."
+                    };
+                } else {
+                    screen.sub_subtitle_intermedio = {
+                        text: "Ingresá tu número de cliente<br>y toque continuar"
+                    };
+                }
             },
     
 		}
@@ -22,8 +36,13 @@
 	    include(p/chunk/event_timeout.json),
 
 	    "back": "p/identificacion_manual",
+
+        "cancel": "p/identificacion_start",
         
-		"accept": "p/identificacion_manual_comms",
+		"accept": function(){
+            States.storeNamedValue("origen_pin", "identificacion");
+            return "p/identificacion_manual_comms";
+        },
  
         "reject": function() {
             States.refreshState();
