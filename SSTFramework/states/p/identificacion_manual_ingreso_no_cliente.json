@@ -11,7 +11,7 @@
 			States.storeNamedValue("origen_id_type", States.getStoredValue("customer_id_type"));
 			States.storeNamedValue("no_cliente", true);
             Vars.set("identificacion_depositante", States.getStoredValue("customer_id"));
-            States.handleEvent("identificacion_ok");   
+            return "p/menu_principal_select";
         },
 
 	}
