@@ -97,6 +97,48 @@ var Vars = {
 
 var SSUtil = {
 
+    getBankLogo:function(){
+        var entity = Vars.get("entidad"); 
+        return entity; 
+    },
+    getBankColor: function() {
+        var bank = this.getBankLogo();
+
+        switch (bank) {
+            case "bersa":
+                color = "#8B0000"; 
+                break;
+            case "santacruz":
+                color = "#0047AB"; 
+                break;
+            case "sanjuan":
+                color = "#FFC107"; 
+                break;
+            default:
+                color = "#8B0000"; 
+        }
+
+        return color;
+    },
+    getLogoPatch: function (isDarkColor){
+        var bank = this.getBankLogo();
+        var logo = "";
+        switch (bank) {
+            case "bersa":
+                    logo = isDarkColor ? "/images/logo_bersa_dark.svg" : "/images/logo_bersa_white.svg";
+                    break;
+            case "santacruz":
+                   logo = isDarkColor ? "/images/logo_santacruz_dark.svg" : "/images/logo_santacruz_white.svg";
+                  break;
+            case "sanjuan": 
+                   logo= isDarkColor? "/images/bsj-full-logo-darker.svg": "/images/logo_sanjuan_white.svg";
+                   break;
+            default:
+                return logo;
+        } 
+        return logo;
+    },
+
     run: function(callback) {
         try {
             callback();
