@@ -14,6 +14,27 @@
 	<% include message.html %>
 <% } %>
 
+
+<% if(locals["sub_subtitle"]) {%>
+    <% include sub_subtitle.html %>
+<% } %>
+
+<% if(locals["sub_subtitle_chico"]) {%>
+    <% include sub_subtitle_chico.html %>
+<% } %>
+
+<% if(locals["sub_subtitle_intermedio"]) {%>
+    <% include sub_subtitle_intermedio.html %>
+<% } %>
+
+<% if(locals["sub_subtitle_cheque"]) {%>
+    <% include sub_subtitle_cheque.html %>
+<% } %>
+
+<% if(locals["table_data"]) { %>
+    <% include table_data.html %>
+<% } %>
+
 <% if(locals["messagecenter"]) {%>
 	<% include messagecenter.html %>
 <% } %>
@@ -62,6 +83,10 @@
 
 <% if(locals["select"]) {%>
 	<% include select.html %>
+<% } %>
+
+<% if(locals["selectMenu"]) {%>
+	<% include selectMenu.html %>
 <% } %>
 
 <% if(locals["version"]) {%>
