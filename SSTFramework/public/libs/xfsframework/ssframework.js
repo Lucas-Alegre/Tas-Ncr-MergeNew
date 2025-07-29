@@ -2004,85 +2004,33 @@ runState: function (name, params, eventargs) {
         
         ///asks for a card entry
         CardEntry: function(statedata) {
-            
-            // First evaluate enabled identifying modes
-            var identifyingModes = UserFuns.getEnabledIdentifyingModes();
-            States.storeNamedValue("identifying_modes", identifyingModes);
-            
-            // If ttcc not enabled return
-            if ( !identifyingModes.includes("T") ) {
-                SSFramework.displayScreen(statedata.screens.no_dip);
-                if ( identifyingModes == "M" )
-                    States.handleEvent("identificacion_manual");
-                else if ( identifyingModes == "N" )
-                    States.handleEvent("no_cliente");
-                return;
-            }
-            
-
+            console.log("Reiniciando variables de sesión al iniciar identificación");
+            States.storeNamedValue("no_cliente", null);
+            SSUtil.setLocal("identified", false);
+            States.storeNamedValue("tipo_identificacion", null);
+            States.storeNamedValue("tipo_usuario", null);
+            States.storeNamedValue("customer", null);
+            States.storeNamedValue("origen_id", null);
+            States.storeNamedValue("origen_id_type", null);
+            States.storeNamedValue("customer_name", null);
+            States.storeNamedValue("proxima_accion", null);
+            States.storeNamedValue("data.menu_principal", { text: "" });
+               
+            SSFramework.displayScreen(statedata.screens.idc_ok);
             var idc = new XFSDevice("idc");
-            var _this = this;
 
             idc.available()
-
-            .then(function (val) {
-
-                if (val.available == false)
-                    throw "no_idc";
-                
-            })
-            .then(function () {
+                .then(function (res) {
+                if (!res.available) throw "lector_no_disponible";
                 return idc.getInfo("WFS_INF_IDC_CAPABILITIES");
-            })
-
-            .then(function (caps) {
-
-                if (SSUtil.getObj("lpBuffer.fwType", caps) == 1) {
-                    SSFramework.displayScreen(statedata.screens.idc_ok);
-                } else {
-                    SSFramework.displayScreen(statedata.screens.idc_ok_dip);
-                }
-
-            })
-
-            .then(function () {
-
-                States.registerCustomEvent("state_exit", function (evt) {
-                    idc.cancelAsyncRequest({ RequestID: 0 });
-                });
-
-                return idc.execute("WFS_CMD_IDC_READ_RAW_DATA");                
-            })
-
-            .then(function (result) {
-
-                if (result.hResult == 0) {
-                    var arr = result.lpBuffer;
-                    var tracks = {};
-                    for (var c = 0; c < arr.length; c++) {
-                        if (arr[c].wDataSource == 1)
-                            tracks.track1 = arr[c].lpbData;
-                        if (arr[c].wDataSource == 2)
-                            tracks.track2 = arr[c].lpbData;
-                        if (arr[c].wDataSource == 4)
-                            tracks.track3 = arr[c].lpbData;
-                    }
-
-                    States.storeValue(JSON.stringify(tracks));
-                    States.handleEvent("card_read");                                   
-
-
-                } else {
-                    if (result.hResult != -4)
-                        throw "no_idc";
-                }
-
-            })
-
-            .catch(function (ex) {
+                })
+                .then(function (caps) {
+                var tipo = SSUtil.getObj("lpBuffer.fwType", caps); // 1 = motorizado
+                States.storeNamedValue("tipo_lector", tipo);
+                }).catch(function (ex) {
                 SSFramework.displayScreen(statedata.screens.idc_error);
                 States.handleEvent("hardware_error_idc");                                   
-            });
+                });
 
         },
 
