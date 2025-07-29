@@ -1,0 +1,28 @@
+{
+    "back": function() {
+        var origen = States.getStoredValue("origen_to_back_pin");
+        var destino = "p/menu_principal_select";
+
+        switch(origen) {
+				case "cambio_pin":
+					destino = "p/menu_principal_select";
+					break;
+				case "depositante":
+					destino = "p/transf_cuenta_destino_tipo";
+					break;
+				case "pago_impuestos":
+					destino = "p/pago_impuestos";
+					break;
+				case "transferencia":
+					destino = "p/transf_confirma";
+					break;
+				case "pagoTTCC":
+					destino = "p/pago_ttcc_confirma";
+					break;
+		}
+	
+		States.storeNamedValue("origen_to_back_pin", null);
+
+        return destino;
+    }
+}
