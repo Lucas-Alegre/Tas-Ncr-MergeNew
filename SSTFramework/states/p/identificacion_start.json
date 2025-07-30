@@ -139,7 +139,7 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),
 
-        "cancel": "p/status_inservice",
+        "cancel": "p/close_salir",
 
 	    "card_read": function() {
             var back = States.getStoredValue("cancelar_ingreso_tarjeta");
@@ -209,7 +209,7 @@
 
 		"back": function(){
             States.storeNamedValue("cancelar_ingreso_tarjeta", true);
-            return "p/identificacion_start"; 
+            return "p/close_salir"; 
         },
 	}
 }
