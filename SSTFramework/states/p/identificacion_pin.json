@@ -23,7 +23,7 @@
 
 	"events" : {
 	    "pin_entered": "p/identificacion_manual_comms_cuentas",
-		"back": "p/status_inservice",
+		"back": "p/close_salir",
 		"cancel": "p/close_salir",
         "hardware_error": "return",
     }
