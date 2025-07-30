@@ -2,7 +2,7 @@
 
     "cancel": function(){
       if (States.getStoredValue("no_cliente") === true) {
-        return "p/status_inservice";
+        return "p/close_salir";//"p/status_inservice";
       } else {
         return "p/close_salir";
       }
