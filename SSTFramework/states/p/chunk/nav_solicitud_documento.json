@@ -1,0 +1,10 @@
+"nav": {
+        "nav0": {
+            "text": "Ir al Inicio",
+            "event": "cancel"
+        },
+        include(p/chunk/nav_btn_anterior.json),
+        include(p/chunk/nav_btn_borrar.json),
+        include(p/chunk/nav_btn_continuar.json),
+}
+

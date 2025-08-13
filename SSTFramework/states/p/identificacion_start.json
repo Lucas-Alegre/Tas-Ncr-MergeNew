@@ -10,26 +10,41 @@
 
         "idc_ok": {
 
-            include(p/chunk/title_transaccion.json),
-
-            include(p/chunk/screen_identificacion.json),
+              "title":{
+                "text": "",
+            },
 
 
             "subtitle": {
-                "text": "Inserte su tarjeta o<br>seleccione la opción manual"
+                "text": "¿Cómo querés ingresar?"
             },
 
-            "video": {
-                "class": "video_ingreso_tarjeta_motorizada",
-                "src": "<%= SSUtil.readCSS('video_ingreso_tarjeta_motorizada') %>"
+            "selectMenu": {
+                "select1": {
+                    "text": "Tarjeta de débito-y clave",
+                    "event": "instruccion_tarjeta",
+                },
+                "select2": {
+                    "text": "Documento-y clave",
+                    "event": "identificacion_manual",
+                },
+                "select3": {
+                    "text": "Documento",
+                    "event": "no_cliente",
+                }
+            },
+            "nav": {							    
+                "nav0" : {
+                    "text": "Salir",
+					"event": "cancel",
+                    "value": "cancel",
+                }
             },
         },
 
         "idc_ok_dip": {
 
             include(p/chunk/title_transaccion.json),
-
-            include(p/chunk/screen_identificacion.json),
 
             "subtitle": {
                 "text": "Ingrese y retire su tarjeta o<br>seleccione la opción manual"
@@ -39,30 +54,84 @@
                 "class": "video_ingreso_tarjeta_dip",
                 "src": "<%= SSUtil.readCSS('video_ingreso_tarjeta_dip') %>"
             },
+            "nav": {							    
+                "nav0" : {
+                    "text": "Volver",
+                    "event": "back",
+                    "value": "back"
+                }
+            }
+        },
+
+        "insercion_tarjeta_motorizado": {
+          include(p/chunk/title_transaccion.json),
+            "subtitle": {
+                "text": "Por favor, insertá tu tarjeta para continuar"
+            },
+            "video": {
+                "class": "video_ingreso_tarjeta_motorizada",
+                "src": "<%= SSUtil.readCSS('video_ingreso_tarjeta_motorizada') %>"
+            },
+            "nav": {							    
+                "nav0" : {
+                    "text": "Volver",
+                    "event": "back",
+                    "value": "back"
+                }
+            }
+        },
+
+        "insercion_tarjeta_dip": {
+            include(p/chunk/title_transaccion.json),
+            "subtitle": {
+                "text": "Insertá y retirá tu tarjeta para continuar"
+            },
+            "video": {
+                "class": "video_ingreso_tarjeta_dip",
+                "src": "<%= SSUtil.readCSS('video_ingreso_tarjeta_dip') %>"
+            },
+            "nav": {							    
+                "nav0" : {
+                    "text": "Volver",
+                    "event": "back",
+                    "value": "back"
+                }
+            }
         },
 
         "idc_error": {
 
             include(p/chunk/title_transaccion.json),
 
-            include(p/chunk/screen_identificacion.json),
-
             "subtitle": {
                 "text": "Seleccione la opción manual"
             },
 
+            "nav": {							    
+                "nav0" : {
+                    "text": "Volver",
+                    "event": "back",
+                    "value": "back"
+                }
+            }
+
         },
-		
 
         "no_dip": {
 
             include(p/chunk/title_transaccion.json),
 
-            include(p/chunk/screen_identificacion.json),
-
             "subtitle": {
                 "text": "Seleccione la opción manual"
             },
+
+            "nav": {							    
+                "nav0" : {
+                    "text": "Volver",
+                    "event": "back",
+                    "value": "back"
+                }
+            }
 			
         },
     },
@@ -70,18 +139,77 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),
 
+        "cancel": "p/close_salir",
+
 	    "card_read": function() {
+            var back = States.getStoredValue("cancelar_ingreso_tarjeta");
+
+            if(back){
+                States.storeNamedValue("cancelar_ingreso_tarjeta", false);
+                return 
+            }
+
 			States.storeNamedValue("tipo_identificacion", "tarjeta");
 			return "p/identificacion_manual_comms";
 		}, 
-		"back": "p/menu_principal_select",
-		"identificacion_manual": function() {
-			States.storeNamedValue("tipo_identificacion", "manual");
-			return "p/identificacion_manual";
-		},
-        "no_cliente": function() {
-			States.storeNamedValue("tipo_identificacion", "no_cliente");
-			return "p/identificacion_manual_no_cliente";
-		}
+
+        "identificacion_manual": function () {
+        States.storeNamedValue("tipo_identificacion", "manual");
+        States.storeNamedValue("origen_pin", "identificacion");
+        return "p/identificacion_manual";
+        },
+
+        "no_cliente": function () {
+        States.storeNamedValue("tipo_identificacion", "no_cliente");
+        return "p/identificacion_manual_no_cliente";
+        },
+
+        "instruccion_tarjeta": function () {
+            var identifyingModes = UserFuns.getEnabledIdentifyingModes();
+            if (!identifyingModes.includes("T")) {
+                SSFramework.displayScreen("no_dip");
+                return;
+            }
+            var tipo = States.getNamedValue("tipo_lector");
+            if (tipo === 1) {
+                SSFramework.displayScreen("insercion_tarjeta_motorizado");
+            } else {
+                SSFramework.displayScreen("insercion_tarjeta_dip");
+            }
+            
+            
+            var idc = new XFSDevice("idc");
+
+            States.registerCustomEvent("state_exit", function () {
+                idc.cancelAsyncRequest({ RequestID: 0 });
+            });
+
+            idc.execute("WFS_CMD_IDC_READ_RAW_DATA")
+            .then(function (result) {
+                if (result.hResult === 0) {
+                    var arr = result.lpBuffer;
+                    var tracks = {};
+                    for (var c = 0; c < arr.length; c++) {
+                        if (arr[c].wDataSource == 1) tracks.track1 = arr[c].lpbData;
+                        if (arr[c].wDataSource == 2) tracks.track2 = arr[c].lpbData;
+                        if (arr[c].wDataSource == 4) tracks.track3 = arr[c].lpbData;
+                    }
+                    States.storeValue(JSON.stringify(tracks));
+                    States.storeNamedValue("tipo_identificacion", "tarjeta");
+                    States.handleEvent("card_read");
+                } else {
+                    if (result.hResult != -4) throw "no_idc";
+                }
+            })
+            .catch(function (ex) {
+                SSFramework.displayScreen(statedata.screens.idc_error);
+                States.handleEvent("hardware_error_idc");
+            });
+        },
+
+		"back": function(){
+            States.storeNamedValue("cancelar_ingreso_tarjeta", true);
+            return "p/close_salir"; 
+        },
 	}
 }

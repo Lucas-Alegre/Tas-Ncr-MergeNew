@@ -23,8 +23,8 @@
 				"text" : "Menú Principal"
 			},
 
-            "subtitle": {
-                "text": "Seleccione la operación que desea realizar"
+            "sub_subtitle": {
+                "text": "¿Qué necesitás hacer?"
             },
             
 			"select": {
@@ -78,10 +78,10 @@
 				},
 
                 "select5" : {
-                    "text": "Pago TTCC",
+                    "text": "Pagos de <br> Tarjetas de Credito",
 					"event": "pago_ttcc", 
                     "value": {
-                        "text": "Pago TTCC",
+                        "text": "Pagos Tarjeta de credito",
                         "value": "pago_ttcc",
                         },
 					"funciones": {

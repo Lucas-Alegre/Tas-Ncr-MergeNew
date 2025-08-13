@@ -1,11 +1,17 @@
 ﻿"events" : {
 
-    "cancel": "p/close_salir",
+    "cancel": function(){
+      if (States.getStoredValue("no_cliente") === true) {
+        return "p/close_salir";//"p/status_inservice";
+      } else {
+        return "p/close_salir";
+      }
+    },
 
     "consultas": {
-        "call": "p/identificacion",
+        "call": "p/redireccion_transaccion",
         "events": {
-            "identificacion_ok" : "p/consultas",
+            "validacion_ok": "p/consultas",
             "hardware_error_pin": "p/close_hardware_error",
             "cancel" : "p/close_salir"
         }
@@ -13,25 +19,28 @@
         
     "mensajes": "p/pedidos_check_dep",
 
-    "deposito": {
-		"call": "p/identificacion",
-        "events": {
-            "identificacion_ok" : "p/deposito_cuenta_propia",
-            "hardware_error_pin": "p/close_hardware_error",
-            "cancel" : "p/close_salir"
-        }
-	},
+    "depositoOpcion": function() {
+      if (States.getStoredValue("no_cliente") === true) {
+        return "p/deposito_tipo_terceros";
+      } else {
+        return "p/deposito_tipo";
+      }
+    },
      
     "deposito_terceros": "p/deposito_terceros_check_dep",
     
     "cambio_pin": {
-		    "call": "p/identificacion",
-            "events": {
-                "identificacion_ok" : "p/cambio_pin1",
-                "hardware_error_pin": "p/close_hardware_error",
-                "cancel" : "p/close_salir"
-            }
-		},
+		"call": "p/redireccion_transaccion",
+        "events": {
+            "validacion_ok":function(){
+                States.storeNamedValue("origen_to_back_pin", "cambio_pin");
+                States.storeNamedValue("proxima_accion", "cambio_pin");
+                return "p/cambio_pin_reingreso_pin";
+            },
+            "hardware_error_pin": "p/close_hardware_error",
+            "cancel" : "p/close_salir"
+        }
+	},
 
 		"extraccion": {
 		    "call": "p/identificacion",
@@ -43,22 +52,22 @@
 		},
 
 		"transferencia": {
-		    "call": "p/identificacion",	
+		    "call": "p/redireccion_transaccion",	
             "events": {
-                "identificacion_ok" : "p/transf_cuenta_origen",
+                "validacion_ok" : "p/transf_cuenta_origen",
                 "hardware_error_pin": "p/close_hardware_error",
                 "cancel" : "p/close_salir"
             }
 		},
 
-    "pago_ttcc": {
-        "call": "p/identificacion",	
-        "events": {
-            "identificacion_ok" : "p/pago_ttcc_tipo",
-            "hardware_error_pin": "p/close_hardware_error",
-            "cancel" : "p/close_salir"
-        }
-    },
+       "pago_ttcc": {
+            "call": "p/redireccion_transaccion",	
+            "events": {
+                "validacion_ok" : "p/pago_ttcc_tipo",
+                "hardware_error_pin": "p/close_hardware_error",
+                "cancel" : "p/close_salir"
+            }
+        },
 
     "pago_impuestos": "p/pago_impuestos_check_dep",
 

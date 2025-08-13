@@ -45,8 +45,15 @@
 			
 	        include(p/chunk/title_transaccion.json),
 
-            "subtitle": { 
-                "text": "Digite su PIN usando el teclado del equipo" 
+             "sub_subtitle_intermedio": { 
+                "text": "Ingresá tu Clave de canales" 
+            },
+
+            "nav": {
+                "nav0": {
+                    "text": "Volver",
+                    "event": "back"
+                }
             },
 
 		}
