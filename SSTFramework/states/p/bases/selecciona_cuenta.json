@@ -37,6 +37,12 @@
 	    "default" : {
             
 	        "update": function(screen) {				
+                if (!sessionStorage["entered.selectAccount"]) {
+                    sessionStorage["temp.select_from_list.selectAccount"] = 0;
+                    sessionStorage["entered.selectAccount"] = "true";
+                }
+                
+
 	            var nombre = States.getStoredValue("customer_name");
 	            States.setProperty("nombre_cliente", nombre);
 				
@@ -58,35 +64,69 @@
 				}                   
 	            
 	            var orden = ["select0", "select4", "select1", "select5", "select2", "select6", "select3"];
-	            UserFuns.selectFromList(screen, opciones, orden);
+	            UserFuns.selectFromListNamed(screen, opciones, orden, "selectAccount");//Nueva paginación
+                //UserFuns.selectFromList(screen, opciones, orden);
 	        },
 		
             include(p/chunk/title_transaccion.json),
 
       
-            "subtitle": {
+            "sub_subtitle": {
                 "text": "Bienvenido <%= nombre_cliente %><br>Por favor, seleccione una cuenta",
             },
 
-            include(p/chunk/nav_cancelar_anterior.json),
+            "nav":{
+                 include(p/chunk/nav_btn_volver_first.json),
+            }
 
-            "select": {							    
+            //include(p/chunk/nav_cancelar_anterior.json),
+
+            /*"select": {							    
 			    "select7" : {
 			        "text": "Más",
 					"event": "mas" 
 			    }
-			},
+			},*/
 		}
 	},
     
 	"events" : {
 
 	    include(p/chunk/event_timeout.json),
+        "state_entry": function() {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;
+        },
 
         "sin_opciones": "p/close_sin_opciones",
 
-	    "mas" : function() {
-	        States.refreshState();
-	    },
+        "mas": function () {
+            var key = "temp.select_from_list.selectAccount";
+            var pos = parseInt(sessionStorage[key] || "0", 10);
+            pos += 6; // o la cantidad de items por página
+            sessionStorage[key] = pos;
+            States.refreshState();
+        },
+
+        "menos": function () {
+            var key = "temp.select_from_list.selectAccount";
+            var pos = parseInt(sessionStorage[key] || "0", 10);
+            pos -= 6; // mismo valor que arriba
+            if (pos < 0) pos = 0;
+            sessionStorage[key] = pos;
+            States.refreshState();
+        },
+
+        "back": function () {
+            delete sessionStorage["entered.selectAccount"];
+            delete sessionStorage["temp.select_from_list.selectAccount"];
+            return "p/consultas"
+        },
+        
+        "select": function(val) {
+            delete sessionStorage["entered.selectAccount"];
+            delete sessionStorage["temp.select_from_list.selectAccount"];
+            return States.getProperty("select_destino"); 
+        },
+
 	}
 }

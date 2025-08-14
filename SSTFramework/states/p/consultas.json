@@ -27,8 +27,8 @@
 
             "nav": {
                 "nav0": {
-                    "text": "Cancelar",
-                    "event": "cancel"
+                    "text": "Volver",
+                    "event": "back"
                 },
             },
 
@@ -108,10 +108,10 @@
 	        "call": "p/bases/selecciona_cuenta",
             "params": {
                 "title": "Consulta de saldos",
-                "conceptos": [1, 2]
+                "conceptos": [1, 2],
+                "select_destino": "p/consulta_saldo"
 	        },
             "events": {
-                "select": "p/consulta_saldo",
                 "back": "p/consultas",
                 "cancel": "p/close_salir",
             }
@@ -120,10 +120,10 @@
 		    "call": "p/bases/selecciona_cuenta",
             "params": {
                 "title": "Consulta de movimientos",
-                "conceptos": [1, 2]
+                "conceptos": [1, 2],
+                "select_destino": "p/consulta_movimientos_comms"
             },
             "events": {
-                "select": "p/consulta_movimientos_comms",
                 "back": "p/consultas",
                 "cancel": "p/close_salir",
             }
@@ -132,22 +132,22 @@
             "call": "p/bases/selecciona_cuenta",
             "params": {
                 "title": "Consulta de plazo fijo",
-                "conceptos": [4]           
+                "conceptos": [4],
+                "select_destino": "p/consulta_plazo_fijo"            
             },
             "events": {
-                "select": "p/consulta_plazo_fijo",
                 "back": "p/consultas",
                 "cancel": "p/close_salir",
-                }
+            }
         },
         "tarjetas": {
             "call": "p/bases/selecciona_cuenta",
             "params": {
                 "title": "Consulta de tarjetas",
-                "conceptos": [25]
+                "conceptos": [25],
+                "select_destino": "p/consulta_tarjetas" 
             },
             "events": {
-                "select": "p/consulta_tarjetas",
                 "back": "p/consultas",
                 "cancel": "p/close_salir",
 
@@ -157,10 +157,10 @@
             "call": "p/bases/selecciona_cuenta",
             "params": {
                 "title": "Consulta de CBU",
-                "conceptos": [1, 2]
+                "conceptos": [1, 2],
+                "select_destino": "p/consulta_cbu"
             },
             "events": {
-                "select": "p/consulta_cbu",
                 "back": "p/consultas",
                 "cancel": "p/close_salir",
             }
