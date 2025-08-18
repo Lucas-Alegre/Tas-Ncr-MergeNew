@@ -9,8 +9,9 @@
 	
 	                var tabla = "";
 	                var cuenta = UserFuns.getProduct("cuenta");
-	                tabla += "<table id='detalle_chico'>";
-                    tabla += "<tr><td class='detalle_chico_td_left'>Número:</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
+	                tabla += "<table id='detalle'>";
+                    tabla += "<tbody>";
+                    tabla += "<tr><td>Número:</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
                     tabla += "<tr><td>Cuenta:</td><td>" + cuenta.TNUCUENTA + "</td></tr>";
                     tabla += "<tr><td>&nbsp;</td><td></td></tr>";
                     tabla += "<tr><td>Total resumen $:</td><td>" + UserFuns.formatMonto(cuenta.CSA_DISPO) + "</td></tr>";
@@ -19,20 +20,21 @@
                     tabla += "<tr><td>&nbsp;</td><td></td></tr>";
                     tabla += "<tr><td>Vencimiento Resumen:</td><td>" + UserFuns.formatFecha(cuenta.FFE_VENCI) + "</td></tr>";
                     tabla += "<tr><td>Fecha de cierre:</td><td>" + UserFuns.formatFecha(cuenta.SFECIERRE) + "</td></tr>";
+                    tabla += "</tbody>";
                     tabla += "</table>";
                     States.setProperty("detalle", tabla);
                 },
 			
             include(p/chunk/title_transaccion.json),
 
-            "subtitle": {
-                "text": "Toque CONTINUAR para imprimir la consulta"
+            "sub_subtitle_chico": {
+                "text": "Toque continuar para imprimir la consulta"
             },
 
-            include(p/chunk/nav_cancelar_continuar.json),
+            include(p/chunk/nav_volver_continuar.json),
     
 
-            "message": { 
+            "table_data": { 
                 "text": "<%= detalle %>"
             },
 
@@ -43,6 +45,6 @@
 	    include(p/chunk/event_timeout.json),
 
 	    "enter": "p/consulta_tarjetas_print",
-        "cancel": "p/close_salir",
+        "back": "p/consultas",
         }
 }
