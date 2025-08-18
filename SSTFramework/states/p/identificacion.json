@@ -12,7 +12,7 @@
     },
 
     "events": {
-        "identified": "p/identificacion_pin",
+        "identified": "p/menu_principal_select",
 
         "not_identified": "p/identificacion_start",    
     }

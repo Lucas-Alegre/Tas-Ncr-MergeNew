@@ -15,27 +15,26 @@
             include(p/chunk/title_transaccion.json),
     
             "subtitle": {
-                "text": "¿Desea realizar otro depósito en la misma cuenta?",
+                "text": "¿Querés realizar otra operación?",
             },
 			
 			"nav": {
 	            "nav0": {
-	                "text": "No",
+	                "text": "No, cerrar sesión",
                     "event": "no",
-                    },
+                },
 
                 "nav3": {
-                    "text": "Si",
+                    "text": "Si, realizar otra operación",
                     "event": "si",
                 }
 	        }
-    
         }
     },
 
     "events": {
 
-        "si": "cim/check_status",
+        "si": "p/identificacion",
 
         "no": "p/close_salir",
     
