@@ -21,7 +21,7 @@
                 
             include(p/chunk/title_transaccion.json),
     
-            "subtitle": {
+            "sub_subtitle_intermedio": {
                 "text": "Por favor, ingrese el monto a transferir",
                 },
 
@@ -35,7 +35,16 @@
 
         "accept": "p/transf_comms_simulacion",
 
-        "back": "p/transf_cuenta_destino_tipo",
+        "back": function(){
+            var flujo = States.getStoredValue("flujo_transferencia");
+                if (flujo === "terceros") {
+                    States.storeNamedValue("flujo_transferencia", null);
+                    return "p/transf_cuenta_destino_terceros"; 
+                }
+                if (flujo === "propia") {
+                    return "p/transf_cuenta_destino_tipo"; 
+                }
+        },
 
         "cancel": "p/close_salir",
 
