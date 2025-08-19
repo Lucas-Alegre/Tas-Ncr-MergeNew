@@ -39,9 +39,10 @@
                         States.getStoredValue("cuenta_destino"));
 	            }
 
-	            tabla += "<table id='detalle_chico'>";
+	            tabla += "<table id='detalle'>";
+				tabla += "<tbody>";
 	            tabla += "<tr><td>Cuenta Origen </td><td/></tr>";
-	            tabla += "<tr><td class='detalle_chico_td_left'>Tipo: " + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
+	            tabla += "<tr><td>Tipo: " + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
 	            tabla += "<tr><td>Monto a Debitar: </td><td>" + UserFuns.formatMonto(States.getStoredValue("monto"), "", 0) + "</td></tr>";
 	            if(nombre!="")
 	                tabla += "<tr><td>Cliente: </td><td>" + nombre + "</td></tr>";
@@ -56,19 +57,20 @@
 	                tabla += "<tr><td>Cliente: </td><td>" + nombre2 + "</td></tr>";
 	            if(ente2!="")
 	                tabla += "<tr><td>CUIT: </td><td>" + ente2 + "</td></tr>";
+				tabla += "</tbody>";
 	            tabla += "</table>";
 	            States.setProperty("detalle", tabla);
             },
 			
               include(p/chunk/title_transaccion.json),
     
-            "subtitle": {
-                "text": "Toque CONTINUAR para confirmar la transferencia"
+            "sub_subtitle_chico": {
+                "text": "Toque continuar para confirmar la transferencia"
             },
 
             include(p/chunk/nav_cancelar_continuar.json),
     
-            "message": { 
+            "table_data": { 
                 "text": "<%= detalle %>"
             },
 
@@ -78,7 +80,20 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),
 
-        "enter": "p/transf_reingreso_pin",
+        "enter": function(){
+            var siguiente = States.getStoredValue("proxima_accion");
+
+            if (siguiente && siguiente === "ir_a_transferencia_propia") {
+                States.storeNamedValue("proxima_accion", null);
+                return "p/transf_comms";
+            }
+            if (siguiente && siguiente === "ir_a_transferencia_terceros") {
+                //States.storeNamedValue("proxima_accion", null);
+				States.storeNamedValue("origen_to_back_pin", "transferencia");
+                return "p/transf_reingreso_pin";
+        },
+
+        "back": "p/transf_ingreso_monto",
 
         "cancel": "p/close_salir",
 
