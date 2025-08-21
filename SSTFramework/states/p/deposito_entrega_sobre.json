@@ -5,9 +5,15 @@
                         
           "default" : {            
                     
-              "subtitle": {
+                "subtitle": {
                   "text": "Por favor, ingrese los valores en el sobre. Luego toque CONTINUAR",
-                  },
+                },
+                "nav": {
+                    "nav3": {
+                        "text": "Continuar",
+                        "event": "enter"
+                    },
+                },
 
           },
     },
