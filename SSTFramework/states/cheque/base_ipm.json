@@ -122,7 +122,7 @@ ssfw = {
 
             include(p/chunk/title_transaccion.json),
 
-            "subtitle": {
+            "sub_subtitle_cheque": {
                 "text": "Detalle de los cheques depositados",
             },
 
@@ -131,11 +131,11 @@ ssfw = {
             },
 
             "nav": {
-                "nav1": {
+                "nav0": {
                     "text": "Cancelar",
                     "event": "cancelar",
                 },
-                "nav2": {
+                "nav1": {
                     "text": "Agregar",
                     "event": "agregar",
                 },
@@ -205,7 +205,7 @@ ssfw = {
             },
 
             "subtitle": {           
-                "text" : "Necesita más tiempo?"
+                "text" : "¿Necesita más tiempo?"
             },
 
             "nav": {
