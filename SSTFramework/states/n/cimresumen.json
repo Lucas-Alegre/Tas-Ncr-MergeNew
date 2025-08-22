@@ -17,7 +17,7 @@
 	            var tipo = JSON.stringify(SSUtil.obtieneDetalle(516, States.getStoredValue("deposito_operacion").lppNoteNumber));
 
 	            var tabla = "";
-	            tabla += "<table id='detalle_chico'>";
+	            tabla += "<table id='detalle'>";
                 tabla += "<tr><td class='detalle_chico_td_left'>Documento:</td><td>" + SSUtil.formatNumber(parseInt(States.getStoredValue("customer_id"), 10), 0) + "</td></tr>";
 	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
 	            tabla += "<tr><td>Monto Ingresado: </td><td>$ " + UserFuns.formatMonto(States.getStoredValue("monto_operacion"), "", 0) + "</td></tr>";
