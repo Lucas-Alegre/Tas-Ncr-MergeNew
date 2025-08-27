@@ -40,7 +40,7 @@
         "cancel": "p/identificacion_start",
         
 		"accept": function(){
-            States.storeNamedValue("origen_pin", "identificacion");
+            States.storeNamedValue("navegar.origen_pin", "identificacion");
             return "p/identificacion_manual_comms";
         },
  

@@ -18,12 +18,12 @@
         "sin_opciones": "p/close_sin_opciones",
 	    "select": function(){
             States.storeNamedValue("navegar.proxima_accion", "deposito_cuenta_propia");
-            var tipo = States.getStoredValue("tipo_deposito");
+            var tipo = States.getStoredValue("flow.tipo_deposito");
             if(tipo==="efectivo"){
-                //States.storeNamedValue("tipo_deposito", null);
+                //States.storeNamedValue("flow.tipo_deposito", null);
                 return "cim/check_status";
             }else{
-                //States.storeNamedValue("tipo_deposito", null);
+                //States.storeNamedValue("flow.tipo_deposito", null);
                 return  "cheque/check_status";
             }
         },

@@ -75,13 +75,13 @@
       	    include(p/chunk/event_timeout.json),
 
             "efectivo": function(){
-                States.storeNamedValue("tipo_deposito", "efectivo");
+                States.storeNamedValue("flow.tipo_deposito", "efectivo");
                 States.storeNamedValue("data.menu_principal", { value: "deposito_terceros" });
                 States.storeNamedValue("flow.tipo_accion", "deposito_tercero");
                 return "p/deposito_terceros_check_dep";
             },
             "cheques":function(){
-                States.storeNamedValue("tipo_deposito", "cheque");
+                States.storeNamedValue("flow.tipo_deposito", "cheque");
                 States.storeNamedValue("data.menu_principal", { value: "deposito_terceros" });
                 States.storeNamedValue("flow.tipo_accion", "deposito_tercero");
                 return "p/deposito_terceros_check_dep";

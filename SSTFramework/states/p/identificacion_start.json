@@ -142,10 +142,10 @@
         "cancel": "p/close_salir",
 
 	    "card_read": function() {
-            var back = States.getStoredValue("cancelar_ingreso_tarjeta");
+            var back = States.getStoredValue("navegar.cancelar_ingreso_tarjeta");
 
             if(back){
-                States.storeNamedValue("cancelar_ingreso_tarjeta", false);
+                States.storeNamedValue("navegar.cancelar_ingreso_tarjeta", false);
                 return 
             }
 
@@ -155,7 +155,7 @@
 
         "identificacion_manual": function () {
         States.storeNamedValue("tipo_identificacion", "manual");
-        States.storeNamedValue("origen_pin", "identificacion");
+        States.storeNamedValue("navegar.origen_pin", "identificacion");
         return "p/identificacion_manual";
         },
 
@@ -208,7 +208,7 @@
         },
 
 		"back": function(){
-            States.storeNamedValue("cancelar_ingreso_tarjeta", true);
+            States.storeNamedValue("navegar.cancelar_ingreso_tarjeta", true);
             return "p/close_salir"; 
         },
 	}

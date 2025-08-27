@@ -70,7 +70,7 @@
 
     "events": {
         "comms_ok": function() {
-            States.storeNamedValue("origen_pin", "identificacion");
+            States.storeNamedValue("navegar.origen_pin", "identificacion");
             return "p/identificacion_pin";
         },
     }

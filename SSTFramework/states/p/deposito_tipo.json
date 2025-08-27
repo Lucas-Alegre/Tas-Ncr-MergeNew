@@ -73,12 +73,12 @@
       	    include(p/chunk/event_timeout.json),
 
       	    "efectivo": function(){
-                States.storeNamedValue("tipo_deposito", "efectivo");
+                States.storeNamedValue("flow.tipo_deposito", "efectivo");
                 States.storeNamedValue("flow.tipo_accion", "deposito_propia");
                 return "p/deposito_selector";
             },
             "cheques": function(){
-                States.storeNamedValue("tipo_deposito", "cheque");
+                States.storeNamedValue("flow.tipo_deposito", "cheque");
                 States.storeNamedValue("flow.tipo_accion", "deposito_propia");
                 return "p/deposito_selector";
             },
