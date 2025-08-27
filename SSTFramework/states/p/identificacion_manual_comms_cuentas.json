@@ -28,18 +28,18 @@
 
     "events": {
         "comms_ok": function(){
-            var siguiente = States.getStoredValue("proxima_accion");
+            var siguiente = States.getStoredValue("navegar.proxima_accion");
 
             if (siguiente && siguiente === "ir_a_transferencia_terceros") {
-                //States.storeNamedValue("proxima_accion", null);
+                //States.storeNamedValue("navegar.proxima_accion", null);
                 return "p/transf_terceros_tipo";
             }
             if (siguiente && siguiente === "ir_a_pagos_impuestos") {
-                States.storeNamedValue("proxima_accion", null);
+                States.storeNamedValue("navegar.proxima_accion", null);
                 return "p/pago_impuestos_cuenta_debito";
             }
             if(siguiente && siguiente === "cambio_pin") {
-                States.storeNamedValue("proxima_accion", null);
+                States.storeNamedValue("navegar.proxima_accion", null);
                 return "p/cambio_pin1";
             }
             return "p/identificacion_manual_comms_diasrestantes";

@@ -2070,7 +2070,7 @@ runState: function (name, params, eventargs) {
             States.storeNamedValue("origen_id", null);
             States.storeNamedValue("origen_id_type", null);
             States.storeNamedValue("customer_name", null);
-            States.storeNamedValue("proxima_accion", null);
+            States.storeNamedValue("navegar.proxima_accion", null);
             States.storeNamedValue("data.menu_principal", { text: "" });
                
             SSFramework.displayScreen(statedata.screens.idc_ok);

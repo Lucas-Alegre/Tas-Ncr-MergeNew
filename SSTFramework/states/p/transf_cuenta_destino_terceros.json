@@ -27,7 +27,7 @@
         include(p/chunk/event_timeout.json),
 
         "accept": function(){
-            States.storeNamedValue("flujo_transferencia", "terceros");
+            States.storeNamedValue("flujo.transferencia", "terceros");
             return "p/transf_ingreso_monto";
         },
 

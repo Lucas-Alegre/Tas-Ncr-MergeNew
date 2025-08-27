@@ -74,12 +74,12 @@
 
       	    "efectivo": function(){
                 States.storeNamedValue("tipo_deposito", "efectivo");
-                States.storeNamedValue("tipo_accion", "deposito_propia");
+                States.storeNamedValue("flow.tipo_accion", "deposito_propia");
                 return "p/deposito_selector";
             },
             "cheques": function(){
                 States.storeNamedValue("tipo_deposito", "cheque");
-                States.storeNamedValue("tipo_accion", "deposito_propia");
+                States.storeNamedValue("flow.tipo_accion", "deposito_propia");
                 return "p/deposito_selector";
             },
             "back": "p/menu_principal_select",

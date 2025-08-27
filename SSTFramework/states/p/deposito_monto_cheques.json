@@ -45,7 +45,7 @@
 			if (States.getStoredValue("data.menu_principal").value =="entrega_documentacion"){
 				States.handleEvent("continue_entrega_documentacion");
 			} else {
-                 States.storeNamedValue("proxima_accion_confirma", "deposito_comms_cheque_simulacion");
+                 States.storeNamedValue("navegar.proxima_accion_confirma", "deposito_comms_cheque_simulacion");
 				States.handleEvent("continue");
 			}
     	},

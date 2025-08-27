@@ -36,9 +36,9 @@
         "accept": "p/transf_comms_simulacion",
 
         "back": function(){
-            var flujo = States.getStoredValue("flujo_transferencia");
+            var flujo = States.getStoredValue("flujo.transferencia");
                 if (flujo === "terceros") {
-                    States.storeNamedValue("flujo_transferencia", null);
+                    States.storeNamedValue("flujo.transferencia", null);
                     return "p/transf_cuenta_destino_terceros"; 
                 }
                 if (flujo === "propia") {

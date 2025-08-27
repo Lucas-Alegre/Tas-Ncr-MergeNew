@@ -81,15 +81,15 @@
 	    include(p/chunk/event_timeout.json),
 
         "enter": function(){
-            var siguiente = States.getStoredValue("proxima_accion");
+            var siguiente = States.getStoredValue("navegar.proxima_accion");
 
             if (siguiente && siguiente === "ir_a_transferencia_propia") {
-                States.storeNamedValue("proxima_accion", null);
+                States.storeNamedValue("navegar.proxima_accion", null);
                 return "p/transf_comms";
             }
             if (siguiente && siguiente === "ir_a_transferencia_terceros") {
-                //States.storeNamedValue("proxima_accion", null);
-				States.storeNamedValue("origen_to_back_pin", "transferencia");
+                //States.storeNamedValue("navegar.proxima_accion", null);
+				States.storeNamedValue("navegar.origen_to_back_pin", "transferencia");
                 return "p/transf_reingreso_pin";
         },
 

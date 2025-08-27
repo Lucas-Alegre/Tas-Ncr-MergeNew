@@ -31,15 +31,15 @@
         "cancel": "p/close_salir",
 
         "back": function() {
-			var siguiente = States.getStoredValue("proxima_accion");
+			var siguiente = States.getStoredValue("navegar.proxima_accion");
                     if (siguiente && siguiente === "deposito_tercero") {
-                        //States.storeNamedValue("proxima_accion", null);
+                        //States.storeNamedValue("navegar.proxima_accion", null);
                         return "p/deposito_terceros_numero";
                     }else{
                         if (States.getStoredValue("data.menu_principal").value == "entrega_documentacion")
 						    return "p/seleccion_tipo_deposito";
                         else
-                        //States.storeNamedValue("proxima_accion", null);
+                        //States.storeNamedValue("navegar.proxima_accion", null);
                         return "p/deposito_cuenta_propia"; 
                     }
 		}

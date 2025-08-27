@@ -1,6 +1,6 @@
 {
     "back": function() {
-        var origen = States.getStoredValue("origen_to_back_pin");
+        var origen = States.getStoredValue("navegar.origen_to_back_pin");
         var destino = "p/menu_principal_select";
 
         switch(origen) {
@@ -21,7 +21,7 @@
 					break;
 		}
 	
-		States.storeNamedValue("origen_to_back_pin", null);
+		States.storeNamedValue("navegar.origen_to_back_pin", null);
 
         return destino;
     }

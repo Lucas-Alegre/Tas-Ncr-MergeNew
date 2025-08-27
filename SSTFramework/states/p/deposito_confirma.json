@@ -119,13 +119,13 @@
     	},
 
 		"back": function(){
-			var siguiente = States.getStoredValue("proxima_accion_confirma");
+			var siguiente = States.getStoredValue("navegar.proxima_accion_confirma");
 				if (siguiente && siguiente === "deposito_comms_simulacion") {
-					States.storeNamedValue("proxima_accion_confirma", null);
+					States.storeNamedValue("navegar.proxima_accion_confirma", null);
 					return "p/deposito_monto";
 				}
 				if(siguiente && siguiente === "deposito_comms_cheque_simulacion"){
-					//States.storeNamedValue("proxima_accion", null);
+					//States.storeNamedValue("navegar.proxima_accion", null);
 					return "p/deposito_monto_cheques"; 
 				}
 		}, 

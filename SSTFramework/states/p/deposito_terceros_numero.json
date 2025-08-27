@@ -25,7 +25,7 @@
 
 	"events" : {
 	    "accept": function(){
-            States.storeNamedValue("proxima_accion", "deposito_tercero");
+            States.storeNamedValue("navegar.proxima_accion", "deposito_tercero");
             var tipo = States.getStoredValue("tipo_deposito");
             if(tipo==="efectivo"){           
                 //States.storeNamedValue("tipo_deposito", null);

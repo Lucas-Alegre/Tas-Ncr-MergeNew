@@ -5,19 +5,19 @@
         include(p/chunk/event_back_origen_pin.json),
 	
         "validacion_ok": function(){
-				var siguiente = States.getStoredValue("proxima_accion");
+				var siguiente = States.getStoredValue("navegar.proxima_accion");
 				if (siguiente && siguiente === "pagoTTCC") {
-					States.storeNamedValue("proxima_accion", null);
+					States.storeNamedValue("navegar.proxima_accion", null);
 					return "p/pago_ttcc_comms_simulacion";
 				}
 				if (siguiente && siguiente === "ir_a_pagos_impuestos") {
-					States.storeNamedValue("proxima_accion", null);
+					States.storeNamedValue("navegar.proxima_accion", null);
 					return "p/pago_impuestos_comms_simulacion";
 				}
 
 				
 				if (siguiente && siguiente === "ir_a_transferencia_terceros") {
-					States.storeNamedValue("proxima_accion", null);
+					States.storeNamedValue("navegar.proxima_accion", null);
 					return "p/transf_comms";
 				}else{
 					return "p/identificacion_manual_comms_cuentas";

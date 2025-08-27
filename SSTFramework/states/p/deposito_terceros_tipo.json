@@ -19,7 +19,7 @@
         "cancel": "p/close_salir",
 	    "select": "p/deposito_terceros_numero_sucursal",
         "back": function(){
-			var tipoAccion = States.getStoredValue("tipo_accion");
+			var tipoAccion = States.getStoredValue("flow.tipo_accion");
 			if (tipoAccion === "deposito_tercero") {
 				return "p/deposito_tipo_terceros";
 			} else {

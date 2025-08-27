@@ -33,8 +33,8 @@
 		"call": "p/redireccion_transaccion",
         "events": {
             "validacion_ok":function(){
-                States.storeNamedValue("origen_to_back_pin", "cambio_pin");
-                States.storeNamedValue("proxima_accion", "cambio_pin");
+                States.storeNamedValue("navegar.origen_to_back_pin", "cambio_pin");
+                States.storeNamedValue("navegar.proxima_accion", "cambio_pin");
                 return "p/cambio_pin_reingreso_pin";
             },
             "hardware_error_pin": "p/close_hardware_error",

@@ -31,7 +31,7 @@
         "select": function () {
             delete sessionStorage["entered.selectAccount"];
             delete sessionStorage["temp.select_from_list.selectAccount"];
-            States.storeNamedValue("flujo_transferencia", "propia");
+            States.storeNamedValue("flujo.transferencia", "propia");
             return "p/transf_ingreso_monto";
         },
 

@@ -28,7 +28,7 @@
     "events": {
     
         "accept": function(){
-            States.storeNamedValue("proxima_accion_confirma", "deposito_comms_simulacion");
+            States.storeNamedValue("navegar.proxima_accion_confirma", "deposito_comms_simulacion");
 
             return "p/deposito_comms_simulacion";
         },
@@ -36,7 +36,7 @@
         "cancel": "p/close_salir",
 
         "back": function(){
-			    var siguiente = States.getStoredValue("proxima_accion");
+			    var siguiente = States.getStoredValue("navegar.proxima_accion");
                     if (siguiente && siguiente === "deposito_tercero") {
                         return "p/deposito_terceros_numero";
                     }else{
