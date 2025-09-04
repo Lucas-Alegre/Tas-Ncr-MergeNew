@@ -16,8 +16,8 @@
                 
             include(p/chunk/title_transaccion.json),
     
-            "subtitle": {
-                "text": "Por favor, ingrese el monto a pagar en $<br>Luego toque CONTINUAR",
+            "sub_subtitle_intermedio": {
+                "text": "Por favor, ingrese el monto a pagar en $<br>Luego toque continuar",
                 },
 
             include(p/chunk/nav_all.json),
@@ -32,12 +32,22 @@
             if (Vars.get("medio_pago_tarjeta") == "cheque") {
                 return "p/pago_ttcc_confirma";
             } else {
+                States.storeNamedValue("pago_ttcc.importe", "otro_monto");
                 return "p/pago_ttcc_cuenta_debito";
             }
         },
 
         "cancel": "p/close_salir",
-        "back": "p/pago_ttcc_tipo_medio",
+
+        "back": function(){
+            States.storeNamedValue("pago_ttcc.importe", null);
+            var tipoIngreso = States.getStoredValue("pago_ttcc.tipo_ingreso");
+            if(tipoIngreso == "seleccionoCuentas"){
+                return "p/pago_ttcc_tipo_pago";//return "p/pago_ttcc_tipo_medio";
+            }else if(tipoIngreso == "ingreso_resumen"){
+                return "p/pago_ttcc_resumen_tipo_ingreso";
+            }
+        },
     },
 
 }   
