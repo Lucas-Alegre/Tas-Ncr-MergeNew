@@ -30,7 +30,7 @@
 
             include(p/chunk/nav_cancelar.json),
 
-            "subtitle": {
+            "sub_subtitle": {
                 "text": "Sr. Cliente: Ud no se encuentra adherido al débito automático de su tarjeta de crédito. Si desea adherirse, seleccione la opción de pago total o mínimo",
             },
 
