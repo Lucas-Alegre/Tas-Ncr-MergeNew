@@ -24,6 +24,7 @@
 	            var monto = States.getStoredValue("monto");
                 
 	            tabla += "<table id='detalle'>";
+				tabla += "<tbody>";
 	            if(idtarjeta=="resumen") {
 	                tabla += "<tr><td>Pago de resumen</td><td></td></tr>";
 	                if(States.getStoredValue("pago_resumen_tipo")=="tarjeta") {
@@ -36,30 +37,31 @@
 	                tabla += "<tr><td>Número:</td><td>" + UserFuns.formatProductValue(tarjeta) + "</td></tr>";	         
 	                tabla += "<tr><td>Cuenta:</td><td>" + tarjeta.TNUCUENTA + "</td></tr>";
 	            }
-	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	            //tabla += "<tr><td>&nbsp;</td><td></td></tr>";
 	            tabla += "<tr><td>Forma de pago:</td><td>" + medio_pago_tarjeta + "</td></tr>";	         
 	            if(States.getStoredValue("medio_pago_tarjeta")=="debito") {
 	                var cuentadebito = UserFuns.getProduct("cuenta_debito");
 	                tabla += "<tr><td>" + UserFuns.formatProductName(cuentadebito) + "</td><td>" + UserFuns.formatProductValue(cuentadebito) + "</td></tr>";	            
 	            }
-	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	            //tabla += "<tr><td>&nbsp;</td><td></td></tr>";
 	             
 	            tabla += "<tr><td>Monto pago:</td><td>" + UserFuns.formatFloatMonto(monto) + "</td></tr>";
-	            tabla += "</table>";
+	            tabla += "</tbody>";
+				tabla += "</table>";
 
 	            States.setProperty("detalle", tabla);
 	        },
 			
               include(p/chunk/title_transaccion.json),
 
-            "subtitle": {
-                "text": "Toque CONTINUAR para confirmar el pago"
+            "sub_subtitle_chico": {
+                "text": "Toque continuar para confirmar el pago"
             },
 
-            include(p/chunk/nav_cancelar_continuar.json),
+            include(p/chunk/nav_volver_continuar.json),
     
 
-            "message": { 
+            "table_data": { 
                 "text": "<%= detalle %>"
             },
 
@@ -80,5 +82,6 @@
 	        }
 	    },
         "cancel": "p/close_salir",
+		"back": "p/pago_ttcc_tipo_medio",
     }
 }
