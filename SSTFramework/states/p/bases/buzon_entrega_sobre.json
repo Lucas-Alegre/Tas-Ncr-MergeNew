@@ -12,9 +12,15 @@
             include(p/chunk/title_transaccion.json),
 
             "subtitle": {
-                "text": "Por favor, introduzca los valores junto con el ticket en el sobre. Luego toque CONTINUAR",
+                "text": "Por favor, introduzca los valores junto con el ticket en el sobre. Luego toque continuar",
             },
 
+            "nav": {
+                    "nav3": {
+                        "text": "Continuar",
+                        "event": "enter"
+                    },
+            },
             include(p/chunk/nav_continuar.json),
 
             "video": {

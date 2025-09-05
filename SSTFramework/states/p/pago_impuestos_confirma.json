@@ -27,14 +27,14 @@
             include(p/chunk/title_transaccion.json),
 
 
-            "subtitle": {
-                "text": "Toque CONTINUAR para confirmar el pago"
+            "sub_subtitle_chico": {
+                "text": "Toque continuar para confirmar el pago"
             },
 
-            include(p/chunk/nav_cancelar_continuar.json),
+            include(p/chunk/nav_volver_continuar.json),
     
 
-            "message": { 
+            "table_data": { 
                 "text": "<%= detalle %>"
             },
 
@@ -46,10 +46,20 @@
 
         "enter": function() {
             if(States.getStoredValue("medio_pago")=="debito")
+				States.storeNamedValue("navegar.proxima_accion", "ir_a_pagos_impuestos");
                 return "p/pago_impuestos_reingreso_pin";
             else
                 return "p/pago_impuestos_comms_simulacion";
         },
+
+		"back": function(){
+			var tipoPago = States.getStoredValue("tipo_pago.impuesto");
+			if(tipoPago === "cheque") {
+				return "p/pago_impuestos_monto";
+			} else if(tipoPago === "debito") {
+				return "p/pago_impuestos_aclara";
+			}
+		},
 
 	    "cancel": "p/close_salir",
     }

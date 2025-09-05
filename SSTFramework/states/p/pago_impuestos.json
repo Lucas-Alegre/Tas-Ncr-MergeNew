@@ -30,7 +30,12 @@
                 "text": "Seleccione la forma de pago",
             },
 
-            include(p/chunk/nav_cancelar_anterior.json),
+            "nav": {
+				"nav0": {
+					"text" : "Volver",
+					"event": "back"
+				}
+			},
 
             "select": {							    
                 "select0" : {
@@ -58,11 +63,17 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),
 
-	    "debito" : "p/pago_impuestos_cuenta_debito",
+	    "debito" : function(){
+			States.storeNamedValue("tipo_pago.impuesto", "debito");
+			return "p/pago_impuestos_cuenta_debito";
+		},
 
-        "cheque" : "p/pago_impuestos_comprobantes",
+        "cheque" : function(){
+			States.storeNamedValue("tipo_pago.impuesto", "cheque");
+			return "p/pago_impuestos_comprobantes";
+		},
 
-        "back": "p/close_salir",
+        "back": "p/menu_principal_select",
 
         "cancel": "p/close_salir",
 

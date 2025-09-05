@@ -14,11 +14,13 @@
 	        include(p/chunk/title_transaccion.json),
 
       
-            "subtitle": {
+            "sub_subtitle": {
                 "text": "Seleccione una cuenta donde realizar el débito",
             },
 
-            include(p/chunk/nav_cancelar_anterior.json),
+            "nav":{
+                include(p/chunk/nav_btn_volver_first.json),
+            }
 
 		}
 	},
