@@ -141,9 +141,6 @@
 						"text": "apigp",
 						"value": "apigp"
 					},
-					"funciones": {
-						"menu_principal": ["DpTEf","DpTCh","DpMEf","DpMCh","DtTEf","DtTCh","DtMEf","DtMCh","DtNEf","DtNCh"]
-					}
 				},
 			},
             
