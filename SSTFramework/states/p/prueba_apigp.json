@@ -3,7 +3,9 @@
 
     "run": function() {
 
-        var url = "http://bsfactappwd1.nbsf.com.ar:9003/tas/";
+        //var url = "http://bsfactappwd1.nbsf.com.ar:9003/tas/";
+        var url = "http://172.21.222.181:8070/tas";
+        
 
         $.ajax({
             url: url,
@@ -21,16 +23,48 @@
             success: function (data, textStatus, xhr) {
                 console.log("[GET OK API-GP]", xhr.status, data);
                 States.storeNamedValue("test.apigp_response", { status: xhr.status, data: data });
-                States.handleEvent("yes");
+               //States.handleEvent("yes");
             },
 
             // Si sale error
             error: function (xhr, textStatus, errorThrown) {
                 console.error("[GET ERROR API-GP]", textStatus, errorThrown, xhr && xhr.responseText);
                 States.storeNamedValue("test.apigp_response", { status: xhr.status, error: errorThrown });
-                States.handleEvent("yes");
+                //States.handleEvent("yes");
             }
         });
+            //Prebo con https
+
+        var urll = "https://172.21.222.181:8070/tas";
+        
+    
+        $.ajax({
+            url: urll,
+            method: "GET",
+            headers: {                 
+                "dpb-sucursal": "0",
+                "dpb-terminal": "3570",
+                "dpb-operacion": "125156",
+                "dpb-tipo_terminal": "T600",
+                "dpb-operador": "TASUNI"
+            },
+            timeout: 7000,
+
+            // Si sale bien
+            success: function (data, textStatus, xhr) {
+                console.log("[GET OK API-GP]", xhr.status, data);
+                States.storeNamedValue("test.apigp_response", { status: xhr.status, data: data });
+                //States.handleEvent("yes");
+            },
+
+            // Si sale error
+            error: function (xhr, textStatus, errorThrown) {
+                console.error("[GET ERROR API-GP]", textStatus, errorThrown, xhr && xhr.responseText);
+                States.storeNamedValue("test.apigp_response", { status: xhr.status, error: errorThrown });
+                //States.handleEvent("yes");
+            }
+        });
+        States.handleEvent("yes");
     },
 
     "screens": {
