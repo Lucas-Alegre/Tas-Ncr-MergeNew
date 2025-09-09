@@ -73,6 +73,9 @@
 
 	"entrega_documentacion": "p/entrega_documentacion_check_dep",
 
+  //Prueba llegada a Api-Gp
+  "apigp": "p/prueba_apigp",
+
     include(p/chunk/event_timeout.json),
 
 }

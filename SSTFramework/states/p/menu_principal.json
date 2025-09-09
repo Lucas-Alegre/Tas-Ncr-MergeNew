@@ -133,6 +133,18 @@
 						"menu_principal": ["EdTVn","EdTVc","EdMVn","EdMVc","EdNVn","EdNVc"]
 					}
                 },  
+                //Prueba llegada para Api-GP
+				"select9": {
+					"text": "Prueba Api GP",
+					"event": "apigp",
+					"value": {
+						"text": "apigp",
+						"value": "apigp"
+					},
+					"funciones": {
+						"menu_principal": ["DpTEf","DpTCh","DpMEf","DpMCh","DtTEf","DtTCh","DtMEf","DtMCh","DtNEf","DtNCh"]
+					}
+				},
 			},
             
             include(p/chunk/nav_cancelar.json),            
