@@ -98,7 +98,7 @@
                 "text": "Toque continuar para confirmar el depósito"
             },
 
-            include(p/chunk/nav_cancelar_continuar.json),
+            include(p/chunk/nav_volver_continuar.json),
     
             "table_data": { 
                 "text": "<%= detalle %>"

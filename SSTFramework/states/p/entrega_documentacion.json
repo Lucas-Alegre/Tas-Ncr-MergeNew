@@ -38,7 +38,7 @@
             
 	        "nav": {
 	            "nav0": {
-	                "text": "Cancelar",
+	                "text": "Volver",
                     "event": "cancel"
 	            },
             }
@@ -49,8 +49,8 @@
 	    include(p/chunk/event_timeout.json),
 
 	    "select": "p/identificacion_destino",
-        "back": "p/identificacion",
-        "cancel": "p/close_salir",
+        "back": "p/menu_principal_select",
+        "cancel": "p/menu_principal_select",
 	    
 	    "otros" : function() {
 	        States.refreshState();

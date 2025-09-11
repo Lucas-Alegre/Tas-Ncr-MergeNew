@@ -35,7 +35,7 @@
                 }
               },
               //Prueba llegada para Api-GP
-				"select3": {
+				"select4": {
 					"text": "Prueba Api GP",
 					"event": "apigp",
 					"value": {
@@ -43,6 +43,17 @@
 						"value": "apigp"
 					},
 				},
+        "select3" : {
+                    "text": "Entrega de Documentacion",
+                    "event": "entrega_documentacion", 
+					"value": {
+					    "text": "Entrega de Documentacion",
+                        "value": "entrega_documentacion",
+                        },
+					"funciones": {
+						"menu_principal": ["EdTVn","EdTVc","EdMVn","EdMVc","EdNVn","EdNVc"]
+					}
+                },  
 
       },
 
