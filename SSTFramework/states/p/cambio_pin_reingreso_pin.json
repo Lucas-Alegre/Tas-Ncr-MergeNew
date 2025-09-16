@@ -3,8 +3,11 @@
 
     "events" : {
         include(p/chunk/event_back_origen_pin.json),
-	
-        "validacion_ok": function(){
+	    "validacion_ok": "p/cambio_pin1",
+
+        "validacion_error": "p/close_identificacion_incorrecta",
+
+		 /*"validacion_ok": function(){
 				var siguiente = States.getStoredValue("navegar.proxima_accion");
 				if (siguiente && siguiente === "pagoTTCC") {
 					States.storeNamedValue("navegar.proxima_accion", null);
@@ -20,11 +23,9 @@
 					States.storeNamedValue("navegar.proxima_accion", null);
 					return "p/transf_comms";
 				}else{
-					return "p/identificacion_manual_comms_cuentas";
+					States.storeNamedValue("navegar.proxima_accion", null);
+					return "p/cambio_pin1";
 				}
-		},
-
-        "validacion_error": "p/close_identificacion_incorrecta",
-
+		},*/
     }
 }

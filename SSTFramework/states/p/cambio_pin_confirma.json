@@ -8,10 +8,10 @@
 	        include(p/chunk/title_transaccion.json),
     
             "message": {
-                "text": "El cambio de PIN se ha realizado con éxito<br>Toque CONTINUAR para seguir"
+                "text": "El cambio de PIN se ha realizado con éxito<br>Toque continuar para seguir"
             },
 
-            include(p/chunk/nav_cancelar_continuar.json),
+            include(p/chunk/nav_continuar.json),
     
 		}
 	},
@@ -19,6 +19,6 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),
         "cancel": "p/close_salir",
-        "enter": "p/close_salir",
+        "enter":"p/deposito_pregunta_otra",
 	}
 }

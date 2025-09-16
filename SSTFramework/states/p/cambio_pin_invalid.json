@@ -21,6 +21,7 @@
 
 	"events" : {
         include(p/chunk/event_timeout.json),
+		"back": "p/close_salir",
 		"cancel": "p/close_salir",
 	    "pin_entered": "p/cambio_pin2",
     }

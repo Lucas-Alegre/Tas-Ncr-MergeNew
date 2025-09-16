@@ -30,7 +30,7 @@
     "deposito_terceros": "p/deposito_terceros_check_dep",
     
     "cambio_pin": {
-		"call": "p/redireccion_transaccion",
+		  "call": "p/redireccion_transaccion",
         "events": {
             "validacion_ok":function(){
                 States.storeNamedValue("navegar.origen_to_back_pin", "cambio_pin");
@@ -40,7 +40,7 @@
             "hardware_error_pin": "p/close_hardware_error",
             "cancel" : "p/close_salir"
         }
-	},
+	  },
 
 		"extraccion": {
 		    "call": "p/identificacion",
