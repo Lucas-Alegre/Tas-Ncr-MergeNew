@@ -23,8 +23,8 @@
 				"text" : "Menú Principal"
 			},
 
-            "subtitle": {
-                "text": "Seleccione la operación que desea realizar"
+            "sub_subtitle": {
+                "text": "¿Qué necesitás hacer?"
             },
 
 			"select": {

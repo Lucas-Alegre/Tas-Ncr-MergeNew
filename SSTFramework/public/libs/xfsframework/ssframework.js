@@ -97,6 +97,48 @@ var Vars = {
 
 var SSUtil = {
 
+     getBankLogo:function(){
+        var entity = Vars.get("entidad"); 
+        return entity; 
+    },
+    getBankColor: function() {
+        var bank = this.getBankLogo();
+
+        switch (bank) {
+            case "bersa":
+                color = "#8B0000"; 
+                break;
+            case "santacruz":
+                color = "#0047AB"; 
+                break;
+            case "sanjuan":
+                color = "#FFC107"; 
+                break;
+            default:
+                color = "#8B0000"; 
+        }
+
+        return color;
+    },
+    getLogoPatch: function (isDarkColor){
+        var bank = this.getBankLogo();
+        var logo = "";
+        switch (bank) {
+            case "bersa":
+                    logo = isDarkColor ? "/images/logo_bersa_dark.svg" : "/images/logo_bersa_white.svg";
+                    break;
+            case "santacruz":
+                   logo = isDarkColor ? "/images/logo_santacruz_dark.svg" : "/images/logo_santacruz_white.svg";
+                  break;
+            case "sanjuan": 
+                   logo= isDarkColor? "/images/bsj-full-logo-darker.svg": "/images/logo_sanjuan_white.svg";
+                   break;
+            default:
+                return logo;
+        } 
+        return logo;
+    },
+    
     run: function(callback) {
         try {
             callback();
@@ -964,6 +1006,19 @@ var States = {
         }
     },
 
+    updateTheme: function(state) {
+        var body = document.body;
+    
+        if (state === "p/menu_principal" || state === "p/menu_principal_no_cliente"|| state === "p/identificacion_start" || 
+            state === "p/status_inservice" || state === "p/check_printer") {
+            body.classList.add("theme-dark");
+            body.classList.remove("theme-white");
+        } else {
+            body.classList.add("theme-white");
+            body.classList.remove("theme-dark");
+        }
+    },
+
 runState: function (name, params, eventargs) {
 
         $("#state").html(name);
@@ -989,6 +1044,9 @@ runState: function (name, params, eventargs) {
             try{
                                 OnlyView.checkState();
             }catch(e){}
+            setTimeout(function () {
+                _this.updateTheme(name);
+            }, 0);
             if (!States.CurrentStateData.hasOwnProperty('screens'))
                 States.CurrentStateData.screens = {};
             if (params) {
