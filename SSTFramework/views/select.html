@@ -12,45 +12,65 @@
     ListenEvents:
         -
 -->
-<% if(select.select0) { %>
-    <div class="selectbtn selectbtnleft" id="select0">select0</div>
-<% } %>
+<div class="select-container">
+    <% if(select.select0) { %>
+        <div class="selectbtn" id="select0"><span>select0</span></div>
+    <% } %>
 
-<% if(select.select1) { %>
-    <div class="selectbtn selectbtnleft" id="select1">select1</div>
-<% } %>
+    <% if(select.select1) { %>
+        <div class="selectbtn" id="select1">
+            <span>select1</span>
+        </div>
+    <% } %>
 
-<% if(select.select2) { %>
-    <div class="selectbtn selectbtnleft" id="select2">select2</div>
-<% } %>
+    <% if(select.select2) { %>
+        <div class="selectbtn" id="select2">
+            <span>select2</span>
+        </div>
+    <% } %>
 
-<% if(select.select3) { %>
-    <div class="selectbtn selectbtnleft" id="select3">select3</div>
-<% } %>
+    <% if(select.select3) { %>
+        <div class="selectbtn" id="select3">
+            <span>select3</span>
+        </div>
+    <% } %>
 
-<% if(select.select4) { %>
-    <div class="selectbtn selectbtnright" id="select4">select4</div>
-<% } %>
+    <% if(select.select4) { %>
+        <div class="selectbtn" id="select4">
+            <span>select4</span>
+        </div>
+    <% } %>
 
-<% if(select.select5) { %>
-    <div class="selectbtn selectbtnright" id="select5">select5</div>
-<% } %>
+    <% if(select.select5) { %>
+        <div class="selectbtn" id="select5">
+            <span>select5</span>
+        </div>
+    <% } %>
 
-<% if(select.select6) { %>
-    <div class="selectbtn selectbtnright" id="select6">select6</div>
-<% } %>
+    <% if(select.select6) { %>
+        <div class="selectbtn" id="select6">
+            <span>select6</span>
+        </div>
+    <% } %>
 
-<% if(select.select7) { %>
-    <div class="selectbtn selectbtnright" id="select7">select7</div>
-<% } %>
+    <% if(select.select7) { %>
+        <div class="selectbtn" id="select7">
+            <span>select7</span>
+        </div>
+    <% } %>
 
-<% if(select.select8) { %>
-    <div class="selectbtn selectbtnleft" id="select8">select8</div>
-<% } %>
+    <% if(select.select8) { %>
+        <div class="selectbtn" id="select8">
+            <span>select8</span>
+        </div>
+    <% } %>
 
-<% if(select.select9) { %>
-    <div class="selectbtn selectbtnright" id="select9">select9</div>
-<% } %>
+    <% if(select.select9) { %>
+        <div class="selectbtn" id="select9">
+            <span>select9</span>
+        </div>
+    <% } %>
+</div>
 
 <script>
     $(function () {
@@ -70,38 +90,10 @@
             $.each(component_data[key], function(subkey, value) {
                 element.data(subkey, value);
                 if(subkey=="text")
-                    element.html(value);
+                    //element.html(value);
+                    element.find("span").html(value);
             });
         });
 
-        ////////////////////////
-        ///centrado vertical
-        SSFramework.centerInDiv(".selectbtn");
-
-        ////////////////////////
-        //tween inicial
-        for (var c = 0; c < 10; c++) {
-            var tweendata = "";
-            var el = $("#select" + c);
-            if(el) {
-				switch (true) {
-					case (c < 4):
-						tweendata = TweenHelpers.tweenSide(el, "left", false, 500, c);
-						break;
-					case (c > 3 && c < 8):
-						tweendata = TweenHelpers.tweenSide(el, "right", false, 500, c - 4);
-						break;
-					case (c == 8):
-						tweendata = TweenHelpers.tweenSide(el, "left", false, 500, 4);
-						break;
-					case (c == 9):
-						tweendata = TweenHelpers.tweenSide(el, "right", false, 500, 4);
-						break;
-					default:
-						break;
-				}
-            }
-            $("#select" + c).tween(tweendata);
-        }
     });
 </script>
