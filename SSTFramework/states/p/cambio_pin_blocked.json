@@ -17,7 +17,7 @@
 			},
 			"nav": {
 				"nav1": {
-					"text": "Salir",
+					 "text": "Salir",
                     "event": "cancel"
 				}
 			}

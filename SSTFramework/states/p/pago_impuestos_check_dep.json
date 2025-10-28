@@ -4,9 +4,9 @@
     "events": {
         "hardware_error_dep": "p/close_hardware_error",
         "check_complete": {
-            "call": "p/redireccion_transaccion",	
+            "call": "p/identificacion",	
             "events": {
-                "validacion_ok" : "p/pago_impuestos",
+                "identificacion_ok" : "p/pago_impuestos",
                 "hardware_error_pin": "p/close_hardware_error",
                 "cancel" : "p/close_salir"
             }

@@ -27,7 +27,7 @@
 
 
 	"events": { 	
-	    "print_ok": "p/deposito_pregunta_otra",
+	    "print_ok": "p/close_salir",
 	    "hardware_error_ptr": "p/close_printer_error"
     }
 

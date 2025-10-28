@@ -21,7 +21,7 @@
                 
             include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle_intermedio": {
+            "subtitle": {
                 "text": "Por favor, ingrese el monto total de<br>los cheques a depositar",
                 },
 
@@ -45,7 +45,6 @@
 			if (States.getStoredValue("data.menu_principal").value =="entrega_documentacion"){
 				States.handleEvent("continue_entrega_documentacion");
 			} else {
-                 States.storeNamedValue("navegar.proxima_accion_confirma", "deposito_comms_cheque_simulacion");
 				States.handleEvent("continue");
 			}
     	},

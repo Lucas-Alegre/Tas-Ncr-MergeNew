@@ -18,9 +18,9 @@
                 
             include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle_intermedio": {
-                "text": "Por favor, ingrese el monto a pagar en $<br>Luego toque continuar",
-            },
+            "subtitle": {
+                "text": "Por favor, ingrese el monto a pagar en $<br>Luego toque CONTINUAR",
+                },
 
             include(p/chunk/nav_all.json),
     

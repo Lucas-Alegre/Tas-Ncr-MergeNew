@@ -7,7 +7,7 @@
 			
 		    include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle_intermedio": { 
+            "subtitle": { 
                 "text": "Los PIN ingresados son diferentes<br>Por favor, ingrese el nuevo PIN" 
             },
 
@@ -16,7 +16,7 @@
 
 	"properties" : {
 	    include(p/chunk/event_timeout.json),
-	    "storename": "newpin1", //"pinblocknew",
+	    "storename": "newpin1",
 	},
 
 

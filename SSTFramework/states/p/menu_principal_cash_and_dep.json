@@ -14,12 +14,6 @@
 	    "default" : {
 		
 			"update": function(screen) {
-				if (States.getStoredValue("no_cliente") === true) {
-					screen.select.select5.text = "Depósito a terceros";
-				} else {
-					screen.select.select5.text = "Depósito";
-				}
-
 				UserFuns.deleteUnenabledSelects(screen.select, "menu_principal");
 				
 				UserFuns.reorganizeSelects(screen.select);
@@ -29,8 +23,8 @@
 				"text" : "Menú Principal"
 			},
 
-            "sub_subtitle": {
-                "text": "¿Qué necesitás hacer?"
+            "subtitle": {
+                "text": "Seleccione la operación que desea realizar"
             },
 
 			"select": {
@@ -61,17 +55,31 @@
 					}
                 },
 
-				"select5": {
-					"text": "Depósito",
-					"event": "depositoOpcion",
+
+				"select1" : {
+				    "text": "Depósito a cuentas propias",
+					"event": "deposito", 
 					"value": {
-						"text": "Depósito",
-						"value": "deposito"
-					},
+					    "text": "Depósito a cta. propias",
+                        "value": "deposito",
+                        },
 					"funciones": {
-						"menu_principal": ["DpTEf","DpTCh","DpMEf","DpMCh","DtTEf","DtTCh","DtMEf","DtMCh","DtNEf","DtNCh"]
+						"menu_principal": ["DpTEf","DpTCh","DpMEf","DpMCh"]
 					}
-				},
+                },
+    
+
+                "select5" : {
+                    "text": "Depósito a cuentas de terceros",
+                    "event": "deposito_terceros", 
+					"value": {
+					    "text": "Depósito a cta. terceros",
+                        "value": "deposito_terceros",
+                        },
+					"funciones": {
+						"menu_principal": ["DtTEf","DtTCh","DtMEf","DtMCh","DtNEf","DtNCh"]
+					}
+                },
 
 				"select2" : {
 				    "text": "Transferencias",
@@ -99,10 +107,10 @@
 
     
                 "select3" : {
-                    "text": "Pagos de <br> Tarjetas de Credito",
+                    "text": "Pagos TTCC",
                     "event": "pago_ttcc",
 					"value": {
-					    "text": "Pagos Tarjeta de credito",
+					    "text": "Pagos TTCC",
                         "value": "pago_ttcc",
                         },
 					"funciones": {

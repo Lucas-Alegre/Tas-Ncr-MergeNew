@@ -36,14 +36,13 @@
 	            var deposito_tipo  = States.getStoredValue("deposito_tipo");
 	            var tabla = "";
 
-	            tabla += "<table id='detalle'>";
-				tabla += "<tbody>";
+	            tabla += "<table id='detalle_chico'>";
 	            //tabla += "<tr><td colspan='2' style='text-align:center'>Nombre</td></tr>";
                 //tabla += "<tr><td>&nbsp;</td><td></td></tr>";
 				if(States.getStoredValue("data.menu_principal").value =="entrega_documentacion") {
-	                tabla += "<tr><td>Tipo de Deposito: </td><td>" + tipo.text + "</td></tr>";
+	                tabla += "<tr><td class='detalle_chico_td_left'>Tipo de Deposito: </td><td>" + tipo.text + "</td></tr>";
                 } else {
-					tabla += "<tr><td>" + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
+					tabla += "<tr><td class='detalle_chico_td_left'>" + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
 				};  
 				tabla += "<tr><td>&nbsp;</td><td></td></tr>";
 	            //tabla += "<tr><td>Monto a Depositar: </td><td>" + UserFuns.formatMonto(States.getStoredValue("monto"), "", 0) + "</td></tr>";
@@ -87,20 +86,19 @@
 					tabla += "<tr><td>&nbsp;</td><td></td></tr>";
 	                //tabla += "<tr><td colspan='2' style='text-align:center'>Advertencia: la cantidad máxima de billetes a poner en el sobre es de 40</td></tr>";
 	            }
-				tabla += "</tbody>";
 	            tabla += "</table>";
 	            States.setProperty("detalle", tabla);
             },
 			
             include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle_chico": {
-                "text": "Toque continuar para confirmar el depósito"
+            "subtitle": {
+                "text": "Toque CONTINUAR para confirmar el depósito"
             },
 
-            include(p/chunk/nav_volver_continuar.json),
+            include(p/chunk/nav_cancelar_continuar.json),
     
-            "table_data": { 
+            "message": { 
                 "text": "<%= detalle %>"
             },
 
@@ -111,16 +109,7 @@
 	    include(p/chunk/event_timeout.json),
 
 	    "enter": "cim/ingresar_billetes",
-		"back": function(){
-			var siguiente = States.getStoredValue("navegar.proxima_accion");
-				if (siguiente && siguiente === "deposito_tercero") {
-					States.storeNamedValue("navegar.proxima_accion", null);
-					return "p/deposito_terceros_numero";
-				}else{
-					return "p/deposito_cuenta_propia"; 
-				}
-			
-		},		
+		
         "cancel": "p/close_salir"
 	}
 }

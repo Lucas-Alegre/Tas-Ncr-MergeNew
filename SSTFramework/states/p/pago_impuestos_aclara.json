@@ -17,7 +17,7 @@
 	    	
             include(p/chunk/title_transaccion.json),
 
-            "sub_subtitle_cheque": {
+            "subtitle": {
                 "text": "Diferencia de importes"
             },
 
@@ -26,7 +26,7 @@
                 "text": "En caso de diferir el importe por mi ingresado con el correspondiente a la cancelacion del impuesto/servicio que involucra esta operación, AUTORIZO al banco a debitar de mi cuenta la diferencia entre el importe consignado y el que corresponde abonar por el impuesto/servicio respectivo."
             },
 
-            include(p/chunk/nav_volver_continuar.json),
+            include(p/chunk/nav_cancelar_continuar.json),
 
 		}
 	},
@@ -34,7 +34,6 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),
 	    "enter": "p/pago_impuestos_confirma",
-        "back": "p/pago_impuestos_monto",
         "cancel": "p/close_salir",
     }
 }

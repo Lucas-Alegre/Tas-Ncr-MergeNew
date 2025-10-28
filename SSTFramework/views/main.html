@@ -10,32 +10,8 @@
 	<% include title.html %>
 <% } %>
 
-<% if(locals["subtitle"]) {%>
-	<% include petersen/subtitle.html %>
-<% } %>
-
-<% if(locals["sub_subtitle"]) {%>
-    <% include sub_subtitle.html %>
-<% } %>
-
-<% if(locals["sub_subtitle_chico"]) {%>
-    <% include sub_subtitle_chico.html %>
-<% } %>
-
-<% if(locals["sub_subtitle_intermedio"]) {%>
-    <% include sub_subtitle_intermedio.html %>
-<% } %>
-
-<% if(locals["sub_subtitle_cheque"]) {%>
-    <% include sub_subtitle_cheque.html %>
-<% } %>
-
 <% if(locals["message"]) {%>
 	<% include message.html %>
-<% } %>
-
-<% if(locals["table_data"]) { %>
-    <% include table_data.html %>
 <% } %>
 
 <% if(locals["messagecenter"]) {%>
@@ -88,14 +64,6 @@
 	<% include select.html %>
 <% } %>
 
-<% if(locals["selectMenu"]) {%>
-	<% include selectMenu.html %>
-<% } %>
-
-<% if(locals["selectAccount"]) {%>
-	<% include selectAccount.html %>
-<% } %>
-
 <% if(locals["version"]) {%>
 	<% include version.html %>
 <% } %>
@@ -105,6 +73,10 @@
 <% } %>
 
 <!-- Componentes Petersen -->
+
+<% if(locals["subtitle"]) {%>
+	<% include petersen/subtitle.html %>
+<% } %>
 
 <% if(locals["nav"]) {%>
 	<% include petersen/nav.html %>

@@ -18,7 +18,7 @@
      
             include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle": {
+            "subtitle": {
                 "text": "Bienvenido <%= States.getStoredValue('customer_name') %><br>Por favor, seleccione la cuenta de origen",
             },
         }
@@ -29,17 +29,9 @@
                 
         "sin_opciones": "p/close_sin_opciones",
 
-        "select": function () {
-            delete sessionStorage["entered.selectAccount"];
-            delete sessionStorage["temp.select_from_list.selectAccount"];
-            return "p/transf_cuenta_destino_tipo";
-        },
+        "select": "p/transf_cuenta_destino_tipo",
 
-        "back": function () {
-            delete sessionStorage["entered.selectAccount"];
-            delete sessionStorage["temp.select_from_list.selectAccount"];
-            return "p/menu_principal_select";
-        },
+        "back": "p/menu_principal_select",
 
         "cancel": "p/close_salir"
 

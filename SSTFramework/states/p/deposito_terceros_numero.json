@@ -15,7 +15,7 @@
 
 	        include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle_intermedio": {			
+            "subtitle": {			
                 "text" : "Ingrese el número de cuenta"
 	        },
 
@@ -24,17 +24,7 @@
 	},
 
 	"events" : {
-	    "accept": function(){
-            States.storeNamedValue("navegar.proxima_accion", "deposito_tercero");
-            var tipo = States.getStoredValue("flow.tipo_deposito");
-            if(tipo==="efectivo"){           
-                //States.storeNamedValue("flow.tipo_deposito", null);
-                return "cim/check_status";
-            }else{
-                //States.storeNamedValue("flow.tipo_deposito", null);
-                return  "cheque/check_status";
-            }
-        },
+	    "accept": "p/deposito_tipo_terceros",
         "back": "p/deposito_terceros_numero_sucursal",
         "cancel": "p/close_salir",
 

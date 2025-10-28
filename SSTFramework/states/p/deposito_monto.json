@@ -16,34 +16,20 @@
                 
             include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle_intermedio": {
+            "subtitle": {
                 "text": "Por favor, ingrese el monto a depositar",
                 },
 
-            include(p/chunk/nav_volver_continuar.json),
+            include(p/chunk/nav_cancelar_continuar.json),
     
         }
     },
 
     "events": {
     
-        "accept": function(){
-            States.storeNamedValue("navegar.proxima_accion_confirma", "deposito_comms_simulacion");
-
-            return "p/deposito_comms_simulacion";
-        },
+        "accept": "p/deposito_comms_simulacion",
 
         "cancel": "p/close_salir",
-
-        "back": function(){
-			    var siguiente = States.getStoredValue("navegar.proxima_accion");
-                    if (siguiente && siguiente === "deposito_tercero") {
-                        return "p/deposito_terceros_numero";
-                    }else{
-                        return "p/deposito_cuenta_propia"; 
-                    }
-			
-		},
 
     },
 

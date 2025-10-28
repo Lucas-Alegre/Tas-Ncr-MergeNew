@@ -14,7 +14,7 @@
         
             include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle_intermedio": {
+            "subtitle": {
                 "text": "Por favor, ingrese el número de cuenta",
                 },
 
@@ -26,10 +26,7 @@
     "events": {
         include(p/chunk/event_timeout.json),
 
-        "accept": function(){
-            States.storeNamedValue("flujo.transferencia", "terceros");
-            return "p/transf_ingreso_monto";
-        },
+        "accept": "p/transf_ingreso_monto",
 
         "back": "p/transf_cuenta_destino_terceros_sucursal",
         "cancel": "p/close_salir",

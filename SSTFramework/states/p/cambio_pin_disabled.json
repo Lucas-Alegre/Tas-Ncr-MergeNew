@@ -16,8 +16,8 @@
 				"text": "Clave de canales Deshabilitada"
 			},
 			"nav": {
-				"nav0": {
-					"text": "Salir",
+				"nav1": {
+					 "text": "Salir",
                     "event": "cancel"
 				}
 			}

@@ -10,10 +10,7 @@
 -->
 
 <div class="title" id="title">
-    <div id="title-bar">
-        <div class="nav-left"><img src="" class="icon-img" alt="" width="200" height="40"></div>
-        <div class="nav-right" id="transaction-title"><%- title.text %></div>
-    </div>
+    <%- title.text %>
 </div>
 
 <script>
@@ -23,17 +20,5 @@
 
         var tit = $(".title");
         tit.tween(TweenHelpers.tweenSide(tit, "top", false, 200, 0));
-        
-        var logo = document.querySelector(".icon-img");
-        logo.alt="Logo de banco";
-        var current = States.CurrentState;
-        if (logo) {
-            if (current === "p/menu_principal" || current === "p/identificacion_start" || current === "p/menu_principal_no_cliente" ) {
-                logo.src = SSUtil.getLogoPatch(true);
-            } else {
-                logo.src = SSUtil.getLogoPatch(false);
-            }
-        }
-
     });
 </script>

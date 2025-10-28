@@ -15,13 +15,11 @@
 	        include(p/chunk/title_transaccion.json),
 
       
-            "sub_subtitle": {
+            "subtitle": {
                 "text": "Seleccione una cuenta donde realizar el débito",
             },
 
-            "nav":{
-                include(p/chunk/nav_btn_volver_first.json),
-            }
+            include(p/chunk/nav_cancelar_anterior.json),
 
 		}
 	},
@@ -32,21 +30,10 @@
         
         "sin_opciones": "p/close_sin_opciones",
 
-        "select": function(){
-            States.storeNamedValue("pago_ttcc.importe", null);
-            return "p/pago_ttcc_confirma";
-        },
+        "select": "p/pago_ttcc_confirma",
 
-        "cancel": "p/close_salir",
-
-        "back": function(){
-            var tipoIngreso = States.getStoredValue("pago_ttcc.importe");
-            if(tipoIngreso == "otro_monto"){
-                return "p/pago_ttcc_monto";
-            }else{
-                return "p/pago_ttcc_tipo_pago";
-            }
-        }
+            "cancel": "p/close_salir",
+        "back": "p/pago_ttcc_tipo_pago",
 
     }
 }

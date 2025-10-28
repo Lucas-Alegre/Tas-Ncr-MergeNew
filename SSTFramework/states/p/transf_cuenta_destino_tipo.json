@@ -19,13 +19,11 @@
        
             include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle": {
+            "subtitle": {
                 "text": "Por favor, seleccione el tipo de cuenta",
             },
 
-            "nav":{
-                include(p/chunk/nav_btn_volver_first.json),
-            },
+            include(p/chunk/nav_cancelar_anterior.json),
 
             "select": {							    
                 "select0" : {
@@ -53,17 +51,8 @@
     "events": {
         include(p/chunk/event_timeout.json),
 
-        "propia": function(){
-            States.storeNamedValue("navegar.proxima_accion", "ir_a_transferencia_propia");
-            States.storeNamedValue("navegar.origen_to_back_pin", "depositante");
-            return  "p/transf_cuenta_destino_propia";
-        } ,
-        "terceros": function() {
-            States.storeNamedValue("navegar.proxima_accion", "ir_a_transferencia_terceros");
-            States.storeNamedValue("navegar.origen_to_back_pin", "depositante");
-            return "p/identificacion_manual_comms_cuentas";
-        },
-        
+        "propia": "p/transf_cuenta_destino_propia",
+        "terceros": "p/transf_terceros_tipo",
         "back": "p/transf_cuenta_origen",
         "cancel": "p/close_salir",
     },

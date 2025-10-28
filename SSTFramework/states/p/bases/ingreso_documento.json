@@ -46,7 +46,7 @@
 
 			"numkeyboard": {},
 
-            include(p/chunk/nav_solicitud_documento.json),
+            include(p/chunk/nav_all.json),
     
         }
 	},

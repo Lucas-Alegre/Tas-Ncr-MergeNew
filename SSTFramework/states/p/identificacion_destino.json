@@ -11,8 +11,8 @@
 			            
 	        include(p/chunk/title_transaccion.json),
 
-            "sub_subtitle_intermedio": {			
-                "text" : "Ingrese el número de cliente de<br>destino y toque continuar"
+            "subtitle": {			
+                "text" : "Ingrese el número de cliente de<br>destino y toque CONTINUAR"
             },
     
 		}

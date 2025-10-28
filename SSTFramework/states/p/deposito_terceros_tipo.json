@@ -18,13 +18,6 @@
 	    include(p/chunk/event_timeout.json),
         "cancel": "p/close_salir",
 	    "select": "p/deposito_terceros_numero_sucursal",
-        "back": function(){
-			var tipoAccion = States.getStoredValue("flow.tipo_accion");
-			if (tipoAccion === "deposito_tercero") {
-				return "p/deposito_tipo_terceros";
-			} else {
-				return "p/deposito_selector";
-			}
-		},
+        "back": "p/menu_principal_select",
 	}
 }

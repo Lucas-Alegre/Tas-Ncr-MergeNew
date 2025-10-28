@@ -97,48 +97,6 @@ var Vars = {
 
 var SSUtil = {
 
-    getBankLogo:function(){
-        var entity = Vars.get("entidad"); 
-        return entity; 
-    },
-    getBankColor: function() {
-        var bank = this.getBankLogo();
-
-        switch (bank) {
-            case "bersa":
-                color = "#8B0000"; 
-                break;
-            case "santacruz":
-                color = "#0047AB"; 
-                break;
-            case "sanjuan":
-                color = "#FFC107"; 
-                break;
-            default:
-                color = "#8B0000"; 
-        }
-
-        return color;
-    },
-    getLogoPatch: function (isDarkColor){
-        var bank = this.getBankLogo();
-        var logo = "";
-        switch (bank) {
-            case "bersa":
-                    logo = isDarkColor ? "/images/logo_bersa_dark.svg" : "/images/logo_bersa_white.svg";
-                    break;
-            case "santacruz":
-                   logo = isDarkColor ? "/images/logo_santacruz_dark.svg" : "/images/logo_santacruz_white.svg";
-                  break;
-            case "sanjuan": 
-                   logo= isDarkColor? "/images/bsj-full-logo-darker.svg": "/images/logo_sanjuan_white.svg";
-                   break;
-            default:
-                return logo;
-        } 
-        return logo;
-    },
-
     run: function(callback) {
         try {
             callback();
@@ -1005,18 +963,6 @@ var States = {
             console.log("invalid state type: " + type);
         }
     },
-    updateTheme: function(state) {
-        var body = document.body;
-    
-        if (state === "p/menu_principal" || state === "p/menu_principal_no_cliente"|| state === "p/identificacion_start" || 
-            state === "p/status_inservice" || state === "p/check_printer") {
-            body.classList.add("theme-dark");
-            body.classList.remove("theme-white");
-        } else {
-            body.classList.add("theme-white");
-            body.classList.remove("theme-dark");
-        }
-    },
 
 runState: function (name, params, eventargs) {
 
@@ -1043,9 +989,6 @@ runState: function (name, params, eventargs) {
             try{
                                 OnlyView.checkState();
             }catch(e){}
-            setTimeout(function () {
-                _this.updateTheme(name);
-            }, 0);
             if (!States.CurrentStateData.hasOwnProperty('screens'))
                 States.CurrentStateData.screens = {};
             if (params) {
@@ -2061,33 +2004,85 @@ runState: function (name, params, eventargs) {
         
         ///asks for a card entry
         CardEntry: function(statedata) {
-            console.log("Reiniciando variables de sesión al iniciar identificación");
-            States.storeNamedValue("no_cliente", null);
-            SSUtil.setLocal("identified", false);
-            States.storeNamedValue("tipo_identificacion", null);
-            States.storeNamedValue("tipo_usuario", null);
-            States.storeNamedValue("customer", null);
-            States.storeNamedValue("origen_id", null);
-            States.storeNamedValue("origen_id_type", null);
-            States.storeNamedValue("customer_name", null);
-            States.storeNamedValue("navegar.proxima_accion", null);
-            States.storeNamedValue("data.menu_principal", { text: "" });
-               
-            SSFramework.displayScreen(statedata.screens.idc_ok);
+            
+            // First evaluate enabled identifying modes
+            var identifyingModes = UserFuns.getEnabledIdentifyingModes();
+            States.storeNamedValue("identifying_modes", identifyingModes);
+            
+            // If ttcc not enabled return
+            if ( !identifyingModes.includes("T") ) {
+                SSFramework.displayScreen(statedata.screens.no_dip);
+                if ( identifyingModes == "M" )
+                    States.handleEvent("identificacion_manual");
+                else if ( identifyingModes == "N" )
+                    States.handleEvent("no_cliente");
+                return;
+            }
+            
+
             var idc = new XFSDevice("idc");
+            var _this = this;
 
             idc.available()
-                .then(function (res) {
-                if (!res.available) throw "lector_no_disponible";
+
+            .then(function (val) {
+
+                if (val.available == false)
+                    throw "no_idc";
+                
+            })
+            .then(function () {
                 return idc.getInfo("WFS_INF_IDC_CAPABILITIES");
-                })
-                .then(function (caps) {
-                var tipo = SSUtil.getObj("lpBuffer.fwType", caps); // 1 = motorizado
-                States.storeNamedValue("tipo_lector", tipo);
-                }).catch(function (ex) {
+            })
+
+            .then(function (caps) {
+
+                if (SSUtil.getObj("lpBuffer.fwType", caps) == 1) {
+                    SSFramework.displayScreen(statedata.screens.idc_ok);
+                } else {
+                    SSFramework.displayScreen(statedata.screens.idc_ok_dip);
+                }
+
+            })
+
+            .then(function () {
+
+                States.registerCustomEvent("state_exit", function (evt) {
+                    idc.cancelAsyncRequest({ RequestID: 0 });
+                });
+
+                return idc.execute("WFS_CMD_IDC_READ_RAW_DATA");                
+            })
+
+            .then(function (result) {
+
+                if (result.hResult == 0) {
+                    var arr = result.lpBuffer;
+                    var tracks = {};
+                    for (var c = 0; c < arr.length; c++) {
+                        if (arr[c].wDataSource == 1)
+                            tracks.track1 = arr[c].lpbData;
+                        if (arr[c].wDataSource == 2)
+                            tracks.track2 = arr[c].lpbData;
+                        if (arr[c].wDataSource == 4)
+                            tracks.track3 = arr[c].lpbData;
+                    }
+
+                    States.storeValue(JSON.stringify(tracks));
+                    States.handleEvent("card_read");                                   
+
+
+                } else {
+                    if (result.hResult != -4)
+                        throw "no_idc";
+                }
+
+            })
+
+            .catch(function (ex) {
                 SSFramework.displayScreen(statedata.screens.idc_error);
                 States.handleEvent("hardware_error_idc");                                   
-                });
+            });
 
         },
 

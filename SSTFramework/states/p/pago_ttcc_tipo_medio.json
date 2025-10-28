@@ -34,9 +34,7 @@
                 "text": "Seleccione la forma de pago",
             },
 
-            "nav":{
-                include(p/chunk/nav_btn_volver_first.json),
-            },
+            include(p/chunk/nav_cancelar_anterior.json),
 
             "select": {							    
                 "select0" : {

@@ -2,8 +2,7 @@
     "base" : include(p/bases/reingreso_pin.json),
 
     "events" : {
-        include(p/chunk/event_back_origen_pin.json),
-
+	
         "validacion_ok": "p/transf_comms",
 
         "validacion_error": "p/close_identificacion_incorrecta",

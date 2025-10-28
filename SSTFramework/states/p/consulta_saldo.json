@@ -9,7 +9,6 @@
 	            var tabla = "";
 	            var cuenta = UserFuns.getProduct("cuenta");
 	            tabla += "<table id='detalle'>";
-				tabla += "<tbody>";
 	            tabla += "<tr><td>" + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
 	            tabla += "<tr><td></td><td></td></tr>";
 	            tabla += "<tr><td>Saldo Operativo: </td><td>" + UserFuns.formatMonto(cuenta.CSA_DISPO) + "</td></tr>";
@@ -18,21 +17,20 @@
 	            tabla += "<tr><td>Saldo 48hs:</td><td>" + UserFuns.formatMonto(cuenta.CSAFLOH2) + "</td></tr>";
 	            tabla += "<tr><td>Dep. Cheque a Conf:</td><td>" + UserFuns.formatMonto(cuenta.CSAFLOH1) + "</td></tr>";
 	            tabla += "<tr><td>Depósito a Conf.:</td><td>" + UserFuns.formatMonto(cuenta.CSAFLOE1) + "</td></tr>";
-				tabla += "</tbody>";
 	            tabla += "</table>";
 	            States.setProperty("detalle", tabla);
             },
 			
             include(p/chunk/title_transaccion.json),
 
-            "sub_subtitle_chico": {
-                "text": "Toque continuar para imprimir la consulta"
+            "subtitle": {
+                "text": "Toque CONTINUAR para imprimir la consulta"
             },
 
-            include(p/chunk/nav_volver_continuar.json),
+            include(p/chunk/nav_cancelar_continuar.json),
     
 
-            "table_data": { 
+            "message": { 
                 "text": "<%= detalle %>"
             },
 
@@ -43,6 +41,6 @@
 	    include(p/chunk/event_timeout.json),
 
 	    "enter": "p/consulta_saldo_print",
-		"back": "p/consultas",
+        "cancel": "p/close_salir",
 	}
 }

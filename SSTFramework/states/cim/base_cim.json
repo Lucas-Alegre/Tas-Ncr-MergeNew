@@ -11,7 +11,7 @@ ssfw = {
                     var cuenta = UserFuns.getProduct("tarjeta_pago");
                     var monto_total = SSUtil.intAsFloat(cuenta.CSA_DISPO);
                     var monto_minimo = SSUtil.intAsFloat(cuenta.CSA_CONFO);
-                    screen.sub_subtitle.text = "Monto a pagar:" + "<br>" +
+                    screen.subtitle.text = "Monto a pagar:" + "<br>" +
                                             "Pago Total: $ " + monto_total + "<br>" +
                                             "Pago mínimo: $ " + monto_minimo + "<br>" +
                                             "El importe deberá ser ingresado en billetes, no se acepta dinero metálico. En caso de existir remanente, el mismo será imputado en la próxima liquidación.";
@@ -22,7 +22,7 @@ ssfw = {
 
 			include(p/chunk/title_transaccion.json),
 
-            "sub_subtitle": {
+            "subtitle": {
                 "text": "",
             },
 
@@ -105,16 +105,16 @@ ssfw = {
             },
 
 			"nav": {
-				"nav0": {
-			        "text": "Cancelar",
+				"nav1": {
+			        "text": "Cancelar depósito",
                     "event": "module_cancel",
 			    },
-				"nav1": {
-			        "text": "Agregar",
+				"nav2": {
+			        "text": "Agregar más billetes",
                     "event": "add_bills",
 			    },
 				"nav3": {
-			        "text": "Confirmar",
+			        "text": "confirmar depósito",
                     "event": "confirm",
 			    },
 			},
@@ -128,7 +128,7 @@ ssfw = {
 	        },
 
             "subtitle": {			
-                "text" : "¿Necesita más tiempo?"
+                "text" : "Necesita más tiempo?"
             },
 
 	        "nav": {

@@ -15,7 +15,7 @@
     
             include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle": {
+            "subtitle": {
                 "text": "Por favor, seleccione la cuenta destino",
             },
         }
@@ -25,22 +25,12 @@
         include(p/chunk/event_timeout.json),
                 
         "sin_opciones": "p/close_sin_opciones",
-        
+
+        "select": "p/transf_ingreso_monto",
+
+        "back": "p/transf_cuenta_destino_tipo",
+
         "cancel": "p/close_salir",
-
-        "select": function () {
-            delete sessionStorage["entered.selectAccount"];
-            delete sessionStorage["temp.select_from_list.selectAccount"];
-            States.storeNamedValue("flujo.transferencia", "propia");
-            return "p/transf_ingreso_monto";
-        },
-
-        "back": function () {
-            delete sessionStorage["entered.selectAccount"];
-            delete sessionStorage["temp.select_from_list.selectAccount"];
-            return "p/transf_cuenta_destino_tipo";
-        },
-
 
     },
 

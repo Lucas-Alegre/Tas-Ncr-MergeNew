@@ -27,23 +27,7 @@
     },
 
     "events": {
-        "comms_ok": function(){
-            var siguiente = States.getStoredValue("navegar.proxima_accion");
-
-            if (siguiente && siguiente === "ir_a_transferencia_terceros") {
-                //States.storeNamedValue("navegar.proxima_accion", null);
-                return "p/transf_terceros_tipo";
-            }
-            if (siguiente && siguiente === "ir_a_pagos_impuestos") {
-                States.storeNamedValue("navegar.proxima_accion", null);
-                return "p/pago_impuestos_cuenta_debito";
-            }
-            if(siguiente && siguiente === "cambio_pin") {
-                States.storeNamedValue("navegar.proxima_accion", null);
-                return "p/cambio_pin1";
-            }
-            return "p/identificacion_manual_comms_diasrestantes";
-        },
+        "comms_ok": "p/identificacion_manual_comms_diasrestantes", 
         "invalid_pin": "p/identificacion_pin_error",
         "blocked_pin": "p/identificacion_pin_bloqueado",
         "disabled_pin": "p/identificacion_pin_deshabilitado",

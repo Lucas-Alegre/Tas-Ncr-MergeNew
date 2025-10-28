@@ -15,7 +15,7 @@
                 
             include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle_intermedio": {
+            "subtitle": {
                 "text": "Por favor, ingrese la cantidad de cheques",
                 },
 
@@ -31,17 +31,16 @@
         "cancel": "p/close_salir",
 
         "back": function() {
-			var siguiente = States.getStoredValue("navegar.proxima_accion");
-                    if (siguiente && siguiente === "deposito_tercero") {
-                        //States.storeNamedValue("navegar.proxima_accion", null);
-                        return "p/deposito_terceros_numero";
-                    }else{
-                        if (States.getStoredValue("data.menu_principal").value == "entrega_documentacion")
-						    return "p/seleccion_tipo_deposito";
-                        else
-                        //States.storeNamedValue("navegar.proxima_accion", null);
-                        return "p/deposito_cuenta_propia"; 
-                    }
+			if ( States.getStoredValue("seleccion_tipo_deposito") == true ) {
+				if (States.getStoredValue("data.menu_principal").value == "deposito_terceros")
+					return "p/deposito_tipo_terceros";
+				else
+					if (States.getStoredValue("data.menu_principal").value == "entrega_documentacion")
+						return "p/seleccion_tipo_deposito";
+					else
+						return "p/deposito_tipo";
+			} else
+				return "p/close_salir";
 		}
     },
 

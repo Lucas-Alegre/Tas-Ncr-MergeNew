@@ -66,11 +66,8 @@
                 },
 			},
 
-            "nav":{
-                include(p/chunk/nav_btn_volver_first.json),
-            },
-
-        }
+            include(p/chunk/nav_cancelar_anterior.json),
+            }
     },
 
       	"events" : {
@@ -78,7 +75,7 @@
 
             "valores_negociados": "p/deposito_cantidad_cheques",
 			"valores_al_cobro": "p/deposito_cantidad_cheques",
-            "back": "p/identificacion_destino",
+            "back": "p/menu_principal_select",
 			"cancel": "p/close_salir",	    
         },
 

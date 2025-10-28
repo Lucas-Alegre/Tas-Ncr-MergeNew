@@ -20,9 +20,9 @@
                 
             include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle_intermedio": {
-                "text": "Ingrese la cantidad de comprobantes<br>(máximo <%=States.getProperty('valor_maximo')%>) a pagar y toque continuar",
-            },
+            "subtitle": {
+                "text": "Ingrese la cantidad de comprobantes<br>(máximo <%=States.getProperty('valor_maximo')%>) a pagar y toque CONTINUAR",
+                },
 
             include(p/chunk/nav_all.json),
     

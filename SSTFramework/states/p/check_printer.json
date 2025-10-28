@@ -4,14 +4,7 @@
     "events": {
         "hardware_error_ptr": "p/close_no_printer",
         "hardware_error_pin": "p/close_no_printer",
-        "check_complete": function (){
-            const sub = States.getStoredValue("submenu");
-            if (sub) {
-                console.log("Limpiando submenu");
-                States.storeNamedValue("submenu", null);
-            }
-            return "p/identificacion_start"
-        }     
+        "check_complete": "p/menu_principal_select",       
     }
 
 }

@@ -65,7 +65,12 @@
 	},
     
 	"events": { 	
-	    "print_ok":"p/deposito_pregunta_otra",
+	    "print_ok": function() {
+			if (States.getStoredValue("deposito_tipo").text == "Efectivo")
+				return "p/deposito_pregunta_otra";
+			else
+				return "p/close_salir";
+		},
 	    "hardware_error_ptr": "p/close_printer_error"
     }
 

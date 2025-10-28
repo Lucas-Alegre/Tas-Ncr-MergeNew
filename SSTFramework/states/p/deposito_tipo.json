@@ -62,26 +62,15 @@
                 },
 			},
 
-           "nav": {
-                include(p/chunk/nav_btn_volver_first.json),
-            },
-            
-        }
+            include(p/chunk/nav_cancelar_anterior.json),
+            }
     },
 
       	"events" : {
       	    include(p/chunk/event_timeout.json),
 
-      	    "efectivo": function(){
-                States.storeNamedValue("flow.tipo_deposito", "efectivo");
-                States.storeNamedValue("flow.tipo_accion", "deposito_propia");
-                return "p/deposito_selector";
-            },
-            "cheques": function(){
-                States.storeNamedValue("flow.tipo_deposito", "cheque");
-                States.storeNamedValue("flow.tipo_accion", "deposito_propia");
-                return "p/deposito_selector";
-            },
+      	    "efectivo": "cim/check_status",
+            "cheques": "cheque/check_status",
             "back": "p/menu_principal_select",
 			"cancel": "p/close_salir",	    
         },

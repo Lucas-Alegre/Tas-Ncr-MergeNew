@@ -33,7 +33,7 @@
     },
     
     "events": {    
-        "deposit_ok": "p/deposito_pregunta_otra",
+        "deposit_ok": "p/close_salir",
         "deposit_error": "p/close_hardware_error",
         "hardware_error_dep": "p/close_hardware_error",  
         "cancel_deposit": function() {

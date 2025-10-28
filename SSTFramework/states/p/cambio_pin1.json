@@ -7,7 +7,7 @@
 			
 		    include(p/chunk/title_transaccion.json), 
             
-            "sub_subtitle_intermedio": { 
+            "subtitle": { 
                 "text": "Por favor, ingrese el nuevo PIN" 
             },
 
@@ -23,6 +23,6 @@
 
 	"events" : {
         "pin_entered": "p/cambio_pin2",
-        "cancel": "p/menu_principal_select",
+        "cancel": "p/close_salir",
     }
 }

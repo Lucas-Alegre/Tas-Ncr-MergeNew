@@ -69,10 +69,7 @@
     },
 
     "events": {
-        "comms_ok": function() {
-            States.storeNamedValue("navegar.origen_pin", "identificacion");
-            return "p/identificacion_pin";
-        },
+        "comms_ok": "p/identificacion_pin",
     }
 
 }

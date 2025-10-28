@@ -1,4 +1,0 @@
-"nav": {
-    include(p/chunk/nav_btn_volver_first.json),
-    include(p/chunk/nav_btn_continuar.json),
-}
