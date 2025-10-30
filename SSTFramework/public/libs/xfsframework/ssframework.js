@@ -2064,7 +2064,7 @@ runState: function (name, params, eventargs) {
         CardEntry: function(statedata) {
             
             // First evaluate enabled identifying modes
-            var identifyingModes = UserFuns.getEnabledIdentifyingModes();
+            /*var identifyingModes = UserFuns.getEnabledIdentifyingModes();
             States.storeNamedValue("identifying_modes", identifyingModes);
             
             // If ttcc not enabled return
@@ -2075,7 +2075,7 @@ runState: function (name, params, eventargs) {
                 else if ( identifyingModes == "N" )
                     States.handleEvent("no_cliente");
                 return;
-            }
+            }*/ //Esta logica primero seleccionabas la transaccion y segun esa transaccion te dejaba ingresar con tarjeta/documento o no cliente
             
 
             var idc = new XFSDevice("idc");

@@ -12,7 +12,7 @@
 
             include(p/chunk/title_transaccion.json),
 
-            include(p/chunk/screen_identificacion.json),
+            //include(p/chunk/screen_identificacion.json), Segun nueva logica no se usa mas
 
 
             "subtitle": {
@@ -29,7 +29,7 @@
 
             include(p/chunk/title_transaccion.json),
 
-            include(p/chunk/screen_identificacion.json),
+            //include(p/chunk/screen_identificacion.json),
 
             "subtitle": {
                 "text": "Ingrese y retire su tarjeta o<br>seleccione la opción manual"
@@ -45,7 +45,7 @@
 
             include(p/chunk/title_transaccion.json),
 
-            include(p/chunk/screen_identificacion.json),
+            //include(p/chunk/screen_identificacion.json),
 
             "subtitle": {
                 "text": "Seleccione la opción manual"
@@ -58,7 +58,7 @@
 
             include(p/chunk/title_transaccion.json),
 
-            include(p/chunk/screen_identificacion.json),
+            //include(p/chunk/screen_identificacion.json),
 
             "subtitle": {
                 "text": "Seleccione la opción manual"

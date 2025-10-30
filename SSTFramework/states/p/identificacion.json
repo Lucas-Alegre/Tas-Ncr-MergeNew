@@ -12,7 +12,9 @@
     },
 
     "events": {
-        "identified": "p/identificacion_pin",
+        "identified": function() {
+            States.handleEvent("identificacion_ok");   
+        },
 
         "not_identified": "p/identificacion_start",    
     }
