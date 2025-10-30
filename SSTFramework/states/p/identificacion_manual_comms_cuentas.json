@@ -8,8 +8,8 @@
 
 
         "responseHandler": function(response) { 
-            console.log("comms cuentas");
-        console.log(response);
+        console.log("Comms cuentas luego de la identificación");
+        console.log(JSON.stringify(response));
 
             if(response.hasOwnProperty("LineItems")) {
                 States.storeNamedValue("data.cuentas", [].concat(response.LineItems));
@@ -22,6 +22,9 @@
             } else {
                 response.commserror = "sin_productos";
             }
+            console.log("response final en data.cuentas");
+            console.log(States.getStoredValue("data.cuentas"));
+            console.log("data.cuentas JSON:\n" + JSON.stringify(States.getStoredValue("data.cuentas"), null, 2));
             return response;            
         }
     },

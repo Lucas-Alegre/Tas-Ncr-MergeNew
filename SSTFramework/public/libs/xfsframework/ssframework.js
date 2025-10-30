@@ -1194,6 +1194,8 @@ runState: function (name, params, eventargs) {
             postobj.numtrx = States.getSequencialNumber("config.numtrx", postobj.repeat_trx!=true);
             
             States.storeNamedValue("comms.last_esb_request", postobj)
+            //Valor de mensaje Payload completo
+            console.log("Valor de mensaje comms de request completo: " + JSON.stringify(postobj));
 
 
             var esb = SSUtil.getLocal("ESB", null);
@@ -1224,6 +1226,8 @@ runState: function (name, params, eventargs) {
                 } else {
 
                     States.storeNamedValue("comms.last_esb_reply", JSON.stringify(msg));
+                    //Valor de mensaje de respuesta completo
+                    console.log("Valor de mensaje comms de respuesta completo: " + JSON.stringify(msg));
 
                     if (States.getProperty("storename", null) != null)
                         States.storeValue(JSON.stringify(msg));
