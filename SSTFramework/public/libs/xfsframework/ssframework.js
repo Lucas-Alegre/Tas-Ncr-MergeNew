@@ -2080,7 +2080,8 @@ runState: function (name, params, eventargs) {
                     States.handleEvent("no_cliente");
                 return;
             }*/ //Esta logica primero seleccionabas la transaccion y segun esa transaccion te dejaba ingresar con tarjeta/documento o no cliente
-            
+            console.log("Entering CardEntry state");
+            //SSFramework.displayScreen(statedata.screens.idc_ok); probar aca si dejo o quito esa linea
 
             var idc = new XFSDevice("idc");
             var _this = this;
@@ -2131,6 +2132,7 @@ runState: function (name, params, eventargs) {
                     }
 
                     States.storeValue(JSON.stringify(tracks));
+                    console.log("Card data read: " + JSON.stringify(tracks));
                     States.handleEvent("card_read");                                   
 
 
