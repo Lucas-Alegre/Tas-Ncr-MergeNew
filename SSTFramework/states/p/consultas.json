@@ -27,8 +27,8 @@
 
             "nav": {
                 "nav0": {
-                    "text": "Cancelar",
-                    "event": "cancel"
+                    "text": "Volver",
+                    "event": "back"
                 },
             },
 

@@ -19,6 +19,6 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),
         "cancel": "p/close_salir",
-        "enter": "p/close_salir",
+        "enter":"p/deposito_pregunta_otra",
 	}
 }
