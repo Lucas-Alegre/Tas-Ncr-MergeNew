@@ -9,8 +9,8 @@
 		    include(p/chunk/title_transaccion.json),
 
             
-            "subtitle": { 
-                "text": "Digite su PIN usando el teclado del equipo" 
+            "sub_subtitle_intermedio": { 
+                "text": "Ingresá tu Clave de canales" 
             },
 
 		}
@@ -23,6 +23,7 @@
 
 	"events" : {
 	    "pin_entered": "p/identificacion_manual_comms_cuentas",
+		"cancel": "p/close_salir",
         "hardware_error": "return",
     }
 }

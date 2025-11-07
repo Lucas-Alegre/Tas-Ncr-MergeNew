@@ -9,6 +9,10 @@
         },
 
         "storename": "comms.WSCCL",
+        "requestHandler": function(obj) {
+            console.log("Aca muestra el request de envio a identificar TRX:WSCCL");
+            console.log(JSON.stringify(obj));
+        },
         "responseHandler": function(response) {
             console.log("Aca muestra el response despues de identificar");
             console.log(JSON.stringify(response));
@@ -69,7 +73,10 @@
     },
 
     "events": {
-        "comms_ok": "p/identificacion_pin",
+        "comms_ok": function() {
+            States.storeNamedValue("navegar.origen_pin", "identificacion");
+            return "p/identificacion_pin";
+        },
     }
 
 }

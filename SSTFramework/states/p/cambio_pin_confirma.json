@@ -8,7 +8,7 @@
 	        include(p/chunk/title_transaccion.json),
     
             "message": {
-                "text": "El cambio de PIN se ha realizado con éxito<br>Toque CONTINUAR para seguir"
+                "text": "El cambio de PIN se ha realizado con éxito<br>Toque continuar para seguir"
             },
 
             include(p/chunk/nav_cancelar_continuar.json),

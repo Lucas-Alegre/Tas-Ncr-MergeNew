@@ -19,7 +19,7 @@
 	        include(p/chunk/title_transaccion.json),
 
             "subtitle": {			
-                "text" : "Seleccione el tipo de documento"
+                "text" : "¿Cómo querés identificarte?"
             },
 
 	        "update": function(screen) {				
@@ -38,8 +38,8 @@
             
 	        "nav": {
 	            "nav0": {
-	                "text": "Cancelar",
-                    "event": "cancel"
+	                "text": "Volver",
+                    "event": "back",
 	            },
             }
 		}
@@ -49,7 +49,7 @@
 	    include(p/chunk/event_timeout.json),
 
 	    "select": "p/identificacion_manual_ingreso",
-        "back": "p/identificacion",
+        "back": "p/identificacion_start",
         "cancel": "p/close_salir",
 	    
 	    "otros" : function() {

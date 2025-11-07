@@ -3,10 +3,15 @@
 
     "run": function(state) {
 
-        if(SSUtil.getLocal("identified")==true) {
-            States.handleEvent("identified");
+        const estaIdentificado = SSUtil.getLocal("identified") === true;
+        const esNoCliente = States.getStoredValue("no_cliente") === true;
+
+        if (estaIdentificado || esNoCliente) {
+          console.log("Pasando validación por identificado o no_cliente");
+          States.handleEvent("identified");
         } else {
-            States.handleEvent("not_identified");
+          console.log("Usuario no identificado, redirigiendo a identificación");
+          States.handleEvent("not_identified");
         }
 
     },

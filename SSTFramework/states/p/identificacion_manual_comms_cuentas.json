@@ -5,7 +5,10 @@
         "trx": "WSCCC",
         "storename": "comms.WSCCC",        
         "nombre": "valida cliente",
-
+        "requestHandler": function(obj) {
+            console.log("Aca muestra el request de envio a validar el Pin del cliente TRX:WSCCC");
+            console.log(JSON.stringify(obj));
+        },
 
         "responseHandler": function(response) { 
         console.log("Comms cuentas luego de la identificación");
