@@ -14,6 +14,12 @@
 	    "default" : {
 		
 			"update": function(screen) {
+				if (States.getStoredValue("no_cliente") === true) {
+					screen.select.select5.text = "Depósito a terceros";
+				} else {
+					screen.select.select5.text = "Depósito";
+				}
+				
 				UserFuns.deleteUnenabledSelects(screen.select, "menu_principal");
 				
 				UserFuns.reorganizeSelects(screen.select);
@@ -23,9 +29,10 @@
 				"text" : "Menú Principal"
 			},
 
-            "subtitle": {
-                "text": "Seleccione la operación que desea realizar"
+            "sub_subtitle": {
+                "text": "¿Qué necesitás hacer?"
             },
+
 
 			"select": {
 

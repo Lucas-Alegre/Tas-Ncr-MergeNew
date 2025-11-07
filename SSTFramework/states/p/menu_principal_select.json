@@ -13,6 +13,12 @@
         //borra la data
         States.storeNamedValue("submenu", null);     
         States.storeNamedValue("data.navbar", []);
+
+        if (States.getStoredValue("no_cliente") === true) {
+            console.log("Redirigiendo al menú exclusivo de no cliente");
+            States.handleEvent("no_cliente_menu");
+            return;
+        }
         
         ///decide el tipo de atm
         UserFuns.identifyATM(function(dev) {
@@ -26,6 +32,8 @@
     },
 
     "events": {
+        "no_cliente_menu": "p/menu_principal_no_cliente",
+        
         "cash": "p/menu_principal_cash",
 
         "dep": "p/menu_principal",
