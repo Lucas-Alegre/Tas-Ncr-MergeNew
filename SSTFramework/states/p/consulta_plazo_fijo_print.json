@@ -26,8 +26,8 @@
 
 
 	"events": { 	
-	    "print_ok": "p/close_salir",
-	    "hardware_error_ptr": "p/close_printer_error"
+	    "print_ok": "p/deposito_pregunta_otra",
+	    "hardware_error_ptr": "p/close_printer_error",//Que pasaria si tocamos cancel en el pinpad
     }
 
 }

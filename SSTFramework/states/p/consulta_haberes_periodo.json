@@ -38,7 +38,9 @@
                 "text": "Seleccione el período de la consulta",
             },
 
-            include(p/chunk/nav_cancelar_anterior.json),
+            "nav":{
+                include(p/chunk/nav_btn_volver_first.json),
+            },
 
 		}
 	},
