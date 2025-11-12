@@ -13,7 +13,7 @@
         
     "mensajes": "p/pedidos_check_dep",
 
-    /*"deposito": {
+    "deposito": {
 		"call": "p/identificacion",
         "events": {
             "identificacion_ok" : "p/deposito_cuenta_propia",
@@ -22,11 +22,11 @@
         }
 	},
      
-    "deposito_terceros": "p/deposito_terceros_check_dep",*/ //Borrar esto
+    "deposito_terceros": "p/deposito_terceros_check_dep",
 
     "depositoOpcion": function() {
       if (States.getStoredValue("no_cliente") === true) {
-        return "p/deposito_tipo_terceros";
+        return "p/deposito_terceros_check_dep",//return "p/deposito_tipo_terceros"; despues cambiar por esto
       } else {
         console.log("Voy hacia => deposito_tipo");
         return "p/deposito_tipo";
