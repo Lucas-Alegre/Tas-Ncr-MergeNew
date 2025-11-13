@@ -34,15 +34,6 @@
                   "menu_principal": ["DtTEf","DtTCh","DtMEf","DtMCh","DtNEf","DtNCh"]
                 }
               },
-              //Prueba llegada para Api-GP
-				"select4": {
-					"text": "Prueba Api GP",
-					"event": "apigp",
-					"value": {
-						"text": "apigp",
-						"value": "apigp"
-					},
-				},
         "select3" : {
                     "text": "Entrega de Documentacion",
                     "event": "entrega_documentacion", 

@@ -1,0 +1,43 @@
+{
+  "type": "General",
+  "screens": {
+    "default": {
+      "title": { "text": "¿A quién querés hacer el depósito?" },
+      "subtitle": { "text": "Seleccioná una opción para continuar" },
+      "select": {
+        "select0": {
+          "text": "A mi cuenta",
+          "event": "deposito_propio"
+        },
+        "select1": {
+          "text": "A otra cuenta",
+          "event": "deposito_terceros"
+        }
+      },
+      "nav": {
+        "nav0": {
+          "text": "Volver",
+          "event": "back"
+        }
+      }
+    }
+  },
+  "events": {
+    "deposito_propio": {
+            "call": "p/identificacion",
+            "events": {
+                "identificacion_ok": function(){
+                  States.storeNamedValue("data.menu_principal", { value: "deposito_propia" });
+                  return "p/deposito_cuenta_propia";
+                },
+                "hardware_error_pin": "p/close_hardware_error",
+                "cancel" : "p/close_salir"
+            }
+        },
+    "deposito_terceros": function(){
+                  States.storeNamedValue("data.menu_principal", { value: "deposito_terceros" });
+                  return "p/deposito_terceros_check_dep";
+                },
+    "back": "p/deposito_tipo",
+  }
+}

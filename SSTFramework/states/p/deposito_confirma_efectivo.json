@@ -36,17 +36,18 @@
 	            var deposito_tipo  = States.getStoredValue("deposito_tipo");
 	            var tabla = "";
 
-	            tabla += "<table id='detalle_chico'>";
+	            tabla += "<table id='detalle'>";
+				tabla += "<tbody>";
 	            //tabla += "<tr><td colspan='2' style='text-align:center'>Nombre</td></tr>";
                 //tabla += "<tr><td>&nbsp;</td><td></td></tr>";
 				if(States.getStoredValue("data.menu_principal").value =="entrega_documentacion") {
-	                tabla += "<tr><td class='detalle_chico_td_left'>Tipo de Deposito: </td><td>" + tipo.text + "</td></tr>";
+	                tabla += "<tr><td>Tipo de Deposito: </td><td>" + tipo.text + "</td></tr>";
                 } else {
-					tabla += "<tr><td class='detalle_chico_td_left'>" + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
+					tabla += "<tr><td>" + UserFuns.formatProductName(cuenta) + "</td><td>" + UserFuns.formatProductValue(cuenta) + "</td></tr>";
 				};  
 				tabla += "<tr><td>&nbsp;</td><td></td></tr>";
 	            //tabla += "<tr><td>Monto a Depositar: </td><td>" + UserFuns.formatMonto(States.getStoredValue("monto"), "", 0) + "</td></tr>";
-	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	            
 				if(States.getStoredValue("data.menu_principal").value =="entrega_documentacion") {
 
 	                tabla += "<tr><td>Cliente: </td><td>" + States.getStoredValue("destino_name") + "</td></tr>";
@@ -57,7 +58,7 @@
 						tipo_identificacion = "CUIT:"
 					}
 					tabla += "<tr><td>" + tipo_identificacion + "</td><td>" + States.getStoredValue("destino_id") + "</td></tr>";
-					tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+					
 
 					if (States.getStoredValue("origen_name") != null){
 						tabla += "<tr><td>Mandatario: </td><td>" + States.getStoredValue("origen_name") + "</td></tr>";
@@ -80,25 +81,24 @@
 						tabla += "<tr><td>CUIT: </td><td>" + ente + "</td></tr>";
 				};
 	            if(deposito_tipo.value==1) { //cheques
-					tabla += "<tr><td>&nbsp;</td><td></td></tr>";
 	                tabla += "<tr><td>Cheques: </td><td>" + States.getStoredValue("cheques") + "</td></tr>";	          
 	            } else {
-					tabla += "<tr><td>&nbsp;</td><td></td></tr>";
 	                //tabla += "<tr><td colspan='2' style='text-align:center'>Advertencia: la cantidad máxima de billetes a poner en el sobre es de 40</td></tr>";
 	            }
+				tabla += "</tbody>";
 	            tabla += "</table>";
 	            States.setProperty("detalle", tabla);
             },
 			
             include(p/chunk/title_transaccion.json),
     
-            "subtitle": {
-                "text": "Toque CONTINUAR para confirmar el depósito"
+            "sub_subtitle_chico": {
+                "text": "Toque continuar para confirmar el depósito"
             },
 
             include(p/chunk/nav_cancelar_continuar.json),
     
-            "message": { 
+            "table_data": { 
                 "text": "<%= detalle %>"
             },
 
@@ -110,6 +110,6 @@
 
 	    "enter": "cim/ingresar_billetes",
 		
-        "cancel": "p/close_salir"
+        "cancel": "p/menu_principal_select",
 	}
 }

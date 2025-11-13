@@ -8,7 +8,7 @@
 
 	        include(p/chunk/title_transaccion.json),
     
-            "subtitle": {			
+            "sub_subtitle_intermedio": {			
                 "text" : "Ingrese el número de sucursal de la cuenta"
 	        },
 

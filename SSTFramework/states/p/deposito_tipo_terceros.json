@@ -64,16 +64,34 @@
                 },
 			},
 
-            include(p/chunk/nav_cancelar_anterior.json),
+            "nav":{
+                include(p/chunk/nav_btn_volver_first.json),
+            },
             }
     },
 
       	"events" : {
       	    include(p/chunk/event_timeout.json),
 
-            "efectivo": "cim/check_status",
-            "cheques": "cheque/check_status",
-            "back": "p/menu_principal_select",
+            "efectivo": function(){
+                States.storeNamedValue("flow.tipo_deposito", "efectivo");
+                States.storeNamedValue("data.menu_principal", { value: "deposito_terceros" });
+                States.storeNamedValue("flow.tipo_accion", "deposito_tercero");
+                return "p/deposito_terceros_check_dep";
+            },
+            "cheques":function(){
+                States.storeNamedValue("flow.tipo_deposito", "cheque");
+                States.storeNamedValue("data.menu_principal", { value: "deposito_terceros" });
+                States.storeNamedValue("flow.tipo_accion", "deposito_tercero");
+                return "p/deposito_terceros_check_dep";
+            },
+            "back": function() {
+                if (States.getStoredValue("no_cliente") === true) {
+                    return "p/menu_principal_no_cliente";
+                } else {
+                    return "p/menu_principal_select";
+                }
+            },
 			"cancel": "p/close_salir",	    
         },
 

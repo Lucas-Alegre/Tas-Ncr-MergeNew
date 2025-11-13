@@ -13,20 +13,9 @@
         
     "mensajes": "p/pedidos_check_dep",
 
-    "deposito": {
-		"call": "p/identificacion",
-        "events": {
-            "identificacion_ok" : "p/deposito_cuenta_propia",
-            "hardware_error_pin": "p/close_hardware_error",
-            "cancel" : "p/close_salir"
-        }
-	},
-     
-    "deposito_terceros": "p/deposito_terceros_check_dep",
-
     "depositoOpcion": function() {
       if (States.getStoredValue("no_cliente") === true) {
-        return "p/deposito_terceros_check_dep",//return "p/deposito_tipo_terceros"; despues cambiar por esto
+        return "p/deposito_tipo_terceros";
       } else {
         console.log("Voy hacia => deposito_tipo");
         return "p/deposito_tipo";

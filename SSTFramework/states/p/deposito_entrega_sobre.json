@@ -6,8 +6,14 @@
           "default" : {            
                     
               "subtitle": {
-                  "text": "Por favor, ingrese los valores en el sobre. Luego toque CONTINUAR",
+                  "text": "Por favor, ingrese los valores en el sobre. Luego toque continuar",
                   },
+                  "nav": {
+                    "nav3": {
+                        "text": "Continuar",
+                        "event": "enter"
+                    },
+                },
 
           },
     },

@@ -105,16 +105,16 @@ ssfw = {
             },
 
 			"nav": {
-				"nav1": {
-			        "text": "Cancelar depósito",
+				"nav0": {
+			        "text": "Cancelar",
                     "event": "module_cancel",
 			    },
-				"nav2": {
-			        "text": "Agregar más billetes",
+				"nav1": {
+			        "text": "Agregar",
                     "event": "add_bills",
 			    },
 				"nav3": {
-			        "text": "confirmar depósito",
+			        "text": "Confirmar",
                     "event": "confirm",
 			    },
 			},

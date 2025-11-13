@@ -63,30 +63,18 @@
                 },
 
 
-				"select1" : {
-				    "text": "Depósito a cuentas propias",
-					"event": "deposito", 
+				"select5": {
+					"text": "Depósito",
+					"event": "depositoOpcion",
 					"value": {
-					    "text": "Depósito a cta. propias",
-                        "value": "deposito",
-                        },
+						"text": "Depósito",
+						"value": "deposito"
+					},
 					"funciones": {
-						"menu_principal": ["DpTEf","DpTCh","DpMEf","DpMCh"]
+						"menu_principal": ["DpTEf","DpTCh","DpMEf","DpMCh","DtTEf","DtTCh","DtMEf","DtMCh","DtNEf","DtNCh"]
 					}
-                },
-    
+				},
 
-                "select5" : {
-                    "text": "Depósito a cuentas de terceros",
-                    "event": "deposito_terceros", 
-					"value": {
-					    "text": "Depósito a cta. terceros",
-                        "value": "deposito_terceros",
-                        },
-					"funciones": {
-						"menu_principal": ["DtTEf","DtTCh","DtMEf","DtMCh","DtNEf","DtNCh"]
-					}
-                },
 
 				"select2" : {
 				    "text": "Transferencias",
