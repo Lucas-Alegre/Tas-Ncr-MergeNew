@@ -1,7 +1,7 @@
 ﻿"events" : {
 
     "cancel": "p/close_salir",
-    
+
     "clear": "p/menu_principal_select", 
 
     "consultas": {
@@ -9,7 +9,8 @@
         "events": {
             "identificacion_ok" : "p/consultas",
             "hardware_error_pin": "p/close_hardware_error",
-            "cancel" : "p/close_salir"
+            "cancel" : "p/close_salir",
+            "clear": "p/menu_principal_select",
         }
     },
         
@@ -29,7 +30,8 @@
             "events": {
                 "identificacion_ok" : "p/cambio_pin1",
                 "hardware_error_pin": "p/close_hardware_error",
-                "cancel" : "p/close_salir"
+                "cancel" : "p/close_salir",
+                "clear": "p/menu_principal_select",
             }
 		},
 
@@ -38,7 +40,8 @@
             "events": {
                 "identificacion_ok" : "p/selecciona_moneda",
                 "hardware_error_pin": "p/close_hardware_error",
-                "cancel" : "p/close_salir"
+                "cancel" : "p/close_salir",
+                "clear": "p/menu_principal_select",
             }
 		},
 
@@ -47,7 +50,8 @@
             "events": {
                 "identificacion_ok" : "p/transf_cuenta_origen",
                 "hardware_error_pin": "p/close_hardware_error",
-                "cancel" : "p/close_salir"
+                "cancel" : "p/close_salir",
+                "clear": "p/menu_principal_select",
             }
 		},
 
@@ -56,7 +60,8 @@
         "events": {
             "identificacion_ok" : "p/pago_ttcc_tipo",
             "hardware_error_pin": "p/close_hardware_error",
-            "cancel" : "p/close_salir"
+            "cancel" : "p/close_salir",
+            "clear": "p/menu_principal_select",
         }
     },
 

@@ -19,11 +19,13 @@
        
             include(p/chunk/title_transaccion.json),
     
-            "subtitle": {
+            "sub_subtitle": {
                 "text": "Por favor, seleccione el tipo de cuenta",
             },
 
-            include(p/chunk/nav_cancelar_anterior.json),
+            "nav":{
+                include(p/chunk/nav_btn_volver_first.json),
+            },
 
             "select": {							    
                 "select0" : {
@@ -55,6 +57,7 @@
         "terceros": "p/transf_terceros_tipo",
         "back": "p/transf_cuenta_origen",
         "cancel": "p/close_salir",
+        "clear": "p/menu_principal_select",
     },
 
 }   
