@@ -1,6 +1,8 @@
 ﻿"events" : {
 
     "cancel": "p/close_salir",
+    
+    "clear": "p/menu_principal_select", 
 
     "consultas": {
         "call": "p/identificacion",

@@ -57,6 +57,8 @@
 	    include(p/chunk/event_timeout.json),
 
         "cancel": "p/close_salir",
+        
+        "clear": "p/close_salir", 
 
         "identificacion_manual": function () {
         States.storeNamedValue("tipo_identificacion", "manual");
