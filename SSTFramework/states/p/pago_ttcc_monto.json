@@ -16,8 +16,8 @@
                 
             include(p/chunk/title_transaccion.json),
     
-            "subtitle": {
-                "text": "Por favor, ingrese el monto a pagar en $<br>Luego toque CONTINUAR",
+            "sub_subtitle_intermedio": {
+                "text": "Por favor, ingrese el monto a pagar en $<br>Luego toque continuar",
                 },
 
             include(p/chunk/nav_all.json),
@@ -36,7 +36,7 @@
             }
         },
 
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
         "back": "p/pago_ttcc_tipo_medio",
     },
 

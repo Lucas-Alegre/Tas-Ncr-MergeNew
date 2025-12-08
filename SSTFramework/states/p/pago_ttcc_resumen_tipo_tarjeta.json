@@ -30,7 +30,9 @@
 			"select": {							    
 			},
 
-            include(p/chunk/nav_cancelar_anterior.json),
+            "nav":{
+                include(p/chunk/nav_btn_volver_first.json),
+            }
 
 	    }
 	},
@@ -40,7 +42,7 @@
 
 	    "select": "p/pago_ttcc_resumen_numero_cuenta",
         "back": "p/pago_ttcc_resumen_tipo_ingreso",
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 	    
 	}
 }

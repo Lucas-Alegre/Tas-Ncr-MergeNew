@@ -19,8 +19,8 @@
 			
             include(p/chunk/title_transaccion.json),
 
-            "subtitle": {
-                "text": "Toque CONTINUAR para realizar la adhesión"
+            "sub_subtitle_cheque": {
+                "text": "Toque continuar para realizar la adhesión"
             },
 
             include(p/chunk/nav_cancelar_continuar.json),
@@ -36,6 +36,6 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),
 	    "enter": "p/pago_ttcc_adesion_comms",
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
     }
 }

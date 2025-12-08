@@ -18,7 +18,7 @@
                 
             include(p/chunk/title_transaccion.json),
     
-            "subtitle": {
+            "sub_subtitle_intermedio": {
                 "text": "Ingrese el número de cuenta de la tarjeta",
                 },
 
@@ -34,7 +34,7 @@
 
         "back": "p/pago_ttcc_resumen_tipo_tarjeta",
 
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 
         },
 

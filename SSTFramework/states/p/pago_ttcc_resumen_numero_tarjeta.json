@@ -8,7 +8,7 @@
 
 	        include(p/chunk/title_transaccion.json),
     
-            "subtitle": {			
+            "sub_subtitle_intermedio": {			
                 "text" : "Ingrese los 16 números de la tarjeta"
             },
 
@@ -19,7 +19,7 @@
 	"events" : {
 	    "accept": "p/pago_ttcc_monto",
         "back": "p/pago_ttcc_resumen_tipo_ingreso",
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 
         }
 }

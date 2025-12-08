@@ -29,9 +29,9 @@
 
 
 	"events": { 	
-	    "cancel": "p/close_salir",
+	    "cancel": "p/menu_principal_select",
         "enter": "p/close_salir",
-	    "print_ok": "p/close_salir",       
+	    "print_ok": "p/deposito_pregunta_otra",       
         "hardware_error_ptr": "p/close_printer_error"
 	}
 

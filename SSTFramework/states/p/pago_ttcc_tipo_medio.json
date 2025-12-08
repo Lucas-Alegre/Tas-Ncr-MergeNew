@@ -34,7 +34,9 @@
                 "text": "Seleccione la forma de pago",
             },
 
-            include(p/chunk/nav_cancelar_anterior.json),
+            "nav":{
+                include(p/chunk/nav_btn_volver_first.json),
+            },
 
             "select": {							    
                 "select0" : {
@@ -70,6 +72,6 @@
 
         "back" : "p/pago_ttcc_tipo",
 
-        "cancel" : "p/close_salir",
+        "cancel" : "p/menu_principal_select",
 	}
 }

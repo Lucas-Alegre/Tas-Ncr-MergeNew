@@ -54,7 +54,7 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),
 
-	    "no_preguntar" : "p/close_salir",
+	    "no_preguntar" : "p/menu_principal_select",
 
         "select" : "p/pago_ttcc_adesion_cuenta",
 

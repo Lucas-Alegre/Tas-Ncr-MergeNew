@@ -48,8 +48,8 @@
 	},
     
 	"events": { 	
-	    "cancel": "p/close_salir",
-        "enter": "p/close_salir",
+	    "cancel": "p/menu_principal_select",
+        "enter": "p/menu_principal_select",
 	    "print_ok": "p/pago_ttcc_pregunta_adesion",       
         "hardware_error_ptr": "p/close_printer_error"
     }
