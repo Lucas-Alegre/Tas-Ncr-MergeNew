@@ -30,7 +30,12 @@
                 "text": "Seleccione la forma de pago",
             },
 
-            include(p/chunk/nav_cancelar_anterior.json),
+            "nav": {
+				"nav0": {
+					"text" : "Volver",
+					"event": "cancel"
+				}
+			},
 
             "select": {							    
                 "select0" : {
@@ -62,9 +67,9 @@
 
         "cheque" : "p/pago_impuestos_comprobantes",
 
-        "back": "p/close_salir",
+        "back": "p/menu_principal_select",
 
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 
 	}
 }

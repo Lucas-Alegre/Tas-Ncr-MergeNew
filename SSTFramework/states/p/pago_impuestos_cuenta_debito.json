@@ -14,11 +14,13 @@
 	        include(p/chunk/title_transaccion.json),
 
       
-            "subtitle": {
+            "sub_subtitle": {
                 "text": "Seleccione una cuenta donde realizar el débito",
             },
 
-            include(p/chunk/nav_cancelar_anterior.json),
+            "nav":{
+                include(p/chunk/nav_btn_volver_first.json),
+             },
 
 		}
 	},
@@ -29,10 +31,10 @@
 			if ( States.getStoredValue("seleccion_medio_pago") == true )
 				return "p/pago_impuestos";
 			else
-				return "p/close_salir";
+				return "p/menu_principal_select";
 		},
         "sin_opciones": "p/close_sin_opciones",
         "select": "p/pago_impuestos_comprobantes",
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
     }
 }

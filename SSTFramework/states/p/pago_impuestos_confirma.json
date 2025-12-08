@@ -13,7 +13,7 @@
 	            tabla += "<table id='detalle'>";
 	            tabla += "<tr><td>Cantidad de comprobantes:</td><td>" + States.getStoredValue("servicios") + "</td></tr>";
 	            tabla += "<tr><td>Monto pago:</td><td>" + UserFuns.formatMonto(monto) + "</td></tr>";
-	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
+	           
 	            tabla += "<tr><td>Medio de pago:</td><td>" + medio_pago + "</td></tr>";
 
 	            if(States.getStoredValue("medio_pago")!="cheque") {
@@ -27,14 +27,14 @@
             include(p/chunk/title_transaccion.json),
 
 
-            "subtitle": {
-                "text": "Toque CONTINUAR para confirmar el pago"
+            "sub_subtitle_chico": {
+                "text": "Toque continuar para confirmar el pago"
             },
 
             include(p/chunk/nav_cancelar_continuar.json),
     
 
-            "message": { 
+            "table_data": { 
                 "text": "<%= detalle %>"
             },
 
@@ -51,6 +51,6 @@
                 return "p/pago_impuestos_comms_simulacion";
         },
 
-	    "cancel": "p/close_salir",
+	    "cancel": "p/menu_principal_select",
     }
 }
