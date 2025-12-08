@@ -21,7 +21,7 @@
 
 
 	"events" : {
-            "cancel": "p/close_salir",
+            "cancel": "p/menu_principal_select",
 	    "pin_entered": "p/cambio_pin2",
     }
 }

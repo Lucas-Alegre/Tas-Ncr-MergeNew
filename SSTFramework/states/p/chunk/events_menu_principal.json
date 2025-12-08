@@ -28,7 +28,7 @@
     "cambio_pin": {
 		    "call": "p/identificacion",
             "events": {
-                "identificacion_ok" : "p/cambio_pin1",
+                "identificacion_ok" : "p/cambio_pin_reingreso_pin",
                 "hardware_error_pin": "p/close_hardware_error",
                 "cancel" : "p/close_salir",
                 "clear": "p/menu_principal_select",

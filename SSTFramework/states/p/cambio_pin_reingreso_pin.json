@@ -1,0 +1,11 @@
+{
+    "base" : include(p/bases/reingreso_pin.json),
+
+    "events" : {
+	
+        "validacion_ok": "p/cambio_pin1",
+
+        "validacion_error": "p/close_identificacion_incorrecta",
+
+    }
+}
