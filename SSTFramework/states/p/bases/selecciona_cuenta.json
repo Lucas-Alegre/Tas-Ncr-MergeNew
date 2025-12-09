@@ -82,6 +82,7 @@
 	"events" : {
 
 	    include(p/chunk/event_timeout.json),
+        "cancel": "p/menu_principal_select",
 
         "sin_opciones": "p/close_sin_opciones",
 

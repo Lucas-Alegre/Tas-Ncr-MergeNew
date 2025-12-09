@@ -4,7 +4,8 @@
 
     "properties": {
         "storename": "cheques",
-        "largo": 2
+        "largo": 2,
+        "accept_zero": "0", //Esto es a probar si no rompe al poner un cero con el pinpad. 
   
     },
 

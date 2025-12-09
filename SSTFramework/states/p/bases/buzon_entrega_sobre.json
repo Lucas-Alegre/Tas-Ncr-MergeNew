@@ -12,7 +12,7 @@
             include(p/chunk/title_transaccion.json),
 
             "subtitle": {
-                "text": "Por favor, introduzca los valores junto con el ticket en el sobre. Luego toque CONTINUAR",
+                "text": "Por favor, introduzca los valores junto con el ticket en el sobre. Luego toque continuar",
             },
 
             include(p/chunk/nav_continuar.json),
@@ -26,7 +26,7 @@
     
     "events": {
         include(p/chunk/event_timeout.json),
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
         "enter": "p/bases/buzon_deposita_sobre",
     }
 
