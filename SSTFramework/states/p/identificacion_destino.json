@@ -11,8 +11,8 @@
 			            
 	        include(p/chunk/title_transaccion.json),
 
-            "subtitle": {			
-                "text" : "Ingrese el número de cliente de<br>destino y toque CONTINUAR"
+            "sub_subtitle_intermedio": {			
+                "text" : "Ingrese el D.N.I de cliente de<br>destino y toque continuar"
             },
     
 		}
@@ -23,7 +23,7 @@
 
 	    "back": "p/entrega_documentacion",
 
-		"cancel": "p/close_salir",
+		"cancel": "p/menu_principal_select",
         
 		"accept": "p/identificacion_destino_comms",
  

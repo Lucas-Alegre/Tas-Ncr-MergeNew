@@ -15,7 +15,7 @@
                 
             include(p/chunk/title_transaccion.json),
     
-            "subtitle": {
+            "sub_subtitle_intermedio": {
                 "text": "Por favor, ingrese la cantidad de cheques",
                 },
 
@@ -28,7 +28,7 @@
     
         "accept": "p/deposito_monto_cheques",
     
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 
         "back": function() {
 			if ( States.getStoredValue("seleccion_tipo_deposito") == true ) {

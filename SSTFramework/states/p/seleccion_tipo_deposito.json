@@ -76,7 +76,7 @@
             "valores_negociados": "p/deposito_cantidad_cheques",
 			"valores_al_cobro": "p/deposito_cantidad_cheques",
             "back": "p/menu_principal_select",
-			"cancel": "p/close_salir",	    
+			"cancel": "p/menu_principal_select",	    
         },
 
   
