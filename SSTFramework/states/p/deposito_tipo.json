@@ -82,7 +82,7 @@
                 return "p/deposito_selector";
             },
             "back": "p/menu_principal_select",
-			"cancel": "p/close_salir",	    
+			"cancel": "p/menu_principal_select",	    
         },
 
   

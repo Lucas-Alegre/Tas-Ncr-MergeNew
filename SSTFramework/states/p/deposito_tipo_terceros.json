@@ -92,7 +92,13 @@
                     return "p/menu_principal_select";
                 }
             },
-			"cancel": "p/close_salir",	    
+			"cancel": function() {
+                if (States.getStoredValue("no_cliente") === true) {
+                    return "p/menu_principal_no_cliente";
+                } else {
+                    return "p/menu_principal_select";
+                }
+            },	    
         },
 
   

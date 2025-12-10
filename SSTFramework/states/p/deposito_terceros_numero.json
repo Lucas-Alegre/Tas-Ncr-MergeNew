@@ -36,7 +36,7 @@
             }
         },
         "back": "p/deposito_terceros_numero_sucursal",
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 
 	}
 }

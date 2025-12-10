@@ -19,7 +19,7 @@
 	"events" : {
 	    "accept": "p/deposito_terceros_numero",
         "back": "p/deposito_terceros_tipo",
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 
 	}
 }

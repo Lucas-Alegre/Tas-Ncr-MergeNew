@@ -27,7 +27,7 @@
                 return  "cheque/check_status";
             }
         },
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 	    "back": "p/deposito_selector",
     }
 }

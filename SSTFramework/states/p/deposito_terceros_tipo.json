@@ -16,7 +16,7 @@
 
 	"events" : {
 	    include(p/chunk/event_timeout.json),
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 	    "select": "p/deposito_terceros_numero_sucursal",
         "back": function(){
 			var tipoAccion = States.getStoredValue("flow.tipo_accion");

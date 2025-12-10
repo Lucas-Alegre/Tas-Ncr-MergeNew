@@ -39,5 +39,6 @@
                   return "p/deposito_terceros_check_dep";
                 },
     "back": "p/deposito_tipo",
+    "cancel": "p/menu_principal_select"
   }
 }

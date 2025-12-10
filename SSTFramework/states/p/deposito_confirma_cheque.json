@@ -115,6 +115,6 @@
 
 	    "enter": "cheque/ingresar_cheques",
 		
-        "cancel": "p/close_salir"
+        "cancel": "p/menu_principal_select",
 	}
 }

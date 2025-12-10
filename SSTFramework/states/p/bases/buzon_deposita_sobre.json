@@ -33,14 +33,14 @@
     },
     
     "events": {    
-        "deposit_ok": "p/close_salir",
+        "deposit_ok": "p/menu_principal_select",
         "deposit_error": "p/close_hardware_error",
         "hardware_error_dep": "p/close_hardware_error",  
         "cancel_deposit": function() {
             var dep = new XFSDevice("dep");
             dep.cancelAsyncRequest({ RequestID: 0 });
         },
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
         "manual_timeout": "p/timeout",
     }
 
