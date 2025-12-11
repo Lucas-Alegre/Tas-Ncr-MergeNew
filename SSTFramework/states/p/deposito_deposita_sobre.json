@@ -47,7 +47,7 @@
         },
         "deposit_error": "p/close_hardware_error",
         "hardware_error_dep": "p/close_hardware_error", 
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
         }
 
 }

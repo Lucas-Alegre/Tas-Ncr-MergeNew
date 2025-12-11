@@ -64,7 +64,7 @@
             include(p/chunk/title_transaccion.json),
 
       
-            "subtitle": {
+            "sub_subtitle": {
                 "text": "Bienvenido <%= nombre_cliente %><br>Por favor, seleccione una cuenta",
             },
 

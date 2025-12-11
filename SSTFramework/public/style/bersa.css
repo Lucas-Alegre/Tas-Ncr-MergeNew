@@ -190,6 +190,10 @@
     right: 35.0%;
     bottom: 25%;
 }
+.video_entrega_sobre, .video_deposita_sobre {
+    bottom: 21%;
+}
+
 .video_ingreso_pin{
     bottom: 41%;
     right: 5%;
@@ -262,6 +266,10 @@ div, td {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
+}
+
+.sub-subtitle-chico-transf{
+    margin: 20px auto 10px auto;
 }
 
 .sub-subtitle-intermedio{

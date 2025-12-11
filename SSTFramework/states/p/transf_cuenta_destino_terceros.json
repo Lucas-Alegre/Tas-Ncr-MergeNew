@@ -30,7 +30,6 @@
 
         "back": "p/transf_cuenta_destino_terceros_sucursal",
         "cancel": "p/menu_principal_select",
-        "clear": "p/menu_principal_select",
 
     },
 

@@ -49,10 +49,8 @@
 	            if(ente!="")
 	                tabla += "<tr><td>CUIT: </td><td>" + ente + "</td></tr>";
 	            
-	            tabla += "<tr><td>&nbsp;</td><td></td></tr>";
 	            tabla += "<tr><td>Cuenta Destino </td><td/></tr>";
 	            tabla += "<tr><td>Tipo: " + UserFuns.formatProductName(destino) + "</td><td>" + UserFuns.formatProductValue(destino)  + "</td></tr>";
-	            tabla += "<tr><td>Monto a Acreditar: </td><td>" + UserFuns.formatMonto(States.getStoredValue("monto"), "", 0) + "</td></tr>";
 	            if(nombre2!="")
 	                tabla += "<tr><td>Cliente: </td><td>" + nombre2 + "</td></tr>";
 	            if(ente2!="")
@@ -65,7 +63,8 @@
               include(p/chunk/title_transaccion.json),
     
             "sub_subtitle_chico": {
-                "text": "Toque continuar para confirmar la transferencia"
+                "text": "Toque continuar para confirmar la transferencia",
+				"class": "<%= States.getStoredValue('tipo_cuenta') == 'propia' ? '' : 'sub-subtitle-chico-transf' %>",
             },
 
             include(p/chunk/nav_volver_continuar.json),

@@ -48,7 +48,12 @@
 
       },
 
-      include(p/chunk/nav_cancelar.json)
+      "nav": {
+				"nav0": {
+					"text": "Cerrar sesión",
+					"event": "cancel"
+				},
+			},  
     }
   },
 

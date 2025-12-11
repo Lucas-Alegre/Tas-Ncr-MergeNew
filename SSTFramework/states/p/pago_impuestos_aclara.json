@@ -17,9 +17,10 @@
 	    	
             include(p/chunk/title_transaccion.json),
 
-            "sub_subtitle_cheque": {
-                "text": "Diferencia de importes"
-            },
+            /*"sub_subtitle_cheque": {
+                "text": "Diferencia de importes",
+                "class": "sub-subtitle-cheque-impuestos",
+            },*/ //No hace falta este pequeño texto
 
 
             "message": { 
