@@ -2215,3 +2215,31 @@ runState: function (name, params, eventargs) {
     }
 };
 
+
+// ===============================
+// PINPAD / KEYBOARD GUARD GLOBAL
+// ===============================
+(function keyGuardPinpad() {
+  document.addEventListener("keydown", function(e) {
+    const isBackspace =
+      e.key === "Backspace" ||
+      e.keyCode === 8 ||
+      e.which === 8;
+
+    if (!isBackspace) return;
+
+    const t = e.target;
+    const editable =
+      t && (
+        t.tagName === "INPUT" ||
+        t.tagName === "TEXTAREA" ||
+        t.isContentEditable === true
+      );
+
+    if (!editable) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, true);
+})();
