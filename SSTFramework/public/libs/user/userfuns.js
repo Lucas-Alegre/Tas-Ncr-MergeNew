@@ -679,6 +679,62 @@ var UserFuns = {
         };
 
     },
+    
+    selectFromListNamed: function (screen, list, order, containerName, hidenext) {
+        var pageKey = "temp.select_from_list." + containerName;
+        var pos_inicial = parseInt(sessionStorage[pageKey] || "0", 10);
+        var itemsPorPagina = order.length;
+        var totalPaginas = Math.ceil(list.length / itemsPorPagina);
+
+        
+        if (pos_inicial >= list.length) pos_inicial = 0;
+        sessionStorage[pageKey] = pos_inicial;
+
+        if (!screen[containerName]) screen[containerName] = {};
+
+        for (var c = 0; c < order.length; c++) {
+            var index = c + pos_inicial;
+            screen[containerName][order[c]] = (index < list.length) ? {
+                "text": list[index].text,
+                "value": list[index].value,
+                "event": "select"
+            } : "";
+        }
+
+        
+        var paginaActual = Math.floor(pos_inicial / itemsPorPagina);
+        var enPrimera = (paginaActual === 0);
+        var enUltima = (paginaActual === totalPaginas - 1);
+        screen.nav = screen.nav || {}; 
+
+        if (list.length > itemsPorPagina) { 
+            if (enPrimera) {
+                screen.nav["nav3"] = {
+                    "text": "Más cuentas",
+                    "event": "mas"
+                };
+            }
+            // Páginas intermedias: "Más" y "Menos"
+            else if (!enUltima) {
+                screen.nav["nav3"] = {
+                    "text": "Más cuentas",
+                    "event": "mas"
+                };
+                screen.nav["nav2"] = {
+                    "text": "Menos cuentas",
+                    "event": "menos"
+                };
+            }
+            // Última página: solo "Menos cuentas"
+            else if (enUltima) {
+                screen.nav["nav3"] = {
+                    "text": "Menos cuentas",
+                    "event": "menos"
+                };
+            }
+        }
+        
+    },
 
 
     stack: {

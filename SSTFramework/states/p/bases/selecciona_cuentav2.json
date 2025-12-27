@@ -1,4 +1,4 @@
-﻿{
+{
     "type": "General",
 
     "properties": {
@@ -86,6 +86,8 @@
             sessionStorage["temp.select_from_list.selectAccount"] = 0;
         },
 
+        "sin_opciones": "p/close_sin_opciones",
+
         "mas": function () {
             var key = "temp.select_from_list.selectAccount";
             var pos = parseInt(sessionStorage[key] || "0", 10);
@@ -102,6 +104,15 @@
             sessionStorage[key] = pos;
             States.refreshState();
         },
+        "back": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+            return "p/consultas"
+        },
+        "select": function(val) {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+            return States.getProperty("select_destino"); 
+        },
+
 
 	}
 }

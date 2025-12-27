@@ -111,8 +111,14 @@
                 "conceptos": [1, 2]
 	        },
             "events": {
-                "select": "p/consulta_saldo",
-                "back": "p/consultas",
+                "select": function (data) {
+                    sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+                    return "p/consulta_saldo"; 
+                },
+                "back": function (data) {
+                    sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+                    return "p/consultas";
+                },
                 "cancel": "p/close_salir",
             }
         },
@@ -154,13 +160,13 @@
             }
         },
         "cbu": {
-            "call": "p/bases/selecciona_cuenta",
+            "call": "p/bases/selecciona_cuentav2",
             "params": {
                 "title": "Consulta de CBU",
-                "conceptos": [1, 2]
+                "conceptos": [1, 2],
+                "select_destino": "p/consulta_cbu"
             },
             "events": {
-                "select": "p/consulta_cbu",
                 "back": "p/consultas",
                 "cancel": "p/close_salir",
             }
