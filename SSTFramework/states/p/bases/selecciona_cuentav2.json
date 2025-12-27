@@ -110,6 +110,7 @@
         },
         "select": function(val) {
             sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+            console.log("select_destino:", States.getProperty("select_destino"));
             return States.getProperty("select_destino"); 
         },
 
