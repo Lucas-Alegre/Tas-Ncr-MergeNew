@@ -105,7 +105,7 @@
 	    "cancel": "p/close_salir",
 
 	    "saldos": {
-	        "call": "p/bases/selecciona_cuenta",
+	        "call": "p/bases/selecciona_cuentav2",
             "params": {
                 "title": "Consulta de saldos",
                 "conceptos": [1, 2]
@@ -160,7 +160,7 @@
             }
         },
         "cbu": {
-            "call": "p/bases/selecciona_cuentav2",
+            "call": "p/bases/selecciona_cuentav3",
             "params": {
                 "title": "Consulta de CBU",
                 "conceptos": [1, 2],

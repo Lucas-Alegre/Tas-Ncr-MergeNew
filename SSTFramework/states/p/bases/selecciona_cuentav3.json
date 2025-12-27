@@ -1,4 +1,4 @@
-﻿{
+{
     "type": "General",
 
     "properties": {
@@ -36,7 +36,13 @@
 
 	    "default" : {
             
-	        "update": function(screen) {				
+	        "update": function(screen) {	
+                
+                if (!sessionStorage["entered.selectAccount"]) {
+                    sessionStorage["temp.select_from_list.selectAccount"] = 0;
+                    sessionStorage["entered.selectAccount"] = "true";
+                }
+
 	            var nombre = States.getStoredValue("customer_name");
 	            States.setProperty("nombre_cliente", nombre);
 				
@@ -86,6 +92,8 @@
             sessionStorage["temp.select_from_list.selectAccount"] = 0;
         },
 
+        "sin_opciones": "p/close_sin_opciones",
+
         "mas": function () {
             var key = "temp.select_from_list.selectAccount";
             var pos = parseInt(sessionStorage[key] || "0", 10);
@@ -102,6 +110,16 @@
             sessionStorage[key] = pos;
             States.refreshState();
         },
+        "back": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+            return "p/consultas"
+        },
+        "select": function(val) {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+            console.log("select_destino:", States.getProperty("select_destino"));
+            return States.getProperty("select_destino"); 
+        },
+
 
 	}
 }
