@@ -62,9 +62,8 @@
 			
               include(p/chunk/title_transaccion.json),
     
-            "sub_subtitle_chico": {
+            "sub_subtitle_chico_transferencia": {
                 "text": "Toque continuar para confirmar la transferencia",
-				"class": "<%= States.getStoredValue('tipo_cuenta') == 'propia' ? '' : 'sub-subtitle-chico-transf' %>",
             },
 
             include(p/chunk/nav_volver_continuar.json),

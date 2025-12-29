@@ -264,8 +264,8 @@ div, td {
     justify-content: flex-start;
     flex-wrap: wrap;
 }
-.sub-subtitle-chico-transf{
-    margin: 20px auto 10px auto;
+.sub-subtitle-chico-transferencia{
+    margin: 50px auto 5px auto;
 }
 .sub-subtitle-intermedio{
     color: rgba(12, 11, 11, 0.808);

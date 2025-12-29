@@ -20,7 +20,11 @@
 
 <% if(locals["sub_subtitle_chico"]) {%>
     <% include sub_subtitle_chico.html %>
-<% } %>
+<% } %>   
+
+<% if(locals["sub_subtitle_chico_transferencia"]) {%>
+    <% include sub_subtitle_chico_transferencia.html %>
+<% } %> 
 
 <% if(locals["sub_subtitle_intermedio"]) {%>
     <% include sub_subtitle_intermedio.html %>
