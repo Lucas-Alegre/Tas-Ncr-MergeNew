@@ -235,6 +235,31 @@ var UserFuns = {
 			}
 		}
 	},
+    deleteUnenabledSelectsMenuPrincipal: function(selectObj) {
+		var tipo = States.getStoredValue("tipo_identificacion");
+
+        // Regla extra: si es MANUAL (o NO_CLIENTE) ocultar ciertas transacciones del menú principal
+        if (tipo === "manual") {
+            var bloquear = {
+            //"extraccion": true,
+            "transferencia": true,
+            "pago_ttcc": true,
+            "pago_impuestos": true
+            };
+
+            for (var i = 0; i < 10; i++) {
+                var k = "select" + i;
+                if (!selectObj || !selectObj.hasOwnProperty(k)) continue;
+
+                var item = selectObj[k];
+                var ev = item && item.event;
+
+                if (ev && bloquear[ev]) {
+                    delete selectObj[k];
+                }
+            }
+        }   
+    },
 	
 	executeUniqueSelect: function(selectObj) {
 		var component = null;
