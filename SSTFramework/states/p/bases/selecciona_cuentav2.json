@@ -57,8 +57,8 @@
 					}
 				}                   
 	            
-	            var orden = ["select0", "select1", "select2", "select3", "select4", "select5"];
-	            //UserFuns.selectFromList(screen, opciones, orden);
+	            //var orden = ["select0", "select1", "select2", "select3", "select4", "select5"]; //este era el nuevo original funcional para nuevo listado
+                var orden = ["select0"];
                 UserFuns.selectFromListNamed(screen, opciones, orden, "selectAccount");
 	        },
 		
@@ -89,7 +89,8 @@
         "mas": function () {
             var key = "temp.select_from_list.selectAccount";
             var pos = parseInt(sessionStorage[key] || "0", 10);
-            pos += 6; // o la cantidad de items por página
+            //pos += 6; // o la cantidad de items por página
+            pos += 1;
             sessionStorage[key] = pos;
             States.refreshState();
         },
@@ -97,7 +98,8 @@
         "menos": function () {
             var key = "temp.select_from_list.selectAccount";
             var pos = parseInt(sessionStorage[key] || "0", 10);
-            pos -= 6; // mismo valor que arriba
+            //pos -= 6; // mismo valor que arriba
+            pos -= 1;
             if (pos < 0) pos = 0;
             sessionStorage[key] = pos;
             States.refreshState();

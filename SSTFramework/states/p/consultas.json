@@ -123,38 +123,56 @@
             }
         },
 		"movimientos": {
-		    "call": "p/bases/selecciona_cuenta",
+		    "call": "p/bases/selecciona_cuentav2",
             "params": {
                 "title": "Consulta de movimientos",
                 "conceptos": [1, 2]
             },
             "events": {
-                "select": "p/consulta_movimientos_comms",
-                "back": "p/consultas",
+                "select": function (data) {
+                    sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+                    return "p/consulta_movimientos_comms"; 
+                },
+                "back": function (data) {
+                    sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+                    return "p/consultas";
+                },
                 "cancel": "p/close_salir",
             }
 		},
         "plazo_fijo": {
-            "call": "p/bases/selecciona_cuenta",
+            "call": "p/bases/selecciona_cuentav2",
             "params": {
                 "title": "Consulta de plazo fijo",
                 "conceptos": [4]           
             },
             "events": {
-                "select": "p/consulta_plazo_fijo",
-                "back": "p/consultas",
+                "select": function (data) {
+                    sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+                    return "p/consulta_plazo_fijo"; 
+                },
+                "back": function (data) {
+                    sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+                    return "p/consultas";
+                },
                 "cancel": "p/close_salir",
                 }
         },
         "tarjetas": {
-            "call": "p/bases/selecciona_cuenta",
+            "call": "p/bases/selecciona_cuentav2",
             "params": {
                 "title": "Consulta de tarjetas",
                 "conceptos": [25]
             },
             "events": {
-                "select": "p/consulta_tarjetas",
-                "back": "p/consultas",
+                "select": function (data) {
+                    sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+                    return "p/consulta_tarjetas"; 
+                },
+                "back": function (data) {
+                    sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+                    return "p/consultas";
+                },
                 "cancel": "p/close_salir",
 
             }
