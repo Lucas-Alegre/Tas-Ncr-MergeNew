@@ -1,6 +1,52 @@
-﻿
-///no text selection
-document.onselectstart = function () { return false; }
+﻿/// no text selection
+document.onselectstart = function () { return false; };
+
+(function lockBrowserBackFromPinpad() {
+  function pushLock() {
+    try { history.pushState({ __lock: true }, "", location.href); } catch (e) {}
+  }
+
+  function showAndStay(reason) {
+    alert("Operación cancelada: uso del botón de retroceso del navegador no permitido (" + reason + ").");
+    pushLock();
+  }
+
+  pushLock();
+
+  if (window.addEventListener) {
+    window.addEventListener("popstate", function () {
+      showAndStay("popstate");
+    }, false);
+
+    window.addEventListener("hashchange", function () {
+      showAndStay("hashchange");
+    }, false);
+
+    window.addEventListener("keydown", function (e) {
+      e = e || window.event;
+
+      var t = e.target || e.srcElement;
+      var tag = (t && t.tagName) ? String(t.tagName).toUpperCase() : "";
+      var isEditable = !!(t && (tag === "INPUT" || tag === "TEXTAREA" || t.isContentEditable === true));
+
+      var key = e.key;
+      var kc = e.keyCode || e.which;
+
+      var isBackspace = (key === "Backspace") || (kc === 8);
+      var isBrowserBack = (key === "BrowserBack") || (kc === 166) || (kc === 177);
+      var isAltLeft = !!(e.altKey && ((key === "ArrowLeft") || (kc === 37)));
+
+      if (!isEditable && (isBackspace || isBrowserBack || isAltLeft)) {
+        if (e.preventDefault) e.preventDefault(); else e.returnValue = false;
+        if (e.stopPropagation) e.stopPropagation(); else e.cancelBubble = true;
+        if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+
+        showAndStay("keydown");
+        return false;
+      }
+    }, true);
+  }
+})();
 
 /**
     * @class Vars

@@ -249,7 +249,7 @@ var UserFuns = {
 
             for (var i = 0; i < 10; i++) {
                 var k = "select" + i;
-                if (!selectObj || !selectObj.hasOwnProperty(k)) continue;
+                if (!selectObj || !selectObj.hasOwnProperty(k)) continue; 
 
                 var item = selectObj[k];
                 var ev = item && item.event;
