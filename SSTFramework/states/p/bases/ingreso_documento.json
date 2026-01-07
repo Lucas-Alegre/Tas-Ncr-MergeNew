@@ -6,7 +6,17 @@
         "storename": "documento",
 
         "datachanged": function(args) {			
-            return args.slice(0, 12);
+            //return args.slice(0, 12); linea funciona en produccion, sin todo lo otro
+
+            var tipo = States.getStoredValue("customer_id_type");
+
+            if (tipo === 35) {
+                // CUIL/CUIT/CDI: 11 dígitos
+                return args.slice(0, 11);
+            }
+
+            // DNI u otros: 8 dígitos
+            return args.slice(0, 8);
         },
 
 		"datapresented": function(args) { 
