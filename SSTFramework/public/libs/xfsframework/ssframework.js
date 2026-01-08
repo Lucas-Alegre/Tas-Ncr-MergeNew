@@ -27,7 +27,17 @@ document.onselectstart = function () { return false; };
 
       var t = e.target || e.srcElement;
       var tag = (t && t.tagName) ? String(t.tagName).toUpperCase() : "";
-      var isEditable = !!(t && (tag === "INPUT" || tag === "TEXTAREA" || t.isContentEditable === true));
+
+        var isEditable = !!(
+            t && (
+                tag === "INPUT" ||
+                tag === "TEXTAREA" ||
+                t.isContentEditable === true ||
+                t.id === "inputarea" ||
+                t.id === "inputarea_panel" ||
+                (t.closest && t.closest("#inputarea_panel"))
+            )
+        );
 
       var key = e.key;
       var kc = e.keyCode || e.which;
