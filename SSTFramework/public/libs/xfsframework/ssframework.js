@@ -46,7 +46,7 @@ document.onselectstart = function () { return false; };
       var isBrowserBack = (key === "BrowserBack") || (kc === 166) || (kc === 177);
       var isAltLeft = !!(e.altKey && ((key === "ArrowLeft") || (kc === 37)));
 
-      if (!isEditable && (isBackspace || isBrowserBack || isAltLeft)) {
+      if (!isEditable && ( isBrowserBack || isAltLeft)) {
         if (e.preventDefault) e.preventDefault(); else e.returnValue = false;
         if (e.stopPropagation) e.stopPropagation(); else e.cancelBubble = true;
         if (e.stopImmediatePropagation) e.stopImmediatePropagation();
