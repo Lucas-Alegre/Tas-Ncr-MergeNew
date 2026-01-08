@@ -1,5 +1,5 @@
 ﻿{
-    "base": include(p/bases/selecciona_cuenta.json),
+    "base": include(p/bases/selecciona_cuentav2.json),
 
     "properties": {
         "storename": "cuenta_debito",
@@ -29,13 +29,19 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),
 
-        
+        "back": function() {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+			return "p/pago_ttcc_tipo_pago";
+		},
         "sin_opciones": "p/close_sin_opciones",
-
-        "select": "p/pago_ttcc_confirma",
-
-        "cancel": "p/menu_principal_select",
-        "back": "p/pago_ttcc_tipo_pago",
+        "select": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;
+            return "p/pago_ttcc_confirma";
+        },
+        "cancel": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+            return "p/menu_principal_select";
+        },
 
     }
 }

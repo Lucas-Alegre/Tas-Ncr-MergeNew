@@ -1,7 +1,7 @@
 ﻿{
     "type": "General",
 
-    "base" : include(p/bases/selecciona_cuenta.json),
+    "base" : include(p/bases/selecciona_cuentav2.json),
 
     "properties": {
         "storename": "cuenta_origen",
@@ -26,16 +26,20 @@
 
     "events": {
         include(p/chunk/event_timeout.json),
-                
+
+        "back": function() {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+			return "p/menu_principal_select";
+		},
         "sin_opciones": "p/close_sin_opciones",
-
-        "select": "p/transf_cuenta_destino_tipo",
-
-        "back": "p/menu_principal_select",
-
-        "cancel": "p/menu_principal_select",
-
-        "clear": "p/menu_principal_select",
+        "select": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;
+            return "p/transf_cuenta_destino_tipo";
+        },
+        "cancel": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+            return "p/menu_principal_select";
+        },
 
     },
 

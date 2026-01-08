@@ -1,5 +1,5 @@
 ﻿{
-    "base": include(p/bases/selecciona_cuenta.json),
+    "base": include(p/bases/selecciona_cuentav2.json),
 
     "properties": {
         "conceptos": [1, 2],        
@@ -28,13 +28,20 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),     
         "back": function() {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
 			if ( States.getStoredValue("seleccion_medio_pago") == true )
 				return "p/pago_impuestos";
 			else
 				return "p/menu_principal_select";
 		},
         "sin_opciones": "p/close_sin_opciones",
-        "select": "p/pago_impuestos_comprobantes",
-        "cancel": "p/menu_principal_select",
+        "select": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;
+            return "p/pago_impuestos_comprobantes";
+        },
+        "cancel": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+            return "p/menu_principal_select";
+        },
     }
 }

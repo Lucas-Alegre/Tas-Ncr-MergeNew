@@ -706,6 +706,12 @@ var UserFuns = {
     },
     
     selectFromListNamed: function (screen, list, order, containerName, hidenext) {
+
+        if (!list || list.length === 0) {
+            States.handleEvent("sin_opciones");
+            return;
+        }
+
         var pageKey = "temp.select_from_list." + containerName;
         var pos_inicial = parseInt(sessionStorage[pageKey] || "0", 10);
         var itemsPorPagina = order.length;

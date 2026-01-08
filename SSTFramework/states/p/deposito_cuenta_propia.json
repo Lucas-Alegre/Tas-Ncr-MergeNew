@@ -1,5 +1,5 @@
 ﻿{
-    "base": include(p/bases/selecciona_cuenta.json),
+    "base": include(p/bases/selecciona_cuentav2.json),
     
     "properties": {
         "conceptos": [1, 2],
@@ -10,13 +10,14 @@
 	"screens": {
 	    "default" : {
 	        include(p/chunk/title_transaccion.json),
-	        }
+	    }
 	},
 
 	"events" : {
 	    include(p/chunk/event_timeout.json),
         "sin_opciones": "p/close_sin_opciones",
         "select": function(){
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
             States.storeNamedValue("navegar.proxima_accion", "deposito_cuenta_propia");
             var tipo = States.getStoredValue("flow.tipo_deposito");
             if(tipo==="efectivo"){
@@ -27,7 +28,13 @@
                 return  "cheque/check_status";
             }
         },
-        "cancel": "p/menu_principal_select",
-	    "back": "p/deposito_selector",
+        "back": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+            return "p/deposito_selector";
+        },
+        "cancel": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+            return "p/menu_principal_select";
+        },
     }
 }

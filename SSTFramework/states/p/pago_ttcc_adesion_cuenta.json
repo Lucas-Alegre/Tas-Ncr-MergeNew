@@ -1,6 +1,6 @@
 ﻿{
     
-    "base" : include(p/bases/selecciona_cuenta.json),
+    "base" : include(p/bases/selecciona_cuentav2.json),
 
     "properties": {
         "storename": "cuenta",
@@ -26,11 +26,18 @@
                 
         "sin_opciones": "p/close_sin_opciones",
 
-        "select": "p/pago_ttcc_confirma_adesion",
-
-        "back": "p/pago_ttcc_pregunta_adesion",
-
-        "cancel": "p/menu_principal_select",
+        "back": function() {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+			return "p/pago_ttcc_pregunta_adesion";
+		},
+        "select": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;
+            return "p/pago_ttcc_confirma_adesion";
+        },
+        "cancel": function () {
+            sessionStorage["temp.select_from_list.selectAccount"] = 0;  
+            return "p/menu_principal_select";
+        },
 
     },
 
