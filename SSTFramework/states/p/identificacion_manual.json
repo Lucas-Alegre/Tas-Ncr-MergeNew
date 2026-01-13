@@ -50,7 +50,7 @@
 
 	    "select": "p/identificacion_manual_ingreso",
         "back": "p/identificacion_start",
-        "cancel": "p/close_salir",
+        "cancel": "p/identificacion_start",
 	    
 	    "otros" : function() {
 	        States.refreshState();

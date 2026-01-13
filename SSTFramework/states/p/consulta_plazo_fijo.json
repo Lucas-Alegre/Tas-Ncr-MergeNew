@@ -41,6 +41,6 @@
 
 	    "enter": "p/consulta_plazo_fijo_print",
         "back": "p/consultas",
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 	}
 }

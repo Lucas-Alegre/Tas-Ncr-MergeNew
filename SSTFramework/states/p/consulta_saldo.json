@@ -43,6 +43,6 @@
 
 	    "enter": "p/consulta_saldo_print",
 		"back": "p/consultas",
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 	}
 }

@@ -47,6 +47,6 @@
 
 	    "enter": "p/deposito_pregunta_otra",
         "back": "p/consultas",
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
 	}
 }

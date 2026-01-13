@@ -7,7 +7,7 @@ document.onselectstart = function () { return false; };
   }
 
   function showAndStay(reason) {
-    alert("Operación cancelada: uso del botón de retroceso del navegador no permitido (" + reason + ").");
+    //alert("Operación cancelada: uso del botón de retroceso del navegador no permitido (" + reason + ").");
     pushLock();
   }
 
@@ -42,7 +42,6 @@ document.onselectstart = function () { return false; };
       var key = e.key;
       var kc = e.keyCode || e.which;
 
-      var isBackspace = (key === "Backspace") || (kc === 8);
       var isBrowserBack = (key === "BrowserBack") || (kc === 166) || (kc === 177);
       var isAltLeft = !!(e.altKey && ((key === "ArrowLeft") || (kc === 37)));
 

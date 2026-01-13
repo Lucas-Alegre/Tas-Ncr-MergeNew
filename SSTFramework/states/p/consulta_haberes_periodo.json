@@ -48,7 +48,7 @@
 	"events" : {
 	    include(p/chunk/event_timeout.json),
 
-        "cancel": "p/close_salir",
+        "cancel": "p/menu_principal_select",
         
         "back": "p/consultas",
 

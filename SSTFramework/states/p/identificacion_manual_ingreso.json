@@ -36,6 +36,7 @@
 	    include(p/chunk/event_timeout.json),
 
 	    "back": "p/identificacion_manual",
+        "cancel": "p/identificacion_start",
         
 		"accept": function(){
             States.storeNamedValue("navegar.origen_pin", "identificacion");
