@@ -20,7 +20,12 @@
                 "text": "Por favor, ingrese el monto a depositar",
                 },
 
-            include(p/chunk/nav_cancelar_continuar.json),
+            "nav": {
+                include(p/chunk/nav_btn_cancelar.json),
+                include(p/chunk/nav_btn_borrar.json),
+                include(p/chunk/nav_btn_continuar.json),
+            }
+
     
         }
     },

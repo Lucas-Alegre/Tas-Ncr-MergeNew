@@ -79,6 +79,7 @@
 		        }
 	        }
 	    },
+		"back": "p/pago_ttcc_tipo_pago",
         "cancel": "p/close_salir",
     }
 }

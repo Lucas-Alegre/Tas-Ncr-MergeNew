@@ -31,6 +31,7 @@
 	"events" : {
 		"timeout": "p/close_salir",
 
-	    "cancel": "p/close_salir"
+	    //"cancel": "p/close_salir"
+        "cancel": "p/menu_principal_select"
 	}
 }

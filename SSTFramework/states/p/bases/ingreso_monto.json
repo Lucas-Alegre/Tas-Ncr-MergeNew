@@ -15,15 +15,30 @@
         },
 
         "datachanged": function(args) {			
+            args = (args === undefined || args === null) ? "" : args;
+            args = String(args);
+
+            args = args.replace(/\D/g, "");
+
+            args = args.replace(/^0+(?=\d)/, "");
+            args = args.replace(/^0+$/, "");
+
             return args.slice(0, 12);
         },
 
 		"datapresented": function(args) { 
+            args = (args === undefined || args === null) ? "" : args;
+            args = String(args);
+
+            args = args.replace(/\D/g, "");
 		    var div = 1;
 		    
 		    var decimales = parseInt(States.getProperty("decimales"));
 		    for(var c=0; c<decimales; c++)
 		        div *= 10;
+            if (args.length === 0) {
+                return "$ " + (0).toFixed(decimales);
+            }
 		    return "$ " + SSUtil.formatNumber((parseFloat(args)/div).toFixed(decimales), decimales);
 		},
 
