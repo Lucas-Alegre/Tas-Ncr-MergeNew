@@ -67,12 +67,16 @@
 	    "video" : {
 
             "update" : function(screen) {
-                screen.video.src = Vars.get("video");
+                var v = Vars.get("video");
+                if (SSUtil.isDef(v)) {
+                    screen.video.src = v;
+                }
             },
 
 	        "video": {
 	            "fullscreen": "true",
-                "src": "/video/prestamos.webm"
+                "src": "<%= SSUtil.getVideoTest() %>",
+                //"src": "/video/prestamos.webm"
 	        },
 						
 		}

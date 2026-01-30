@@ -152,7 +152,13 @@ var Vars = {
 
 var SSUtil = {
 
-     getBankLogo:function(){
+    getVideoTest: function() {
+        var bank = this.getBankLogo();
+        if (!bank) bank = "prestamos";
+        return "/video/" + bank + ".webm";    
+    },
+
+    getBankLogo:function(){
         var entity = Vars.get("entidad"); 
         return entity; 
     },
