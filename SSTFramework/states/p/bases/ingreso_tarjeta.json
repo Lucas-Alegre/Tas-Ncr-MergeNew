@@ -11,7 +11,10 @@
 
 
 		"datapresented": function(args) { 
-		    return UserFuns.formatTarjeta(args);
+		    return UserFuns.maskFormatTarjeta(args, {
+                showFirst: 0,
+                showLast: 4
+            });
 		},
 
         "dataccept": function(args) {

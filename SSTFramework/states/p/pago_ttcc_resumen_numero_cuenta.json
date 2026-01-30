@@ -10,7 +10,11 @@
 
         "storename": "cuenta_tarjeta",
 
-        },
+        "datapresented": function(args) { 
+			return parseInt(args, 10); 
+		},
+
+    },
 
     "screens": {
                         

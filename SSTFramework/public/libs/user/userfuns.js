@@ -448,6 +448,46 @@ var UserFuns = {
         return ret;
     },
 
+    maskFormatTarjeta: function (args, opts) {
+
+        opts = opts || {};
+
+        var showFirst = (opts.showFirst !== undefined) ? opts.showFirst : 0;
+        var showLast  = (opts.showLast  !== undefined) ? opts.showLast  : 4;
+        var maskChar  = (opts.maskChar  !== undefined) ? opts.maskChar  : "•";
+
+        args = (args === undefined || args === null) ? "" : String(args);
+        args = args.replace(/\D/g, "").slice(0, 16);
+
+        var len = args.length;
+
+        var firstLen = Math.min(showFirst, len);
+        var lastLen  = Math.min(showLast, Math.max(len - firstLen, 0));
+
+        var visibleFirst = args.slice(0, firstLen);
+        var visibleLast  = args.slice(len - lastLen);
+
+        var maskedLen = Math.max(len - firstLen - lastLen, 0);
+
+        var middle = "";
+        for (var i = 0; i < maskedLen; i++) middle += maskChar;
+
+        var masked = visibleFirst + middle + visibleLast;
+
+        //formato xxxx-xxxx-xxxx-abcd
+        var p1 = masked.slice(0, 4);
+        var p2 = masked.slice(4, 8);
+        var p3 = masked.slice(8, 12);
+        var p4 = masked.slice(12, 16);
+
+        return (
+            SSUtil.pad(p1, "_", 4, -1) + "-" +
+            SSUtil.pad(p2, "_", 4, -1) + "-" +
+            SSUtil.pad(p3, "_", 4, -1) + "-" +
+            SSUtil.pad(p4, "_", 4, -1)
+        );
+    },
+
     formatCuenta: function (numero, sinsucursal) {
         numero = numero.toString();
         var oficinalen = 3;
